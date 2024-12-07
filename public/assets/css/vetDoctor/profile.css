@@ -1,0 +1,342 @@
+:root {
+    --body-color: #E4E9F7;
+    --primary-color: #6A0DAD;
+    --secondary-color: #8E44AD;
+    --white-color: #FFFFFF;
+    --text-color: #333;
+    --light-text: #666;
+    --border-color: #E0E0E0;
+    --transition: all 0.3s ease;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--body-color);
+    line-height: 1.6;
+}
+
+/* Profile Container Styles */
+.profile-container {
+    display: flex;
+    background-color: var(--white-color);
+    max-width: 1200px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Sidebar Navigation */
+.section-navigation {
+    width: 250px;
+    /* background-color: var(--primary-color); */
+    background-color: var(--primary-color-light);
+    padding: 20px;
+    border-right: 1px solid var(--toggle-color);
+}
+
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-button {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 12px 15px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition);
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+}
+
+/* Profile Content */
+.profile-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+/* Sections */
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Profile Picture */
+.profile-picture-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.profile-picture-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+}
+
+.profile-picture-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.upload-btn, 
+.remove-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.remove-btn {
+    background-color: #DC3545;
+}
+
+/* Form Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: var(--light-text);
+}
+
+.form-input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(106, 13, 173, 0.2);
+}
+
+/* Edit Actions */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.edit-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.edit-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.edit-actions {
+    display: none;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+    }
+
+    .section-navigation {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .nav-buttons {
+        flex-direction: row;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* File Input Styles */
+.file-input {
+    display: none;
+}
+
+/* Certificates */
+.certificate-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.certificate-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.remove-certificate-btn {
+    background-color: #DC3545;
+    color: var(--white-color);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.home {
+    position: relative;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background: var(--body-color);
+    transition: var(--tran-05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* When sidebar is closed */
+.sidebar.close + .home {
+    left: 88px;
+    width: calc(100% - 88px);
+}
+
+.profile-container {
+    background-color: var(--background-white);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .home {
+        left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .sidebar.close + .home {
+        left: 0;
+        width: 100%;
+    }
+
+    .profile-container {
+        flex-direction: column;
+        max-height: none;
+    }
+}
+
+.btn-danger {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    background-color: red;
+    margin-top: 10px;
+}
+
+.btn-danger:hover {
+    background-color: #ff0000;
+    color : white;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}

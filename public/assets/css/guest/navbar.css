@@ -1,0 +1,71 @@
+nav.navBar {
+    height: fit-content;
+    position: sticky;
+    top: 0;
+
+    border-bottom: 2px solid var(--primary-border-color);
+    padding: 5px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    z-index: 10;
+}
+
+#navBar-logo {
+    width: auto;
+    height: 4rem;
+}
+
+.navBar .links {
+    width: fit-content;
+
+    display: flex;
+    gap: 2px;
+}
+.navBar a {
+    border: none;
+    width: fit-content;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    border-radius: 10px;
+
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+
+    padding: 15px;
+}
+.navBar a:hover {
+    transition: all 0.3s ease;
+    transform: scale(1.05);
+    box-shadow: inset 3px 3px 10px var(--shadow-color);
+}
+.navBar a:hover,
+.navBar a.active {
+    color: var(--nav-hover-text-color);
+}
+.navBar a:hover label,
+.navBar a.active label{
+    cursor: pointer;
+
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 5px;
+}
+
+.navBar .logout {
+    padding: 10px;
+    border-radius: 5px;
+}
+@media (width <= 1050px) {
+    .collapsable {
+        display: none;
+    }
+}
