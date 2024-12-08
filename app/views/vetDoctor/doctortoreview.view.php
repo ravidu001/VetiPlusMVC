@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vet Assistant Reviews</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #6a0dad;
@@ -37,6 +40,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            color: var(--primary-color);
         }
 
         .review-tabs {
@@ -95,8 +99,17 @@
             margin-right: 20px;
         }
 
+        .assistant-details h3 {
+            padding-bottom: 10px;
+        }
+
         .review-details {
             flex-grow: 1;
+           padding-left:20px;
+        }
+
+        .review-details p {
+            padding: 8px;
         }
 
         .review-actions {
@@ -160,15 +173,210 @@
         .delete-button:hover {
             opacity: 0.8;
         }
+
+        .feedback-modal {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            width: 500px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(-10deg);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .feedback-modal.active {
+            transform: perspective(1000px) rotateX(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #e6e6e6;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* .rating-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        } */
+
+        /* .rating-star {
+            font-size: 40px;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-star:hover,
+        .rating-star.active {
+            color: #ffc107;
+            transform: scale(1.2);
+        } */
+
+        /* rating section */
+        .rating {
+            width: 400px;
+            background: none;
+            padding: 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .rating .star-widget input {
+            display: none;
+        }
+
+        .star-widget label {
+            font-size: 40px;
+            color: #444; 
+            padding: 10px;
+            float: right;
+            transition: all 0.2s ease;
+        }
+
+        .star-widget input:not(:checked) ~ label:hover,
+        .star-widget input:not(:checked) ~ label:hover ~ label {
+            color: var(--text-primary);
+        }
+
+        .star-widget input:checked ~ label {
+            color: var(--text-primary);
+        }
+
+        input#rate-5:checked ~ label {
+            color: var(--text-primary);
+            text-shadow: 0 0 20px var(--background-light);
+        }
+
+        /* Display rating text based on selection */
+        #rate-1:checked ~ header:before {
+            content: 'Very Bad 😖';
+        } 
+        #rate-2:checked ~ header:before {
+            content: 'Bad 🙁';
+        }
+        #rate-3:checked ~ header:before {
+            content: 'Good 😃';
+        }
+        #rate-4:checked ~ header:before {
+            content: 'Very Good 😎';
+        }
+        #rate-5:checked ~ header:before {
+            content: "Excellent 😍";
+        }
+
+        star-widget header {
+            display: none;
+        }
+
+        input:checked ~ header {
+            display: block;
+        }
+
+        .star-widget header {
+            width: 100%;
+            font-size: 25px;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin: 5px 0 20px 0;
+            text-align: center;
+            transition: all 0.2s ease;
+        } 
+
+        .feedback-textarea {
+            width: 100%;
+            height: 150px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            resize: none;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
+<?php require_once '../app/views/navbar/doctornav.php'; ?>
+<div class="home">
     <div class="review-container">
         <div class="review-header">
             <h1>Vet Assistant Reviews</h1>
             <div class="review-tabs">
                 <button class="tab-button active" onclick="switchTab('pending')">Pending Reviews</button>
-                <button class="tab-button" onclick="switchTab('completed')">Completed Reviews</ button>
+                <button class="tab-button" onclick="switchTab('completed')">Completed Reviews</button>
             </div>
         </div>
 
@@ -177,9 +385,9 @@
             <div class="review-card">
                 <div class="assistant-profile">
                     <img src="https://randomuser.me/api/portraits/women/50.jpg" alt="Assistant Profile">
-                    <div>
+                    <div class="assistant-details">
                         <h3>Emma Johnson</h3>
-                        <p>Appointment: Aug 17, 2024</p>
+                        <p>Session: Aug 17, 2024</p>
                     </div>
                 </div>
                 <div class="review-details">
@@ -194,9 +402,9 @@
             <div class="review-card">
                 <div class="assistant-profile">
                     <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Assistant Profile">
-                    <div>
+                    <div class="assistant-details">
                         <h3>Michael Chen</h3>
-                        <p>Appointment: Aug 19, 2024</p>
+                        <p>Session: Aug 19, 2024</p>
                     </div>
                 </div>
                 <div class="review-details">
@@ -214,9 +422,9 @@
             <div class="review-card">
                 <div class="assistant-profile">
                     <img src="https://randomuser.me/api/portraits/women/60.jpg" alt="Assistant Profile">
-                    <div>
+                    <div class="assistant-details">
                         <h3>Sarah Williams</h3>
-                        <p>Appointment: Aug 10, 2024</p>
+                        <p>Session: Aug 10, 2024</p>
                     </div>
                 </div>
                 <div class="review-details">
@@ -238,13 +446,49 @@
     </div>
 
     <div id="reviewModal" class="modal">
-        <div class="modal-content">
-            <h2>Review Vet Assistant</h2>
+        <!-- <div class="modal-content">
+            <h2>Review Vet Assistant</h2> -->
             <!-- Add review form here -->
-        </div>
+        <!-- </div> -->
+        <form method="post" action="#">
+            <div class="feedback-modal active">
+                <div class="modal-header">
+                    <img src="https://randomuser.me/api/portraits/women/50.jpg" alt="Profile" class="profile-image">
+                    <h2 class="modal-title">Provide Feedback</h2>
+                </div>
+
+                <div class="rating">
+                    <div class="star-widget"> 
+                        <input type="radio" name="rate" id="rate-5">
+                        <label for="rate-5" class="fas fa-star"></label>
+                        <input type="radio" name="rate" id="rate-4">
+                        <label for="rate-4" class="fas fa-star"></label>
+                        <input type="radio" name="rate" id="rate-3">
+                        <label for="rate-3" class="fas fa-star"></label>
+                        <input type="radio" name="rate" id="rate-2">
+                        <label for="rate-2" class="fas fa-star"></label>
+                        <input type="radio" name="rate" id="rate-1">
+                        <label for="rate-1" class="fas fa-star"></label>
+                        
+                        <header> </header>
+
+                    </div>
+                </div>
+
+                <textarea class="feedback-textarea" placeholder="Share your detailed feedback here..."></textarea>
+
+                <div class="button-group">
+                    <button class="btn btn-cancel" id="cancel">Cancel</button>
+                    <button class="btn btn-submit">Submit Feedback</button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 
     <script>
+        let currentTab = 'pending'; // Default tab
+
         function switchTab(tab) {
             const pendingTab = document.getElementById('pendingReviews');
             const completedTab = document.getElementById('completedReviews');
@@ -256,11 +500,15 @@
                 completedTab.style.display = 'none';
                 pendingButton.classList.add('active');
                 completedButton.classList.remove('active');
+                currentTab = 'pending';
+                // window.alert(currentTab);
             } else {
                 pendingTab.style.display = 'none';
                 completedTab.style.display = 'grid';
                 pendingButton.classList.remove('active');
                 completedButton.classList.add('active');
+                currentTab = 'completed';
+                // window.alert(currentTab);
             }
         }
 
@@ -269,17 +517,21 @@
             modal.style.display = 'flex';
         }
 
-        function deleteReview(button) {
-            const card = button.closest('.review-card');
-            card.remove();
+        function closeModal() {
+            const modal = document.getElementById('reviewModal');
+            modal.style.display = 'none';
+            switchTab(currentTab); // Switch back to the relevant tab
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('reviewModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
+        function deleteReview(button) {
+            const card = button.closest('.review-card');
+            // Add your delete logic here
         }
+
+        // Add event listener to the cancel button
+        document.getElementById('cancel').addEventListener('click', closeModal);
+        
+
     </script>
 </body>
 </html>

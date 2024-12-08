@@ -33,22 +33,22 @@ class App {
             }
         } 
         
-        $controlller = new $this->controller; // create an instance of the controller
+        $controller = new $this->controller; // create an instance of the controller
 
         // check if the method exists in the controller
         if(!empty($URL[1])){
-            if(method_exists($controlller, $URL[1])) {
+            if(method_exists($controller, $URL[1])) {
                 $this->method = $URL[1];
                 unset($URL[1]);
             } else {
                 $filename = "../app/controllers/_404.php"; // if the method does not exist, load the 404 controller
                 require $filename;
                 $this->controller = "_404";
-                $controlller = new $this->controller; // create an instance of the controller
+                $controller = new $this->controller; // create an instance of the controller
             }
         }
         // show($URL);
-        call_user_func_array([$controlller, $this->method], $URL); // call the method of the controller. call_user_func_array is a function that calls a user-defined function with an array of parameters. 
+        call_user_func_array([$controller, $this->method], $URL); // call the method of the controller. call_user_func_array is a function that calls a user-defined function with an array of parameters. 
         // array paramters used to pass the URL parameters to the method
     }
 
