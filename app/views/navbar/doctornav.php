@@ -79,8 +79,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <i class='bx bxs-down-arrow arrow first icon'></i>
                     </a>
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == 'prescription.php' ? 'active' : '' ?>">
-                            <a href="prescription.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorPrescription/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorPrescription/index">
                                 <i class='bx bx-book-add icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Add Prescription</span>
                             </a>
