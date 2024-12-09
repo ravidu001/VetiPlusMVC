@@ -24,7 +24,7 @@ body {
     justify-content: center;
     margin: 20px auto;
     width: 100%;
-    max-width: 1200px;
+    max-width: 850px;
     background: var(--white);
     border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
@@ -70,6 +70,7 @@ body {
     background: var(--background-light);
     border-radius: 12px;
     padding: 20px;
+    margin:20px;
     border: 1px solid var(--border-color);
     position: relative;
     margin-top: 20px;
