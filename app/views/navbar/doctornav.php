@@ -91,8 +91,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <span class="text nav-text" style="font-size:14px;">Medical History</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'certificate.php' ? 'active' : '' ?>">
-                            <a href="certificate.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorCertificate/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorCertificate/index">
                                 <i class='bx bx-certification icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Create Certificate</span>
                             </a>
