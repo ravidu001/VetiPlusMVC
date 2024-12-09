@@ -4,6 +4,7 @@ update doctorreview.view page
     relevant js file 1-54 line shuld be un comment and add relavent url here (fetch(''))
     @394 line in css file /* remove after new code added to the reviewNotification section */
 
+    not full complete certificate.view.php file that is about medical certificate
 
 
 

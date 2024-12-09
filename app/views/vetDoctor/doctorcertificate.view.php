@@ -15,7 +15,7 @@
             <h1>Veterinary Certificate Generator</h1>
         </div>
 
-        <form class="certificate-form">
+        <form class="certificate-form" action="<?= ROOT ?>/doctorcertificate/certificate" method="post">
             <div class="form-section">
                 <div class="form-section-title">Pet Information</div>
                 <div class="form-group">
