@@ -85,8 +85,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <span class="text nav-text" style="font-size:14px;">Add Prescription</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'medicalhistory.php' ? 'active' : '' ?>">
-                            <a href="medicalhistory.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorMedicalHistory/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorMedicalHistory/index">
                                 <i class='bx bx-history icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Medical History</span>
                             </a>

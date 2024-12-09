@@ -34,7 +34,7 @@ body {
 .prescription-header {
     display: flex;
     align-items: center;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8e44ad 100%);
     color: var(--white);
     padding: 20px 30px;
 }
