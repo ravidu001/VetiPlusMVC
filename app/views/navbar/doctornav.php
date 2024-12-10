@@ -44,8 +44,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <!-- Sub-menu should be inside the parent li -->
 
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == 'newAppointment.php' ? 'active' : '' ?>">
-                            <a href="newAppointment.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorNewSession/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorNewSession/index">
                                 <i class='bx bx-calendar-plus icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">New Session</span>
                             </a>
