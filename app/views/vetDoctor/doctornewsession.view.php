@@ -116,5 +116,8 @@
 </div>
     <script src="<?= ROOT ?>/assets/js/vetDoctor/newsession.js"></script>
     <script src="<?= ROOT ?>/assets/js/calendar/calendar.js"></script>
+    <script>
+        const sessionDates = [''];
+    </script>
 </body>
 </html>

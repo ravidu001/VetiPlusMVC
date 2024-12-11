@@ -107,3 +107,14 @@
 .calendar-image img:hover {
     transform: translateY(-10px);
 }
+
+.calendar-day.session-date {
+    background-color: var(--white);
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.calendar-day.future-date:hover {
+    background-color: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}

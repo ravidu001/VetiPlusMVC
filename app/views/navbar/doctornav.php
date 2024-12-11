@@ -50,8 +50,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <span class="text nav-text" style="font-size:14px;">New Session</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'viewAppointment.php' ? 'active' : '' ?>">
-                            <a href="viewAppointment.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/doctorviewsession/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/doctorviewsession/index">
                                 <i class='bx bx-calendar-event icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">View Sessions</span>
                             </a>

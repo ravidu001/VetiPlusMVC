@@ -6,6 +6,11 @@ update doctorreview.view page
 
     not full complete certificate.view.php file that is about medical certificate
 
+    <script>
+        const sessionDates = ['2024-11-15', '2024-12-16', '2025-01-20'];
+        // this will pass the session dates to calendar for highlighting relevant dates
+    </script>
+
 
 
 Vet Assistant
