@@ -16,6 +16,39 @@ update doctorreview.view page
 Vet Assistant
 
 
+Calendar
+    remove funtions from existing js code
+    1.Add a Global Variable in DoctorViewSession.php:
+    <script>
+    const isDoctorViewSession = true;
+    </script>
+
+    2.Modify the selectDate Function: Update calendar.js to check for this flag before running:
+    selectDate(date, element) {
+        if (typeof isDoctorViewSession !== 'undefined' && isDoctorViewSession) {
+            // Do nothing in DoctorViewSession
+            return;
+        }
+
+        // Prevent selection of past dates
+        if (date < new Date()) return;
+
+        // Remove previous selection
+        this.calendarGrid.querySelectorAll('.calendar-day').forEach(el => 
+            el.classList.remove('selected')
+        );
+
+        // Add selection to clicked date
+        element.classList.add('selected');
+
+        // Update selected date input
+        this.selectedDateInput.value = date.toDateString();
+    }
+
+
+
+
+
 this is the page about vet doctor can review their vet assistants after assistants attend to the appointment session.
 
 this is the html file
