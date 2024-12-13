@@ -5,4 +5,7 @@ class DoctorViewSession extends Controller {
         $this->view('vetDoctor/doctorviewsession');
     }
 
+    public function session() {
+        $this->view('vetDoctor/doctorsessionview');
+    }
 }

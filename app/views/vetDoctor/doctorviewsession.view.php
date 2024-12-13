@@ -299,7 +299,7 @@
                 <span class="session-status status-confirmed">Confirmed</span>
             </td> -->
             <td>
-                <a href="#" class="view-btn">
+                <a href="<?= ROOT ?>/DoctorViewSession/session" class="view-btn">
                     <i class='bx bx-right-arrow-circle'></i>
                 </a>
             </td>
@@ -327,7 +327,7 @@
                 <span class="session-status status-pending">Pending</span>
             </td> -->
             <td>
-                <a href="#" class="view-btn">
+                <a href="<?= ROOT ?>/DoctorViewSession/session" class="view-btn">
                     <i class='bx bx-right-arrow-circle'></i>
                 </a>
             </td>
