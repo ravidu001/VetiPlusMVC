@@ -2,136 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Veterinary Session Management</title>
-    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <title>Vet Sessions Scheduler</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/calendar/calendar.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/sessionhistoryview.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/viewsession.css">
+    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        
+    </style>
 </head>
 <body>
 <?php require_once '../app/views/navbar/doctornav.php'; ?>
 <div class="home">
-    <div class="session-container">
-        <a href="<?= ROOT ?>/DoctorViewSession/index" class="view-btn" title="Back">
-            <i class='bx bx-left-arrow-circle'></i>
-        </a>
-        <div class="session-header">
-            <h2>Veterinary Session Details</h2>
-        </div>
-
-        <div class="session-details">
-            <div class="detail-item">
-                <div class="detail-label">Start Date and Time</div>
-                <div class="detail-value">2024-08-10, 15:00</div>
+    <div class="container">
+        <?php require_once '../app/views/calendar.view.php'; ?>
+        <!-- <div class="calendar-section">
+            <div class="calendar-header">
+                <h2 id="current-month">August 2024</h2>
+                <div class="calendar-navigation">
+                    <button>←</button>
+                    <button>→</button>
+                </div>
             </div>
-            <div class="detail-item">
-                <div class="detail-label">End Date and Time</div>
-                <div class="detail-value">2024-08-10, 17:00</div>
+            <div id="calendar-grid" class="calendar-grid">
+                Calendar Days Generated Here
             </div>
-            <div class="detail-item">
-                <div class="detail-label">Address</div>
-                <div class="detail-value">147, Galthude, Panadura</div>
-            </div>
-        </div>
+        </div> -->
 
-        <div class="assistant-profile">
-            <div class="assistant-avatar">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Assistant">
-            </div>
-            <div class="assistant-info">
-                <h3>John Doe</h3>
-                <p>Veterinary Assistant | 3 Years Experience</p>
-                <div id="assistant-rating"></div>
-                <div>Hourly Rate: $50/hr</div>
-            </div>
-        </div>
-
-        <div class="session-container">
-        <div class="status-buttons">
-            <button class="btn btn-queue active" data-target="completed">Completed</button>
-            <button class="btn btn-queue" data-target="cancelled">Cancelled</button>
-        </div>
-
-        <div id="completed" class="animated-section" >
-            <table class="appointment-table">
-                <thead>
-                    <tr>
-                        <th>Owner Name</th>
-                        <th>Pet Profile</th>
-                        <th>Pet Details</th>
-                        <th>Contact</th>
-                        <th>Session Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>15:00</td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>15:30</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="cancelled" class="animated-section" style="display:none;">
-            <table class="appointment-table">
-                <thead>
-                    <tr>
-                        <th>Owner Name</th> <th>Pet Profile</th>
-                        <th>Pet Details</th>
-                        <th>Contact</th>
-                        <th>Session Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>16:00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <h2 class="session-heading">Sessions history</h2>
+        <table class="sessions-table">
+    <thead>
+        <tr>
+            <th>Session</th>
+            <th>Assistant</th>
+            <th>Date & Time</th>
+            <th>Location</th>
+            <th>Appointments</th>
+            <!-- <th>Status</th> -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>001</td>
+            <td>
+                <div class="vet-info">
+                    <div class="vet-avatar">
+                        <img src="<?= ROOT ?>/assets/images/vetAssistant/assistant.jpg" alt="assistant">
+                    </div>
+                    <div class="vet-details">
+                        <span class="vet-name">Kasun Perera</span>
+                        <span class="vet-specialization">Small Animal Care</span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                2025/11/15<br>
+                15:00 - 17:00
+            </td>
+            <td>147, Galthude, Panadura</td>
+            <td>10</td>
+            <!-- <td>
+                <span class="session-status status-confirmed">Confirmed</span>
+            </td> -->
+            <td>
+                <a href="<?= ROOT ?>/DoctorSessionHistory/session" class="view-btn">
+                    <i class='bx bx-right-arrow-circle'></i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>002</td>
+            <td>
+                <div class="vet-info">
+                    <div class="vet-avatar">
+                        <img src="<?= ROOT ?>/assets/images/vetAssistant/assistantprofile.avif" alt="assistant">
+                    </div>
+                    <div class="vet-details">
+                        <span class="vet-name">Dr. Emily Wong</span>
+                        <span class="vet-specialization">Exotic Pets</span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                2025/12/16<br>
+                15:00 - 17:00
+            </td>
+            <td>22, Main Street, Colombo</td>
+            <td>8</td>
+            <!-- <td>
+                <span class="session-status status-pending">Pending</span>
+            </td> -->
+            <td>
+                <a href="<?= ROOT ?>/DoctorSessionHistory/session" class="view-btn">
+                    <i class='bx bx-right-arrow-circle'></i>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
     </div>
 </div>
+    <script src="<?= ROOT ?>/assets/js/calendar/calendar.js"></script>
+    <script>
+        const sessionDates = ['2024-11-15', '2024-12-16'];
+        // this will pass the session dates to calendar for highlighting relevant dates
 
-    <script src="<?= ROOT ?>/assets/js/vetDoctor/sessionhistoryview.js"></script>
+        const isActiveDate = true;
+    
+    </script>
+        
 </body>
 </html>
