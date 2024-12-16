@@ -19,6 +19,9 @@ a:hover {
 body {
     display: flex;
     flex-direction: column;
+
+    /* background-image: url('../../images/guestUser/pawBG.png');
+    background-size: contain; */
 }
 section {
     margin: 20px, 10%;
@@ -27,6 +30,10 @@ section {
     display: flex;
     justify-content: center;
 }
+/* div {
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+} */
 
 /* .blurBG {
     filter: blur(5px);

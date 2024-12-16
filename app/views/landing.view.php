@@ -2,43 +2,43 @@
 <html lang="en">
     <head>
         <title>Home - VetiPlus</title>
-        <!-- <link rel="icon" href="<?= ROOT ?>/assets/images/vetiplus-logo.png" type="image/png"> -->
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="<?= ROOT ?>/assets/css/guest/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guest/styles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/guest/navBar.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guest/myFooter.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guest/hero.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/hero.css" rel="stylesheet">
 
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-        <link href="<?= ROOT ?>/assets/css/guest/guestHome.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guest/happyCx.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/guestHome.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/happyCx.css" rel="stylesheet">
 
     </head>
 
     <body>
 
         <!-- navbar on top: -->
-        <!-- <?php //include INCLUDE_BASE.'/client/components/guestUser/guestNavbar.php'; ?> -->
+        <!-- <?php include ROOT.'/app/views/navbar/guestNav.php'; ?> -->
 
         <section class="hero-section">
             <header>
                 VetiPlus:<br/>
                 Connecting Pet Parents<br/>with<br/>Quality Care
             </header>
-            <img class="heroImg" src="./client/assets/images/guestUser/guestHeroes/homeHero.png" alt="">
+            <img class="heroImg" src="./assets/images/guestUser/guestHeroes/homeHero.png" alt="">
         </section>
 
         <h1>Our Services</h1>
         <div class="serviceCards"></div>
 
         <div class="homeDiv">
-            <img src="./client/assets/images/guestUser/homeImg/SittingDoggo.png" alt="SittingDoggo">
+            <img src="./assets/images/guestUser/homeImg/SittingDoggo.png" alt="SittingDoggo">
             <div class="homeDivText">
                 <h2>Pets do speak, but only to those who know how to listen.</h2>
                 <p>Join the VetiPlus family today and connect with professionals who take pet care to another level.</p>    
@@ -61,13 +61,13 @@
                     <button>Register</button>
                 </a>
             </div>
-            <img src="./client/assets/images/guestUser/homeImg/CuteDoggo.png" alt="SittingDoggo">
+            <img src="./assets/images/guestUser/homeImg/CuteDoggo.png" alt="SittingDoggo">
         </div>
 
         <h1>Our Community</h1>
         <div class="userTypes">
             <div class="userCard">
-                <img src="./client/assets/images/guestUser/userTypes/petOwners.png" alt="">
+                <img src="./assets/images/guestUser/userTypes/petOwners.png" alt="">
                 <p class="userTitle">Pet Owner</p>
                 <p class="userDescription">
                     Care for your furry friend from
@@ -78,7 +78,7 @@
                 </p>
             </div>
             <div class="userCard">
-                <img src="./client/assets/images/guestUser/userTypes/vetDoctor.png" alt="">
+                <img src="./assets/images/guestUser/userTypes/vetDoctor.png" alt="">
                 <p class="userTitle">Veterinary Doctor</p>
                 <p class="userDescription">
                     Expand your practice online. Join
@@ -90,7 +90,7 @@
                 </p>
             </div>
             <div class="userCard">
-                <img src="./client/assets/images/guestUser/userTypes/vetAssistant.png" alt="">
+                <img src="./assets/images/guestUser/userTypes/vetAssistant.png" alt="">
                 <p class="userTitle">Veterinary Assistant</p>
                 <p class="userDescription">
                     Streamline your work. Sign up to
@@ -101,7 +101,7 @@
                 </p>
             </div>
             <div class="userCard">
-                <img src="./client/assets/images/guestUser/userTypes/salon.png" alt="">
+                <img src="./assets/images/guestUser/userTypes/salon.png" alt="">
                 <p class="userTitle">Pet Salon</p>
                 <p class="userDescription">
                     Boost your business. Register to
@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <h1>Our Happy Customers</h1>
+        <!-- <h1>Our Happy Customers</h1>
         <div class="happyCx">
             <div class="cxCard">
                 <img src="" alt="">
@@ -123,15 +123,14 @@
                 </p>
                 <div class="stars"></div>
             </div>
-        </div>
+        </div> -->
 
         
         <!-- footer at page's bottom: -->
-        <?php// include INCLUDE_BASE.'/client/components/guestUser/guestFooter.php'; ?>
+        <!-- <?php include ROOT.'/components/guestUser/guestFooter.php'; ?> -->
 
         <script>
-
-            const imgFolder = "./client/assets/images/serviceIcons/"
+            const imgFolder = "./assets/images/guestUser/serviceIcons/"
             const services = [
                 {
                     serviceName: "Vet Appointments",
@@ -160,6 +159,5 @@
                                 <img src='${ser.imgLoc}'/>
                             </div>`)
         </script>
-        <script src="<?= INCLUDE_BASE ?>/client/pages/guestUser/heroHeight.js"></script>
     </body>
 </html>
