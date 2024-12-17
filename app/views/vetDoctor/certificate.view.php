@@ -233,7 +233,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date();
             const nextCheckup = new Date(today);
-            nextCheckup.set Month(today.getMonth() + 6);
+            nextCheckup.setMonth(today.getMonth() + 6);
 
             document.getElementById('examDate').textContent = today.toLocaleDateString();
             document.getElementById('nextCheckup').textContent = nextCheckup.toLocaleDateString();
