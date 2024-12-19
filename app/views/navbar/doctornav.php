@@ -29,8 +29,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
 
             <ul class="menu-links">
-                <li class="nav-link <?= $current_page == 'homeNew.php' ? 'active' : '' ?>">
-                    <a href="homeNew.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/Doctor/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/Doctor/index">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text"> Home</span>
                     </a>

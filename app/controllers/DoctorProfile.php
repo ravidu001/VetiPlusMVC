@@ -5,3 +5,4 @@ class DoctorProfile extends Controller {
         $this->view('vetDoctor/doctorprofile');
     }
 }
+

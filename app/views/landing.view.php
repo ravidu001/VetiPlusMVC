@@ -24,7 +24,7 @@
     <body>
 
         <!-- navbar on top: -->
-        <!-- <?php //include INCLUDE_BASE.'/client/components/guestUser/guestNavbar.php'; ?> -->
+        <!-- <?php // include INCLUDE_BASE.'/client/components/guestUser/guestNavbar.php'; ?> -->
 
         <section class="hero-section">
             <header>

@@ -5,7 +5,4 @@ class Doctor extends Controller {
         $this->view('vetDoctor/home');
     }
 
-    public function about() {
-        echo "This is the about page of our custom MVC framework.";
-    }
 }
