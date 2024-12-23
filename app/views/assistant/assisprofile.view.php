@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vet Assistant Profile</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
@@ -443,6 +445,8 @@
     </style>
 </head>
 <body>
+<?php require_once '../app/views/navbar/assistantnav.php'; ?>
+
     <div class="home">
         <div class="profile-container">
             <!-- Side Navigation -->
@@ -723,9 +727,13 @@
                 const actions = document.getElementById(actionId);
                 const inputs = form.querySelectorAll('input, select');
 
-                editBtn.addEventListener('click', () => {
-                    toggleEditMode(inputs, actions);
-                });
+                if (editBtn) {
+                    editBtn.addEventListener('click', () => {
+                        toggleEditMode(inputs, actions);
+                    });
+                } else {
+                //     console.log('editBtn element not found');
+                }
 
                 const resetBtn = actions.querySelector('[id$="ResetBtn"]');
                 resetBtn.addEventListener('click', () => {
