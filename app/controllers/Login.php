@@ -40,7 +40,7 @@ class Login extends Controller {
                                 header('Location: ../Salon');
                                 break;
                             case 'Vet Assistant':
-                                header('Location: ../Assistant');
+                                header('Location: ../AssisProfile');
                                 break;
                             case 'System Admin':
                                 header('Location: ../Admin');
@@ -69,7 +69,7 @@ class Login extends Controller {
                                 header('Location: ../Salon');
                                 break;
                             case 'Vet Assistant':
-                                header('Location: ../Assistant');
+                                header('Location: ../AssisProfile');
                                 break;
                             case 'System Admin':
                                 header('Location: ../Admin');
