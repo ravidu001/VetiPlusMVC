@@ -17,20 +17,22 @@ class Login extends Controller {
             $user = new User();
 
             $registered = $user->checkLoginUser($data['email']); 
-            print_r($registered->email);
+            // print_r($registered->email);
             
-
+            // echo "<script>window.alert($registered->loginCount);</script>";
             if($registered) {
                 if(password_verify($data['password'], $registered->password)) {
-                    
+                    $_SESSION['user_id'] = $registered->email;
+                    // echo "<script>window.alert($registered->loginCount);</script>";
                     if($registered->loginCount == 0) {
                         $loginCount = $registered->loginCount + 1;
-                        
+                        // echo "<script>window.alert($loginCount);</script>";
                         $update = $user->updateCount($registered->email, $loginCount);
                         
+                        $_SESSION['type'] = $registered->type;
                         switch ($registered->type) {
                             case 'Vet Doctor':
-                                header('Location: ../Doctor');
+                                header('Location: ../DoctorRegistration');
                                 break;
                             case 'Pet Owner':
                                 header('Location: ../PetOwner');
@@ -39,7 +41,7 @@ class Login extends Controller {
                                 header('Location: ../Salon');
                                 break;
                             case 'Vet Assistant':
-                                header('Location: ../Assistant');
+                                header('Location: ../AssisRegistration');
                                 break;
                             case 'System Admin':
                                 header('Location: ../Admin');
@@ -53,12 +55,13 @@ class Login extends Controller {
                         }
                     } else {
                         $loginCount = $registered->loginCount + 1;
-
+                        // echo "<script>window.alert($loginCount);</script>";
                         $update = $user->updateCount($registered->email, $loginCount);
                         
+                        $_SESSION['type'] = $registered->type;
                         switch ($registered->type) {
                             case 'Vet Doctor':
-                                header('Location: ../Doctor.php');
+                                header('Location: ../Doctor');
                                 break;
                             case 'Pet Owner':
                                 header('Location: ../PetOwner');

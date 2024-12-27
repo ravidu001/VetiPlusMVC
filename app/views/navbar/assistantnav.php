@@ -29,16 +29,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
 
             <ul class="menu-links">
-                <li class="nav-link <?= $current_page == '<?= ROOT ?>/Doctor/index' ? 'active' : '' ?>">
-                    <a href="<?= ROOT ?>/Doctor/index">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/Assistant/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/Assistant/index">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text"> Home</span>
                     </a>
                 </li>
                 <li class="nav-link" style="display:block">
-                    <a href="appointment.php" class="appointment-link">
+                    <a href="appointment.php" class="request-link">
                         <i class='bx bx-calendar icon'></i>
-                        <span class="text nav-text">Appointment</span>
+                        <span class="text nav-text">Doctor Request</span>
                         <i class='bx bxs-down-arrow arrow first icon'></i>
                     </a>
                     <!-- Sub-menu should be inside the parent li -->
@@ -47,26 +47,26 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorNewSession/index' ? 'active' : '' ?>">
                             <a href="<?= ROOT ?>/DoctorNewSession/index">
                                 <i class='bx bx-calendar-plus icon'></i>
-                                <span class="text nav-text" style="font-size:14px;">New Session</span>
+                                <span class="text nav-text" style="font-size:14px;">Request</span>
                             </a>
                         </li>
                         <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorViewSession/index' ? 'active' : '' ?>">
                             <a href="<?= ROOT ?>/DoctorViewSession/index">
                                 <i class='bx bx-calendar-event icon'></i>
-                                <span class="text nav-text" style="font-size:14px;">View Sessions</span>
+                                <span class="text nav-text" style="font-size:14px;">Accepted Request</span>
                             </a>
                         </li>
                         <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorSessionHistory/index' ? 'active' : '' ?>">
                             <a href="<?= ROOT ?>/DoctorSessionHistory/index">
                                 <i class='bx bx-calendar-check icon'></i>
-                                <span class="text nav-text" style="font-size:14px;"> History</span>
+                                <span class="text nav-text" style="font-size:14px;">Request History</span>
                             </a>
                         </li>
                     </ul>
 
                 </li>
 
-                <div style="display:none;" id="hiddenListItems-Appointment">
+                <div style="display:none;" id="hiddenListItems-Request">
                     <li style="display:block"></li>
                     <li style="display:block"></li>
                     <li style="display:block"></li>
@@ -91,12 +91,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <span class="text nav-text" style="font-size:14px;">Medical History</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorCertificate/index' ? 'active' : '' ?>">
+                        <!-- <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorCertificate/index' ? 'active' : '' ?>">
                             <a href="<?= ROOT ?>/DoctorCertificate/index">
                                 <i class='bx bx-certification icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Create Certificate</span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
 
                 </li>
@@ -104,7 +104,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <div style="display:none;" id="hiddenListItems-Medical">
                     <li style="display:block"></li>
                     <li style="display:block"></li>
-                    <li style="display:block"></li>
+                    <!-- <li style="display:block"></li> -->
                 </div>
 
                 <li class="nav-link" style="display:block">
@@ -162,8 +162,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <i class='bx bxs-up-arrow arrow first icon' ></i>
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-link <?= $current_page == '<?=ROOT ?>/doctorProfile/index' ? 'active' : '' ?>">
-                        <a href="<?= ROOT ?>/doctorProfile/index">
+                    <li class="nav-link <?= $current_page == '<?=ROOT ?>/assisprofile/index' ? 'active' : '' ?>">
+                        <a href="<?= ROOT ?>/assisProfile/index">
                             <i class='bx bx-edit icon'></i>
                             <span class="text nav-text" style="font-size:14px;">Edit profile</span>
                         </a>
@@ -199,7 +199,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </nav>
 
 <script src="<?= ROOT ?>/assets/js/navbar/darkmode.js"></script>
-<script src="<?= ROOT ?>/assets/js/vetDoctor/appointmentnavbar.js"></script>
-<script src="<?= ROOT ?>/assets/js/vetDoctor/medicalnavbar.js"></script>
-<script src="<?= ROOT ?>/assets/js/vetDoctor/reviewnavbar.js"></script>
-<script src="<?= ROOT ?>/assets/js/vetDoctor/profilenavbar.js"></script>
+<script src="<?= ROOT ?>/assets/js/vetAssistant/requestnavbar.js"></script>
+<script src="<?= ROOT ?>/assets/js/vetAssistant/medicalnavbar.js"></script>
+<script src="<?= ROOT ?>/assets/js/vetAssistant/reviewnavbar.js"></script>
+<script src="<?= ROOT ?>/assets/js/vetAssistant/profilenavbar.js"></script>
