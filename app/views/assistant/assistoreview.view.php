@@ -16,7 +16,7 @@
 <div class="home">
     <div class="review-container">
         <div class="review-header">
-            <h1>Vet Assistant Reviews</h1>
+            <h1>Vet Doctor Reviews</h1>
             <div class="review-tabs">
                 <button class="tab-button active" onclick="switchTab('pending')">Pending Reviews</button>
                 <button class="tab-button" onclick="switchTab('completed')">Completed Reviews</button>
