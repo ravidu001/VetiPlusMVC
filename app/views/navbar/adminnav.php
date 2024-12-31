@@ -10,7 +10,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <header>
         <div class="image-text">
             <span class="image">
-                <img src="../../assets/images/admin_logo.png" alt="logo">
+                <img src="<?= ROOT ?>/assets/images/common/logo.png" alt="logo">
             </span>
 
             <div class="text header-text">
@@ -26,39 +26,39 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="menu">
             <ul class="menu-links">
                 <h4>Main Menu</h4>
-                <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorPrescription/index' ? 'active' : '' ?>">
-                    <a href="<?= ROOT ?>/DoctorPrescription/index">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/Admin/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/Admin/index">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text">Dashbord</span>
                     </a>
                 </li>
-                <li class="nav-link <?= $current_page == 'accountDashboard.php' ? 'active' : '' ?>">
-                    <a href="accountDashboard.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminAccountDashboard/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminAccountDashboard/index">
                         <i class='bx bx-group icon'></i>
                         <span class="text nav-text"> Account</span>
                     </a>
                 </li>
-                <li class="nav-link <?= $current_page == 'appointment.php' ? 'active' : '' ?>">
-                    <a href="appointment.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminAppointment/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminAppointment/index">
                         <i class='bx bx-calendar icon'></i>
                         <span class="text nav-text"> Appointment</span>
                     </a>
                 </li>
-                <li class="nav-link <?= $current_page == 'payment.php' ? 'active' : '' ?>">
-                    <a href="payment.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminPayment/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminPayment/index">
                         <i class='bx bx-dollar icon'></i>
                         <span class="text nav-text">Payment</span>
                     </a>
                 </li>
                 <h4>Other Menu</h4>
-                <li class="nav-link <?= $current_page == 'feedback.php' ? 'active' : '' ?>">
-                    <a href="feedback.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminFeedback/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminFeedback/index">
                         <i class='bx bx-message-dots icon'></i>
                         <span class="text nav-text">Feedback</span>
                     </a>
                 </li>
-                <li class="nav-link <?= $current_page == 'complain.php' ? 'active' : '' ?>">
-                    <a href="complain.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminComplain/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminComplain/index">
                         <i class='bx bx-shield-quarter icon'></i>
                         <span class="text nav-text">Complain</span>
                     </a>
@@ -72,14 +72,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <!-- Sub-menu should be inside the parent li -->
 
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == 'salonSystem.php' ? 'active' : '' ?>">
-                            <a href="salonSystem.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminSalonSystem/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AdminSalonSystem/index">
                                 <i class='bx bx-home-heart icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Salon System</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'DoctorSystem.php' ? 'active' : '' ?>">
-                            <a href="DoctorSystem.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminDoctorSystem/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AdminDoctorSystem/index">
                                 <i class='bx bx-plus-medical icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Doctor System</span>
                             </a>
@@ -95,9 +95,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
 
         <div class="bottom-content">
-            <li class="nav-link <?= $current_page == 'profile.php' ? 'active' : '' ?>">
-                <a href="profile.php">
-                    <!--<i class='bx bx-log-out icon'></i>-->
+            <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminProfile/index' ? 'active' : '' ?>">
+                <a href="<?= ROOT ?>/AdminProfile/index">
                     <div class="profile">
                         <img src="../../assets/images/image_8.jpg" alt="">
                     </div>
