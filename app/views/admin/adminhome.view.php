@@ -5,110 +5,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
-    <title>VetiPlus</title>
+    <title>VetiPlus | Admin Dashboard</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/adminnav.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/adminhome.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
-    <!-- Include navbar -->
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
-
-    <section class="home">
-        <div class="home-before">
-            <div class="home-1">
-                <div class="home-inside">
-                    <img src="../../assets/images/user.png" alt="">
-                    <div>
-                        <h1>Ramesh Peshala</h1>
-                        <h2>System Admin</h2>
+    <div class="home">
+        <div class="container-fluid">
+            <div class="dashboard-wrapper">
+                <!-- User Header -->
+                <div class="user-header">
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/60" alt="Admin Profile">
+                        <div>
+                            <h4 class="mb-0">Ramesh Peshala</h4>
+                            <small class="text-muted">System Administrator</small>
+                        </div>
                     </div>
-                </div>
-                <div class="home-inside-right">
-                    <img src="../../assets/images/image_9.png" alt="">
-                </div>
-            </div>
-            <div class="home-search">
-                <div class="searchbar">
-                    <i class='bx bx-search-alt-2 icon'></i>
-                    <input class="search" type="text" placeholder="Search...">
-                    <i class='bx bx-bell icon'></i>
-                </div>
-            </div>
-            <div class="home-after">
-                <div class="home-after-inside">
-                    <i class='bx bxs-user-account icon'></i>
-                    <div>
-                        <h3>Total Account</h3>
-                        <h1>2345</h1>
-                    </div>
-                </div>
-                <div class="home-after-inside">
-                    <i class='bx bx-calendar-plus icon'></i>
-                    <div>
-                        <h3>Total Appointment</h3>
-                        <h1>4561</h1>
+                    <div class="search-container">
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Search dashboard...">
+                        <div class="notifications-badge">
+                            <i class='bx bx-bell'></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="home-after-inside">
-                    <i class='bx bxs-dollar-circle icon'></i>
-                    <div>
-                        <h3>Total Transactions</h3>
-                        <h1>234</h1>
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <i class='bx bxs-user-account icon'></i>
+                        <div class="content">
+                            <h3>Total Accounts</h3>
+                            <h2>2,345</h2>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class='bx bx-calendar-plus icon'></i>
+                        <div class="content">
+                            <h3>Total Appointments</h3>
+                            <h2>4,561</h2>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class='bx bxs-dollar-circle icon'></i>
+                        <div class="content">
+                            <h3>Total Transactions</h3>
+                            <h2>$234,567</h2>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class='bx bxs-store icon'></i>
+                        <div class="content">
+                            <h3>Total Salons</h3>
+                            <h2>102</h2>
+                        </div>
                     </div>
                 </div>
-                <div class="home-after-inside">
-                    <i class='bx bxs-store icon'></i>
-                    <div>
-                        <h3>Total Salon </h3>
-                        <h1>102</h1>
+
+                <!-- Dashboard Main Content -->
+                <div class="dashboard-main">
+                    <div class="chart-container">
+                        <canvas id="appointmentChart"></canvas>
+                    </div>
+                    <div class="complaints-container">
+                        <h2>Recent Complaints</h2>
+                        <table class="table complaints-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Message</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>Service delay issue</td>
+                                    <td><button class="view-button">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>Billing concern</td>
+                                    <td><button class="view-button">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Mike Johnson</td>
+                                    <td>Appointment not found</td>
+                                    <td><button class="view-button">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="home-down">
-                <div class="home-chart">
-                    <canvas id="barChart"></canvas>
-                    <script src="<?= ROOT ?>/assets/js/admin/adminbarchart.js"></script>
-                </div>
-                <div class="home-down-message">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User's Name</th>
-                                <th>Complain Message</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr onclick="window.location.href='complain_profile.php'">
-                                <td>Ramesh Peshala</td>
-                                <td>It is a long established fact that a reader will be...</td>
-                                <td>2022/05/15</td>
-                            </tr>
-                            <tr>
-                                <td>Ramesh Peshala</td>
-                                <td>It is a long established fact that a reader will be...</td>
-                                <td>2022/05/15</td>
-                            </tr>
-                            <tr>
-                                <td>Ramesh Peshala</td>
-                                <td>It is a long established fact that a reader will be...</td>
-                                <td>2022/05/15</td>
-                            </tr>
-                            <tr>
-                                <td>Ramesh Peshala</td>
-                                <td>It is a long established fact that a reader will be...</td>
-                                <td>2022/05/15</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="analytics-container">
+                    <div class="analytics-row">
+                        <div class="analytics-column">
+                            <div class="main-card">
+                                <div class="card-header">
+                                    <h5 class="card-header-title">Additional Analytics</h5>
+                                </div>
+                                <div class="card-content">
+                                    <div class="sub-cards-row">
+                                        <div class="sub-card-column">
+                                            <div class="sub-card">
+                                                <div class="sub-card-body">
+                                                    <h6 class="sub-card-title">Recent Registrations</h6>
+                                                    <p class="sub-card-text">120 New Users This Month</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sub-card-column">
+                                            <div class="sub-card">
+                                                <div class="sub-card-body">
+                                                    <h6 class="sub-card-title">Pending Approvals</h6>
+                                                    <p class="sub-card-text">15 Salon Registrations Pending</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sub-card-column">
+                                            <div class="sub-card">
+                                                <div class="sub-card-body">
+                                                    <h6 class="sub-card-title">System Health</h6>
+                                                    <p class="sub-card-text">All Systems Operational</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <script src="<?= ROOT ?>/assets/js/admin/adminbarchart.js"></script>
+
 </body>
 
 </html>
