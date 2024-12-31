@@ -8,7 +8,7 @@
 }
 
 :root {
-   --body-color: #E4E9F7;
+   --body-color: #ebedf6;
    --sidebar-color: #FFF;
    --primary-color: #6a0dad;
    --primary-color-light: #f6f5ff;
@@ -22,6 +22,8 @@
    --text-white: #fff;
    --shadow-color: slategray;
    --list-item: #ffecff;
+   --gradient-primary: linear-gradient(135deg, #6a0dad 100%, #9c27b0 0%);
+   --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 
 
    --tran-02: all 0.2s ease;
