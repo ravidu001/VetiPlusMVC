@@ -1,0 +1,171 @@
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        /* Color Palette */
+        --primary-color: #6a0dad;
+        --secondary-color: #c8a2c8;
+        --background-color: #f4f4f4;
+        --text-color: #333;
+        --white: #ffffff;
+        --light-purple: #f3e5f5;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+
+        /* Typography */
+        --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+        font-family: var(--font-primary);
+        background: var(--background-color);
+        color: var(--text-color);
+    }
+
+    /* Container Styles */
+    .payment-container {
+        max-width: 1200px;
+        width: 95%;
+        margin: 0 auto;
+        padding: 1.5rem;
+    }
+
+    /* Profile Header */
+    .payment-header {
+        background-color: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 8rem;
+        transition: all 0.3s ease;
+    }
+
+    .payment-header:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Profile Image */
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--primary-color);
+        box-shadow: 0 4px 10px rgba(106, 13, 173, 0.2);
+    }
+
+    /* Profile Details */
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .profile-details h2 {
+        font-size: 1rem;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .profile-details h2 i {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+
+    /* Payment Table */
+    .payment-table {
+        background-color: var(--white);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px var(--shadow-color);
+    }
+
+    .payment-table table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .payment-table thead {
+        background-color: var(--primary-color);
+        color: var(--white);
+    }
+
+    .payment-table th,
+    .payment-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--light-purple);
+    }
+
+    .payment-table thead th {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .payment-table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .payment-table tbody tr:hover {
+        background-color: var(--light-purple);
+        transform: scale(1.01);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(106, 13, 173, 0.2);
+    }
+
+    .btn:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(106, 13, 173, 0.3);
+    }
+
+    .btn i {
+        font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .payment-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .payment-table {
+            overflow-x: auto;
+        }
+
+        .payment-table table {
+            width: 100%;
+            min-width: 600px;
+        }
+    }
