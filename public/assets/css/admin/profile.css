@@ -1,0 +1,113 @@
+:root {
+    --background-color: #E4E9F7;
+    --primary-color: #6a0dad;
+    --text-color: #707070;
+    --text-black: black;
+    --text-white: #fff;
+    --background-light: #c8a2c8;
+}
+
+body {
+    background-color: var(--background-color);
+    display: flex;
+    font-family: 'Arial', sans-serif;
+}
+
+.profile-container {
+    width: 95%;
+    height: 95%;
+    margin: 20px auto;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    padding: 40px;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.detail-card {
+    background-color: #f9f5ff;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s ease;
+}
+
+.detail-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+}
+
+.detail-card i {
+    color: var(--primary-color);
+    font-size: 30px;
+}
+
+.detail-card .info {
+    flex-grow: 1;
+}
+
+.detail-card .info h4 {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-black);
+}
+
+.btn-primary {
+    background-color: var(--background-light);
+}
+
+.btn-danger {
+    background-color: var(--background-light);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    color: var(--text-white);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary-color);
+}
