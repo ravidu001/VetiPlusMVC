@@ -1,69 +1,139 @@
-.payment-profile{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.payment-profile-inside{
-    display: flex;
-    flex-direction: row;
-   justify-content:center;
-   align-items: center;
-   margin: 20px 100px;
-   border-radius: 40px;
-   border: 3px solid var(--background-primary);
-   color: var(--text-color);
-    box-shadow: 10px 10px 15px rgba(202, 143, 225, 0.3);
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
 
-}
-.payment-profile-inside-left{
-    width: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.payment-profile-inside-left img{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-   
-}
-.payment-profile-inside-right{
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-.payment-profile-inside-right-top{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-top: 40px;
-    height: 250px;
-}
-.container {
-    width: 80%;
-    margin: 0 auto;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    font-weight: bold;
-    color: #333;
-  }
-  .admin-navbar-inside-left-inner-1 ul li.active {
-    background-color: #F8ECFF; /* Active background color */
-}
+  :root {
+      /* Color Palette */
+      --primary-color: #6a0dad;
+      --secondary-color: #c8a2c8;
+      --background-color: #f4f4f4;
+      --text-color: #333;
+      --white: #ffffff;
+      --light-purple: #f3e5f5;
+      --shadow-color: rgba(0, 0, 0, 0.1);
 
-.admin-navbar-inside-left-inner-1 ul li.active a {
-    color: #000000; /* Text color for the active link */
-}
+      /* Typography */
+      --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  body {
+      font-family: var(--font-primary);
+      background: var(--background-color);
+      color: var(--text-color);
+  }
+
+  /* Container Styles */
+  .payment-container {
+      max-width: 1200px;
+      width: 95%;
+      margin: 0 auto;
+      padding: 1.5rem;
+  }
+
+  /* Profile Header */
+  .payment-header {
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px var(--shadow-color);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 8rem;
+      transition: all 0.3s ease;
+  }
+
+  .payment-header:hover {
+      transform: translateY(-5px);
+  }
+
+  /* Profile Image */
+  .profile-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary-color);
+      box-shadow: 0 4px 10px rgba(106, 13, 173, 0.2);
+  }
+
+  /* Profile Details */
+  .profile-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+  }
+
+  .profile-details h2 {
+      font-size: 1rem;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+  }
+
+  .profile-details h2 i {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+  }
+
+  /* Payment Table */
+  .payment-table {
+      background-color: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px var(--shadow-color);
+  }
+
+  .payment-table table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+  }
+
+  .payment-table thead {
+      background-color: var(--primary-color);
+      color: var(--white);
+  }
+
+  .payment-table th,
+  .payment-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-purple);
+  }
+
+  .payment-table thead th {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+  }
+
+  .payment-table tbody tr {
+      transition: all 0.3s ease;
+  }
+
+  .payment-table tbody tr:hover {
+      background-color: var(--light-purple);
+      transform: scale(1.01);
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+      .payment-header {
+          flex-direction: column;
+          text-align: center;
+      }
+
+      .payment-table {
+          overflow-x: auto;
+      }
+
+      .payment-table table {
+          width: 100%;
+          min-width: 600px;
+      }
+  }
