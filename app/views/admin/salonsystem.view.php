@@ -17,14 +17,6 @@
         <div class="salon-container">
             <div class="salon-header">
                 <h1>Salon Registration Requests</h1>
-                <div class="search-filter">
-                    <select class="search-input">
-                        <option>All Requests</option>
-                        <option>Pending</option>
-                        <option>Accepted</option>
-                        <option>Declined</option>
-                    </select>
-                </div>
             </div>
 
             <div class="salon-table">

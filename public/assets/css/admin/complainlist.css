@@ -1,94 +1,155 @@
-.complain_profile {
-    width: 100%;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+:root {
+    --body-color: #F4F6F9;
+    --primary-color: #6a0dad;
+    --text-color: #333;
+    --background-light: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
+.complain-container {
+    width: 93%;
+    height: 91%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--background-light);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    gap: 30px;
+    animation: fadeIn 0.5s ease-out;
 
 }
 
-.complain_profile_top {
+.profile-header {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 200px;
-    margin: 20px 100px;
-    border-radius: 20px;
-    color: var(--text-color);
-    border: 3px solid var(--background-primary);
-    box-shadow: 10px 10px 15px rgba(202, 143, 225, 0.3);
-    height: 350px;
-}
-
-.complain_profile_top_left img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    margin-top: 70px;
-}
-
-.complain_profile_top_right {
-    display: flex;
-    flex-direction: row;
-    margin: 10px;
     align-items: center;
-    justify-content: center;
+    gap: 30px;
+    background-color: #f9f5ff;
+    padding: 30px;
+    border-radius: 15px;
+    transition: var(--transition);
+}
+
+.profile-header:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item label {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.complaint-section {
+    display: flex;
     gap: 30px;
 }
 
-.complain_profile_top_right_inner {
-
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-}
-
-.complain_profile_down {
-    display: flex;
-    flex-direction: row;
-    margin: 10px 100px;
-    height: 60%;
-    gap: 20px;
-}
-
-.complain_profile_down_inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+.complaint-message,
+.complaint-images {
+    flex: 1;
+    background-color: #f9f5ff;
     padding: 30px;
-    border-radius: 10px;
-    color: var(--text-color);
-    border: 3px solid var(--background-primary);
-    box-shadow: 10px 10px 15px rgba(202, 143, 225, 0.3);
-    height: 300px;
-    width: 50%;
-}
-.complain_profile_down_inner h4{
-    font-weight: 500;
+    border-radius: 15px;
+    transition: var(--transition);
 }
 
-.complain_profile_down_inner h1 {
-    margin: 10px;
+.complaint-message:hover,
+.complaint-images:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
 }
-.complain_profile_down_inner_img{
+
+.complaint-message h2,
+.complaint-images h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.complaint-message p {
+    text-align: justify;
+}
+
+.image-gallery {
     display: flex;
-    flex-direction: row;
-    gap: 50px;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-.complain_profile_down_inner_img img {
-    width: 150px;
-    height: 150px;
-    border-radius: 5%;
-   
+.image-gallery img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: var(--transition);
 }
 
-.admin-navbar-inside-left-inner-1 ul li.active {
-    background-color: #F8ECFF;
-    /* Active background color */
+.image-gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.admin-navbar-inside-left-inner-1 ul li.active a {
-    color: #000000;
-    /* Text color for the active link */
+@media (max-width: 768px) {
+
+    .profile-header,
+    .complaint-section {
+        flex-direction: column;
+    }
+
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

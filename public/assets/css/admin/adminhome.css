@@ -3,6 +3,8 @@
     box-shadow: var(--card-shadow);
     margin: 10px;
     padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+
 }
 
 .stats-grid {
@@ -234,4 +236,15 @@
 .sub-card-text {
     color: white;
     font-size: 0.9rem;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
