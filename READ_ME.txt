@@ -221,8 +221,205 @@ this is js file
 
 
 
+// assitant request page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vet Assistant Appointment Requests</title>
+    <style>
+        :root {
+            --body-color: #E4E9F7;
+            --primary-color: #6a0dad;
+            --secondary-color: #c8a2c8;
+            --white: #ffffff;
+            --text-color: #333;
+            --transition: all 0.3s ease;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
+        body {
+            background-color: var(--body-color);
+            display: flex;
+        }
+
+        .home {
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .request-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .request-header h2 {
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .request-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .request-table th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+        }
+
+        .request-table tr {
+            background-color: #f9f5ff;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .request-table tr:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .request-table td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+        .doctor-profile {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .btn-accept {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-reject {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .request-table tr {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="home">
+        <div class="request-container">
+            <div class="request-header">
+                <h2>Appointment Requests</h2>
+                <div class="filter-options">
+                    <!-- Optional: Add filter/sort functionality -->
+                </div>
+            </div>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="table-heading">Doctor</th>
+                        <th>Date & Time</th>
+                        <th>Location</th>
+                        <th>Contact</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src="<?= ROOT ?>/assets/images/vetAssistant/assistantprofile.avif" alt="Dr. Kasun" class="doctor-profile">
+                            
+                        </td>
+                        <td>Dr. Kasun Perera</td>
+                        <td>Nov 30, 2024<br>3:00 PM - 6:00 PM</td>
+                        <td>147, Galthude, Panadura</td>
+                        <td>077 050 7520</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-accept">Accept</button>
+                                <button class="btn btn-reject">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="<?= ROOT ?>/assets/images/vetAssistant/assistantprofile.avif" alt="Dr. Saman" class="doctor-profile">
+                            
+                        </td>
+                        <td>Dr. Saman Silva</td>
+                        <td>Dec 02, 2024<br>3:00 PM - 6:00 PM</td>
+                        <td>147, Hirana, Panadura</td>
+                        <td>077 050 1136</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-accept">Accept</button>
+                                <button class="btn btn-reject">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Future JavaScript for dynamic interactions
+        document.querySelectorAll('.btn-accept, .btn-reject').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                row.remove(); // Simple removal for now
+                // In future: Add logic to move to appropriate sections
+            });
+        });
+    </script>
+</body>
+</html>
 
 
 

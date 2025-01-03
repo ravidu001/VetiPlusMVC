@@ -44,20 +44,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <!-- Sub-menu should be inside the parent li -->
 
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorNewSession/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorNewSession/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisRequest/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisRequest/index">
                                 <i class='bx bx-calendar-plus icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Request</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorViewSession/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorViewSession/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisAccepted/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisAccepted/index">
                                 <i class='bx bx-calendar-event icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Accepted Request</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorSessionHistory/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorSessionHistory/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisRequestHistory/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisRequestHistory/index">
                                 <i class='bx bx-calendar-check icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Request History</span>
                             </a>
