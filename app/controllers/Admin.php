@@ -3,6 +3,15 @@ class Admin extends Controller
 {
     public function index()
     {
-        $this->view('admin/adminhome');
+        $userCount = $this->countUser();
+        // echo $userCount;
+        $this->view('admin/adminhome', ['userCount' => $userCount]);
+    }
+
+    public function countUser(){
+        $user = new User();
+        $count = $user->countUser();
+        return $count;
     }
 }
+

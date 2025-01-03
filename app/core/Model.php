@@ -125,4 +125,11 @@ Trait Model {
 
         return false;
     }
+
+    public function getCount() {
+        $query = "SELECT COUNT(*) as count FROM $this->table";
+        $result = $this->query($query);
+        return $result[0]->count;  // Assuming the result is an array of objects and 'count' is a field
+ 
+    }
 }

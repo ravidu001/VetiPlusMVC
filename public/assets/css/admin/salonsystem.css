@@ -13,7 +13,6 @@
 }
 
 body {
-    background-color: var(--background-light);
     color: var(--text-color);
 }
 
@@ -22,6 +21,8 @@ body {
     margin: 0 auto;
     padding: 20px;
     background-color: var(--white);
+    animation: fadeIn 0.5s ease-out;
+
 }
 
 .salon-header {
@@ -34,18 +35,6 @@ body {
 .salon-header h1 {
     font-size: 24px;
     color: var(--primary-color);
-}
-
-.search-filter {
-    display: flex;
-    gap: 15px;
-}
-
-.search-input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 250px;
 }
 
 .salon-table {
@@ -150,4 +139,15 @@ body {
     justify-content: center;
     gap: 15px;
     margin-top: 20px;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

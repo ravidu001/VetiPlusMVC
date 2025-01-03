@@ -51,5 +51,11 @@ class User {
             return false;
         }
     }
+    
+    public function countUser(){
+        $count = $this->getCount();
+        return $count;  // Return the count value
+
+    }
 }
 

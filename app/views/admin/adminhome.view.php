@@ -42,7 +42,7 @@
                         <i class='bx bxs-user-account icon'></i>
                         <div class="content">
                             <h3>Total Accounts</h3>
-                            <h2>2,345</h2>
+                            <h2><?php echo htmlspecialchars($userCount, ENT_QUOTES, 'UTF-8'); ?></h2>
                         </div>
                     </div>
                     <div class="stats-card">

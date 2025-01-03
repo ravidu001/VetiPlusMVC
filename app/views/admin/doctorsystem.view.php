@@ -17,15 +17,6 @@
         <div class="doctor-container">
             <div class="doctor-header">
                 <h1>Doctor Registration Requests</h1>
-                <div class="search-filter">
-
-                    <select class="search-input">
-                        <option>All Requests</option>
-                        <option>Pending</option>
-                        <option>Accepted</option>
-                        <option>Declined</option>
-                    </select>
-                </div>
             </div>
 
             <div class="doctor-table">
