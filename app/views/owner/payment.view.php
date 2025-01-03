@@ -50,7 +50,7 @@
 
             <!-- Search Section -->
             <div class="payment-search">
-                <form class="search-form">
+                <form class="search-form"  action="<?= ROOT ?>/OwnerPayment/paymentlist" method="post">
                     <div class="search-inputs">
                         <input type="text" placeholder="Enter User ID">
                         <input type="text" placeholder="Enter Pet ID">
