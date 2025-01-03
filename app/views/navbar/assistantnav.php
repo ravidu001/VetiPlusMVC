@@ -44,20 +44,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <!-- Sub-menu should be inside the parent li -->
 
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorNewSession/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorNewSession/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisRequest/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisRequest/index">
                                 <i class='bx bx-calendar-plus icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Request</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorViewSession/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorViewSession/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisAccepted/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisAccepted/index">
                                 <i class='bx bx-calendar-event icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Accepted Request</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorSessionHistory/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorSessionHistory/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisRequestHistory/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisRequestHistory/index">
                                 <i class='bx bx-calendar-check icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Request History</span>
                             </a>
@@ -114,14 +114,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <i class='bx bxs-down-arrow arrow first icon'></i>
                     </a>
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorReview/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorReview/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisReview/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisReview/index">
                                 <i class='bx bx-smile icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">My Reviews</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorToreview/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorToreview/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisToreview/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisToreview/index">
                                 <i class='bx bx-upside-down icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">To Review</span>
                             </a>
@@ -141,8 +141,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="text nav-text"> About Us</span>
                     </a>
                 </li>
-                <li class="nav-link <?= $current_page == '<?=ROOT ?>/doctorContactus/index' ? 'active' : '' ?>">
-                    <a href="<?= ROOT ?>/doctorContactus/index">
+                <li class="nav-link <?= $current_page == '<?=ROOT ?>/AssisContactus/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AssisContactus/index">
                         <i class='bx bx-phone-call icon'></i>
                         <span class="text nav-text"> Contact Us</span>
                     </a>
