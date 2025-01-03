@@ -1,81 +1,136 @@
-.pet-account{
-    width: 100%;
+
+body {
+background: #f5f5f5;
+display: flex;
 }
-.pet-account-inside{
+
+.profile-container {
+    width: 90%;
+    height: 95%;
+    margin: 20px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    padding: 40px;
+    background: white;
+}
+
+.profile-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 40px 200px;
-    color: var(--text-color);
-    background-color: var(--background-white);
-    height: 60%;
-    width: 70%;
-    border-radius: 20px;
-    border: 3px solid var(--background-primary);
+    text-align: center;
 }
-.pet-account-inside-left{
-    width: 40%;  
-    margin: 10px 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.pet-account-inside-left img{
+
+.profile-image {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-}
-.admin-navbar-inside-left-inner-1 ul li.active {
-    background-color: #F8ECFF; /* Active background color */
-}
-
-.admin-navbar-inside-left-inner-1 ul li.active a {
-    color: #000000; /* Text color for the active link */
-}
-table {
-    width: 80%;
-    border-collapse: separate; 
-    border-spacing: 10px; 
-    margin: 20px 200px; 
-    border-radius: 10px; 
-    padding: 20px;
-    
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-table tr {
-    margin: 10px 0; 
-    transition: background-color 0.3s ease; 
+.profile-header h2 {
+    color: var(--text-black);
+    margin-bottom: 10px;
+    font-size: 24px;
 }
 
-
-td {
-    text-align: left;
-    font-size: 18px;
-    padding: 20px 15px; 
-    border-radius: 5px; 
-    width: 60%;;
+.profile-header p {
+    color: var(--text-color);
+    font-size: 16px;
 }
 
-th {
-    color: white; 
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
-label {
-    font-size: 18px;
-    font-weight: bold;
-    display: block; 
-    margin-bottom: 5px; 
-    color: #333;
-}
-.regi-icon{
+.detail-card {
+    background-color: #f9f5ff;
+    padding: 15px;
+    border-radius: 10px;
     display: flex;
-    flex-direction: row;
-    gap: 25px;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
 }
-.icon{
+
+.detail-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+}
+
+.detail-card i {
+    color: var(--primary-color);
     font-size: 30px;
-    color: var(--background-primary);
+    min-width: 40px;
+}
+
+.detail-card .info {
+    flex-grow: 1;
+}
+
+.detail-card .info h4 {
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.detail-card .info p {
+    color: var(--text-black);
+    font-size: 14px;
+}
+
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.stat-card {
+    background-color: #f9f5ff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(106, 13, 173, 0.1);
+}
+
+.stat-card h3 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
 }

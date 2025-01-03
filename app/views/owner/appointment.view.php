@@ -55,7 +55,7 @@
                         <input type="text" placeholder="Search by Pet ID">
                         <input type="date">
                     </div>
-                    <button type="submit">Search Appointments</button>
+                    <button type="submit">Search</button>
                 </form>
             </div>
 
