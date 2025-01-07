@@ -9,11 +9,13 @@ Trait Model {
     protected $order_column = "id";
     public $errors = [];
 
+    // this function is used to get all data from the table
     public function findAll() {
         $query = "Select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
         return $this->query($query); 
     }   
 
+    // this function is used to get all data from the table. where is used to filter the data
     public function where($data, $data_not = []) { // sample parameter: ['id' => 1, 'name' => 'John']
         $keys = array_keys($data); // get the keys of the array
         $key_not = array_keys($data_not); // get the keys of the array
@@ -37,6 +39,7 @@ Trait Model {
         return $this->query($query, $data); 
     }
 
+    // this function is used to get the first row of the query
     public function first($data, $data_not = []) {  // sample return: ['id' => 1, 'name' => 'John']
         $keys = array_keys($data); // get the keys of the array
         $key_not = array_keys($data_not); // get the keys of the array
@@ -103,13 +106,13 @@ Trait Model {
         foreach($keys as $key) {
             $query .= $key . "= :". $key. ", ";
         }
-
     
         $query = trim($query, ", "); // remove the last '&&' from the query
 
         $query .= " where $id_column = :$id_column";
 
         $data[$id_column] = $id;
+
         // echo $query; // this will output: Select * from user where id = :id && name = :name limit 10 offset 0
         $this->query($query, $data); 
 

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     removeProfilePicBtn.addEventListener('click', () => {
-        profilePic.src = 'default-profile.jpg';
+        profilePic.src = '/VetiPlusMVC/public/assets/images/vetDoctor/defaultProfile.png'; // Replace with the correct default profile image path.
     });
 
     // Edit Functionality
@@ -41,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const editBtn = document.getElementById(editBtnId);
         const form = document.getElementById(formId);
         const actions = document.getElementById(actionId);
+
+        if (!editBtn || !form || !actions) {
+            console.error(`Element(s) not found: ${editBtnId}, ${formId}, ${actionId}`);
+            return;
+        }
+
         const inputs = form.querySelectorAll('input, select');
 
         editBtn.addEventListener('click', () => {
@@ -50,40 +56,107 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset Button
         const resetBtn = actions.querySelector('[id$="ResetBtn"]');
         resetBtn.addEventListener('click', () => {
-            resetForm(inputs);
+            inputs.forEach(input => {
+                input.value = input.defaultValue;
+            });
             toggleEditMode(inputs, actions);
         });
 
         // Save Button
-        const saveBtn = actions.querySelector('[id$="SaveBtn"]');
+        const saveBtn = actions.querySelector('[id$="SaveBtn"]'); // Selects the element with an ID that ends with 'SaveBtn'.
+        // window.alert(saveBtn);
         saveBtn.addEventListener('click', () => {
-            saveForm(inputs);
-            toggleEditMode(inputs, actions);
+            const formData = new FormData(form);
+            
+            try {
+                if (saveBtn.id === 'personalSaveBtn') {
+                    personalSaveForm(formData);
+                } else if (saveBtn.id === 'professionalSaveBtn') {
+                    professionalSaveForm(formData);
+                } else if (saveBtn.id === 'passwordSaveBtn') {
+                    passwordSaveForm(formData);
+                } else {
+                    console.error('Unknown save button');
+                    return;
+                }
+                
+                toggleEditMode(inputs, actions);
+            } catch (error) {
+                console.error('Error saving form:', error);
+            }
         });
     }
 
     function toggleEditMode(inputs, actions) {
         const isEditing = actions.style.display !== 'none';
-        
-        actions.style.display = isEditing ? 'none' : 'flex';
         inputs.forEach(input => {
-            input.readOnly = isEditing;
+            // input.readOnly = isEditing;
             input.disabled = isEditing;
         });
+        actions.style.display = isEditing ? 'none' : 'block';
     }
 
-    function resetForm(inputs) {
-        inputs.forEach(input => {
-            input.value = input.defaultValue;
+    function personalSaveForm(formData) {
+        fetch('/VetiPlusMVC/public/DoctorProfile/updatePersonal', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Form saved successfully');
+            } else {
+                console.error('Error saving form:', data.message);
+            }
+        })
+        .catch(error => {
+            // window.alert("mn methana");
+            
+            console.error('Error:', error);
         });
     }
 
-    function saveForm(inputs) {
-        // Logic to save the form data (e.g., send to server)
-        alert('Changes saved successfully!');
+    function professionalSaveForm(formData) {
+        fetch('/VetiPlusMVC/public/DoctorProfile/updateProfessional', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Form saved successfully');
+            } else {
+                console.error('Error saving form:', data.message);
+            }
+        })
+        .catch(error => {
+            // window.alert("mn methana");
+            
+            console.error('Error:', error);
+        });
     }
 
-    // Setup edit functionality for personal and professional sections
+    function passwordSaveForm(formData) {
+        fetch('/VetiPlusMVC/public/DoctorProfile/updatePassword', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Passowrd update successfully');
+            } else {
+                console.error('Error update form:', data.message);
+            }
+        })
+        .catch(error => {
+            window.alert("mn methana");
+            
+            console.error('Error:', error);
+        });
+    }
+
+    // Initialize Edit Sections
     setupEditSection('personalEditBtn', 'personalInfoForm', 'personalEditActions');
     setupEditSection('professionalEditBtn', 'professionalInfoForm', 'professionalEditActions');
     setupEditSection('passwordEditBtn', 'passwordChangeForm', 'passwordEditActions');
