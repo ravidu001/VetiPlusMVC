@@ -5,7 +5,8 @@ class Login extends Controller {
         $this->view('logindetail/login',[]);
     }
 
-    public function login() {
+    public function login() 
+    {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /vetiplusMVC/public/signup');
         } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,20 +15,23 @@ class Login extends Controller {
                 'email' => $_POST['email'],
                 'password' => $_POST['password'], 
             ];
+
             $user = new User();
 
-            $registered = $user->checkLoginUser($data['email']); 
-            print_r($registered->email);
-            
+            $salonRegister = new SalonRegisters();
 
+            $registered = $user->checkLoginUser($data['email']); 
+            
             if($registered) {
                 if(password_verify($data['password'], $registered->password)) {
-                    
+                    //$_SESSION['user_id'] = $registered->email; // register wechcha mail eka gann pluwan
+
                     if($registered->loginCount == 0) {
                         $loginCount = $registered->loginCount + 1;
                         
+                        //$_SESSION['type'] = $registered->type; //type gann pluwan
+
                         $update = $user->updateCount($registered->email, $loginCount);
-                        
                         switch ($registered->type) {
                             case 'Vet Doctor':
                                 header('Location: ../Doctor');
@@ -36,7 +40,10 @@ class Login extends Controller {
                                 header('Location: ../PetOwner');
                                 break;
                             case 'Salon':
-                                header('Location: ../Salon');
+                                $_SESSION['SALON_USER'] = $registered->email;
+                                // header('Location: ../SalonRegister?email=' . urlencode($registered->email));
+                                // $this->view('logindetail/login',[]);
+                                redirect('SalonRegister');
                                 break;
                             case 'Vet Assistant':
                                 header('Location: ../Assistant');
@@ -51,10 +58,15 @@ class Login extends Controller {
                             default:
                                 $message[] = 'User type not recognized!';
                         }
-                    } else {
+                    } 
+                    else 
+                    
+                    {
                         $loginCount = $registered->loginCount + 1;
 
                         $update = $user->updateCount($registered->email, $loginCount);
+                        
+                        
                         
                         switch ($registered->type) {
                             case 'Vet Doctor':
@@ -64,8 +76,35 @@ class Login extends Controller {
                                 header('Location: ../PetOwner');
                                 break;
                             case 'Salon':
-                                header('Location: ../Salon');
+                                $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
+                                if ($salonStatus) {
+                                    switch ($salonStatus->status) {
+                                        case 'pending':
+                                            $_SESSION['SALON_USER'] = $registered->email;
+                                            redirect('Pending');
+                                            break;
+                                        case 'approved':
+                                            $_SESSION['SALON_USER'] = $registered->email;
+                                            // header('Location: ../SalonDashboard');
+                                            redirect('SalonDashboard');
+                                            break;
+                                        case 'rejected':
+                                            // echo 'Your registration has been rejected. Please contact support.';
+                                            // header('Location: ../SalonRegister');
+                                            $_SESSION['SALON_USER'] = $registered->email;
+                                            redirect('Rejected');
+                                            break;
+                                        default:
+                                            $message[] = 'Invalid status. Please contact support.';
+                                    }
+                                } else 
+
+                                {
+                                    $message[] = 'Registration data not found. Please register again.';
+                                }
                                 break;
+                                // header('Location: ../Salon');
+                                // break;
                             case 'Vet Assistant':
                                 header('Location: ../Assistant');
                                 break;
@@ -88,6 +127,6 @@ class Login extends Controller {
                 $message[] = 'Incorrect email or password';
             }
     }
-    }
+}
 
 }
