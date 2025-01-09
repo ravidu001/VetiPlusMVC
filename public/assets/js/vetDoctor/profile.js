@@ -202,5 +202,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEditSection('personalEditBtn', 'personalInfoForm', 'personalEditActions');
     setupEditSection('professionalEditBtn', 'professionalInfoForm', 'professionalEditActions');
     setupEditSection('passwordEditBtn', 'passwordChangeForm', 'passwordEditActions');
-    setupEditSection('settingsEditBtn', 'accountSettingsForm', 'settingsEditActions');
+    // setupEditSection('settingsEditBtn', 'accountSettingsForm', 'settingsEditActions');
 });

@@ -224,9 +224,9 @@
                 <div id="settings" class="section">
                     <h2 class="section-header">
                         Account Settings
-                        <button class="edit-btn" id="settingsEditBtn">
+                        <!-- <button class="edit-btn" id="settingsEditBtn">
                             <i class="fas fa-edit"></i> Edit
-                        </button>
+                        </button> -->
                     </h2>
 
                     <form class="form-grid" id="accountSettingsForm">
