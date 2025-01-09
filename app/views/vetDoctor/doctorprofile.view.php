@@ -123,14 +123,22 @@
                             <input type="text" name="lnumber" class="form-input"
                                 value="<?= htmlspecialchars($doctor->lnumber ?? 'N/A') ?>" readonly>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="specialization">Specialization</label>
                             <select id="specialization" class="form-input" name="specialization" disabled>
-                                <option value="Small Animal Care" <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Small Animal Care' ? 'selected' : '' ?>>Small Animal Care</option>
-                                <option value="Large Animal Medicine" <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Large Animal Medicine' ? 'selected' : '' ?>>Large Animal Medicine</option>
-                                <option value="Exotic Pet Care" <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Exotic Pet Care' ? 'selected' : '' ?>>Exotic Pet Care</option>
-                                <option value="Wildlife Conservation" <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Wildlife Conservation' ? 'selected' : '' ?>>Wildlife Conservation</option>
+                                <option value="Small Animal Care"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Small Animal Care' ? 'selected' : '' ?>>
+                                    Small Animal Care</option>
+                                <option value="Large Animal Medicine"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Large Animal Medicine' ? 'selected' : '' ?>>
+                                    Large Animal Medicine</option>
+                                <option value="Exotic Pet Care"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Exotic Pet Care' ? 'selected' : '' ?>>
+                                    Exotic Pet Care</option>
+                                <option value="Wildlife Conservation"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Wildlife Conservation' ? 'selected' : '' ?>>
+                                    Wildlife Conservation</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -147,7 +155,8 @@
                             <label>Certifications</label>
                             <div class="certificate-container">
                                 <div class="certificate-wrapper">
-                                    <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= $doctor->doctorCertificate ?>" alt="Certification 1" class="certificate-image">
+                                    <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= $doctor->doctorCertificate ?>"
+                                        alt="Certification 1" class="certificate-image">
                                     <!-- <button class="remove-certificate-btn">
                                         <i class="fas fa-trash"></i>
                                     </button> -->
@@ -198,15 +207,16 @@
                             <label>Confirm New Password</label>
                             <input type="password" name="confirmPassword" class="form-input" disabled>
                         </div>
-                        <div class="edit-actions" id="passwordEditActions" style="display: none;">
-                            <button class="btn btn-secondary" id="passwordResetBtn">
-                                <i class="fas fa-undo"></i> Reset
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="passwordSaveBtn">
-                                <i class="fas fa-save"></i> Save
-                            </button>
-                        </div>
                     </form>
+                    <div class="edit-actions" id="passwordEditActions" style="display: none;">
+                        <button class="btn btn-secondary" id="passwordResetBtn">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="passwordSaveBtn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+
 
                 </div>
 

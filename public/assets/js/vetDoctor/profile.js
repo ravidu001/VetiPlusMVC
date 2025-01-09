@@ -1,3 +1,47 @@
+function showNotification(message, type = 'success') {
+    // Remove any existing notifications
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.classList.add('notification', `notification-${type}`);
+    
+    // Set icon based on type
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️'
+    };
+
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${icons[type] || icons.success}</span>
+            <p>${message}</p>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+
+    // Add to body
+    document.body.appendChild(notification);
+
+    // Auto-remove after 5 seconds
+    const removeTimer = setTimeout(() => {
+        notification.classList.add('notification-exit');
+        setTimeout(() => notification.remove(), 500);
+    }, 5000);
+
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        clearTimeout(removeTimer);
+        notification.classList.add('notification-exit');
+        setTimeout(() => notification.remove(), 500);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Navigation Functionality
     const navButtons = document.querySelectorAll('.nav-button');
@@ -104,18 +148,18 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log('Form saved successfully');
+                showNotification(data.message || 'Profile updated successfully');
             } else {
-                console.error('Error saving form:', data.message);
+                showNotification(data.message || 'Failed to update profile', 'error');
             }
         })
         .catch(error => {
-            // window.alert("mn methana");
-            
+            showNotification('An error occurred while updating profile', 'error');
             console.error('Error:', error);
         });
     }
-
+    
+    // Do similar modifications for professionalSaveForm and passwordSaveForm
     function professionalSaveForm(formData) {
         fetch('/VetiPlusMVC/public/DoctorProfile/updateProfessional', {
             method: 'POST',
@@ -124,18 +168,17 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log('Form saved successfully');
+                showNotification(data.message || 'Professional details updated successfully');
             } else {
-                console.error('Error saving form:', data.message);
+                showNotification(data.message || 'Failed to update professional details', 'error');
             }
         })
         .catch(error => {
-            // window.alert("mn methana");
-            
+            showNotification('An error occurred while updating professional details', 'error');
             console.error('Error:', error);
         });
     }
-
+    
     function passwordSaveForm(formData) {
         fetch('/VetiPlusMVC/public/DoctorProfile/updatePassword', {
             method: 'POST',
@@ -144,14 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log('Passowrd update successfully');
+                showNotification(data.message || 'Password updated successfully');
             } else {
-                console.error('Error update form:', data.message);
+                showNotification(data.message || 'Failed to update password', 'error');
             }
         })
         .catch(error => {
-            window.alert("mn methana");
-            
+            showNotification('An error occurred while updating password', 'error');
             console.error('Error:', error);
         });
     }

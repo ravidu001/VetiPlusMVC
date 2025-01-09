@@ -115,25 +115,42 @@ class DoctorProfile extends Controller {
     }
 
     public function updatePassword() {
-        //echo "<script>window.alert('hello');</script>";
         // Assuming you have a model to handle database operations
         $doctor = new User();
         $doctorID = $_SESSION['user_id'];
-        //echo '<script>window.alert("'.$doctorID.'");</script>';
-
+        $doctorDetails = $doctor->checkLoginUser($doctorID);
+    
+        $currentPasswordHash = $doctorDetails->password;
+    
+        // Get the form data from the POST request
         $data = [
-            'password' => $_POST['password'] ?? ''
+            'password' => $_POST['password'] ?? '',
+            'newPassword' => $_POST['newPassword'] ?? '',
+            'confirmPassword' => $_POST['confirmPassword'] ?? ''
         ];
 
-        // Save the data using the model
-        $result = $doctor->updateProfile($doctorID, $data);
-
-        if (empty($result)) {
-            echo json_encode(['success' => true, 'message' => 'Profile updated successfully']);
+        if ($data['newPassword'] != $data['confirmPassword']) {
+            echo json_encode(['success' => false, 'message' => 'Passwords do not match']);
+            return;
+        } else if (empty($data['newPassword']) || empty($data['confirmPassword'])) {
+            echo json_encode(['success' => false, 'message' => 'Password cannot be empty']);
+            return;
+        } else if ($data['password'] == $data['newPassword']) {
+            echo json_encode(['success' => false, 'message' => 'New password cannot be the same as the old password']);
+            return;
+        } else if (!password_verify($data['password'], $currentPasswordHash)) {
+            echo json_encode(['success' => false, 'message' => 'Current password is incorrect']);
             return;
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update profile']);
-            return;
+            $newPasswordHash = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+            $result = $doctor->updatePassword($doctorID, $newPasswordHash);
+            if (empty($result)) {
+                echo json_encode(['success' => true, 'message' => 'Password updated successfully']);
+                return;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update password']);
+                return;
+            }
         }
     }
     
