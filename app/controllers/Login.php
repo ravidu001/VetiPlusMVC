@@ -1,38 +1,51 @@
 <?php
 
-class Login extends Controller {
-    public function index() {
+class Login extends Controller
+{
+    public function index()
+    {
         $this->view('logindetail/login',[]);
     }
 
     public function login() 
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') 
+        {
             header('Location: /vetiplusMVC/public/signup');
-        } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
+        } 
+        else if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+        {
             $data = [
                 'email' => $_POST['email'],
                 'password' => $_POST['password'], 
+                'status' => 'error',
+                'message' => ''
             ];
 
             $user = new User();
-
             $salonRegister = new SalonRegisters();
+            $salontable = new Salons();
 
+            //find the login email has in the user table 
+            //return the user table data 
             $registered = $user->checkLoginUser($data['email']); 
-            
-            if($registered) {
-                if(password_verify($data['password'], $registered->password)) {
+
+            if($registered) 
+            {
+                if(password_verify($data['password'], $registered->password)) 
+                {
                     //$_SESSION['user_id'] = $registered->email; // register wechcha mail eka gann pluwan
 
-                    if($registered->loginCount == 0) {
+                    if($registered->loginCount == 0) 
+                    {
                         $loginCount = $registered->loginCount + 1;
                         
                         //$_SESSION['type'] = $registered->type; //type gann pluwan
 
                         $update = $user->updateCount($registered->email, $loginCount);
-                        switch ($registered->type) {
+
+                        switch ($registered->type) 
+                        {
                             case 'Vet Doctor':
                                 header('Location: ../Doctor');
                                 break;
@@ -60,15 +73,21 @@ class Login extends Controller {
                         }
                     } 
                     else 
-                    
                     {
                         $loginCount = $registered->loginCount + 1;
-
                         $update = $user->updateCount($registered->email, $loginCount);
+
+                        $data['status'] = 'success';
+                        $data['message'] = 'Login successful! Redirecting...';
                         
+                        // Store the success message in session
+                        $_SESSION['login_message'] = [
+                            'status' => 'success',
+                            'message' => $data['message']
+                        ];
                         
-                        
-                        switch ($registered->type) {
+                        switch ($registered->type)
+                        {
                             case 'Vet Doctor':
                                 header('Location: ../Doctor.php');
                                 break;
@@ -76,35 +95,108 @@ class Login extends Controller {
                                 header('Location: ../PetOwner');
                                 break;
                             case 'Salon':
-                                $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
-                                if ($salonStatus) {
-                                    switch ($salonStatus->status) {
-                                        case 'pending':
-                                            $_SESSION['SALON_USER'] = $registered->email;
-                                            redirect('Pending');
-                                            break;
-                                        case 'approved':
-                                            $_SESSION['SALON_USER'] = $registered->email;
-                                            // header('Location: ../SalonDashboard');
-                                            redirect('SalonDashboard');
-                                            break;
-                                        case 'rejected':
-                                            // echo 'Your registration has been rejected. Please contact support.';
-                                            // header('Location: ../SalonRegister');
-                                            $_SESSION['SALON_USER'] = $registered->email;
-                                            redirect('Rejected');
-                                            break;
-                                        default:
-                                            $message[] = 'Invalid status. Please contact support.';
-                                    }
-                                } else 
+                                $_SESSION['SALON_USER'] = $registered->email;
+                                //check the accepted email has or not
+                                $email = $data['email']; 
+                                //this function in the salons model file
+                                $accepted = $salontable->FindUser($email);
 
+                                if($accepted)
                                 {
-                                    $message[] = 'Registration data not found. Please register again.';
+                                    echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
+                                    // $_SESSION['SALON_USER'] = $registered->email;
+                                    // redirect('SalonDashboard');
                                 }
+                                //email not in the accepted salon data table
+                                //so it will be rejected or pending  
+                                else
+                                {
+                                    //get the satus of the salon egister pending or not
+                                    //this function in the salon registration model
+                                    //get the first data row which match the email
+                                    $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
+
+                                    //check the status
+                                    if ($salonStatus) 
+                                    {
+                                        switch ($salonStatus->status) 
+                                        {
+                                            case 'pending':
+                                                // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/Pending']);
+                                                // $_SESSION['SALON_USER'] = $registered->email;
+                                                // redirect('Pending');
+                                                break;
+                                           
+                                            case 'rejected':
+                                                // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/Rejected']);
+                                                // $_SESSION['SALON_USER'] = $registered->email;
+                                                redirect('Rejected');
+                                                break;
+
+                                            default:
+                                                // show('Invalid status');
+                                                // $message[] = 'Invalid status. Please contact support.';
+                                                // $data['status'] = 'error';
+                                                $data['message'] = 'User type not recognized!';
+                                                echo json_encode(['status' => 'error', 'message' => $data['message']]);
+                                        }
+                                    }
+                                    else 
+                                    {
+                                        show('registration not found, not submit/ complete registration form');
+                                        $message[] = 'Registration data not found. Please register again.';
+                                        // $data['message'] = 'Incorrect password';
+                                        // echo json_encode(['status' => 'error', 'message' => $data['message']]);
+                                    }
+
+                                }
+
+                                // $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
+                                // //if -> email eka salon table eke tyed  -> accepted -> dashboard 
+                                // //else ->rejected / pending  -> 
+
+                                // if ($salonStatus) 
+                                // {
+                                //     switch ($salonStatus->status) 
+                                //     {
+                                //         case 'pending':
+                                //             $_SESSION['SALON_USER'] = $registered->email;
+                                //             redirect('Pending');
+                                //             break;
+                                //         case 'approved':
+                                //             $_SESSION['SALON_USER'] = $registered->email;
+                                //             redirect('SalonDashboard');
+                                //             break;
+                                //         case 'rejected':
+                                //             $_SESSION['SALON_USER'] = $registered->email;
+                                //             redirect('Rejected');
+                                //             break;
+                                //         default:
+                                //             $message[] = 'Invalid status. Please contact support.';
+                                //     }
+                                // } 
+                                
+                                //check the email is has or not in the  salon table 
+                                //if has salon 
+
+                                // if
+                                // {
+
+                                // }
+
+                                //salon table has not the email -> it will reject or pending
+                                // else
+                                // {
+
+                                // }
+
+                                // else 
+                                // {
+                                //     $message[] = 'Registration data not found. Please register again.';
+                                // }
                                 break;
-                                // header('Location: ../Salon');
-                                // break;
+                                header('Location: ../Salon');
+                                break;
                             case 'Vet Assistant':
                                 header('Location: ../Assistant');
                                 break;
@@ -120,13 +212,22 @@ class Login extends Controller {
                         }
                     }
                     exit();
-                } else {
+                } 
+                else 
+                {
+                    show('login incorrect password');
                     $message[] = 'Incorrect email or password';
                 }
-            } else {
+            } 
+            else
+            {
+                show('Invalid email or password');
                 $message[] = 'Incorrect email or password';
             }
+            
+            $data['errors'] =  $message;
+            return $data;
+        }
     }
-}
 
 }
