@@ -22,9 +22,10 @@
     </head>
 
     <body>
+        <!-- <?php // require_once '../app/views/navbar/guestNav.php' ?> -->
 
         <!-- navbar on top: -->
-        <!-- <?php include ROOT.'/app/views/navbar/guestNav.php'; ?> -->
+        <?php include 'navbar/guestNav.php' ?>
 
         <section class="hero-section">
             <header>
@@ -127,7 +128,8 @@
 
         
         <!-- footer at page's bottom: -->
-        <!-- <?php include ROOT.'/components/guestUser/guestFooter.php'; ?> -->
+        <?php include_once '../app/views/navbar/guestFooter.php'; ?>
+
 
         <script>
             const imgFolder = "./assets/images/guestUser/serviceIcons/"

@@ -1,0 +1,102 @@
+fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+}
+fieldset legend {
+    margin-left: 20px;
+    padding: 10px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    gap: 5px;
+}
+form input {
+    padding: 5px;
+}
+form label {
+    margin-left: 20%;
+}
+form .radioLabel {
+    margin-left: 10px;
+}
+
+input[type=radio] {
+    margin: 5px;
+}
+
+/* for logout and delete buttons: */
+form button.loneBtn{
+    padding: 5px;
+    border-radius: 10px;
+
+    margin: 10px;
+    margin-left: 30%;
+    margin-right: 30%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+}
+
+form.profileDetailsEditForm {
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 0.5fr;
+    align-items: center;
+
+    padding: 20px;
+    gap: 10px;
+}
+form label {
+    grid-column: 1;
+    padding: 5px;
+    font-weight: 500;
+}
+form button{
+    grid-column: 3;
+    padding: 5px;
+    border-radius: 10px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+}
+form button:hover {
+    cursor: pointer;
+    background-color: var(--button-hover-bg-color);
+}
+
+/* to display the parts that are not editable: */
+.unchangingData {
+
+    margin: 10px;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: max-content;
+
+
+    padding: 20px;
+    border: 1px solid var(--primary-border-color);
+}
+.unchangingData .field {
+    grid-column: 1;
+    padding: 5px;
+}
+.unchangingData .data {
+    grid-column: 2;
+    padding: 5px;
+}

@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>Our Services</title>
-        <link rel="icon" href="<?= ROOT ?>/assets/images/vetiplus-logo.png" type="image/png">
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,6 @@
         <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/hero.css" rel="stylesheet">
@@ -22,7 +21,7 @@
     </head>
     <body>
         <!-- navbar on top: -->
-        <?php include ROOT.'/client/components/guestUser/guestNavbar.php'; ?>
+        <?php include_once '../app/views/navbar/guestNav.php'; ?>
 
         <div class="hero-section">
             <div>
@@ -31,7 +30,7 @@
                     Join us today to enjoy a whole host of benefits and services from our professionals.
                 </p>
             </div>
-            <img class="heroImg" src="../../assets/images/guestUser/guestHeroes/servicesHero.png" alt="">
+            <img class="heroImg" src="<?= ROOT ?>/assets/images/guestUser/guestHeroes/servicesHero.png" alt="">
         </div>
 
         <div class="services">
@@ -44,7 +43,7 @@
                             Access top-quality care for your pets with just a few clicks.
                         </p>
                     </div>
-                    <img src="../../assets/images/serviceIcons/vetAppointmentIcon.png" alt="Vet Appointments">
+                    <img src="<?= ROOT ?>/assets\images\guestUser\serviceIcons/vetAppointmentIcon.png" alt="Vet Appointments">
                 </div>
                 <div class=" card">
                     <div class="text">
@@ -54,7 +53,7 @@
                             Schedule grooming sessions at your preferred pet salons through our platform.
                         </p>
                     </div>
-                    <img src="../../assets/images/serviceIcons/salonIcon.png" alt="Salon Appointments">
+                    <img src="<?= ROOT ?>/assets\images\guestUser\serviceIcons/salonIcon.png" alt="Salon Appointments">
                 </div>
             </div>
 
@@ -67,7 +66,7 @@
                             Connect with local shelters and rescues to give a loving home to a pet in need.
                         </p>
                     </div>
-                    <img src="../../assets/images/serviceIcons/petAdoptionIcon.png" alt="">
+                    <img src="<?= ROOT ?>/assets\images\guestUser\serviceIcons/petAdoptionIcon.png" alt="">
                 </div>
                 <div class=" card">
                     <div class="text">
@@ -77,7 +76,7 @@
                             Connect with reputable breeders or list your breeding services on our platform.
                         </p>
                     </div>
-                    <img src="../../assets/images/serviceIcons/petBreedingIcon.png" alt="">
+                    <img src="<?= ROOT ?>/assets/images/guestUser/serviceIcons/petBreedingIcon.png" alt="">
                 </div>
                 <div class=" card">
                     <div class="text">
@@ -87,13 +86,13 @@
                             No longer is it needed to carry about (and misplace) your pet's record books.
                         </p>
                     </div>
-                    <img src="../../assets/images/serviceIcons/recordKeepingIcon.png" alt="">
+                    <img src="<?= ROOT ?>/assets/images/guestUser/serviceIcons/recordKeepingIcon.png" alt="">
                 </div>
             </div>
         </div>
    
         <!-- footer at page's bottom: -->
-        <?php include ROOT.'/client/components/guestUser/guestFooter.php'; ?>
+        <?php include_once '../app/views/navbar/guestFooter.php'; ?>
 
     </body>
 </html>
