@@ -9,6 +9,7 @@ class Login extends Controller
 
     public function login() 
     {
+        $data = [];
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') 
         {
             header('Location: /vetiplusMVC/public/signup');
@@ -17,9 +18,7 @@ class Login extends Controller
         {
             $data = [
                 'email' => $_POST['email'],
-                'password' => $_POST['password'], 
-                'status' => 'error',
-                'message' => ''
+                'password' => $_POST['password']
             ];
 
             $user = new User();
@@ -69,7 +68,7 @@ class Login extends Controller
                                 break;
 
                             default:
-                                $message[] = 'User type not recognized!';
+                                $data['message'] = 'User type not recognized!';
                         }
                     } 
                     else 
@@ -77,15 +76,6 @@ class Login extends Controller
                         $loginCount = $registered->loginCount + 1;
                         $update = $user->updateCount($registered->email, $loginCount);
 
-                        $data['status'] = 'success';
-                        $data['message'] = 'Login successful! Redirecting...';
-                        
-                        // Store the success message in session
-                        $_SESSION['login_message'] = [
-                            'status' => 'success',
-                            'message' => $data['message']
-                        ];
-                        
                         switch ($registered->type)
                         {
                             case 'Vet Doctor':
@@ -103,9 +93,9 @@ class Login extends Controller
 
                                 if($accepted)
                                 {
-                                    echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
-                                    // $_SESSION['SALON_USER'] = $registered->email;
-                                    // redirect('SalonDashboard');
+                                    // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
+                                    $_SESSION['SALON_USER'] = $registered->email;
+                                    redirect('SalonDashboard');
                                 }
                                 //email not in the accepted salon data table
                                 //so it will be rejected or pending  
@@ -123,28 +113,31 @@ class Login extends Controller
                                         {
                                             case 'pending':
                                                 // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/Pending']);
-                                                // $_SESSION['SALON_USER'] = $registered->email;
-                                                // redirect('Pending');
+                                                $_SESSION['SALON_USER'] = $registered->email;
+                                                redirect('Pending');
                                                 break;
                                            
                                             case 'rejected':
                                                 // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/Rejected']);
-                                                // $_SESSION['SALON_USER'] = $registered->email;
+                                                $_SESSION['SALON_USER'] = $registered->email;
                                                 redirect('Rejected');
                                                 break;
 
                                             default:
                                                 // show('Invalid status');
                                                 // $message[] = 'Invalid status. Please contact support.';
+                                                $this->view('logindetail/login', ['errors' => 'User type not recognized!']);
                                                 // $data['status'] = 'error';
-                                                $data['message'] = 'User type not recognized!';
-                                                echo json_encode(['status' => 'error', 'message' => $data['message']]);
+                                                // $data['message'] = 'User type not recognized!';
+                                                // echo json_encode(['status' => 'error', 'message' => $data['message']]);
                                         }
                                     }
                                     else 
                                     {
-                                        show('registration not found, not submit/ complete registration form');
-                                        $message[] = 'Registration data not found. Please register again.';
+                                        // show('registration not found, not submit/ complete registration form');
+                                        $this->view('logindetail/login', ['errors' => 'Registration data not found. Please register again.']);
+                                        // $data['status'] = 'error';
+                                        // $data['message'] = 'Registration data not found. Please register again.';
                                         // $data['message'] = 'Incorrect password';
                                         // echo json_encode(['status' => 'error', 'message' => $data['message']]);
                                     }
@@ -208,26 +201,27 @@ class Login extends Controller
                                 break;
 
                             default:
-                                $message[] = 'User type not recognized!';
+                            $this->view('logindetail/login', ['errors' => 'User type not recognized!']);
+                            // $data['message'] = 'User type not recognized!';
                         }
                     }
                     exit();
                 } 
                 else 
                 {
-                    show('login incorrect password');
-                    $message[] = 'Incorrect email or password';
+                    // show('login incorrect password');
+                    $this->view('logindetail/login', ['errors' => 'Incorrect email or password']);
+                    // $data['message'] = 'Incorrect email or password';
                 }
             } 
             else
             {
-                show('Invalid email or password');
-                $message[] = 'Incorrect email or password';
+                // show('Invalid email or password');
+                $this->view('logindetail/login', ['errors' => 'Incorrect email or password']);
+                // $data['message'] = 'Incorrect email or password';
             }
-            
-            $data['errors'] =  $message;
-            return $data;
         }
+
     }
 
 }
