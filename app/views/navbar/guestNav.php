@@ -6,7 +6,7 @@
 
     <div class="links">
         <a href="<?= ROOT ?>/guestUser"
-        class="<?= ($current_pg == 'landing.php') ? 'active' : ''; ?>">
+        class="<?= ($current_pg == 'guestUser') ? 'active' : ''; ?>">
             <i class="bx bxs-home bx-sm" id="homeIcon"></i>
             <label for="homeIcon" class="collapsable">Home</label>
         </a>

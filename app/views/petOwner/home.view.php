@@ -1,11 +1,3 @@
-<?php
-    session_start();
-    // if (!isset($_SESSION['user_id']))
-    //     $_SESSION['user_id'] = 'sp.john.manuel737@gmail.com';
-    $userID = $_SESSION['user_id'];
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,24 +31,23 @@
                 <h2>My Profile</h2>
                 <div id="myProfile_content" class="dashAreaContent" style="justify-content: space-evenly;">
                     <?php
-                        $stmt = $con->prepare("SELECT * FROM petOwner WHERE petOwnerID = ?");
-                        $stmt->bind_param("s", $userID);
-                        $stmt->execute();                  
-                        $profileDetails = $stmt->get_result()->fetch_assoc();
+                        // $stmt = $con->prepare("SELECT * FROM petOwner WHERE petOwnerID = ?");
+                        // $stmt->bind_param("s", $userID);
+                        // $stmt->execute();                  
+                        // $profileDetails = $stmt->get_result()->fetch_assoc();
                         
-                        $stmt->close();
-                        if (!empty($profileDetails['profilePicture'])):
+                        // $stmt->close();
+                        // if (!empty($profileDetails['profilePicture'])):
                         
-                            
                     ?>
-                    <img src="<?= ROOT.'/assets/images/profilePics/petOwner/'.$profileDetails['profilePicture']?>"
-                        alt="Profile picture.">
-                    <?php else: ?>
+                    <!-- <img src="<?= ROOT.'/assets/images/profilePics/petOwner/'.$profileDetails['profilePicture']?>"
+                        alt="Profile picture."> -->
+                    <?php //else: ?>
                         <p>Add a profile picture.</p>
-                    <?php endif; ?>
+                    <?php //endif; ?>
                     <div class="textContent">
                         <h3>Welcome back!</h3>
-                        <p><?= $profileDetails['fullName'] ?></p>
+                        <!-- <p><?= $profileDetails['fullName'] ?></p> -->
                     </div>
                 </div>
             </section>
@@ -64,27 +55,27 @@
             <section id="myPets" class="dashArea">
                 <h2>My Pets</h2>
                 <div class="dashAreaContent">
-                    <?php
-                        $stmt = $con->prepare("SELECT petID, name, profilePicture FROM pet WHERE petOwnerID = ?");
-                        $stmt->bind_param("s", $userID);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        $stmt->close();
+                    <!-- <?php
+                        // $stmt = $con->prepare("SELECT petID, name, profilePicture FROM pet WHERE petOwnerID = ?");
+                        // $stmt->bind_param("s", $userID);
+                        // $stmt->execute();
+                        // $result = $stmt->get_result();
+                        // $stmt->close();
 
-                        if($result->num_rows > 0) :
-                            $data = $result->fetch_all(MYSQLI_ASSOC);
-                            foreach ($data as $k => $pet) : ?>
-                                <form action='./petProfile.php' method='post' class='petCard' onclick='this.submit()' title='Go to Pet Profile Page.'>
+                        // if($result->num_rows > 0) :
+                        //     $data = $result->fetch_all(MYSQLI_ASSOC);
+                        //     foreach ($data as $k => $pet) : ?>
+                                <!-- <form action='./petProfile.php' method='post' class='petCard' onclick='this.submit()' title='Go to Pet Profile Page.'>
                                     <input type='text' name='petID' id='petID' value='<?= $pet['petID'] ?>' hidden>
                                     <img src='<?= ROOT."/assets/images/profilePics/pet/".$pet['profilePicture'] ?>' class='petImg' alt='Pet Image'>
                                     <h3><?= $pet['name'] ?></h3>
-                                </form>
-                            <?php endforeach;
-                        else: ?>
+                                </form> -->
+                            <?php //endforeach;
+                        //else: ?>
                             <div class="petCard">
                                 <h3>No Pets<br/>added yet!</h3>
                             </div>
-                        <?php endif;
+                        <?php //endif;
                     ?>
                     <a class="petCard" href="./petRegister.php">
                         <i class="bx bxs-plus-circle bx-lg"></i>
