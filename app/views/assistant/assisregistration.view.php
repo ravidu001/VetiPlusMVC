@@ -89,7 +89,7 @@
             <p>Join our professional network and support animal healthcare</p>
         </div>
         
-        <form class="registration-form" id="vetAssistantRegistrationForm" action="<?= ROOT ?>/assisRegistration/home" method="POST">
+        <form class="registration-form" id="vetAssistantRegistrationForm" action="<?= ROOT ?>/assisRegistration/register" method="POST" enctype="multipart/form-data">
             <div class="form-steps">
                 <div class="step active">1</div>
                 <div class="step">2</div>
@@ -100,22 +100,22 @@
             <div class="form-section active" id="personalInfo">
                 <h3>Personal Information</h3>
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="form-input" name="name" required 
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-input" name="fullName" required 
                         placeholder="Enter Full Name">
                 </div>
                 <div class="form-group">
-                    <label>Date of Birth</label>
-                    <input type="date" class="form-input" name="DOB" required>
+                    <label for="DOB">Date of Birth</label>
+                    <input type="date" id="DOB" class="form-input" name="DOB" required>
                 </div>
                 <div class="form-group">
-                    <label>Mobile Number</label>
-                    <input type="number" class="form-input" name="mobile" required
+                    <label id="mobile">Mobile Number</label>
+                    <input type="number" id="mobile" class="form-input" name="mobile" required
                             placeholder="Enter Mobile Number">
                 </div>
                 <div class="form-group">
-                    <label>Gender</label>
-                    <select class="form-input" name="gender" required>
+                    <label for="gender">Gender</label>
+                    <select class="form-input" id="gender" name="gender" required>
                         <option value="">Select Gender</option>
                         <option>Male</option>
                         <option>Female</option>
@@ -123,13 +123,13 @@
                     </select>
                 </div>
                 <div class="form-group full-width">
-                    <label>Address</label>
-                    <input type="text" class="form-input" name="street_address" required
+                    <label for="address">Address</label>
+                    <input type="text" class="form-input" id="address" name="address" required
                         placeholder="Street Address">
                 </div>
                 <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-input" name="city" required
+                    <label for="city">City</label>
+                    <input type="text" class="form-input" id="city" name="city" required
                         placeholder="City">
                 </div>
                 <!-- <div class="form-group">
@@ -147,8 +147,8 @@
             <div class="form-section" id="professionalInfo">
                 <h3>Professional Details</h3>
                 <div class="form-group">
-                    <label>Certification Number</label>
-                    <input type="text" class="form-input" name="certNumber" required 
+                    <label for="certificateNumber">Certification Number</label>
+                    <input type="text" class="form-input" id="certificateNumber" name="certificateNumber" required 
                         placeholder="Professional Certification">
                 </div>
                 <div class="form-group">
@@ -162,30 +162,30 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Years of Experience</label>
-                    <input type="number" class="form-input" 
-                        min="0" max="50" name="exp" required 
+                    <label for="experience">Years of Experience</label>
+                    <input type="number" class="form-input" id="experience"
+                        min="0" max="50" name="experience" required 
                         placeholder="Enter Experience">
                 </div>
                 <div class="form-group">
-                    <label>Charge per Hour</label>
-                    <input type="number" class="form-input" 
-                        min="0" step="0.01" name="hourly_rate" required 
+                    <label for="chargePerHour">Charge per Hour</label>
+                    <input type="number" class="form-input" id="chargePerHour"
+                        min="0" step="0.01" name="chargePerHour" required 
                         placeholder="Enter Hourly Rate">
                 </div>
                 <div class="form-group">
                     <label>Languages</label>
                     <div class="language-checkboxes">
-                        <label class="checkbox-container">
-                            <input type="checkbox" name="languages[]" value="English"> English
+                        <label for="languageEnglish" class="checkbox-container">
+                            <input type="checkbox" id="languageEnglish" name="languageSpoken[]" value="English"> English
                             <span class="checkmark"></span>
                         </label>
-                        <label class="checkbox-container">
-                            <input type="checkbox" name="languages[]" value="Sinhala"> Sinhala
+                        <label for="languageSinhala" class="checkbox-container">
+                            <input type="checkbox" id="languageSinhala" name="languageSpoken[]" value="Sinhala"> Sinhala
                             <span class="checkmark"></span>
                         </label>
-                        <label class="checkbox-container">
-                            <input type="checkbox" name="languages[]" value="Tamil"> Tamil
+                        <label for="languageTamil" class="checkbox-container">
+                            <input type="checkbox" id="languageTamil" name="languageSpoken[]" value="Tamil"> Tamil
                             <span class="checkmark"></span>
                         </label>
                     </div>
@@ -200,9 +200,8 @@
             <div class="form-section" id="uploadInfo">
                 <h3>Upload Certification</h3>
                 <div class="form-group file-upload">
-                    <label for="certificateFile">Upload Professional Certificate</label>
-                    <input type="file" id="certificateFile" name="certificate" accept=".pdf,.jpg,.png" required>
-                    <label for="certificateFile" class="file-upload-label">Choose File</label>
+                    <label for="certificate">Upload Professional Certificate</label>
+                    <input type="file" id="certificate" name="certificate" accept=".pdf,.jpg,.png" required>
                 </div>
 
                 <div class="navigation-buttons">
