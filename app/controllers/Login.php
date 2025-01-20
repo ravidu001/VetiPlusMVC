@@ -22,12 +22,12 @@ class Login extends Controller {
 
             if($registered) {
                 if(password_verify($data['password'], $registered->password)) {
-                    
+                    $_SESSION['email'] = $registered->email;
                     if($registered->loginCount == 0) {
                         $loginCount = $registered->loginCount + 1;
                         
                         $update = $user->updateCount($registered->email, $loginCount);
-                        
+                        $_SESSION['type'] = $registered->type;
                         switch ($registered->type) {
                             case 'Vet Doctor':
                                 header('Location: ../Doctor');
