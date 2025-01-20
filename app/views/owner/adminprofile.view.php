@@ -17,7 +17,7 @@
         <div class="profile-container">
             <div class="profile-header">
                 <img src="https://via.placeholder.com/200" alt="Admin Profile" class="profile-image">
-                <h2>John Doe</h2>
+                <h2><?= htmlspecialchars($admin->name ?? 'N/A') ?></h2>
                 <p>Senior Admin</p>
             </div>
 
@@ -27,35 +27,35 @@
                         <i class='bx bxs-envelope'></i>
                         <div class="info">
                             <h4>Email</h4>
-                            <p>john.doe@example.com</p>
+                            <p><?= htmlspecialchars($admin->email ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bxs-phone'></i>
                         <div class="info">
                             <h4>Phone</h4>
-                            <p>+1 (123) 456-7890</p>
+                            <p><?= htmlspecialchars($admin->contactNumber ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bxs-id-card'></i>
                         <div class="info">
                             <h4>NIC</h4>
-                            <p>123456789V</p>
+                            <p><?= htmlspecialchars($admin->NIC ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bxs-home'></i>
                         <div class="info">
                             <h4>Address</h4>
-                            <p>123 Main Street</p>
+                            <p><?= htmlspecialchars($admin->address ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-male-female'></i>
                         <div class="info">
                             <h4>Gender</h4>
-                            <p>Male</p>
+                            <p><?= htmlspecialchars($admin->gender ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
@@ -68,8 +68,16 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="<?= ROOT ?>/OwnerAddAdmin/editprofile" class="btn btn-primary">Edit Profile</a>
-                    <a href="<?= ROOT ?>/OwnerAddAdmin/deleteprofile" class="btn btn-danger">Delete Profile</a>
+                    <a href="<?= ROOT ?>/OwnerAddAdmin/editprofile?email=<?= ($admin->email) ?>" class="btn btn-primary">Edit Profile</a>
+                    <script>
+                        const deleteProfile = () => {
+                            if (confirm("Are you sure you want to delete this profile?")) {
+                                window.location.href = `<?= ROOT ?>/OwnerAddAdmin/deleteprofile?email=<?= ($admin->email) ?>`;
+                            }
+                        }
+                    </script>
+
+                    <button onclick="deleteProfile()" class="btn btn-danger">Delete Profile</button>
                 </div>
             </div>
         </div>
