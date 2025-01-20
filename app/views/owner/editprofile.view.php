@@ -38,7 +38,7 @@
                 <label>Address</label>
                 <input type="text" id="address" name="address" value="<?= htmlspecialchars($admin->address ?? '') ?>" required>
             </div>
-            <button type="submit" name="submit" class="update-btn" >Update Profile</button>
+            <button type="submit" name="submit" class="update-btn">Update Profile</button>
         </form>
     </div>
 </body>
