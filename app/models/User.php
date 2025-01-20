@@ -25,11 +25,11 @@ class User {
     }
 
     public function checkLoginUser($email) {
-        if($this->first(['email' => $email])) {
-           echo "wada";
-        } else {
-            echo "false";
-        }
+        // if($this->first(['email' => $email])) {
+        //    echo "wada";
+        // } else {
+        //     echo "false";
+        // }
         return $this->first(['email' => $email]); // how to access return value: $registered['email']
     }
 

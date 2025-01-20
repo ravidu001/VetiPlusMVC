@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Veterinarian Reviews</title>
+    <title>Assistant Reviews</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,7 +16,7 @@
             <img src="<?= ROOT ?>/assets/images/vetDoctor/review.avif" alt="Veterinary Logo" class="loading-image">
         </div>
         <div class="loading-text" id="loadingMessage">
-            Hey, Dr. Samantha! Fetching your reviews...🤩🤩🤩
+            Hey, Samantha! Fetching your reviews...🤩🤩🤩
         </div>
         <div id="reviewNotification">
     <div class="review-alert animated-bounce">
@@ -36,7 +36,7 @@
 </div>
 
     <div class="main-content" id="mainContent">
-        <?php require_once '../app/views/navbar/doctornav.php'; ?>
+        <?php require_once '../app/views/navbar/assistantnav.php'; ?>
         <div class="home">
         <div class="reviews-container">
             <!-- Previous review container HTML -->
