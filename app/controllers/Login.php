@@ -22,12 +22,18 @@ class Login extends Controller {
             // echo "<script>window.alert($registered->loginCount);</script>";
             if($registered) {
                 if(password_verify($data['password'], $registered->password)) {
+
+                    $_SESSION['email'] = $registered->email;
+
                     $_SESSION['user_id'] = $registered->email;
                     // echo "<script>window.alert($registered->loginCount);</script>";
+
                     if($registered->loginCount == 0) {
                         $loginCount = $registered->loginCount + 1;
                         // echo "<script>window.alert($loginCount);</script>";
                         $update = $user->updateCount($registered->email, $loginCount);
+
+
                         
                         $_SESSION['type'] = $registered->type;
                         switch ($registered->type) {

@@ -13,34 +13,34 @@
 <body>
     <?php require_once '../app/views/navbar/ownernav.php'; ?>
     <section class="home">
-    <div class="container">
-        <div class="admin-dashboard">
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <h2>Total Admins</h2>
-                    <h3>24</h3>
+        <div class="container">
+            <div class="admin-dashboard">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <h2>Total Admins</h2>
+                        <h3>78</h3>
+                    </div>
+                    <div class="stat-card">
+                        <h2>Active Admins</h2>
+                        <h3> <?php echo htmlspecialchars($userCount, ENT_QUOTES, 'UTF-8'); ?></h3>
+                    </div>
+                    <div class="stat-card">
+                        <h2>Left Admins</h2>
+                        <h3>03</h3>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <h2>Active Admins</h2>
-                    <h3>14</h3>
-                </div>
-                <div class="stat-card">
-                    <h2>Left Admins</h2>
-                    <h3>03</h3>
-                </div>
-            </div>
 
-            <div class="admin-actions">
-            <form action="<?= ROOT ?>/OwnerAddAdmin/adminprofile" method="GET">
-                <div class="search-admin">
-                    <input  type="email" id="email" name="email" placeholder="Search Admin by Email">
-                    <a class="search-btn" href="<?= ROOT ?>/OwnerAddAdmin/adminprofile" type="submit" name="submit">Search</a>
+                <div class="admin-actions">
+                    <form action="<?= ROOT ?>/OwnerAddAdmin/select" method="GET">
+                        <div class="search-admin">
+                            <input type="email" id="email" name="email" placeholder="Search Admin by Email">
+                            <button class="search-btn" type="submit" name="submit">Search</button>
+                        </div>
+                    </form>
+                    <a href="<?= ROOT ?>/OwnerAddAdmin/adminregistration" class="add-admin-btn">Add New Admin</a>
                 </div>
-                </form>
-                <a href="<?= ROOT ?>/OwnerAddAdmin/adminregistration" class="add-admin-btn">Add New Admin</a>
             </div>
         </div>
-    </div>
     </section>
 </body>
 
