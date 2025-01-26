@@ -115,7 +115,6 @@ class DoctorProfile extends Controller {
     }
 
     public function updatePassword() {
-        // Assuming you have a model to handle database operations
         $doctor = new User();
         $doctorID = $_SESSION['user_id'];
         $doctorDetails = $doctor->checkLoginUser($doctorID);
