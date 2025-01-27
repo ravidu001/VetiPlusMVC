@@ -73,11 +73,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 profilePic.src = e.target.result;
             };
             reader.readAsDataURL(file);
+    
+            // Create FormData and append the file
+            const formData = new FormData();
+            formData.append('profilePicture', file); // Send the actual file
+    
+            fetch('/VetiPlusMVC/public/DoctorProfile/updateProfile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message || 'Profile picture updated successfully');
+                } else {
+                    showNotification(data.message || 'Failed to update profile picture', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('An error occurred while updating profile picture', 'error');
+            });
         }
     });
 
     removeProfilePicBtn.addEventListener('click', () => {
-        profilePic.src = '/VetiPlusMVC/public/assets/images/vetDoctor/defaultProfile.png'; 
+        const formData = new FormData();
+        formData.append('removeProfilePicture', 'true');
+    
+        fetch('/VetiPlusMVC/public/DoctorProfile/removeProfile', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                profilePic.src = '/VetiPlusMVC/public/assets/images/vetDoctor/defaultProfile.png';
+                showNotification(data.message || 'Profile picture reset to default successfully');
+            } else {
+                showNotification(data.message || 'Failed to reset profile picture', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('An error occurred while resetting profile picture', 'error');
+        });
     });
 
     // Edit Functionality

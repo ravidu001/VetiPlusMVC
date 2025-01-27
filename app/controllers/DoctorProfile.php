@@ -31,6 +31,113 @@ class DoctorProfile extends Controller {
         // $this->view('vetDoctor/doctorprofile', ['doctor' => $doctorData]);
     }
 
+    public function updateProfile() {
+        $doctor = new DoctorModel();
+        $doctorID = $_SESSION['user_id'];
+    
+        // Check if the request is a POST request
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if a file was uploaded
+            if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {
+                // Generate a unique filename
+                $originalFileName = $_FILES['profilePicture']['name'];
+                $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+                $uniqueFileName = uniqid('profile_') . '.' . $fileExtension;
+    
+                // Define the upload directory
+                $uploadDirectory = __DIR__ . '/../../public/assets/images/vetDoctor/';
+    
+                // Ensure the directory exists
+                if (!is_dir($uploadDirectory)) {
+                    mkdir($uploadDirectory, 0755, true);
+                }
+    
+                // Full path for the file
+                $uploadPath = $uploadDirectory . $uniqueFileName;
+    
+                // Move the uploaded file
+                if (move_uploaded_file($_FILES['profilePicture']['tmp_name'], $uploadPath)) {
+                    // Prepare data for database update
+                    $data = [
+                        'profilePicture' => $uniqueFileName
+                    ];
+    
+                    // Update the profile picture in the database
+                    $result = $doctor->updateProfile($doctorID, $data);
+    
+                    if (empty($result)) {
+                        echo json_encode([
+                            'success' => true, 
+                            'message' => 'Profile picture updated successfully',
+                            'filename' => $uniqueFileName
+                        ]);
+                    } else {
+                        // Remove the uploaded file if database update fails
+                        unlink($uploadPath);
+                        echo json_encode(['success' => false, 'message' => 'Failed to update profile picture in the database']);
+                    }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file']);
+                }
+            } else {
+                // Handle file upload errors
+                $errorMessage = 'No file uploaded';
+                switch ($_FILES['profilePicture']['error']) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $errorMessage = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
+                        break;
+                    case UPLOAD_ERR_FORM_SIZE:
+                        $errorMessage = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $errorMessage = 'The uploaded file was only partially uploaded';
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        $errorMessage = 'No file was uploaded';
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        $errorMessage = 'Missing a temporary folder';
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        $errorMessage = 'Failed to write file to disk';
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        $errorMessage = 'File upload stopped by extension';
+                        break;
+                }
+    
+                echo json_encode(['success' => false, 'message' => $errorMessage]);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+        }
+    }
+
+    public function removeProfile(){
+        $doctor = new DoctorModel();
+        $doctorID = $_SESSION['user_id'];
+
+        // Inside updateProfile method
+        if (isset($_POST['removeProfilePicture']) && $_POST['removeProfilePicture'] === 'true') {
+            $data = [
+                'profilePicture' => 'defaultProfile.png'
+            ];
+
+            $result = $doctor->updateProfile($doctorID, $data);
+
+            if (empty($result)) {
+                echo json_encode([
+                    'success' => true, 
+                    'message' => 'Profile picture reset to default'
+                ]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to reset profile picture']);
+            }
+            exit;
+        }
+    
+    }
+
     public function updatePersonal() {
         //echo "<script>window.alert('hello');</script>";
         // Assuming you have a model to handle database operations
