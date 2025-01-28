@@ -47,7 +47,7 @@
 
                     <div class="profile-picture-container">
                         <div class="profile-picture-wrapper">
-                            <img src="<?= ROOT ?>/assets/images/common/defaultProfile.png" alt="Profile Picture"
+                            <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= htmlspecialchars($doctor->profilePicture ?? 'N/A') ?>" alt="Profile Picture"
                                 class="profile-picture" id="profilePicture">
                             <div class="profile-picture-overlay">
                                 <input type="file" id="profilePictureUpload" accept="image/*" class="file-input">

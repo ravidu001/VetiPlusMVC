@@ -18,6 +18,7 @@ class DoctorProfile extends Controller {
         $doctorData = $doctor->find($doctorID);
 
         if ($doctorData) {
+            $_SESSION['profilePicture'] = $doctorData->profilePicture;
             // Debugging the fullName
             // echo '<script>window.alert("'.$doctorData->fullName.'")</script>';
             // echo '<script>window.alert("'.$doctorData->doctorCertificate.'")</script>';
@@ -111,6 +112,9 @@ class DoctorProfile extends Controller {
         } else {
             echo json_encode(['success' => false, 'message' => 'Invalid request method']);
         }
+        // Redirect to the index page
+        // header('Location: ' . ROOT . '/doctorProfile/index');
+        exit;
     }
 
     public function removeProfile(){
@@ -133,9 +137,11 @@ class DoctorProfile extends Controller {
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to reset profile picture']);
             }
+            // Redirect to the index page
+            // header('Location: ' . ROOT . '/doctorProfile/index');
             exit;
         }
-    
+        
     }
 
     public function updatePersonal() {
