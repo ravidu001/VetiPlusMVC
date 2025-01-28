@@ -13,7 +13,7 @@ class AssisRegistrationModel {
         'address',
         'DOB',
         'gender',
-        'city',
+        'district',
         'certificateNumber',
         'expertise',
         'experience',

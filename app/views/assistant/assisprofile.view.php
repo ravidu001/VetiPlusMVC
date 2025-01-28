@@ -604,9 +604,9 @@
                                 value="<?= htmlspecialchars($assis->address ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>City</label>
-                            <input type="text" class="form-input" name="city"
-                                value="<?= htmlspecialchars($assis->city ?? 'N/A') ?>" disabled>
+                            <label>District</label>
+                            <input type="text" class="form-input" name="district"
+                                value="<?= htmlspecialchars($assis->district ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group full-width">
                             <label>Bio</label>

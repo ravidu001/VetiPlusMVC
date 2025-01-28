@@ -43,7 +43,7 @@ class AssisRegistration extends Controller {
                 'address' => $_POST['address'],
                 'DOB' => $_POST['DOB'],
                 'gender' => $_POST['gender'],
-                'city' => $_POST['city'],
+                'district' => $_POST['district'],
                 'certificateNumber' => $_POST['certificateNumber'],
                 'expertise' => $_POST['expertise'],
                 'experience' => $_POST['experience'],

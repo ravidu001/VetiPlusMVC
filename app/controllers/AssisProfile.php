@@ -138,7 +138,7 @@ class AssisProfile extends Controller {
             'DOB' => $_POST['DOB'] ?? '',
             'contactNumber' => $_POST['contactNumber'] ?? '',
             'address' => $_POST['address'] ?? '',
-            'city' => $_POST['city'] ?? '',
+            'district' => $_POST['district'] ?? '',
             'bio' => $_POST['bio'] ?? '',
             'gender' => $_POST['gender'] ?? ''
         ];
