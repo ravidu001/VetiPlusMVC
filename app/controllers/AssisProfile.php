@@ -12,6 +12,7 @@ class AssisProfile extends Controller {
 
         $assisData = $assis->find($assistantID);
         if ($assisData) {
+            $_SESSION['profilePicture'] = $assisData->profilePicture;
             $languageSpoken = unserialize($assisData->languageSpoken);
         } else {
             echo '<script>window.alert("Assistant not found!")</script>';
