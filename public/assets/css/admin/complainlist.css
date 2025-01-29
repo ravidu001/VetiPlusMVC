@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+:root {
+    --body-color: #F4F6F9;
+    --primary-color: #6a0dad;
+    --text-color: #333;
+    --background-light: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
+.complain-container {
+    width: 93%;
+    height: 91%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--background-light);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    animation: fadeIn 0.5s ease-out;
+
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background-color: #f9f5ff;
+    padding: 30px;
+    border-radius: 15px;
+    transition: var(--transition);
+}
+
+.profile-header:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item label {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.complaint-section {
+    display: flex;
+    gap: 30px;
+}
+
+.complaint-message,
+.complaint-images {
+    flex: 1;
+    background-color: #f9f5ff;
+    padding: 30px;
+    border-radius: 15px;
+    transition: var(--transition);
+}
+
+.complaint-message:hover,
+.complaint-images:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+}
+
+.complaint-message h2,
+.complaint-images h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.complaint-message p {
+    text-align: justify;
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.image-gallery img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.image-gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+
+    .profile-header,
+    .complaint-section {
+        flex-direction: column;
+    }
+
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

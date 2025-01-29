@@ -1,0 +1,233 @@
+/* Root Variables */
+:root {
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #6a0dad;
+    --secondary-color: #9c27b0;
+    --text-color: #707070;
+    --background-light: #f4f4f8;
+    --white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    min-height: 100vh;
+    padding: 20px;
+}
+   
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 0px;
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/*
+.calendar-section {
+    background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+    border-radius: 15px;
+    padding: 30px;
+    color: var(--white);
+    margin-bottom: 30px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    text-align: center;
+}
+
+.calendar-day {
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.calendar-day.current-date {
+    background-color: rgba(255,255,255,0.2);
+    font-weight: bold;
+}
+
+.calendar-day.session-date {
+    background-color: var(--white);
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.calendar-day.future-date:hover {
+    background-color: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+} */
+
+.session-heading {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+/* Enhanced Sessions Table Styling */
+.sessions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin: 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+}
+
+.sessions-table thead {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+}
+
+.sessions-table th {
+    padding: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.sessions-table tbody tr {
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.sessions-table tbody tr::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--primary-color);
+    transition: var(--transition);
+}
+
+.sessions-table tbody tr:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.sessions-table tbody tr:hover::before {
+    width: 8px;
+}
+
+.sessions-table td {
+    padding: 15px;
+    vertical-align: middle;
+    color: var(--text-color);
+}
+
+/* Status and Badge Styling */
+.session-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.status-confirmed {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+/* Action Buttons */
+.session-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.view-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--background-light);
+    color: var(--primary-color);
+    transition: var(--transition);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.1) rotate(360deg);
+}
+
+/* Veterinarian Info */
+.vet-info {
+display: flex;
+align-items: center;
+}
+
+.vet-avatar {
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.vet-avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.vet-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.vet-name {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.vet-specialization {
+    font-size: 0.8em;
+    color: var(--secondary-color);
+}

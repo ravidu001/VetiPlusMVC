@@ -3,7 +3,7 @@
 
 spl_autoload_register(function($classname) {
     require $filename = "../app/models/".ucfirst($classname).".php";
-});
+}); // this function is used to load the classes in the models folder
 
 require 'config.php';
 require 'functions.php';

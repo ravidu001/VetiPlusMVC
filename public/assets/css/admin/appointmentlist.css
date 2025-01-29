@@ -1,0 +1,171 @@
+/* Reset and Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+
+:root {
+  /* Color Palette */
+  --primary-color: #6a0dad;
+  --secondary-color: #c8a2c8;
+  --background-color: #F4F7FA;
+  --white: #ffffff;
+  --text-primary: #333;
+  --text-secondary: #666;
+  --border-color: #e0e0e0;
+
+  /* Transition and Shadows */
+  --transition-speed: 0.3s;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+/* Appointment Container */
+.appointment-container {
+  width: 95%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+/* Header Styles */
+.appointments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.appointments-header h1 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Search and Filter */
+.search-filter {
+  display: flex;
+  gap: 1rem;
+}
+
+.search-filter input,
+.search-filter select {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all var(--transition-speed) ease;
+}
+
+.search-filter input:focus,
+.search-filter select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+}
+
+/* Table Styles */
+.appointments-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+}
+
+.appointments-table thead {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.appointments-table th,
+.appointments-table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+.appointments-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.appointments-table tbody tr {
+  background-color: #f9f9f9;
+  transition: all var(--transition-speed) ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.appointments-table tbody tr:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* Status Styles */
+.status-accepted {
+  color: green;
+  background-color: #e6f3e6;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.status-cancelled {
+  color: red;
+  background-color: #f3e6e6;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Report Generator */
+.report-generator {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.report-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--transition-speed) ease;
+}
+
+.report-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-3px);
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  .appointments-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .search-filter {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .search-filter input,
+  .search-filter select {
+    width: 100%;
+  }
+}
