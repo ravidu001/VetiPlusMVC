@@ -29,8 +29,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
 
             <ul class="menu-links">
-                <li class="nav-link <?= $current_page == 'homeNew.php' ? 'active' : '' ?>">
-                    <a href="homeNew.php">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/Doctor/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/Doctor/index">
                         <i class='bx bx-home icon'></i>
                         <span class="text nav-text"> Home</span>
                     </a>
@@ -44,20 +44,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <!-- Sub-menu should be inside the parent li -->
 
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == 'newAppointment.php' ? 'active' : '' ?>">
-                            <a href="newAppointment.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorNewSession/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorNewSession/index">
                                 <i class='bx bx-calendar-plus icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">New Session</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'viewAppointment.php' ? 'active' : '' ?>">
-                            <a href="viewAppointment.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorViewSession/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorViewSession/index">
                                 <i class='bx bx-calendar-event icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">View Sessions</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'historyAppointment.php' ? 'active' : '' ?>">
-                            <a href="historyAppointment.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorSessionHistory/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorSessionHistory/index">
                                 <i class='bx bx-calendar-check icon'></i>
                                 <span class="text nav-text" style="font-size:14px;"> History</span>
                             </a>
@@ -79,20 +79,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <i class='bx bxs-down-arrow arrow first icon'></i>
                     </a>
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == 'prescription.php' ? 'active' : '' ?>">
-                            <a href="prescription.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorPrescription/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorPrescription/index">
                                 <i class='bx bx-book-add icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Add Prescription</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'medicalhistory.php' ? 'active' : '' ?>">
-                            <a href="medicalhistory.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorMedicalHistory/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorMedicalHistory/index">
                                 <i class='bx bx-history icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Medical History</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == 'certificate.php' ? 'active' : '' ?>">
-                            <a href="certificate.php">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorCertificate/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/DoctorCertificate/index">
                                 <i class='bx bx-certification icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Create Certificate</span>
                             </a>

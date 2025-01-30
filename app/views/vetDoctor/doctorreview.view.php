@@ -41,7 +41,7 @@
         <div class="reviews-container">
             <!-- Previous review container HTML -->
             <div class="reviews-header">
-                <h1 class="reviews-title">My Reviews</h1>
+                <h3 class="reviews-title">My Reviews</h3>
                 <div class="filter-section">
                     <select class="filter-select">
                         <option>Sort by Date</option>
