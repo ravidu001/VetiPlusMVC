@@ -40,4 +40,10 @@ class AssisModel {
         $this->update($assisID, $data, 'assistantID');
     }
 
+    // Get all assistants by district
+    public function getAssistantsByDistrict($district) {
+        $result = $this->where(['district' => $district]);
+        return $result;
+    }
+
 }

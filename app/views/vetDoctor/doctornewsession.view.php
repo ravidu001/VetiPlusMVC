@@ -17,7 +17,7 @@
         <?php require_once '../app/views/calendar.view.php'; ?>
 
         <div class="session-form-section"> <h2>Create Session</h2>
-        <form id="session-form" method="post" action="<?= ROOT ?>/doctorNewSession/createSession">
+        <form id="session-form" method="post" action="<?= ROOT ?>/doctorNewSession/createSession" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Selected Date</label>
                 <input type="text" id="selected-date" name="selectedDate" class="form-input" placeholder="select date from calendar" readonly>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="district">District</label>
-                    <select name="district" class="form-input" required>
+                    <select id="district" name="district" class="form-input" required>
                         <option value="" disabled selected>Select a district</option>
                         <option value="Ampara">Ampara</option>
                         <option value="Anuradhapura">Anuradhapura</option>
@@ -103,8 +103,8 @@
                             <option value="Vavuniya">Vavuniya</option>
                         </select>
                     </div>
-                    <div class="assistant-grid">
-                        <div class="assistant-card">
+                    <div class="assistant-grid" id="assistantList">
+                        <!-- <div class="assistant-card">
                             <div class="assistant-avatar">
                                 <img src="<?= ROOT ?>/assets/images/vetAssistant/assistant.jpg" alt="assistant">
                             </div>
@@ -163,13 +163,13 @@
                                 <input type="checkbox" name="assistant-select">
                                 <span class="checkmark"></span>
                             </label>
-                        </div>
+                        </div> -->
                         <!-- Repeat similar structure for other assistants -->
                     </div>
                 </div>
                 <div class="submit-section">
                     <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Session</button>
+                    <button type="submit" class="btn btn-primary" id="submit-button">Create Session</button>
                 </div>
             </form>
         </div>
