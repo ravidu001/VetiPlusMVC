@@ -73,7 +73,7 @@ class SalonStaff extends Controller
             // Validate the data
             $validateresult = $this->SalonDataValidation($data);
 
-            show($validateresult);
+            // show($validateresult);
 
             if (empty($validateresult['errors'])) 
             {
