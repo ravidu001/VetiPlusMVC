@@ -1,0 +1,122 @@
+
+:root {
+--body-color: #E4E9F7;
+--sidebar-color: #FFF;
+--primary-color: #6a0dad;
+--primary-color-light: #f6f5ff;
+--toggle-color: #ddd;
+--text-color: #707070;
+--background-light: #c8a2c8;
+--background-primary: #6a0dad;
+--background-white: #fff;
+--text-black: black;
+--text-primary: #6a0dad;
+--text-white: #fff;
+--shadow-color: slategray;
+--list-item: #ffecff;
+
+--tran-02: all 0.2s ease;
+--tran-03: all 0.3s ease;
+--tran-04: all 0.4s ease;
+--tran-05: all 0.5s ease;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Arial', sans-serif;
+}
+
+body {
+background-color: var(--body-color);
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+overflow: hidden;
+}
+
+.pending-container {
+background-color: var(--background-white);
+border-radius: 15px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+padding: 40px;
+text-align: center;
+max-width: 500px;
+width: 100%;
+animation: fadeIn 1s ease;
+position: relative;
+}
+
+.pending-icon {
+font-size: 100px;
+color: var(--primary-color);
+margin-bottom: 20px;
+animation: pulse 2s infinite;
+}
+
+.pending-title {
+color: var(--text-primary);
+font-size: 24px;
+margin-bottom: 15px;
+}
+
+.pending-description {
+color: var(--text-color);
+margin-bottom: 25px;
+line-height: 1.6;
+}
+
+.status-indicator {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+}
+
+.dot {
+width: 15px;
+height: 15px;
+background-color: var(--primary-color);
+border-radius: 50%;
+margin: 0 10px;
+animation: loading 1.5s infinite;
+}
+
+.dot:nth-child(2) {
+animation-delay: 0.5s;
+}
+
+.dot:nth-child(3) {
+animation-delay: 1s;
+}
+
+.contact-info {
+margin-top: 30px;
+background-color: var(--primary-color-light);
+padding: 15px;
+border-radius: 10px;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.1); }
+}
+
+@keyframes loading {
+0%, 100% { opacity: 0.3; }
+50% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+.pending-container {
+    margin: 0 20px;
+    padding: 20px;
+}
+}
