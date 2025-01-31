@@ -1,0 +1,249 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+body:has(#sidebar.close) .pagecontent {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+.pagecontent{
+    margin-left: 250px; /*width of sidebar */ 
+    transition: margin-left 0.3s ease-in-out;
+    width: calc(100%- 250px);
+}
+
+.SidebarandSpecialOffers {
+    display: flex;
+}
+
+.SpecialOffers {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #6A0DAD;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.SpecialOffers h2{
+    font-family: "Inter", sans-serif;
+    text-align: center;
+}
+
+.SpecialOffers .content-1 {
+    display: flex;
+}
+
+.SpecialOffers a {
+    text-decoration: none;
+    color: #f2f2f2;
+}
+
+/* Add Button */
+.SpecialOffers .add {
+    display: table-column;
+    margin: 10px 0;
+    margin-right: auto;
+    padding: 8px 12px;
+    width: 70px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #b76feb;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.SpecialOffers .add:hover {
+    background-color: #6A0DAD;
+}
+
+/* Table Styles */
+.SpecialOffers table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.SpecialOffers table th,
+.SpecialOffers table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.SpecialOffers table th {
+    background-color: #f8f3fb;
+    color: #333;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid #6A0DAD;
+}
+
+.SpecialOffers table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Image Styles */
+.SpecialOffers .OfferImage {
+    width: 120px;
+    height: auto;
+    border-radius: 4px;
+    margin: 0.5rem;
+    display: grid;
+    border: 3px solid rgb(60, 60, 60);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.SpecialOffers .OfferImage:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(106, 13, 173, 0.2);
+    cursor: pointer;
+}
+
+/* Description Styles */
+/* .SpecialOffers td {
+    vertical-align: top;
+} */
+
+.SpecialOffers td img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Action Buttons */
+.SpecialOffers button {
+    display: grid;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #ffffff;
+    width: 70px;
+    background-color: #3d0466;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.SpecialOffers button.delete {
+    margin-bottom: 5px;
+    background-color: #ab5fe1;
+}
+
+.SpecialOffers button.delete:hover {
+    background-color:#6A0DAD ;
+}
+
+.SpecialOffers button.edit {
+    background-color: #ab5fe1;
+}
+
+.SpecialOffers button.edit:hover {
+    background-color: #6A0DAD;
+}
+
+/* Service Description styling */
+.ServiceDescription {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a5568;
+    max-width: 500px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+}
+
+.ServiceDescription:hover {
+    -webkit-line-clamp: unset;
+    cursor: pointer;
+}
+
+/* Name, Discount, and Date Styling */
+.name, .discount, .date {
+    font-size: 16px;
+    color: #4a5568;
+    text-align: center;
+}
+
+.name + h3, .discount + h3, .date + h3 {
+    color: #666;
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Details column styling */
+.SpecialOffers td:first-child {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        border: #6A0DAD;
+    }
+
+    table {
+        display: table;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    th, td {
+        text-align: right;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th::before, td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: bold;
+    }
+
+    td::before {
+        content: "";
+    }
+
+    button {
+        padding: 5px;
+        margin: 5px;
+    }
+
+    .name, .discount, .date {
+        font-size: 14px;
+    }
+
+    .name + h3, .discount + h3, .date + h3 {
+        font-size: 13px;
+    }
+
+    .OfferImage {
+        width: 100px;
+        max-width: 100%;
+    }
+
+    .OfferImage:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
