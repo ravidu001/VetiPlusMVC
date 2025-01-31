@@ -29,7 +29,7 @@ class Signup extends Controller {
                 }
             }
         } else {
-            $this->view('logindetail/signup', ['errors' => $user->errors]);
+            $this->view('logindetail/signup'); // remover user because it is out of the if statement
         }
 
 
