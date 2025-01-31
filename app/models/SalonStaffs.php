@@ -6,35 +6,33 @@ class SalonStaffs
 
     protected $table  = 'salonstaff';
 
-    // public function servicevalidation()
-    // {
-        
-    // }
-
     public function staffadd($data)
     {
-        $this->insert($data);
+      return  $this->insert($data);
     }
 
-    // public function servicedelete()
-    // {
+    public function wherestaff($staffID)
+    {
+        $this->order_column = 'staffID';
+        return $this->where(['staffID' => $staffID]);
+    }
 
-    // }
+    public function deletestaff($staffID)
+    {
+        return $this->delete($staffID, 'staffID');
+    }
 
-    // public function serviceupdate()
-    // {
+    public function updatestaff($staffID, $data)
+    {
+        return  $this->update($staffID, $data, 'staffID');
+    }
 
-    // }
-
-    // public function serviceview()
-    // {
-
-    // }
-
-    // public function servicefind()
-    // {
-
-    // }
+    public function findAllstaff()
+    {
+        $this->order_column = 'staffID';
+        return $this->findAll('staffID');
+    }
+    
 }
 
 ?>

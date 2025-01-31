@@ -1,0 +1,200 @@
+/* Global Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333; /* Default text color */
+  background-color: #f9f9f9;
+}
+
+.profileandnavabr {
+  display: flex;
+}
+
+/* Container Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Salon Profile Styles */
+.salon-profile {
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background: #fff;
+  margin-top: 20px;
+}
+
+.salon-header {
+  display: flex;
+  gap: 3rem;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.salon-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10%;
+  box-shadow: 10px 15px 10px rgba(106, 13, 173, 0.2);
+}
+
+.salon-info {
+  max-width: 500px;
+}
+
+/* Header and Star Rating Styles */
+.salon-name {
+  font-size: 35px;
+  color: #6a0dad;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.reviews {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  justify-content: center;
+}
+
+.star {
+  display: flex;
+  align-items: center;
+}
+
+.star i {
+  font-size: 20px;
+  color: #6a0dad;
+  margin-right: 5px;
+}
+
+.reveiwdetail {
+  display: flex;
+  align-items: center;
+}
+
+.rev {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+/* Salon Details */
+.salon-details {
+  font-size: 18px;
+  color: #333;
+  padding: 10px 0;
+  border-top: 3px solid #6a0dad;
+  border-bottom: 3px solid #6a0dad;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.salon-profile .edit a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Button Styles */
+.salon-profile button {
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 16px;
+  background-color: #6a0dad;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.edit:hover {
+  background-color: #da92f7;
+  color: #6a0dad;
+}
+
+/* Description and Section Title */
+.section-title {
+  font-size: 24px;
+  color: #6a0dad;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.salon-description {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Appointment Duration Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #6a0dad;
+  display: block;
+  margin-bottom: 8px;
+}
+
+select, input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #6a0dad;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #da92f7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .salon-header {
+      flex-direction: column;
+      gap: 1.5rem;
+  }
+
+  .salon-image {
+      max-width: 100%;
+  }
+
+  .salon-name, .section-title, .salon-description {
+      text-align: center;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

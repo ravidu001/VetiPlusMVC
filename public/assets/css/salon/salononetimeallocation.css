@@ -1,0 +1,165 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Optional: Add smooth scrolling for the whole page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Form Wrapper Styles */
+.form-wrapper {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* Close Button Styles */
+.pageclose {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #6a0dad;
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.pageclose:hover {
+    color: #da92f7;
+}
+
+/* Form Title Styles */
+.form-title {
+    font-size: 28px;
+    color: black;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #6a0dad;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: none;
+    color: black;
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: #6a0dad;
+}
+
+.form-group .required {
+    color: #ff4444;
+    margin-left: 4px;
+}
+
+.form-group input[type="date"]
+{
+    width: 96%;
+}
+
+.form-group select {
+    width:100%;
+}
+
+/* Input and Select Styles */
+.form-group input[type="date"],
+.form-group select {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #fff;
+    color: gray;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="date"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #6a0dad;
+}
+
+/* Submit Button Styles */
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #6a0dad;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+.submit-button i {
+    margin-right: 8px;
+}
+
+.submit-button:hover {
+    background-color: #da92f7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-wrapper {
+        padding: 20px;
+    }
+    
+    .form-title {
+        font-size: 24px;
+    }
+    
+    .submit-button {
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+
+/* Custom Select Styling */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a0dad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* Focus States */
+input:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.2);
+}

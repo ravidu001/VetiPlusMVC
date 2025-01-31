@@ -1,0 +1,168 @@
+/* General Styles */
+body {
+    font-family:"Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;   
+}
+
+body:has(#sidebar.close) .pagecontent {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+.header-name {
+    font-family:"Inter", sans-serif;
+    text-align: center;
+    
+}
+
+.pagecontent{
+    margin-left: 250px; /*width of sidebar */ 
+    transition: margin-left 0.3s ease-in-out;
+    width: calc(100%- 250px);
+}
+
+
+.StaffandSidebar {
+    display: flex;
+}
+
+.staff-content {
+    border: #6A0DAD solid 2px;
+    width: 90%;
+    margin: 50px auto;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.staff-content a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.staff-topic {
+    color: #6A0DAD;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.content-0 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+button.add {
+    display: table-column;
+    margin: 10px 0;
+    margin-right: auto;
+    padding: 8px 12px;
+    width: 70px;
+    font-size: 16px;
+    background-color: #ab5fe1;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.add:hover {
+    background-color: #6A0DAD;
+    color: #fff;
+}
+
+button.edit {
+    background-color: #ab5fe1;
+    color: #ffffff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.edit:hover {
+    background-color: #6A0DAD;
+    color: white;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.table th{
+    background-color: #f8f3fb;
+    color: #333;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid #6A0DAD;
+}
+
+.table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    color:#4a5568;
+}
+
+.table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Picture Styles */
+.staff-picture {
+    width: 70px;
+    height: 70px;
+    border-radius: 5%;
+    object-fit: cover;
+}
+
+.staff-picture:hover {
+    transform: scale(2.1);
+    transition: transform 0.2s ease;
+}
+
+
+
+
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .staff-content {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .content-0 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    button.add
+    button.edit {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px;
+    }
+}
+
+
+/* Optional: Add smooth scrolling for the whole page */
+html {
+    scroll-behavior: smooth;
+}

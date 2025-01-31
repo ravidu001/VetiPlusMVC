@@ -128,7 +128,7 @@
                         ?>
                     </div>
                     
-                    <form action="<?= ROOT ?>/login/login" method="POST" class="login-form">
+                    <form action="<?= ROOT ?>/Login/login" method="POST" class="login-form">
                         <div class="input-group">
                             <label for="email">
                             <img src="<?= ROOT ?>/assets/images/login/email.png" alt="Email" class="icon">
