@@ -13,10 +13,16 @@ class DoctorNewSession extends Controller {
         $dateTime = DateTime::createFromFormat('D M d Y', $selectedDate);
         $formattedDate = $dateTime->format('Y-m-d'); // Convert to 'YYYY-MM-DD'
     
+        // Format the start and end time to only include hours and minutes
+        $startTime = new DateTime($_POST['startTime']);
+        $endTime = new DateTime($_POST['endTime']);
+        $formattedStartTime = $startTime->format('H:i:s'); // Format to 'HH:MM:SS'
+        $formattedEndTime = $endTime->format('H:i:s'); // Format to 'HH:MM:SS'
+    
         $data = [
             'selectedDate' => $formattedDate,
-            'startTime' => $_POST['startTime'],
-            'endTime' => $_POST['endTime'],
+            'startTime' => $formattedStartTime,
+            'endTime' => $formattedEndTime,
             'clinicLocation' => $_POST['clinicLocation'],
             'district' => $_POST['district'],
             'doctorID' => $doctorID,

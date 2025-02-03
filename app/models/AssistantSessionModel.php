@@ -11,4 +11,13 @@ class AssistantSessionModel {
         $this->insert($data);
     }
 
+    public function getAssistantsession($sessionID) {
+        $this->order_column = 'assistantID';
+        $this->order_type = 'asc';
+        $this->limit = 10;
+        $result = $this->where(['sessionID' => $sessionID]);
+
+        return $result;
+    }
+
 }

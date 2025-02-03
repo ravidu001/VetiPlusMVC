@@ -20,5 +20,14 @@ class DoctorSessionModel {
         return $result[0]->sessionID;
     }
 
+    public function getsession($doctorID) {
+        $this->order_column = 'selectedDate';
+        $this->order_type = 'asc';
+        $this->limit = 100;
+        $result = $this->where(['doctorID' => $doctorID]);
+
+        return $result;
+    }
+
 }
 

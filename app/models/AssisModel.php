@@ -46,4 +46,11 @@ class AssisModel {
         return $result;
     }
 
+    public function getAssistant($assistantID) {
+        $result = $this->where(['assistantID' => $assistantID]);
+        
+        // Return the first result if it exists, otherwise return null
+        return !empty($result) ? $result[0] : null;
+    }
+
 }
