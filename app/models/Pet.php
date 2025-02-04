@@ -27,4 +27,6 @@ class Pet {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
     }
 
+    
+
 }
