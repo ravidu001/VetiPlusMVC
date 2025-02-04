@@ -13,14 +13,11 @@
     font-family: 'Arial', sans-serif;
 }
 
-body {
-    background-color: var(--body-color);
-    display: flex;
-}
 
 .main-container {
     padding: 20px;
-    transition: var(--transition);
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .complain-container {
@@ -34,7 +31,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .complain-header h1 {
@@ -43,16 +42,16 @@ body {
 }
 
 .search-filter {
-    display: flex;
-    gap: 15px;
+    position: relative;
 }
 
 .search-filter input {
-    padding: 10px;
-    border: 1.5px solid #e0e0e0;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
-    width: 250px;
+    width: 300px;
     transition: var(--transition);
+    font-size: 16px;
 }
 
 .search-filter input:focus {
@@ -60,77 +59,76 @@ body {
     border-color: var(--primary-color);
 }
 
-.complain-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 15px;
+.complaints-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
 }
 
-.complain-table thead {
-    background-color: #f9f9f9;
-}
-
-.complain-table th,
-.complain-table td {
-    padding: 15px;
-    text-align: left;
-    transition: var(--transition);
-}
-
-.complain-table th {
-    color: var(--primary-color);
-    text-transform: uppercase;
-    font-size: 14px;
-}
-
-.complain-table tbody tr {
+.complaint-card {
     background-color: #f8f8f8;
-    cursor: pointer;
+    border-radius: 12px;
+    padding: 24px;
     transition: var(--transition);
 }
 
-.complain-table tbody tr:hover {
+.complaint-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.complain-table .action-btn {
+.complaint-info {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.complain-table .action-btn:hover {
-    background-color: var(--background-light);
-}
-
-/* .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    gap: 10px;
-}
-
-.pagination button {
-    background-color: transparent;
-    border: 1.5px solid var(--primary-color);
+.info-group h3 {
     color: var(--primary-color);
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: var(--transition);
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
 }
 
-.pagination button:hover,
-.pagination button.active {
+.info-group p {
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.action-btn {
+    display: inline-block;
     background-color: var(--primary-color);
     color: white;
-} */
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-align: center;
+    transition: var(--transition);
+    margin-top: 8px;
+}
+
+.action-btn:hover {
+    background-color: #4a0b7c;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .complain-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-filter input {
+        width: 100%;
+    }
+
+    .complaints-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Hide cards that don't match search */
+.complaint-card.hidden {
+    display: none;
+}

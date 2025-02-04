@@ -18,7 +18,7 @@ class Pet {
         'profilePicture'
     ];
     public $userID;
-    @use this function at start to get the petOwnerID:
+    // Use this function at start to get the petOwnerID:
     private function getUserID () {
         $this->userID = $_SESSION['userID'];
     }
@@ -26,5 +26,7 @@ class Pet {
     public function createPetProfile() {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
     }
+
+    
 
 }
