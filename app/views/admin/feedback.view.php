@@ -32,7 +32,7 @@
 <div class="feedback-container">
 <?php foreach ($feedback as $feedback): ?>
         <div class="feedback-card">
-            <img src="../../assets/images/user.png" class="user-avatar">
+            <img src="../../../public/assets/images/systemAdmin/user.png" class="user-avatar">
             <h3 class="user-name"><?= htmlspecialchars($feedback->name, ENT_QUOTES, 'UTF-8') ?></h3>
             <p class="user-feedback"><?= htmlspecialchars($feedback->comment, ENT_QUOTES, 'UTF-8') ?></p>
             <div class="rating">
