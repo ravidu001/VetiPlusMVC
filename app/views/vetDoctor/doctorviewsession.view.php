@@ -93,9 +93,21 @@
     </div>
     <script src="<?= ROOT ?>/assets/js/calendar/calendar.js"></script>
     <script>
-    const sessionDates = ['2024-11-15', '2024-12-16', '2025-01-20'];
+    // Extract selected dates from PHP sessions array
+    const sessionDates = [
+        <?php 
+        // Loop through the sessions and echo the selectedDate values
+        foreach ($sessions as $data) {
+            echo '"' . htmlspecialchars($data['session']->selectedDate) . '",';
+        }
+        ?>
+    ];
+
+    // Remove the last comma if there are any dates
+    sessionDates.pop(); // This will remove the last empty element if any
+
     const isActiveDate = true;
-    </script>
+</script>
 </body>
 
 </html>
