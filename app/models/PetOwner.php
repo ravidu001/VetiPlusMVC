@@ -40,9 +40,15 @@ class PetOwner {
         return $userDetails;
     }
 
-    private function registerPetOwner () {
-        
-        $this->insert($data);
+    private function register ($data) {
+
+        $registerSuccess = $this->insert($data);
+
+        if ($registerSuccess) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public function createPetProfile() {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];

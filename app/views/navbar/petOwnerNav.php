@@ -1,4 +1,4 @@
-<?php $current_pg = basename($_SERVER['PHP_SELF']); ?>
+<?php $current_pg = basename(trim($_SERVER['REQUEST_URI'], '/')); ?>
 
 <nav class="navBar">
 
