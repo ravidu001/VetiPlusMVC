@@ -28,6 +28,7 @@ class DoctorNewSession extends Controller {
             'doctorID' => $doctorID,
             'note' => '',
             'publishedTime' => date('Y-m-d H:i:s'),
+            'completeStatus' => 0,
         ];
     
         try {

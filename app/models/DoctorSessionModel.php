@@ -5,7 +5,7 @@ class DoctorSessionModel {
 
     protected $table = 'session';
 
-    protected $allowedColumns = ['sessionID', 'selectedDate', 'startTime', 'endTime', 'publishedTime', 'clinicLocation', 'district', 'assistantID', 'doctorID', 'note'];
+    protected $allowedColumns = ['sessionID', 'selectedDate', 'startTime', 'endTime', 'publishedTime', 'clinicLocation', 'district', 'assistantID', 'doctorID', 'note', 'completeStatus'];
 
     public function insertData($data) {
         $this->insert($data);
@@ -27,6 +27,19 @@ class DoctorSessionModel {
         $result = $this->where(['doctorID' => $doctorID]);
 
         return $result;
+    }
+
+    public function deleteold($sessionID) {
+        if (!is_numeric($sessionID)) {
+            throw new InvalidArgumentException('Session ID must be numeric');
+        }
+    
+        // Call the delete method
+        return $this->delete($sessionID, 'sessionID');
+    }
+
+    public function updatecompleteStatus($sessionID, $data) {
+        $this->update($sessionID, $data, 'sessionID');
     }
 
 }
