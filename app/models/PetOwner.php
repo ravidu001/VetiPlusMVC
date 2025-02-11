@@ -7,7 +7,9 @@ class PetOwner {
     protected $order_column = 'petID';
 
     protected $allowedColumns = [ 
-        
+        'petOwnerID', 'fullName', 'profilePicture', 'gender', 'DOB', 'NIC',
+        'houseNo', 'streetName', 'city'
+        // ,'lastLogin'
     ];
 
     public $userID;
@@ -38,6 +40,10 @@ class PetOwner {
         return $userDetails;
     }
 
+    private function registerPetOwner () {
+        
+        $this->insert($data);
+    }
     public function createPetProfile() {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
     }
