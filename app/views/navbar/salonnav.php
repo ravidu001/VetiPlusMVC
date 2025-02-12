@@ -115,12 +115,22 @@
                 </li>
 
                 <li>
-                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonFeedback' ? 'active' : '' ?>"> 
-                    <a href="<?= ROOT?>/SalonFeedback">
+
+                <li>
+                    <button onclick="toggleSubMenu(this)" class="dropdown-btn">
                         <i class='bx bxs-message icon'></i>
                         <span>Feedback</span>
-                    </a>
-                </li>
+                        <i class='bx bx-chevron-down'></i>
+                    </button>
+                    <ul class="sub-menu">
+                        <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonFeedback' ? 'active' : '' ?>"> 
+                            <a href="<?= ROOT?>/SalonFeedback">My Reviews</a>
+                        </li>
+                        <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonResponse' ? 'active' : '' ?>">
+                            <a href="<?= ROOT?>/SalonResponse">To Reviews</a>
+                        </li>
+                    </ul>
+                </li> 
 
                 <li>
                 <!-- <li class="nav-link "> 
