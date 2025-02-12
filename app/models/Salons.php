@@ -12,6 +12,12 @@ class Salons
         //if has return the row of the user data
         return $this->first(['salonID' => $salonId]);
     }
+
+    //update the salon time details
+    public function updateSalonTimeSlots($salonID, $data)
+    {
+        $this->update( $salonID , $data , 'salonID');
+    }
 }
 
 ?>
