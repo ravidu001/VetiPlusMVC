@@ -16,7 +16,7 @@ class PetOwner {
 
     /**
      * Get the userID stored in server sessionStorage from when logging in
-     * @return int The user ID.
+     * @return void
     */
     private function getUserID () {
         $this->userID = $_SESSION['userID'];
@@ -40,15 +40,19 @@ class PetOwner {
         return $userDetails;
     }
 
+    /**
+     * Register and insert the user details into database
+     * @return bool  - whether registration successful or not.
+    */
     private function register ($data) {
-
         $registerSuccess = $this->insert($data);
-
-        if ($registerSuccess) {
-            return true;
-        } else {
-            return false;
-        }
+        // if ($registerSuccess) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+        
+        return $registerSuccess ? true : false;
     }
     public function createPetProfile() {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];

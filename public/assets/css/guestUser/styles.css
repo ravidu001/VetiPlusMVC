@@ -20,8 +20,8 @@ body {
     display: flex;
     flex-direction: column;
 
-    background-image: url('../../images/guestUser/pawBG-2-2.png');
-    background-size: contain;
+    /* background-image: url('../../images/guestUser/dalo-pawbg.png');
+    background-size: contain; */
 }
 
 section {
@@ -31,9 +31,9 @@ section {
     display: flex;
     justify-content: center;
 }
-div, section {
+/* div, section {
     backdrop-filter: blur(5px);
-}
+} */
 
 /* .blurBG {
     filter: blur(5px);

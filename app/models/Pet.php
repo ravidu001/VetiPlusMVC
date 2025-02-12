@@ -15,7 +15,7 @@ class Pet {
 
     /**
      * confirmation of user ID
-     * @return int The user ID.
+     * @return void
     */
     private function getUserID () {
         $this->userID = $_SESSION['userID'];
@@ -23,7 +23,7 @@ class Pet {
 
     public function createPetProfile() {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
-        $this->insert()
+        $this->insert();
     }
 
 }
