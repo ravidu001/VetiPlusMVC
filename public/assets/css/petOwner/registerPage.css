@@ -1,27 +1,30 @@
+body {
+    background-image: linear-gradient(to top right, var(--background-color), var(--primary-color));
+}
+
 .formContainer {
     border-radius: 20px;
-    border: 2px solid var(--primary-border-color);
     padding: 2em;
 
     width: 80vw;
-    margin: 1em auto 1em auto;
+    margin: 3em auto;
 
     display: flex;
     justify-content: center;
     gap: 2rem;
+
+    background-color: rgba(248, 249, 250, 0.15);
+    backdrop-filter: blur(30px);
 }
 
 .formContainer .logoPart {
-    background-color: var(--primary-bg-color);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 
     width: 40%;
-    border-radius: 10px;
     padding: 1em;
-
 }
 .logoPart img {
     width: 100%;
@@ -30,15 +33,15 @@
 
     animation: bounce 3s infinite;
 }
-
 @keyframes bounce {
     0%, 100% {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-15px);
     }
 }
+
 form {
     display: flex;
     flex-direction: column;
@@ -50,6 +53,8 @@ form fieldset {
     gap: 5px;
 
     border: 1px solid var(--shadow-color);
+    border-radius: 5px;
+
     padding: 15px;
     margin-bottom: 15px;
 
@@ -58,12 +63,26 @@ form fieldset {
 form fieldset legend {
     font-weight: bold;
 }
+form label {
+    font-size: 1rem;
+    font-weight: 500;
+}
 form input {
     padding: 5px;
     font-size: 1rem;
+
+    background-color: var(--background-color);
+    border-radius: 5px;
+}
+form input[type=radio] {
+    width: 1em;
+    height: 1em;
 }
 form input:valid {
     border: 2px solid green;
+}
+form input:user-invalid {
+    border: 2px solid red;
 }
 form input[type=date]:invalid {
     color: grey;
@@ -76,16 +95,7 @@ form input[type=date]:invalid {
 }
 .formButtons button {
     padding: 5px;
-
     font-size: 1.2em;
-
     border-radius: 10px;
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-
     width: 10vw;
-}
-.formButtons button:hover {
-    cursor: pointer;
-    background-color: var(--button-hover-bg-color);
 }

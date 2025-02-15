@@ -6,7 +6,8 @@ class PO_register extends Controller {
     }
 
     /**
-     * receives the form data from the pet owner registration form, checks and passes it to the model to be inserted
+     * Receives the form data from the pet owner registration form, checks and passes it to the model to be inserted.
+     * Returns json object back to view with success or failure message
      * @return void
      */
     public function petOwnerRegister () {
@@ -26,12 +27,12 @@ class PO_register extends Controller {
 
         header('Content-Type: application/json');
         if ($insertSuccess) {
-            echo json_encode(["status" => "Success",
-                                    "message" => "Registration successful! 😺\nWelcome to VetiPlus!"]);
+            echo json_encode(["status" => "success",
+                            "message" => "Registration successful! 😺\nWelcome to VetiPlus!"]);
             exit();
         } else {
-            echo json_encode(["status" => "Failure",
-                                    "message" => "Registration unsuccessful. 🙀\nPlease try again later."]);
+            echo json_encode(["status" => "failure",
+                            "message" => "Registration unsuccessful. 🙀\nPlease try again later."]);
             exit();
         }
     }

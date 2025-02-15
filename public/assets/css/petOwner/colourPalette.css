@@ -1,4 +1,4 @@
-/* Light Theme */
+/* Light Theme by default*/
 body {
     --background-color: #f8f9fa;           /* for body background */
     
@@ -17,7 +17,7 @@ body {
 
     /* Button and Hover Effects */
     --button-color: #9b009b;            /* when hovering */
-    --button-hover-color: #2e00ff;      /* Darker blue for button hover */
+    --button-hover-color: #2c215c;      /* Darker blue for button hover */
     --button-text-color: #d6d6d6;          /* text on buttons */
 }
 
@@ -40,7 +40,7 @@ body.darkTheme {
 
     /* Button and Hover Effects same as light */
     --button-color: #9b009b;            /* when hovering */
-    --button-hover-color: #2e00ff;      /* Darker blue for button hover */
+    --button-hover-color: #2c215c;      /* Darker blue for button hover */
     --button-text-color: #d6d6d6;          /* text on buttons */
 }
 
@@ -51,4 +51,13 @@ body {
 nav, footer {
     background-color: var(--nav-bg-color);
     color: var(--nav-text-color)
+}
+button {
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+}
+button:hover {
+    background-color: var(--button-hover-color);
+    transition: 0.3s;
+    cursor: pointer;
 }
