@@ -26,7 +26,7 @@ class PetOwner {
      * Get the user details from the database
      * @return array The user details.
     */
-    private function getUserDetails () {
+    public function getUserDetails () {
         $this->getUserID();
         // try 
         // {
@@ -42,18 +42,16 @@ class PetOwner {
 
     /**
      * Register and insert the user details into database
-     * @return bool  - whether registration successful or not.
+     * @return bool  whether registration successful or not.
     */
-    private function register ($data) {
-        $registerSuccess = $this->insert($data);
-        // if ($registerSuccess) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
-        
-        return $registerSuccess ? true : false;
+    public function register () {
+    // public function register ($data) {
+        // $registerSuccess = $this->insert($data);
+        // return $registerSuccess ? true : false;
+        return true;
     }
+
+    
     public function createPetProfile() {
         $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
     }

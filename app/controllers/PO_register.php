@@ -21,18 +21,32 @@ class PO_register extends Controller {
             'streetName' => htmlspecialchars(trim($_POST['streetName'] ?? '')),
             'city' => htmlspecialchars(trim($_POST['city'] ?? ''))
         ];
-        $newPetOwner = new PetOwner;
-        
-        $insertSuccess = $newPetOwner->insert($data);
+        try {
+            $newPetOwner = new PetOwner;
+            
+            // $insertSuccess = $newPetOwner->register();
+            $insertSuccess = true;
+        }
+        catch (Exception $e) {
+            $insertSuccess = false;
+        }
+        // $insertSuccess = $newPetOwner->register($data);
+        // $insertSuccess = true;
 
         header('Content-Type: application/json');
         if ($insertSuccess) {
             echo json_encode(["status" => "success",
-                            "message" => "Registration successful! 😺\nWelcome to VetiPlus!"]);
+                            "title" => "Success! 😺",
+                            "message" => "Registration successful! 😺\nWelcome to VetiPlus!",
+                            "icon" => ROOT."/assets/images/petOwner/success.png",
+                        ]);
             exit();
         } else {
             echo json_encode(["status" => "failure",
-                            "message" => "Registration unsuccessful. 🙀\nPlease try again later."]);
+                            "title" => "Failure! 🙀",
+                            "message" => "Registration unsuccessful. 🙀\nPlease try again later.",
+                            "icon" => ROOT."/assets/images/petOwner/fail.png"
+                        ]);
             exit();
         }
     }

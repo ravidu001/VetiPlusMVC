@@ -1,6 +1,6 @@
 <?php
 
-class PetOwner extends Controller {
+class PO_dashboard extends Controller {
     public function index() {
         $this->view('petowner/home');
     }

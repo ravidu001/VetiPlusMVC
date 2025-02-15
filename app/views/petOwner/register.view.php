@@ -34,7 +34,7 @@
             <form id="petOwnerRegisterForm" method="post" action="<?= ROOT ?>/PO_register/petOwnerRegister">
                 <h1>Pet Owner Signup</h1>
                 <fieldset>
-                    <legend>Personal Details</legend>
+                    <!-- <legend>Personal Details</legend>
                     <label for="name">Name</label>
                         <input type="text" id="name" name="name" minlength="5" placeholder="eg: John Doe" required>
                     <?php 
@@ -64,7 +64,7 @@
                         <input type="text" id="streetName" name="streetName" placeholder="eg: Hena Road" required>
                     <label for="city">City</label>
                         <input type="text" id="city" name="city" placeholder="eg: Mount-Lavinia" required>
-                </fieldset>
+                </fieldset> -->
                 
                 <span id="errorMsg"></span>
                 <div class="formButtons">
@@ -77,43 +77,55 @@
         <!-- footer at page's bottom: -->
         <?php include_once '../app/views/navbar/guestFooter.php'; ?>
 
+        <script src="<?=ROOT?>/assets/js/petOwner/fetchHandler.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
+
         <script>
-            document.getElementById('petOwnerRegisterForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-                const formData = new FormData(this);
+            const myObj = {
+                status: 'success',
+                message: 'This is a popup 😍😍. All other elements are blurred.<br>oho',
+                icon: "C:/Users/spjoh/Downloads/success.png",
+                nextPage: ''
+            };
+        </script>
 
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error(`HTTP Error: ${response.status}`);
-                    }
-                })
-                .then(data => {
-                    if (data.status === 'success') {
-                        const popUp = document.querySelector('.poopUpContainer');
+        <script>
+            // document.getElementById('petOwnerRegisterForm').addEventListener('submit', function (event) {
+            //     event.preventDefault();
+            //     const formData = new FormData(this);
 
-                        popUp.querySelector('.popUpIcon').src = '<?= ROOT ?>/assets/images/petOwner/success.png';
-                        popUp.querySelector('.popUpMsg').textContent = data.message;
-                        popUp.style.display = 'block';
+            //     fetch(this.action, {
+            //         method: 'POST',
+            //         body: formData,
+            //     })
+            //     .then(response => {
+            //         if (response.ok) {
+            //             return response.json();
+            //         } else {
+            //             throw new Error(`HTTP Error: ${response.status}`);
+            //         }
+            //     })
+            //     .then(data => {
+            //         if (data.status === 'success') {
+            //             const popUp = document.querySelector('.poopUpContainer');
 
-                        setTimeout(() => {
-                            popUp.style.display = 'none';
-                        }, 5000);
-                        // window.location.href = '<?= ROOT.'/client/pages/petOwner/home.php' ?>';
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('An error occurred\n'+ error);
-                    alert('An error occurred.\nPlease try again later.\n'+ error);
-                })
-            })
+            //             popUp.querySelector('.popUpIcon').src = '<?= ROOT ?>/assets/images/petOwner/success.png';
+            //             popUp.querySelector('.popUpMsg').textContent = data.message;
+            //             popUp.style.display = 'block';
+
+            //             setTimeout(() => {
+            //                 popUp.style.display = 'none';
+            //             }, 5000);
+            //             // window.location.href = '<?= ROOT.'/client/pages/petOwner/home.php' ?>';
+            //         } else {
+            //             alert(data.message);
+            //         }
+            //     })
+            //     .catch(error => {
+            //         console.error('An error occurred\n'+ error);
+            //         alert('An error occurred.\nPlease try again later.\n'+ error);
+            //     })
+            // })
         </script>
     </body>
 </html>

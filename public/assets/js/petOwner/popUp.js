@@ -1,76 +1,71 @@
-function showPopup(response) {
-    const popup = document.getElementById('popup');
-    const popupMessage = document.getElementById('popupMessage');
-    const popupButton = document.getElementById('popupButton');
+// ***********************************************************
+// this JS file is only to be included in view files that may need to display a popup message.
+// ***********************************************************
 
-    if (response.status === 'Success') {
-        popupMessage.innerText = `Success: ${response.msg}`;
-        popupButton.innerText = 'Next';
+document.addEventListener('DOMContentLoaded', function() {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = './assets/css/petOwner/popup.css';
+    document.head.appendChild(link);
+
+    const popupHTML = `
+        <!-- Popup -->
+        <div class="popup">
+            <h2 class="popUpTitle"></h2>
+            <img src="" alt="popUpIcon" class="popUpIcon">
+            <p class="popUpMsg"></p>
+            <button class="close-popup-button">Close</button>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('afterbegin', popupHTML);
+});
+
+
+// queryObject is a JSON object with the following properties:
+    // title: the title to be displayed
+    // message:  the message to be displayed
+    // icon: the path to the icon to be displayed
+    // nextPage: the URL to redirect to after the popup is closed
+function displayPopUp(queryObject) {
+    document.body.classList.add('popup-active');
+
+    const myPopup = document.querySelector('.popup');
+    myPopup.style.display = 'flex';
+    myPopup.querySelector('.popUpTitle').textContent = queryObject.title;
+    myPopup.querySelector('.popUpMsg').innerHTML = queryObject.message;
+    myPopup.querySelector('.popUpIcon').src = queryObject.icon;
+
+    // Trigger the float-down effect
+    setTimeout(() => {
+        myPopup.style.transform = 'translate(-50%, -50%)';
+        myPopup.style.opacity = '1';
+    }, 10);
+
+    if (queryObject.nextPage) {
+        document.querySelector('.close-popup-button').style.display = 'none';
+
         setTimeout(() => {
-            window.location.href = response.next;
-        }, 10000);
-    } else {
-        popupMessage.innerText = `Failure: ${response.msg}`;
-        popupButton.innerText = 'Back';
+            myPopup.style.transform = 'translate(-50%, -100px)';
+            myPopup.style.opacity = '0';
+        }, 5400);
+
         setTimeout(() => {
-            window.history.back();
-        }, 10000);
+            window.location.href = queryObject.nextPage;
+        }, 6000);
+
     }
 
-    popupButton.onclick = () => {
-        if (response.status === 'Success') {
-            window.location.href = response.next;
-        } else {
-            window.history.back();
-        }
-    };
+    document.querySelector('.close-popup-button').addEventListener('click', function() {
+        myPopup.style.transform = 'translate(-50%, -100px)';
+        myPopup.style.opacity = '0';
 
-    popup.style.display = 'block';
-    document.body.classList.add('blur-background');
-}
+        setTimeout(() => {
+            myPopup.style.display = 'none';
+            document.body.classList.remove('popup-active');
 
-// Example usage:
-// showPopup({ status: 'Success', msg: 'Operation completed successfully', next: '/nextPage' });
-// showPopup({ status: 'Failure', msg: 'Operation failed', next: '/retryPage' });
-
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <p id="popupMessage"></p>
-        <button id="popupButton"></button>
-    </div>
-</div>
-
-/* CSS for the popup and blurred background */
-.popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-}
-
-.popup-content {
-    text-align: center;
-}
-
-#popupButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-#popupButton:hover {
-    background-color: #0056b3;
-}
-
-.blur-background {
-    filter: blur(5px);
-    transition: filter 0.3s;
+            if (queryObject.nextPage)
+                window.location.href = queryObject.nextPage;
+            
+        }, 500);
+    });    
 }
