@@ -1,6 +1,6 @@
 footer.myFooter {
     margin: 0;
-    border-top: 2px solid var(--primary-border-color);
+    /* width:  100%; */
 
     display: flex;
     align-items: center;

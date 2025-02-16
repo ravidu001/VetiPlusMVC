@@ -18,8 +18,7 @@ class PO_register extends Controller {
     }
     /**
      * Receives the form data from the pet owner registration form, checks and passes it to the model to be inserted.
-     * Returns json object back to view with success or failure message
-     * @return void
+     * Returns JSON object back to view page with success or failure message
      */
     public function petOwnerRegister () {
         $sanitized = array_map('sanitizeInput', $_POST);
@@ -67,12 +66,11 @@ class PO_register extends Controller {
             $insertSuccess = $newPetOwner->register($sanitized);
             
             if ($insertSuccess) {
-            // if (empty($insertSuccess)) {
                 echo json_encode(["status" => "success",
                                 "title" => "Success! 😺",
                                 "message" => "Registration successful! 😺\nWelcome to VetiPlus!",
                                 "icon" => ROOT."/assets/images/petOwner/success.png",
-                                "nextPage" => "PO_dashboard"
+                                "nextPage" => "PO_home"
                             ]);
                 exit();
             } else {

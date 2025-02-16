@@ -1,5 +1,5 @@
 /* Light Theme by default*/
-body {
+body, body.lightTheme {
     --background-color: #f8f9fa;           /* for body background */
     
     --primary-color: #6a0dad;               /* main colour for borders and other important stuff */

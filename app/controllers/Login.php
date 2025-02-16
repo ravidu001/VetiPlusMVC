@@ -84,7 +84,7 @@ class Login extends Controller
                                 break;
                             case 'Pet Owner':
                                 $_SESSION['petOwnerID'] = $registered->email;
-                                redirect('PO_dashboard');
+                                redirect('PO_home');
                                 break;
                             case 'Salon':
                                 $_SESSION['SALON_USER'] = $registered->email;

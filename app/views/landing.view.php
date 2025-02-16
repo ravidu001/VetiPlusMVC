@@ -10,7 +10,7 @@
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet">
+        <!-- <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet"> -->
         <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/hero.css" rel="stylesheet">
 

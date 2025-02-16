@@ -1,6 +1,6 @@
 <?php
 
-class PO_dashboard extends Controller {
+class PO_home extends Controller {
     public function index() {
         $this->view('petowner/home');
     }

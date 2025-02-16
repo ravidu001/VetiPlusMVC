@@ -1,5 +1,19 @@
 <?php $current_pg = basename(trim($_SERVER['REQUEST_URI'], '/')); ?>
 
+<!-- This style part is for if there's any FOUC -->
+<!-- <style>
+    .navbar { visibility: hidden; }
+</style> -->
+
+<!-- Link the css file dynamically: -->
+<script>
+    let link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = "<?= ROOT ?>/assets/css/guestUser/navBar.css";
+    // link.onload = () => document.getElementById('navbar').style.visibility = 'visible';
+    document.head.appendChild(link);
+</script>
+
 <nav class="navBar">
 
     <img src="<?= ROOT ?>/assets/images/common/logo-nobg.png" alt="VetiPlus logo" id="navBar-logo">
