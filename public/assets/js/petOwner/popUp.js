@@ -22,11 +22,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // queryObject is a JSON object with the following properties:
-    // title: the title to be displayed
-    // message:  the message to be displayed
-    // icon: the path to the icon to be displayed
-    // nextPage: the URL to redirect to after the popup is closed
+// title: the title to be displayed
+// message:  the message to be displayed
+// icon: the path to the icon to be displayed
+// nextPage: the URL to redirect to after the popup is closed
 function displayPopUp(queryObject) {
+
+    // check if php says that the form's input are invalid
+    if (queryObject.status == 'inputFail') {
+        // document.querySelector('.errorMsg').innerHTML = queryObject.message;
+        const errorMsgContainer = document.querySelector('.errorMsg');
+        const messages = queryObject.message.split(';');
+        const ul = document.createElement('ul');
+        
+        messages.forEach(msg => {
+            const li = document.createElement('li');
+            li.textContent = msg.trim();
+            ul.appendChild(li);
+        });
+
+        errorMsgContainer.innerHTML = '';
+        errorMsgContainer.appendChild(ul);
+        return;
+    }
+
     document.body.classList.add('popup-active');
 
     const myPopup = document.querySelector('.popup');

@@ -4,30 +4,40 @@ class PetOwner {
     use Model;
 
     protected $table = 'petowner';
-    protected $order_column = 'petID';
+    public $petOwnerID;
 
     protected $allowedColumns = [ 
-        'petOwnerID', 'fullName', 'profilePicture', 'gender', 'DOB', 'NIC',
+        'petOwnerID', 'fullName', 'profilePicture', 'contactNumber', 'gender', 'DOB', 'NIC',
         'houseNo', 'streetName', 'city'
         // ,'lastLogin'
     ];
+    
+    public function __construct() {
+        $this->order_column = 'petOwnerID ';  // Overriding order_column here
 
-    public $userID;
-
-    /**
-     * Get the userID stored in server sessionStorage from when logging in
-     * @return void
-    */
-    private function getUserID () {
-        $this->userID = $_SESSION['userID'];
+        if (isset($_SESSION['petOwnerID'])) {
+            $this->petOwnerID = $_SESSION['petOwnerID'];
+        } else {
+            redirect('Login');
+        }
+        $this->petOwnerID = isset($_SESSION['petOwnerID']) ? $_SESSION['petOwnerID'] : 'sp.john.manuel737@gmail.com';
     }
+    // public $petOwnerID = $_SESSION['petOwnerID'];
+
+    // /**
+    //  * Get the userID stored in server sessionStorage from when logging in
+    //  * @return petOwnerID
+    // */
+    // private function getUserID () {
+    //     // $this->petOwnerID = $_SESSION['petOwnerID'];
+    //     return $this->petOwnerID;
+    // }
 
     /**
      * Get the user details from the database
      * @return array The user details.
     */
     public function getUserDetails () {
-        $this->getUserID();
         // try 
         // {
         //     $userDetails = $this->where(['userID' => $this->userID]);
@@ -36,7 +46,7 @@ class PetOwner {
         // catch (Exception $e) {
         //     return $e->getMessage();
         // }
-        $userDetails = $this->where(['userID' => $this->userID]);
+        $userDetails = $this->where(['petOwnerID' => $this->petOwnerID]);
         return $userDetails;
     }
 
@@ -44,11 +54,11 @@ class PetOwner {
      * Register and insert the user details into database
      * @return bool  whether registration successful or not.
     */
-    public function register () {
-    // public function register ($data) {
-        // $registerSuccess = $this->insert($data);
-        // return $registerSuccess ? true : false;
-        return true;
+    public function register ($data) {
+        $data['petOwnerID'] = $this->petOwnerID;
+
+        $registerSuccess = $this->insert($data);
+        return empty($registerSuccess) ? true : false;
     }
 
     

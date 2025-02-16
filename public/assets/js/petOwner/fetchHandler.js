@@ -1,5 +1,5 @@
 // ***************************************************************
-// this JS file is only to be included in view files that have forms that need to be submitted via fetch API.
+// this JS file is only to be included in view files that have forms that need to be submitted via fetch.
 // ***************************************************************
 
 
