@@ -161,7 +161,7 @@
             <div class="bottomcontent">
                 <ul>
                     <li>
-                        <a href="../../pages/login-singup/logout.php">
+                        <a href="<?= ROOT?>/Login">
                             <i class='bx bx-log-out icon'></i>
                             <span>Log Out</span>
                         </a>
