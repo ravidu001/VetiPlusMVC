@@ -8,14 +8,16 @@ document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', fetchHandler);
 });
 
+/**
+ * Send the form's data to its specified action function, get the response, and do accordingly
+ * @param {*} event The form being submitted
+ */
 async function fetchHandler(event) {
     event.preventDefault(); // Prevent default form submission
-
     const form = event.target; // The form that was submitted
 
     const formAction = form.getAttribute('action');
     const formMethod = form.getAttribute('method');
-
     const formData = new FormData(form); // Collect form data
 
     try {
@@ -23,15 +25,27 @@ async function fetchHandler(event) {
             method: formMethod || 'POST',
             body: formData,
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        // const data = await response.text();
-        // console.log(JSON.parse(data));
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const data = await response.json();
+
+        // check if php says that the form's input are invalid
+        if (queryObject.status == 'inputFail') {
+            const errorMsgContainer = document.querySelector('.errorMsg');
+            const messages = queryObject.message.split(';');
+            const ul = document.createElement('ul');
+            
+            messages.forEach(msg => {
+                const li = document.createElement('li');
+                li.textContent = msg.trim();
+                ul.appendChild(li);
+            });
+
+            errorMsgContainer.innerHTML = '';
+            errorMsgContainer.appendChild(ul);
+            return;
+        }
+        
         displayPopUp(data);
 
     } catch (error) {
