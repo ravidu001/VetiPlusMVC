@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="central">
-        <img src="<?= ROOT ?>/assets/images/vetiplus-logo.png" alt="logo">
+        <img src="<?= ROOT ?>/assets/images/petOwner/vp-logo.png" alt="logo">
         <h2>VetiPlus</h2>
         <p>
             Copyright 2024 vetiplus@gmail.com<br/>

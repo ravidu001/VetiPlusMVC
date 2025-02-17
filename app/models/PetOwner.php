@@ -9,7 +9,7 @@ class PetOwner {
     protected $allowedColumns = [ 
         'petOwnerID', 'fullName', 'profilePicture', 'contactNumber', 'gender', 'DOB', 'NIC',
         'houseNo', 'streetName', 'city'
-        // ,'lastLogin'
+        ,'lastLogin'
     ];
     
     public function __construct() {
@@ -20,38 +20,22 @@ class PetOwner {
         } else {
             redirect('Login');
         }
-        $this->petOwnerID = isset($_SESSION['petOwnerID']) ? $_SESSION['petOwnerID'] : 'sp.john.manuel737@gmail.com';
+        // $this->petOwnerID = isset($_SESSION['petOwnerID']) ? $_SESSION['petOwnerID'] : 'sp.john.manuel737@gmail.com';
     }
-    // public $petOwnerID = $_SESSION['petOwnerID'];
-
-    // /**
-    //  * Get the userID stored in server sessionStorage from when logging in
-    //  * @return petOwnerID
-    // */
-    // private function getUserID () {
-    //     // $this->petOwnerID = $_SESSION['petOwnerID'];
-    //     return $this->petOwnerID;
-    // }
 
     /**
-     * Get the user details from the database
+     * Get the petOwner's details from the database
      * @return array The user details.
     */
     public function getUserDetails () {
-        // try 
-        // {
-        //     $userDetails = $this->where(['userID' => $this->userID]);
-        //     return $userDetails;
-        // } 
-        // catch (Exception $e) {
-        //     return $e->getMessage();
-        // }
         $userDetails = $this->where(['petOwnerID' => $this->petOwnerID]);
         return $userDetails;
     }
 
+
     /**
      * Register and insert the user details into database
+     * @param array $data The petOwner's details to be inserted
      * @return bool  whether registration successful or not.
     */
     public function register ($data) {

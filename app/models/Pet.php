@@ -4,26 +4,46 @@ class Pet {
     use Model;
 
     protected $table = 'pet';
-    protected $order_column = 'petID';
+    public $petOwnerID;
 
     protected $allowedColumns = [
         'petID', 'petOwnerID', 'name', 'DOB', 'gender', 'weight', 
         'species', 'breed', 'breedAvailable', 'breedDescription', 'profilePicture'
     ];
 
-    public $userID;
+    public function __construct() {
+        $this->order_column = 'petID ';  // Overriding order_column here
 
-    /**
-     * confirmation of user ID
-     * @return void
-    */
-    private function getUserID () {
-        $this->userID = $_SESSION['userID'];
+        if (isset($_SESSION['petOwnerID'])) {
+            $this->petOwnerID = $_SESSION['petOwnerID'];
+        } else {
+            redirect('Login');
+        }
     }
 
-    public function createPetProfile() {
-        $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
-        $this->insert();
+    /**
+     * Based on the petOwner ID return all the pets' details
+     * @return array|false 
+    */
+    public function getPetsDetails () {
+        $petDetailsArray = $this->where(['petOwnerID' => $this->petOwnerID]);
+        return $petDetailsArray;
+    }
+
+    public function getOnePet () {
+
+    }
+    
+    /**
+     * Register and insert the pet's details into database
+     * @param array $data The pet's details to be inserted
+     * @return bool Whether registration successful or not.
+    */
+    public function register ($data) {
+        $data['petOwnerID'] = $this->petOwnerID;
+
+        $registerSuccess = $this->insert($data);
+        return empty($registerSuccess) ? true : false;
     }
 
 }

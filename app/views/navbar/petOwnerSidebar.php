@@ -9,7 +9,7 @@
 
 <nav class="sideBar">
 
-    <img src="<?= ROOT ?>/assets/images/common/logo-nobg.png" alt="VetiPlus logo" id="sideBar-logo">
+    <img src="<?= ROOT ?>/assets/images/petOwner/vp-logo.png" alt="VetiPlus logo" id="sideBar-logo">
 
     <div class="links">
         <a href="<?= ROOT ?>/PO_home"
