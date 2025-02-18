@@ -19,6 +19,12 @@ class Salons
        return $this->update( $salonID , $data , 'salonID');
     }
 
+    //delete salon profile picture
+    public function DeleteProfile($salonID)
+    {
+        return $this->deleteOne( $salonID, 'profilePicture', 'salonID');
+    }
+
     //insert the data in to the table
     public function insertData($arr)
     {
