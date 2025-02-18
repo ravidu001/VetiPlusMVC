@@ -6,6 +6,10 @@
             padding: 20px;
             background-color: #f4f4f4;
         } */
+        body{
+            background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+        }
+        
         .container {
             margin: 3rem;
             width: 150%;
