@@ -1,200 +1,353 @@
-/* Global Styles */
-body {
-  font-family: 'Roboto', sans-serif;
+
+:root {
+  --primary-color: rgb(83, 10, 166);
+  --secondary-color: #f4f4f4;
+  --text-color: #333;
+  --white: #ffffff;
+  --accent-color: #2c3e50;
+  --success-color: #b247ca;
+  --error-color: #e74c3c;
+}
+
+* {
   margin: 0;
   padding: 0;
-  color: #333; /* Default text color */
-  background-color: #f9f9f9;
+  box-sizing: border-box;
 }
 
-.profileandnavabr {
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: var(--secondary-color);
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+body:has(#sidebar.close) .pagecontent {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+}
+
+
+.pagecontent{
+  margin-left: 280px; /*width of sidebar */ 
+  transition: margin-left 0.3s ease-in-out;
+  width: calc(100%- 280px);
+}
+
+.profile-container {
   display: flex;
-}
-
-/* Container Styles */
-.container {
   max-width: 1200px;
-  margin: 0 auto;
+  height:600px;
+  margin: 20px auto;
+  background-color: var(--white);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: var(--primary-color);
+  color: var(--white);
   padding: 20px;
 }
 
-/* Salon Profile Styles */
-.salon-profile {
-  position: relative;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  background: #fff;
-  margin-top: 20px;
-}
-
-.salon-header {
-  display: flex;
-  gap: 3rem;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-.salon-image {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 10%;
-  box-shadow: 10px 15px 10px rgba(106, 13, 173, 0.2);
-}
-
-.salon-info {
-  max-width: 500px;
-}
-
-/* Header and Star Rating Styles */
-.salon-name {
-  font-size: 35px;
-  color: #6a0dad;
-  margin-bottom: 10px;
+.profile-header {
   text-align: center;
+  margin-bottom: 30px;
 }
 
-.reviews {
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--white);
+}
+
+.navigation ul {
+  list-style: none;
+}
+
+.nav-item {
+  padding: 12px 15px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
-  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 5px;
 }
 
-.star {
-  display: flex;
-  align-items: center;
+.nav-item:hover {
+  background-color: rgba(255,255,255,0.1);
 }
 
-.star i {
-  font-size: 20px;
-  color: #6a0dad;
-  margin-right: 5px;
+.nav-item.active {
+  background-color: rgba(255,255,255,0.2);
 }
 
-.reveiwdetail {
-  display: flex;
-  align-items: center;
-}
-
-.rev {
-  font-size: 16px;
-  color: #333;
-  margin: 0;
-}
-
-/* Salon Details */
-.salon-details {
+.nav-item i {
   font-size: 18px;
-  color: #333;
-  padding: 10px 0;
-  border-top: 3px solid #6a0dad;
-  border-bottom: 3px solid #6a0dad;
-  margin-top: 10px;
+  width: 25px;
   text-align: center;
 }
 
-.salon-profile .edit a {
-  text-decoration: none;
-  color: #fff;
+.content {
+  flex-grow: 1;
+  padding: 30px;
 }
 
-/* Button Styles */
-.salon-profile button {
-  position: relative;
+.section {
+  display: none;
+}
+
+.section.active {
   display: block;
-  margin: 20px auto;
-  padding: 10px 15px;
-  color: #fff;
-  font-size: 16px;
-  background-color: #6a0dad;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.section-header h1 {
+  font-size: 24px;
+  color: var(--accent-color);
+}
+
+.edit-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
   border: none;
-  border-radius: 4px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #3a7bd5;
+}
+
+.salon-form, .security-form {
+  display: grid;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  flex-grow: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.form-group input:disabled {
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cancel, .btn-primary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button.edit:hover {
-  background-color: #da92f7;
-  color: #6a0dad;
-}
-
-/* Description and Section Title */
-.section-title {
-  font-size: 24px;
-  color: #6a0dad;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.salon-description {
-  font-size: 18px;
-  color: #333;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-/* Appointment Duration Styles */
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  font-size: 16px;
-  font-weight: bold;
-  color: #6a0dad;
-  display: block;
-  margin-bottom: 8px;
-}
-
-select, input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.submit-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #6a0dad;
+.btn-update{
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
+  background-color: var(--primary-color);
+  color: var(--white);
+  width: 20%;
 }
 
-.submit-button:hover {
-  background-color: #da92f7;
+.btn-delete {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--white);
+  border: var(--error-color) solid 2px;
+  color: var(--error-color);
+  width: 20%;
 }
 
-/* Responsive Design */
+.btn-delete :hover {
+  color:var(--white);
+  background-color: var(--error-color);
+}
+
+.btn-delete i {
+  color: #e74c3c;
+  font: 18px;
+}
+
+.btn-cancel {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  color: var(--white);
+  z-index: 1100;
+}
+
+.notification.success {
+  background-color: var(--success-color);
+}
+
+.notification.error {
+  background-color: var(--error-color);
+}
+
+
+/* Heading styles for each schedule section */
+.day-schedule h4 {
+  margin: 0 0 1rem 0;
+  color: #4c2e85;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Select dropdown styling */
+select {
+  width: 95%;
+  padding: 0.8rem;
+  margin-bottom: 5%;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: gray;
+  background: #f9f9f9;
+  appearance: none;
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236a0dad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); */
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+select:disabled {
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+}
+
+select:hover {
+  border-color: #3a393b 3px ;
+}
+
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-  .salon-header {
+  .profile-container {
       flex-direction: column;
-      gap: 1.5rem;
   }
 
-  .salon-image {
-      max-width: 100%;
+  .sidebar {
+      width: 100%;
   }
 
-  .salon-name, .section-title, .salon-description {
-      text-align: center;
+  .form-row {
+      flex-direction: column;
+      gap: 15px;
   }
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
 }
