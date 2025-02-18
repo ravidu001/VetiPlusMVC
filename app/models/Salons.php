@@ -18,6 +18,11 @@ class Salons
     {
         $this->update( $salonID , $data , 'salonID');
     }
+
+    //insert the data in to the table
+    public function insertData($arr)
+    {
+        return $this->insert($arr);
+    }
 }
 
-?>

@@ -2,239 +2,315 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #ffecff;
-    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #2d3748;
 }
-/*add the side bar close open*/
+
+.pagecontent {
+    margin-left: 250px;
+    transition: all 0.3s ease-in-out;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
 body:has(#sidebar.close) .pagecontent {
     margin-left: 70px;
     width: calc(100% - 70px);
 }
-.pagecontent{
-    margin-left: 250px; /*width of sidebar */
-    transition: margin-left 0.3s ease-in-out;
-    width: calc(100%- 250px);
-    /* min-width: 60vw; */
-}
 
-
-.selectdatebox {
-    background-color: #fff;
-    padding: 10px;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0  15px rgba(197, 62, 224, 0.3);
-    border: #e0bdf9 3px solid;
-}
-
-/* time search box */
-.selectdateboxname {
-    font-size: 25px;
-    gap: 3rem;
-    padding: 5px;
-    font-weight: bold;
-    border-bottom: 3px solid #6A0DAD;
-}
-
-.enterdate input[type="date"] {
-    align-items: center;
-    margin: 10px;
-    padding: 13px;
-    border: 1px solid #6A0DAD;
-    border-radius: 5px;
-    color: rgb(81, 81, 81);
-    margin-left: 20%;
-}
-
-.TimeSLotAndSideBar {
-    display: flex;
-    gap: 1rem;
-}
-.SelectDateAndSlot {
-    width: 70%;
-    padding: 20px 40px;
-}
+/* Header Styles */
 h1 {
-    color: #6a0dad;
+    color: #5a1699;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2rem;
-}
-/* Date selection and legend area */
-.DateAndScedule {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-.SelectDate {
-    width: 100%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-/* Legend styling */
-.legend {
-    /* display: flex; */
-    justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #c8a2c8;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(106, 13, 173, 0.1);
+    position: relative;
 }
 
-.legendcontent {
-    display: flex;
-    padding: 10px;
-    margin: 10px;
+h1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #6a0dad, #c8a2c8);
+    margin: 0.5rem auto;
+    border-radius: 2px;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin: 10px;
-    color: #707070;
-}
-.color-box {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-}
-.color-box.available {
-    background-color: #c8a2c8;
-}
-.color-box.booked {
-    background-color: #6a0dad;
-}
-.color-box.blocked {
-    background-color: slategray;
-}
-/* Time slots container */
-.TimeSlotShedule .container {
-    background-color: white;
-    border-radius: 10px;
-    padding: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Date Selection Box */
+.selectdatebox {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(197, 62, 224, 0.15);
+    border: none;
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
 }
 
-.container a
+.selectdatebox:hover {
+    transform: translateY(-5px);
+}
+
+.selectdateboxname {
+    font-size: 1.5rem;
+    padding: 0.5rem 0;
+    font-weight: 600;
+    color: #5a1699;
+    border-bottom: 3px solid #6A0DAD;
+    margin-bottom: 1rem;
+}
+
+/* Date Input Styling */
+.enterdate input[type="date"] {
+    padding: 0.8rem 1rem;
+    border: 2px solid #e0bdf9;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #4a5568;
+    background: #fff;
+    transition: all 0.3s ease;
+    margin: 1rem 0;
+}
+
+.enterdate input[type="date"]:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+    outline: none;
+}
+
+.SelectDateAndSlot a
 {
     text-decoration: none;
     color: white;
 }
 
-/* Time slots grid layout */
+/* Buttons */
+.SelectDateAndSlot button {
+    background: #6a0dad;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.SelectDateAndSlot button:hover {
+    background: #5a1699;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 13, 173, 0.2);
+}
+
+/* Legend Styling */
+.legend {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.legendcontent {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.color-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.color-box:hover {
+    transform: scale(1.1);
+}
+
+.color-box.available {
+    background: linear-gradient(135deg, #c8a2c8, #dbbfdb);
+}
+
+.color-box.booked {
+    background: linear-gradient(135deg, #6a0dad, #8b31cf);
+}
+
+.color-box.blocked {
+    background: linear-gradient(135deg, #708090, #899099);
+}
+
+/* Time Slots Grid */
 .time-slots {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 5px;
-    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
 }
-/* Individual time slot styling */
+
 .time-slot {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 1rem;
     border-radius: 12px;
-    background-color: white;
-    border: 2px solid #c8a2c8;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    position: relative;
 }
-.time-slot:hover:not(.booked):not(.blocked) {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(106, 13, 173, 0.15);
-    cursor: pointer;
-}
+
 .time-slot.available {
-    border-color: #c8a2c8;
-    background-color: rgba(200, 162, 200, 0.1);
+    background: linear-gradient(135deg, #fff, #f8f0f8);
+    border-left: 4px solid #c8a2c8;
 }
+
 .time-slot.booked {
-    border-color: #6a0dad;
-    background-color: rgba(106, 13, 173, 0.1);
+    background: linear-gradient(135deg, #fff, #f5f0fa);
+    border-left: 4px solid #6a0dad;
 }
+
 .time-slot.blocked {
-    border-color: slategray;
-    background-color: rgba(112, 128, 144, 0.1);
+    background: linear-gradient(135deg, #fff, #f5f6f7);
+    border-left: 4px solid slategray;
 }
+
+.time-slot:hover:not(.booked):not(.blocked) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(106, 13, 173, 0.15);
+}
+
 .time-slot-time {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #6a0dad;
-    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #5a1699;
+    margin-bottom: 0.5rem;
     text-align: center;
 }
+
 .time-slot-status {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    color: #707070;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-weight: 500;
 }
+
 .status-icon {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
+    position: relative;
 }
-.status-icon.available {
-    background-color: #c8a2c8;
-}
-.status-icon.booked {
-    background-color: #6a0dad;
-}
-.status-icon.blocked {
-    background-color: slategray;
-}
-/* Locked slot styling */
-.time-slot.locked {
-    opacity: 0.8;
-}
-.locked-message {
+
+.status-icon::after {
+    content: '';
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #707070;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.5rem;
-    white-space: nowrap;
-    z-index: 1;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.3;
+    z-index: -1;
 }
-/* Responsive design */
+
+/* Time Details Container */
+.container {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(197, 62, 224, 0.15);
+    margin-top: 2rem;
+}
+
+.container h2 {
+    color: #5a1699;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.times {
+    background: #f8f5ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.times h4 {
+    color: #6a0dad;
+    margin: 0 1rem;
+    font-weight: 600;
+}
+
+.times p {
+    color: #4a5568;
+    margin: 0 1rem;
+}
+
+/* Form Styling */
+form {
+    margin: 1.5rem 0;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+form input[type="date"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 2px solid #e0bdf9;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
 @media (max-width: 1200px) {
     .time-slots {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 }
+
 @media (max-width: 768px) {
-    .TimeSLotAndSideBar {
-        flex-direction: column;
+    .pagecontent {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
     }
-   
-    .SelectDateAndSlot {
-        padding: 15px;
+
+    .selectdatebox {
+        padding: 1rem;
     }
-   
-    .legend {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-   
+
     .time-slots {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.8rem;
     }
-   
-    .time-slot {
-        padding: 15px;
+
+    .container {
+        padding: 1rem;
     }
 }
-/* Optional: Add smooth scrolling for the whole page */
-html {
-    scroll-behavior: smooth;
-}  

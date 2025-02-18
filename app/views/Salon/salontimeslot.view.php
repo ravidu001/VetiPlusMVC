@@ -5,211 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Salon Scheduler</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salontimeslot.css">
-    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/Enterdatebox.css"> -->
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonavailabletime.css">
+    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonavailabletime.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 </head>
+
+<?php
+    if(isset($data['time_slot'])) 
+    {
+        $time_slots = $data['time_slot'];
+    } 
+    else 
+    {
+        $time_slots = [];
+    }
+
+    if(isset($data['salondetails']))
+    {
+        $salondetails = $data['salondetails'];
+    }
+    else
+    {
+        $salondetails = [];
+    }
+?>
+
 <body>
-        <div class="pagecontent">
-                <div>
-                    <?php
-                         include __DIR__ . '/../navbar/salonnav.php';
-                    ?>
-                </div>
-                <div class="SelectDateAndSlot">
-                    <h1>Pet Salon Schedule</h1>
-                    <div class="DateAndScedule">
-                        <div class="DateContent">
-                            <div style="display: flex;">  
-                                <div class="SelectDate">
-                                <div class="selectdatebox">
-                                    <div class="selectdateboxname">
-                                            Enter Date 
-                                        </div>
-                                        <div class="enterdate">
-                                            <input type="date" class="selectdate">
-                                        </div>
-                                    </div>
-                                    <div class="legend">
-                                        <div class="legendcontent">
-                                            <div class="legend-item">
-                                                <div class="color-box available"></div>
-                                                <span>Available</span>
-                                            </div>
-                                            <div class="legend-item">
-                                                <div class="color-box booked"></div>
-                                                <span>Booked</span>
-                                            </div>
-                                            <div class="legend-item">
-                                                <div class="color-box blocked"></div>
-                                                <span>Blocked</span>
-                                            </div>
-                                        </div>    
-
-                                            <div class="time-slots">
-                                    <!-- Morning slots -->
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">9:00 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">9:30 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot booked">
-                                        <div class="time-slot-time">10:00 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon booked"></span>
-                                            Booked
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot blocked">
-                                        <div class="time-slot-time">10:30 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon blocked"></span>
-                                            Blocked
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available locked">
-                                        <div class="time-slot-time">11:00 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                        <div class="locked-message">Locked (within 2 hours)</div>
-                                    </div>
-
-                                    <!-- Add more time slots as needed -->
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">11:30 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">12:00 PM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">12:30 PM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">1:00 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">1:30 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">2:00 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">2:30 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot available">
-                                        <div class="time-slot-time">3:00 AM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon available"></span>
-                                            Available
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot booked">
-                                        <div class="time-slot-time">3:30 PM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon booked"></span>
-                                            Booked
-                                        </div>
-                                    </div>
-
-                                    <div class="time-slot blocked">
-                                        <div class="time-slot-time">4:00 PM</div>
-                                        <div class="time-slot-status">
-                                            <span class="status-icon blocked"></span>
-                                            Blocked
-                                        </div>
-                                    </div>
-                            
+    <div class="pagecontent">
+        <div>
+            <?php
+                include __DIR__ . '/../navbar/salonnav.php';
+             ?>
+            <!-- <php code for navbar here> -->
+        </div>
+        <div class="SelectDateAndSlot">
+            <h1>Salon Time Slot Schedules</h1>
+            <div class="DateAndScedule">
+                <div class="DateContent">
+                    <div style="display: flex;">
+                        <div class="SelectDate">
+                            <div class="selectdatebox">
+                                <div class="selectdateboxname">
+                                    Time Slots 
+                                    <div class="enterdate">
+                                        <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
+                                            <input 
+                                                type="date" 
+                                                class="selectdate" 
+                                                name="slotDate"
+                                                value="hi">
+                                            <button type="submit" name="finddate">Find</button>
+                                        </form>
                                 </div>
+                                </div>
+                            </div>
+                            <div class="legend">
+                                <div class="legendcontent">
+                                    <div class="legend-item">
+                                        <div class="color-box available"></div>
+                                        <span>Available</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="color-box booked"></div>
+                                        <span>Booked</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="color-box blocked"></div>
+                                        <span>Blocked</span>
+                                    </div>
+                                </div>    
 
+                                <?php if(isset( $data['empty']))
+                                {
+                                    ?> 
+                                    <div class="time-slot available">
+                                        <div class="time-slot-status">
+                                            <span class="status-icon available"></span>
+                                           <?= $data['empty'] ?>
                                         </div>
                                     </div>
+                                    <?php
+                                }
+                                ?>
+                                <?php
+                                    if(isset($data['time_slot']))
+                                    {
+                                ?>   
 
-                                <div>
-                                <div class="container">
-                                   
-                                    <h2>Time Details</h2>
-                                    <div class="times">
+                                    <div class="time-slots">
+                                        <?php foreach ($time_slots as $slot): ?>
+                                        <?php 
+                                            $status = isset($slot->status) ? $slot->status : 'available';
+                                        ?>
+                                        <div class="time-slot <?= htmlspecialchars($status); ?>">
+                                            <div class="time-slot-time">
+                                                <?= htmlspecialchars($slot->time_slot); ?>
+                                            </div>
+                                            <div class="time-slot-status">
+                                                <span class="status-icon <?= htmlspecialchars($status); ?>"></span>
+                                                <?= ucfirst($status); ?>
+                                            </div>
+                                            
+                                            <?php 
+                                                if ($slot->status == 'available') 
+                                                { 
+                                            ?>
+                                                <div class="slotchange">
+                                                    <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
+                                                        <input type="hidden" name="salSessionID" value="<?= htmlspecialchars($slot->salSessionID) ?>">
+                                                        <button type="submit" name="SlotBlock">Block Slot</button>
+                                                    </form>
+                                                </div>
+                                            <?php 
+                                                } elseif ($slot->status == 'blocked') { 
+                                            ?>
+                                                <div class="slotchange">
+                                                    <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
+                                                        <input type="hidden" name="salSessionID" value="<?= htmlspecialchars($slot->salSessionID) ?>">
+                                                        <button type="submit" name="SlotAvailable">Available Slot</button>
+                                                    </form>
+                                                </div>
+                                            <?php 
+                                                } 
+                                            ?>
+
+                                        </div>
+                                    
+                                        <?php endforeach; ?>
+
+                                <?php    
+                                }
+                                ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="container">
+                                <h2>Time Details</h2>
+                                <button type="button">
+                                    <a href='<?= ROOT ?>/SalonTimeSlotEdit'>Edit</a> 
+                                </button>
+                                <div class="times" style="display: flex;">
+                                    <?php
+                                         if(isset($data['salondetails']))
+                                         { 
+                                    ?>
                                         <h4 class="opentime">
-                                            Salon Open Time :-
+                                            Salon Open :-
                                         </h4>
                                         <p>
-                                            10.00 AM
+                                            <?= date("H:i", strtotime($salondetails->open_time)) ?>
                                         </p>
                                         <h4 class="closetime">
-                                            Salon Close Time :-
+                                            Salon Close :-
                                         </h4>
                                         <p>
-                                            12.00 AM
+                                            <?= date("H:i", strtotime($salondetails->close_time)) ?>
                                         </p>
                                         <h4 class="closetime">
-                                            Time duration :-
+                                            Slot Duration :-
                                         </h4>
                                         <p>
-                                            20 min
+                                            <?= $salondetails->slot_duration ?> min
                                         </p>
+                                    <?php
+                                         }
+                                    ?>
+                                    
+                                </div>
+                                <div>
+                                    <button type="button">
+                                        <a href='<?= ROOT ?>/SalonTimeSlotView'>View</a> 
+                                    </button>
+                                    <h3>Select the one day</h3>
+                                    <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
+                                        <label for="one-date">Date :</label>
+                                        <input type="date" name="date" required>
 
-                                        <h3>Closing Dates(For a Month)</h3>
-                                        <div class="closedates">
-                                            <h5 class="date">2025 Jan 25</h5>
-                                        </div>
-                                        <button class="edit-btn" style="margin-right:20px">
-                                            <a href='<?= ROOT ?>/SalonOneTimeAllocation'>
-                                                Edit
-                                            </a>
+                                        <button type="submit" class="edit-btn" name="onedate" style="margin-right:20px">
+                                            Add Slots
                                         </button>
-                                    </div>
+                                    </form>
+
+                                    <h3>Select the date range</h3>
+                                    <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
+                                        <label for="start-date">Start Date:</label>
+                                        <input type="date" id="start-date" name="startDate" required>
+
+                                        <label for="end-date">End Date:</label>
+                                        <input type="date" id="end-date" name="endDate" required>
+
+                                        <label for="holidays">Holidays:</label>
+                                        <div id="holiday-container">
+                                            <input type="date" name="holidays[]" class="holiday-input">
+                                            <button type="button" class="remove-holiday-btn" onclick="removeHoliday(this)">Remove</button>
+                                        </div>
+                                        <button type="button" onclick="addHoliday()">Add Holidays</button>
+
+                                        <button type="submit" class="edit-btn" name="date_range" style="margin-right:20px">
+                                            Add Slots
+                                        </button>
+                                    </form>
 
                                     <div id="saveSection" style="display:none; margin-top: 15px;">
                                         <button class="save-btn" onclick="saveChanges()">Save Changes</button>
@@ -218,16 +214,44 @@
                                 </div>
                             </div>      
                         </div>
-
-                        <!-- <div class="TimeSlotShedule"> -->
-                            <!-- <div class="container"> -->
-                                    
-                                
-                            <!-- </div> -->
-                        <!-- </div> -->
-                    </div>    
+                    </div>
                 </div>
+            </div>    
         </div>
-</body>
+    </div>
+
+    <script>
+        function addHoliday() {
+            let container = document.getElementById("holiday-container");
+            let input = document.createElement("input");
+            input.type = "date";
+            input.name = "holidays[]";
+            input.classList.add("holiday-input");
+
+            let removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.classList.add("remove-holiday-btn");
+            removeButton.textContent = "Remove";
+            removeButton.setAttribute("onclick", "removeHoliday(this)");
+
+            container.appendChild(input);
+            container.appendChild(removeButton);
+        }
+
+        function removeHoliday(button) {
+            let container = document.getElementById("holiday-container");
+            container.removeChild(button.previousElementSibling); // Remove the input
+            container.removeChild(button); // Remove the button
+        }
+
+        
+    </script>
+
     <script src="<?=ROOT?>/assets/js/salon/salonavailabletime.js"></script>
+</body>
 </html>
+
+
+
+
+

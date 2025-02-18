@@ -91,6 +91,7 @@ class Login extends Controller
                                 //this function in the salons model file
                                 $accepted = $salontable->FindUser($email);
 
+                                show($accepted);
                                 if($accepted)
                                 {
                                     // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
