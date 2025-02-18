@@ -11,6 +11,67 @@ class SalonProfile extends Controller
         $this->view('Salon/salonprofile', $data);
     }
 
+    //___________________________________________________________________________________________________________
+    //Profile update and delete 
+    public function profiledelete() {
+        header('Content-Type: application/json');
+    
+        $salonTable = new Salons();
+        $salonID = $_SESSION['SALON_USER'];
+    
+        // Set the profile picture field to NULL
+        $data = ['ProfilePicture' => null];
+        $updateProfile = $salonTable->DeleteProfile($salonID, $data);
+    
+        if ($updateProfile) {
+            echo json_encode(["status" => "success"]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Failed to remove profile picture."]);
+        }
+        exit;
+    }
+    
+
+    //update the profile
+    public function profileupdate()
+    {
+        header('Content-Type: application/json');
+        
+        if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) 
+        {
+            $file = $_FILES['profilePicture'];
+            $fileName = time() . "_" . basename($file['name']); // Unique filename
+            $targetDir = "assets/images/salon/profile/";
+            $targetFile = $targetDir . $fileName;
+        }
+
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+           
+            $data1 = [];
+            //update the database
+            $salonTable = new Salons();
+            $salonID = $_SESSION['SALON_USER'];
+
+            $data1['ProfilePicture'] = $targetFile;
+            $updateprofile = $salonTable ->updateSalonTimeSlots($salonID, $data1);
+
+            if ($updateprofile) 
+            {
+                echo json_encode(["status" => "success", "image" => $fileName]);
+            } 
+            else 
+            {
+                echo json_encode(["status" => "error", "message" => "Database update failed."]);
+            }
+        }
+        else 
+        {
+            echo json_encode(["status" => "error", "message" => "Failed to upload image."]);
+        }
+        
+        exit;
+    }
+
 
     public function update()
     {
