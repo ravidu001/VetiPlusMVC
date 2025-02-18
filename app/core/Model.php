@@ -133,6 +133,22 @@ trait Model
         return false;
     }
 
+    //delete a one  data in a row  in a one colunm
+    public function deleteOne($id, $column_to_delete, $id_column = 'id')
+    {
+        // set the id to the data array
+        $data[$id_column] = $id; 
+        // set the column to NULL (or any value you prefer)
+        $data[$column_to_delete] = null; 
+
+        // Update the column to NULL (or another value) in the specified row
+        $query = "UPDATE $this->table SET $column_to_delete = :$column_to_delete WHERE $id_column = :$id_column";
+        $this->query($query, $data);
+
+        return true; // Indicate success
+    }
+
+
     public function getCount()
     {
         $query = "SELECT COUNT(*) as count FROM $this->table";
