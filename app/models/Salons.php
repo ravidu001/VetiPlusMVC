@@ -16,7 +16,7 @@ class Salons
     //update the salon time details
     public function updateSalonTimeSlots($salonID, $data)
     {
-        $this->update( $salonID , $data , 'salonID');
+       return $this->update( $salonID , $data , 'salonID');
     }
 
     //insert the data in to the table
