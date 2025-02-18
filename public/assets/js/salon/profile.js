@@ -1,199 +1,136 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Notification Function
-    function showNotification(message, type = 'success') {
-        // Remove any existing notifications
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) {
-            existingNotification.remove();
-        }
-
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.classList.add('notification', `notification-${type}`);
-        
-        // Set icon based on type
-        const icons = {
-            success: '✅',
-            error: '❌',
-            warning: '⚠️'
-        };
-
-        notification.innerHTML = `
-            <div class="notification-content">
-                <span class="notification-icon">${icons[type] || icons.success}</span>
-                <p>${message}</p>
-            </div>
-            <button class="notification-close">&times;</button>
-        `;
-
-        // Add to body
-        document.body.appendChild(notification);
-
-        // Auto-remove after 5 seconds
-        const removeTimer = setTimeout(() => {
-            notification.classList.add('notification-exit');
-            setTimeout(() => notification.remove(), 500);
-        }, 5000);
-
-        // Close button functionality
-        const closeBtn = notification.querySelector('.notification-close');
-        closeBtn.addEventListener('click', () => {
-            clearTimeout(removeTimer);
-            notification.classList.add('notification-exit');
-            setTimeout(() => notification.remove(), 500);
-        });
-    }
-
-    // Navigation Functionality
-    const navButtons = document.querySelectorAll('.nav-button');
+    // Navigation Handler with Smooth Scrolling
+    const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.section');
 
-    navButtons.forEach(button => {
-        button.addEventListener('click', () => {
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
             // Remove active classes
-            navButtons.forEach(btn => btn.classList.remove('active'));
+            navItems.forEach(nav => nav.classList.remove('active'));
             sections.forEach(section => section.classList.remove('active'));
 
-            // Add active classes
-            button.classList.add('active');
-            const sectionId = button.getAttribute('data-section');
-            document.getElementById(sectionId).classList.add('active');
+            // Add active class to clicked item and corresponding section
+            item.classList.add('active');
+            const sectionId = item.dataset.section;
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.add('active');
+
+            // Smooth scroll to section
+            targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
         });
     });
 
-    // Image Upload Functionality
-    const imageUpload = document.getElementById('image1');
-    const imagePreview = document.getElementById('preview');
+    // Edit Mode Handlers with UI Glow Effect
+    const editButtons = document.querySelectorAll('.edit-btn');
 
-    imageUpload.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-    
-            // Create FormData and append the file
-            const formData = new FormData();
-            formData.append('salonProfileImage', file);
-    
-            fetch('/Salon/updateProfileImage', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showNotification(data.message || 'Profile image updated successfully');
-                } else {
-                    showNotification(data.message || 'Failed to update profile image', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('An error occurred while updating profile image', 'error');
-            });
-        }
+    editButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const sectionId = button.closest('.section').id;
+            handleEditMode(sectionId);
+        });
     });
 
-    // Edit Functionality for Different Sections
-    function setupEditSection(editBtnId, formId, actionId) {
-        const editBtn = document.getElementById(editBtnId);
-        const form = document.getElementById(formId);
-        const actions = document.getElementById(actionId);
+    function handleEditMode(sectionId) {
+        const section = document.getElementById(sectionId);
+        const inputs = section.querySelectorAll('input, select');
+        const editBtn = section.querySelector('.edit-btn');
 
-        if (!editBtn || !form || !actions) {
-            console.error(`Element(s) not found: ${editBtnId}, ${formId}, ${actionId}`);
-            return;
-        }
-
-        const inputs = form.querySelectorAll('input, select, textarea');
-
-        editBtn.addEventListener('click', () => {
-            toggleEditMode(inputs, actions);
-        });
-
-        // Reset Button
-        const resetBtn = actions.querySelector('[id$="ResetBtn"]');
-        resetBtn.addEventListener('click', () => {
-            inputs.forEach(input => {
-                input.value = input.defaultValue;
-            });
-            toggleEditMode(inputs, actions);
-        });
-
-        // Save Button
-        const saveBtn = actions.querySelector('[id$="SaveBtn"]');
-        saveBtn.addEventListener('click', () => {
-            const formData = new FormData(form);
-            
-            try {
-                if (saveBtn.id === 'passwordSaveBtn') {
-                    passwordSaveForm(formData);
-                } else {
-                    console.error('Unknown save button');
-                    return;
-                }
-                
-                toggleEditMode(inputs, actions);
-            } catch (error) {
-                console.error('Error saving form:', error);
-            }
-        });
-    }
-
-    function toggleEditMode(inputs, actions) {
-        const isEditing = actions.style.display !== 'none';
+        // Toggle input disabled state
+        let isEditing = !inputs[0].disabled;
         inputs.forEach(input => {
-            input.readOnly = isEditing;
+            input.disabled = isEditing;
+            input.classList.toggle("glow-effect", !isEditing);
         });
-        actions.style.display = isEditing ? 'none' : 'block';
+
+        // Change button text and style
+        if (isEditing) {
+            editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+            saveChanges(sectionId);
+        } else {
+            editBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+        }
     }
 
-    function passwordSaveForm(formData) {
-        fetch('/Salon/updatePassword', {
+    function saveChanges(sectionId) {
+        const section = document.getElementById(sectionId);
+        const inputs = section.querySelectorAll('input, select');
+        const formData = {};
+
+        // Collect form data
+        inputs.forEach(input => {
+            formData[input.name] = input.value;
+        });
+
+        // Simulate API call (replace with actual API endpoint)
+        fetch('/update-profile', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                section: sectionId,
+                data: formData
+            })
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                showNotification(data.message || 'Password updated successfully');
-            } else {
-                showNotification(data.message || 'Failed to update password', 'error');
-            }
+            showNotification('✅ Changes saved successfully!', 'success');
         })
         .catch(error => {
-            showNotification('An error occurred while updating password', 'error');
-            console.error('Error:', error);
+            showNotification('❌ Failed to save changes!', 'error');
         });
     }
 
-    // Initialize Edit Sections
-    setupEditSection('passwordEditBtn', 'passwordChangeForm', 'passwordEditActions');
+    // Password Change Handler
+    const securityForm = document.querySelector('.security-form');
+    securityForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(securityForm);
+        const passwords = Object.fromEntries(formData.entries());
 
-    // Account Deletion
-    const deleteAccountBtn = document.querySelector('.btn-danger');
-    deleteAccountBtn.addEventListener('click', () => {
-        if(confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-            fetch('/Salon/deleteAccount', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showNotification(data.message || 'Account deleted successfully');
-                    // Redirect to home or login page
-                    window.location.href = '/';
-                } else {
-                    showNotification(data.message || 'Failed to delete account', 'error');
-                }
-            })
-            .catch(error => {
-                showNotification('An error occurred while deleting account', 'error');
-                console.error('Error:', error);
-            });
+        // Validate passwords
+        if (passwords.newPassword !== passwords.confirmPassword) {
+            showNotification('⚠️ Passwords do not match', 'error');
+            return;
         }
+
+        // Simulate password change API call
+        fetch('/change-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(passwords)
+        })
+        .then(response => response.json())
+        .then(data => {
+            showNotification('🔑 Password changed successfully!', 'success');
+            securityForm.reset();
+        })
+        .catch(error => {
+            showNotification('❌ Failed to change password!', 'error');
+        });
     });
+
+    // Notification System with Smooth Animation
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.classList.add('notification', type);
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Fade in
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 3000);
+    }
 });

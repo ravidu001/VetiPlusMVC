@@ -30,5 +30,6 @@
         </div> 
     </div> 
 </body>
-    <script src="<?=ROOT?>/assets/js/salon/salonpopup.js"></script> 
+    <script src="<?= ROOT?>/assets/js/salon/salonpopup.js"></script>
+    <script src="<?= ROOT?>/assets/js/navbar/salonnav.js"></script> 
 </html>

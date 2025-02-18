@@ -47,8 +47,7 @@ class SalonRegisters {
     {
 
         return $this->first(['email' => $email]);
-        // unset($result->)
-        
+        // unset($result->)   
     }
 
 

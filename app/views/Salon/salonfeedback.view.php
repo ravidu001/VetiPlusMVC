@@ -2,112 +2,178 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback And Reviews</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonfeedback.css">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <title>Veterinarian Reviews</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/salonnav.css">
+    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Salon/myreview.css">
 </head>
 <body>
-    <div class="pagecontent">
-        <div class="feedbackcontent">
-            <div>
-                <?php
-                    include __DIR__ . '/../navbar/salonnav.php';
-                ?>
-            </div>
-            <div class="feedbackdetail">
-                <h3>Feedback and Reviews</h3>
-                <p>You may have 1000 more customer today, and your business may make up to 20 more public comments.</p>
-                <div class="tablecontent">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="userdetail">
-                                            <img class="image" src="assets/images/salon/profile/boy.jpg" alt="userimage">
-                                        <h4>Abdul Raheam Senanayaka</h4>
-                                    </div>
-                                </td>
-                                <td class="discript">
-                                  <div class="star">    
-                                        <?php 
-                                            $stars = 3 ;
-                                            $totalstars = 5;
 
-                                            for($i =  1 ; $i <= $totalstars; $i++ )
-                                            {
-                                                if($i <= $stars)
-                                                {
-                                                    ?>
-                                                        <i class='bx bxs-star icon'></i>      
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                    <i class='bx bx-star icon' ></i>
-                                                    <?php
-                                                }
-                                            }
-
-                                        ?>
-                                        <p>11/27/2021</p>
-                                    </div>
-
-                                    <p class="description">
-                                    <!-- "I recently took my dog, Bella, to Pampered Paws Salon, 
-                                    and I couldn't be happier with the service! From the 
-                                    moment we walked in, the staff was welcoming and made 
-                                    Bella feel at ease. The salon is spotless, with a fresh 
-                                    and calming atmosphere that even nervous pets would 
-                                    feel comfortable in.
-                                    The groomer, Alex, took the time to ask about Bella's grooming 
-                                    needs and preferences. They even offered suggestions for her 
-                                    coat care based on her breed. The grooming was top-notch; 
-                                    Bella's coat was shiny and soft, her nails were perfectly trimmed, 
-                                    and she even got a cute little bow that made her look adorable!
-                                    I appreciated how well the salon communicated—confirming our 
-                                    appointment and sending a reminder on the day. The booking process 
-                                    was smooth, and they were accommodating with times that fit my schedule. 
-                                    I also loved that they used gentle, pet-friendly products. Bella looked 
-                                    fantastic and seemed happy and relaxed afterward.
-                                 -->
-                                    </p>
-                                </td>
-                                <td>
-                            <form method="post" action="">
-                                    <!-- check the reply is send or not!-->
-                                    <?php
-                                    //if (isset($data['reply_success']) && $feedback['id'] === $_POST['feedback_id'])
-                                        if(isset($data['success']))
-                                        {
-                                            ?>
-                                                <p class="description">
-                                                    <?= htmlspecialchars($data['success']); ?>
-                                                </p>
-                                            <?php
-                                        }
-                                        else{
-                                            ?>
-                                                <textarea name="reply">Thank you so much !
-                                                </textarea>
-                                                <button class="reply" name="send">
-                                                    Send
-                                                </button> 
-                                            <?php
-                                        }
-                                        ?>    
-                                </td>
-                            </form>     
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+        <div class="loading-logo">
+            <img src="<?= ROOT ?>/assets/images/vetDoctor/review.avif" alt="Veterinary Logo" class="loading-image">
+        </div>
+        <div class="loading-text" id="loadingMessage">
+            Hey, Marina Pet Salon! Fetching your reviews...🤩🤩🤩
+        </div>
+        <div id="reviewNotification">
+    <div class="review-alert animated-bounce">
+        <span class="emoji-icon">🐾</span>
+        <div class="review-content">
+            <h3>Woofderful Reviews Arrived!</h3>
+            <p>3 Pet Parents Left Awesome Feedback</p>
+            <div class="review-stats">
+                <span>⭐ 4.8/5 Average Rating</span>
+                <span>🏆 Top Rated Vet Clinic</span>
             </div>
         </div>
     </div>
+</div>
+        <p class="click-prompt">Click anywhere to continue</p>
+    </div>
+</div>
+
+    <div class="main-content" id="mainContent">
+        <?php require_once '../app/views/navbar/doctornav.php'; ?>
+        <div class="home">
+        <div class="reviews-container">
+            <!-- Previous review container HTML -->
+            <div class="reviews-header">
+                <h3 class="reviews-title">My Reviews</h3>
+                <div class="filter-section">
+                    <select class="filter-select">
+                        <option>Sort by Date</option>
+                        <option>Highest Rating</option>
+                        <option>Lowest Rating</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>All Reviews</option>
+                        <option>Unread</option>
+                        <option>Replied</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+                <!-- Previous review cards -->
+                <div class="review-card">
+                    <div class="review-details">
+                        <div class="review-header">
+                            <span class="review-author">Kasun Perera</span>
+                            <span class="review-date">17/11/2024</span>
+                        </div>
+                        <div class="review-rating">
+                            ★★★★★ (5/5)
+                        </div>
+                        <p class="review-content">Great service! My pet received excellent care.</p>
+                        <small>Appointment #7</small>
+                    </div>
+                    <div class="review-actions">
+                        <button class="btn btn-reply" onclick="openReplyModal()">Reply</button>
+                        <button class="btn btn-details" onclick="openDetailsModal()">View Details</button>
+                    </div>
+                </div>
+            
+
+           
+                <!-- Previous review cards -->
+                <div class="review-card">
+                    <div class="review-details">
+                        <div class="review-header">
+                            <span class="review-author">Saman Perera</span>
+                            <span class="review-date">15/11/2024</span>
+                        </div>
+                        <div class="review-rating">
+                            ★★★★★ (5/5)
+                        </div>
+                        <p class="review-content">
+                            Great service! My pet received excellent care. 
+                            Great service! My pet received excellent care. 
+                            Great service! My pet received excellent care. 
+                        </p>
+                        <small>Appointment #6</small>
+                    </div>
+                    <div class="review-actions">
+                        <button class="btn btn-reply" onclick="openReplyModal()">Reply</button>
+                        <button class="btn btn-details" onclick="openDetailsModal()">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Reply Modal -->
+    <div id="replyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reply to Review</h2>
+                <button class="modal-close" onclick="closeModal('replyModal')">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea 
+                    id="replyTextarea" 
+                    class="reply-textarea" 
+                    placeholder="Write your professional and compassionate response here..."
+                    maxlength="500"
+                    oninput="updateCharCount(this)"
+                ></textarea>
+                <div class="character-count" id="charCount">0 / 500</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('replyModal')">
+                    <span class="material-icons">cancel</span> Cancel
+                </button>
+                <button class="btn btn-reply" onclick="sendReply()">
+                    <span class="material-icons">send</span> Send Reply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Review Details</h2>
+                <button class="modal-close" onclick="closeModal('detailsModal')">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="review-detail-item">
+                    <span class="review-detail-label">Reviewer</span>
+                    <span class="review-detail-value">Kasun Perera</span>
+                </div>
+                <div class="review-detail-item">
+                    <span class="review-detail-label">Date</span>
+                    <span class="review-detail-value">17/11/2024</span>
+                </div>
+                <div class="review-detail-item">
+                    <span class="review-detail-label">Rating</span>
+                    <span class="review-detail-value">
+                        <span style="color: #ffc107;">★★★★★</span> (5/5)
+                    </span>
+                </div>
+                <div class="review-detail-item">
+                    <span class="review-detail-label">Content</span>
+                    <span class="review-detail-value">Great service! My pet received excellent care.</span>
+                </div>
+                <div class="review-detail-item">
+                    <span class="review-detail-label">Appointment ID</span>
+                    <span class="review-detail-value">#7</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('detailsModal')">
+                    <span class="material-icons">done</span> Close
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="<?= ROOT ?>/assets/js/vetDoctor/myreview.js"></script>
 </body>
-<script src="<?=ROOT?>/assets/js/navbar/salonnavbarbar.js"></script>
 </html>
