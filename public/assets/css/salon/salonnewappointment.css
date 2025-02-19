@@ -6,6 +6,10 @@
     font-family: Arial, sans-serif;
 }
 
+body {
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+}
+
 body:has(#sidebar.close) .pagecontent {
     margin-left: 70px;
     width: calc(100% - 70px);

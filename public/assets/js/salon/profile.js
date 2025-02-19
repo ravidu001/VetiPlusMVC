@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => 
+{
     // Navigation Handler with Smooth Scrolling
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.section');
@@ -111,6 +112,47 @@ document.addEventListener('DOMContentLoaded', () => {
             showNotification('❌ Failed to change password!', 'error');
         });
     });
+
+    //________________________________________________________________
+    //profile handle js 
+document.getElementById("profilePictureUpload").addEventListener("change", function () {
+    let formData = new FormData();
+    formData.append("profilePicture", this.files[0]);
+
+    fetch(`${BASE_URL}/SalonProfile/profileupdate`, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            document.getElementById("profilePicture").src = "assets/images/salon/profile/" + data.image;
+            showNotification('✅ Profile delete successfully!', 'success');
+        } else {
+            showNotification('❌ Failed to Deleting!', 'error');
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+
+document.getElementById("removeProfilePicture").addEventListener("click", function () {
+    fetch(`${BASE_URL}/SalonProfile/profiledelete`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "deleteProfilePicture=true"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            document.getElementById("profilePicture").src = "assets/images/common/defaultProfile.png";
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+
+        
 
     // Notification System with Smooth Animation
     function showNotification(message, type) {

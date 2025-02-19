@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #f5f7fa;
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
     color: #2d3748;
     line-height: 1.6;
     padding: 20px;

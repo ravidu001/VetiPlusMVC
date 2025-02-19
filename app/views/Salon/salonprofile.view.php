@@ -10,6 +10,15 @@
 <body>
     <?php include __DIR__ . '/../navbar/salonnav.php'; ?>
 
+    <?php 
+        if(isset($data['salon_details']))
+        {
+            $x = $data['salon_details'];
+
+            $profile_picture = $x->profilePicture;
+            $profilePicture = $profile_picture ? ROOT.'/'. $profile_picture : "assets/images/common/defaultProfile.png";
+    ?>   
+
     <!-- 
         <div class="fgh" id="fetch_data"></div> -->
     <div class="profile-container">
@@ -17,10 +26,9 @@
             <div class="profile-header">
             <div class="profile-picture-container">
                         <div class="profile-picture-wrapper">
-                            <img src="<?= ROOT ?>/assets/images/" alt="Profile Picture"
-                                class="profile-picture" id="profilePicture">
+                            <img src="<?= $profilePicture ?>" alt="Profile Picture" class="profile-picture" id="profilePicture">
                             <div class="profile-picture-overlay">
-                                <input type="file" id="profilePictureUpload" accept="image/*" class="file-input">
+                                <input type="file" id="profilePictureUpload" accept="image/*" class="file-input" hidden>
                                 <label for="profilePictureUpload" class="upload-btn">
                                     <i class="fas fa-camera"></i>
                                 </label>
@@ -30,11 +38,7 @@
                             </div>
                         </div>
                     </div>
-                <?php 
-                    if(isset($data['salon_details']))
-                    {
-                        $x = $data['salon_details'];
-                ?>    
+                 
                 <h2><?= $x->name?></h2>
             </div>
             <nav class="navigation">
