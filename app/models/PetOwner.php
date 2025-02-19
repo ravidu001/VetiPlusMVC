@@ -3,24 +3,26 @@
 class PetOwner {
     use Model;
 
-    protected $table = 'petowner';
-    public $petOwnerID;
-
+    protected $table = 'petowner'; 
     protected $allowedColumns = [ 
         'petOwnerID', 'fullName', 'profilePicture', 'contactNumber', 'gender', 'DOB', 'NIC',
         'houseNo', 'streetName', 'city'
         ,'lastLogin'
     ];
     
+    public $petOwnerID;
+    public $petOwnerDetails;
+
     public function __construct() {
         $this->order_column = 'petOwnerID ';  // Overriding order_column here
 
         if (isset($_SESSION['petOwnerID'])) {
             $this->petOwnerID = $_SESSION['petOwnerID'];
+        } else if (isset($_SESSION['SALON_USER'])) {
+            // set petOwnerID and other stuff for salon ??
         } else {
             redirect('Login');
         }
-        // $this->petOwnerID = isset($_SESSION['petOwnerID']) ? $_SESSION['petOwnerID'] : 'sp.john.manuel737@gmail.com';
     }
 
     /**
@@ -28,10 +30,9 @@ class PetOwner {
      * @return array The user details.
     */
     public function getUserDetails () {
-        $userDetails = $this->where(['petOwnerID' => $this->petOwnerID]);
+        $userDetails = $this->first(['petOwnerID' => $this->petOwnerID]);
         return $userDetails;
     }
-
 
     /**
      * Register and insert the user details into database
@@ -44,10 +45,10 @@ class PetOwner {
         $registerSuccess = $this->insert($data);
         return empty($registerSuccess) ? true : false;
     }
-
     
-    public function createPetProfile() {
-        $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
+    public function uploadProfilePicture ($data) {
+        $uploadSuccess = $this->update($this->petOwnerID, $data);
+        return empty($uploadSuccess) ? true : false;
     }
 
 }

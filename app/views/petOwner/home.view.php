@@ -9,9 +9,6 @@
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
-        
-        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/myFooter.css" rel="stylesheet"> -->
-        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/dashboard.css" rel="stylesheet"> -->
 
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -20,34 +17,33 @@
     </head>
 
     <body>
+            <script>
+                console.log(<?= json_encode($this->pet_details) ?>);
+                console.log(<?= json_encode($this->pet_details[1]->name) ?>);
+                console.log(<?= json_encode($this->po_details->fullName) ?>);
+                console.log(<?= json_encode($this->po_details) ?>);
+            </script>
         <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
         <!-- actual content: -->
         <div class="bodyContent">
             <div class="dashContent">
+                <!-- for testing -->
+                <!-- <a href="testing?hmm=<?= "Hello There!" ?>">Go to Testing</a> -->
 
                 <section id="myProfile" class="dashArea">
                     <h2>My Profile</h2>
                     <div id="myProfile_content" class="dashAreaContent" style="justify-content: space-evenly;">
-                        <?php
-                            // $stmt = $con->prepare("SELECT * FROM petOwner WHERE petOwnerID = ?");
-                            // $stmt->bind_param("s", $userID);
-                            // $stmt->execute();                  
-                            // $profileDetails = $stmt->get_result()->fetch_assoc();
-                            
-                            // $stmt->close();
-                            // if (!empty($profileDetails['profilePicture'])):
-                            
-                        ?>
-                        <!-- <img src="<?= ROOT.'/assets/images/profilePics/petOwner/'.$profileDetails['profilePicture']?>"
-                            alt="Profile picture."> -->
-                        <?php //else: ?>
+                        <?php if (!empty($this->po_details->profilePicture)): ?>
+                        <img src="<?= ROOT.'/assets/images/profilePics/po/'.$this->po_details->profilePicture?>"
+                            alt="Profile picture.">
+                        <?php else: ?>
                             <p>Add a profile picture.</p>
-                        <?php //endif; ?>
+                        <?php endif; ?>
                         <div class="textContent">
                             <h3>Welcome back!</h3>
-                            <!-- <p><?= $profileDetails['fullName'] ?></p> -->
+                            <p><?= $this->po_details->fullName ?></p>
                         </div>
                     </div>
                 </section>
@@ -55,27 +51,19 @@
                 <section id="myPets" class="dashArea">
                     <h2>My Pets</h2>
                     <div class="dashAreaContent">
-                        <!-- <?php
-                            // $stmt = $con->prepare("SELECT petID, name, profilePicture FROM pet WHERE petOwnerID = ?");
-                            // $stmt->bind_param("s", $userID);
-                            // $stmt->execute();
-                            // $result = $stmt->get_result();
-                            // $stmt->close();
-
-                            // if($result->num_rows > 0) :
-                            //     $data = $result->fetch_all(MYSQLI_ASSOC);
-                            //     foreach ($data as $k => $pet) : ?>
-                                    <!-- <form action='./petProfile.php' method='post' class='petCard' onclick='this.submit()' title='Go to Pet Profile Page.'>
-                                        <input type='text' name='petID' id='petID' value='<?= $pet['petID'] ?>' hidden>
-                                        <img src='<?= ROOT."/assets/images/profilePics/pet/".$pet['profilePicture'] ?>' class='petImg' alt='Pet Image'>
-                                        <h3><?= $pet['name'] ?></h3>
-                                    </form> -->
-                                <?php //endforeach;
-                            //else: ?>
+                        <?php
+                            if($this->pet_details) :
+                                foreach ($this->pet_details as $pet) : ?>
+                                    <a href="po_petProfile?petID=<?= $pet->petID ?>" title="Go to Pet Profile Page." class="petCard">
+                                        <img src='<?= ROOT."/assets/images/profilePics/pet/".$pet->profilePicture ?>' class='petImg' alt='Pet Image'>
+                                        <h3><?= $pet->name ?></h3>
+                                    </a>
+                                <?php endforeach;
+                            else: ?>
                                 <div class="petCard">
                                     <h3>No Pets<br/>added yet!</h3>
                                 </div>
-                            <?php //endif;
+                            <?php endif;
                         ?>
                         <a class="petCard" href="./petRegister.php">
                             <i class="bx bxs-plus-circle bx-lg"></i>

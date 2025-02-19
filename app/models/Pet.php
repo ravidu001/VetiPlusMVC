@@ -23,15 +23,17 @@ class Pet {
 
     /**
      * Based on the petOwner ID return all the pets' details
-     * @return array|false 
+     * @return 'array of arrays'|false 
     */
     public function getPetsDetails () {
         $petDetailsArray = $this->where(['petOwnerID' => $this->petOwnerID]);
         return $petDetailsArray;
     }
 
-    public function getOnePet () {
-
+    public function getOnePet ($petID) {
+        $petDetails = $this->first(['petOwnerID' => $this->petOwnerID,
+                                    'petID' => $petID]);
+        return $petDetails;
     }
     
     /**
@@ -44,6 +46,11 @@ class Pet {
 
         $registerSuccess = $this->insert($data);
         return empty($registerSuccess) ? true : false;
+    }
+
+    public function uploadProfilePicture ($petID, $data) {
+        $uploadSuccess = $this->update($petID, $data);
+        return empty($uploadSuccess) ? true : false;
     }
 
 }
