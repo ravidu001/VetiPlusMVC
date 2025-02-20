@@ -56,10 +56,4 @@
     justify-content: center;
     gap: 5px;
 
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-}
-.aloneContent button:hover,
-.dashArea button:hover {
-    background-color: var(--button-hover-bg-color);
 }

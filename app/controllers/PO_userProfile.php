@@ -63,4 +63,9 @@ class PO_userProfile extends Controller {
             exit();
         }
     }
+
+    public function logout () {
+        unset($_SESSION['petOwnerID']);
+        redirect('Landing');
+    }
 }
