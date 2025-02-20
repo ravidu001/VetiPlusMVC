@@ -49,7 +49,8 @@ class Login extends Controller
                                 header('Location: ../Doctor');
                                 break;
                             case 'Pet Owner':
-                                header('Location: ../PetOwner');
+                                $_SESSION['petOwnerID'] = $registered->email;
+                                redirect('PO_register');
                                 break;
                             case 'Salon':
                                 $_SESSION['SALON_USER'] = $registered->email;
@@ -82,7 +83,8 @@ class Login extends Controller
                                 header('Location: ../Doctor.php');
                                 break;
                             case 'Pet Owner':
-                                header('Location: ../PetOwner');
+                                $_SESSION['petOwnerID'] = $registered->email;
+                                redirect('PO_home');
                                 break;
                             case 'Salon':
                                 $_SESSION['SALON_USER'] = $registered->email;

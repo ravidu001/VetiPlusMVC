@@ -11,6 +11,7 @@ to include icons in the html page:
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all 0.2s ease-in;
 }
 
 a {
@@ -22,7 +23,11 @@ a:hover {
 
 body {
     display: flex;
+}
+.bodyContent {
+    display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 /* content area with many dashAreas (usually sections) */
@@ -31,8 +36,7 @@ body {
     flex-direction: column;
     overflow-y: auto;
 
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: auto 20px;
 }
 .dashArea {
     background-color: var(--primary-bg-color);

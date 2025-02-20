@@ -10,7 +10,7 @@
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet">
+        <!-- <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet"> -->
         <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/hero.css" rel="stylesheet">
 
@@ -35,8 +35,11 @@
             <img class="heroImg" src="./assets/images/guestUser/guestHeroes/homeHero.png" alt="">
         </section>
 
-        <h1>Our Services</h1>
-        <div class="serviceCards"></div>
+        <section class="sectionWithHeader">
+            <h1>Our Services</h1>
+            <span class="serviceCards"></span>
+        </section>
+        
 
         <div class="homeDiv">
             <img src="./assets/images/guestUser/homeImg/SittingDoggo.png" alt="SittingDoggo">
@@ -65,54 +68,56 @@
             <img src="./assets/images/guestUser/homeImg/CuteDoggo.png" alt="SittingDoggo">
         </div>
 
-        <h1>Our Community</h1>
-        <div class="userTypes">
-            <div class="userCard">
-                <img src="./assets/images/guestUser/userTypes/petOwners.png" alt="">
-                <p class="userTitle">Pet Owner</p>
-                <p class="userDescription">
-                    Care for your furry friend from
-                    anywhere. Register to access 24/7
-                    health records, and appointment
-                    booking, knowing expert care is just
-                    a click away.
-                </p>
+        <section class="sectionWithHeader">
+            <h1>Our Community</h1>
+            <div class="userTypes">
+                <div class="userCard">
+                    <img src="./assets/images/guestUser/userTypes/petOwners.png" alt="">
+                    <p class="userTitle">Pet Owner</p>
+                    <p class="userDescription">
+                        Care for your furry friend from
+                        anywhere. Register to access 24/7
+                        health records, and appointment
+                        booking, knowing expert care is just
+                        a click away.
+                    </p>
+                </div>
+                <div class="userCard">
+                    <img src="./assets/images/guestUser/userTypes/vetDoctor.png" alt="">
+                    <p class="userTitle">Veterinary Doctor</p>
+                    <p class="userDescription">
+                        Expand your practice online. Join
+                        our network to grow your client
+                        base with tools for easy
+                        appointment management, digital
+                        prescriptions, and secure record
+                        keeping.
+                    </p>
+                </div>
+                <div class="userCard">
+                    <img src="./assets/images/guestUser/userTypes/vetAssistant.png" alt="">
+                    <p class="userTitle">Veterinary Assistant</p>
+                    <p class="userDescription">
+                        Streamline your work. Sign up to
+                        efficiently collaborate seamlessly
+                        with veterinarians and provide top
+                        notch support to clients with
+                        consultation sessions.
+                    </p>
+                </div>
+                <div class="userCard">
+                    <img src="./assets/images/guestUser/userTypes/salon.png" alt="">
+                    <p class="userTitle">Pet Salon</p>
+                    <p class="userDescription">
+                        Boost your business. Register to
+                        showcase your grooming services,
+                        manage bookings, and connect with
+                        pet owners in your area with
+                        increased visibility
+                    </p>
+                </div>
             </div>
-            <div class="userCard">
-                <img src="./assets/images/guestUser/userTypes/vetDoctor.png" alt="">
-                <p class="userTitle">Veterinary Doctor</p>
-                <p class="userDescription">
-                    Expand your practice online. Join
-                    our network to grow your client
-                    base with tools for easy
-                    appointment management, digital
-                    prescriptions, and secure record
-                    keeping.
-                </p>
-            </div>
-            <div class="userCard">
-                <img src="./assets/images/guestUser/userTypes/vetAssistant.png" alt="">
-                <p class="userTitle">Veterinary Assistant</p>
-                <p class="userDescription">
-                    Streamline your work. Sign up to
-                    efficiently collaborate seamlessly
-                    with veterinarians and provide top
-                    notch support to clients with
-                    consultation sessions.
-                </p>
-            </div>
-            <div class="userCard">
-                <img src="./assets/images/guestUser/userTypes/salon.png" alt="">
-                <p class="userTitle">Pet Salon</p>
-                <p class="userDescription">
-                    Boost your business. Register to
-                    showcase your grooming services,
-                    manage bookings, and connect with
-                    pet owners in your area with
-                    increased visibility
-                </p>
-            </div>
-        </div>
+        </section>
 
         <!-- <h1>Our Happy Customers</h1>
         <div class="happyCx">
