@@ -62,7 +62,6 @@ class SalonRegisters {
     }
 
     //insert data
-
     public function insertData($arr)
     {
         $this->insert($arr);
