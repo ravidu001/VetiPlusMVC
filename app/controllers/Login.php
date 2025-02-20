@@ -80,7 +80,7 @@ class Login extends Controller
                         switch ($registered->type)
                         {
                             case 'Vet Doctor':
-                                header('Location: ../Doctor.php');
+                                header('Location: ../Doctor');
                                 break;
                             case 'Pet Owner':
                                 $_SESSION['petOwnerID'] = $registered->email;
