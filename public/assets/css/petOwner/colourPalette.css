@@ -43,8 +43,8 @@ body.darkTheme {
     --nav-active-text-color: #ffff;       /* text colour when hovering and for active tab */
     --link-color: #4b97cf;
     
-    --inset-shadow-color: #ffffff;         /* for box-shadow inset */
-    --shadow-color: #000000;               /* shadow effect colour */
+    --inset-shadow-color: #000000;         /* for box-shadow inset */
+    --shadow-color: #ffffff;               /* shadow effect colour */
     
     /* Button and Hover Effects same as light */
     

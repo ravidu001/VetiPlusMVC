@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>PetOwner - Profile</title>
-        <link rel="icon" href="<?= ROOT ?>/assets/images/vetiplus-logo.png" type="image/png">
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
         
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
-        <div class="bodyContent">
+        <div class="bodyArea">
             
             <div class="aloneContent profilePage">
                 <h1>My Profile</h1>

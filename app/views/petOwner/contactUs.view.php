@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Contact Us</title>
-        <link rel="icon" href="<?= ROOT ?>/assets/images/vetiplus-logo.png" type="image/png">
+        <title> Contact Us </title>  
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
-        
-        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/navBar.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/petOwner/myFooter.css" rel="stylesheet"> -->
 
-        <link href="<?= ROOT ?>/assets/css/petOwner/poppinsFont.css" rel="stylesheet">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
         <link href="<?= ROOT ?>/assets/css/petOwner/contactUs.css" rel="stylesheet">
@@ -23,7 +19,7 @@
         <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
-        <div class="bodyContent">
+        <div class="bodyArea">
             <!-- static contact us text -->
             <div class="dashContent" id="staticContactUs">
     
