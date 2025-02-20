@@ -44,73 +44,88 @@
         </tr>
     </thead>
     <tbody>
+    <?php foreach($sessions as $data): ?>
         <tr>
-            <td>001</td>
+            <td><?= htmlspecialchars($data['session']->sessionID) ?></td>
             <td>
+                <?php if (!empty($data['assistants'])): ?>
+                <?php if (count($data['assistants']) === 1): ?>
+                <!-- Single assistant display -->
                 <div class="vet-info">
                     <div class="vet-avatar">
-                        <img src="<?= ROOT ?>/assets/images/vetAssistant/assistant.jpg" alt="assistant">
+                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($data['assistants'][0]->profilePicture) ?>"
+                            alt="assistant">
                     </div>
                     <div class="vet-details">
-                        <span class="vet-name">Kasun Perera</span>
-                        <span class="vet-specialization">Small Animal Care</span>
+                        <span
+                            class="vet-name"><?= htmlspecialchars($data['assistants'][0]->fullName) ?></span>
+                        <span
+                            class="vet-specialization"><?= htmlspecialchars($data['assistants'][0]->expertise) ?></span>
                     </div>
                 </div>
+                <?php else: ?>
+                <!-- Multiple assistants display -->
+                <div class="multiple-assistants">
+                    <?php foreach($data['assistants'] as $assistant): ?>
+                    <div class="assistant-avatar"
+                        title="<?= htmlspecialchars($assistant->fullName) ?> - <?= htmlspecialchars($assistant->expertise) ?>">
+                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
+                            alt="assistant">
+                        <div class="assistant-info">
+                            <div class="assistant-avatar-large">
+                                <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
+                                    alt="assistant">
+                            </div>
+                            <span
+                                class="assistant-header"><?= htmlspecialchars($assistant->fullName) ?></span>
+                            <span
+                                class="assistant-expertise"><?= htmlspecialchars($assistant->expertise) ?></span>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+                <?php else: ?>
+                <span>No Assistant Assigned</span>
+                <?php endif; ?>
             </td>
             <td>
-                2025/11/15<br>
-                15:00 - 17:00
+                <?= htmlspecialchars($data['session']->selectedDate) ?><br>
+                <?php
+                    $startTime = new DateTime($data['session']->startTime);
+                    $endTime = new DateTime($data['session']->endTime);
+                ?>
+                <?= $startTime->format('H:i') ?> - <?= $endTime->format('H:i') ?>
             </td>
-            <td>147, Galthude, Panadura</td>
+            <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
             <td>10</td>
-            <!-- <td>
-                <span class="session-status status-confirmed">Confirmed</span>
-            </td> -->
             <td>
-                <a href="<?= ROOT ?>/DoctorSessionHistory/session" class="view-btn">
+                <a href="<?= ROOT ?>/DoctorViewSession/session" class="view-btn">
                     <i class='bx bx-right-arrow-circle'></i>
                 </a>
             </td>
         </tr>
-        <tr>
-            <td>002</td>
-            <td>
-                <div class="vet-info">
-                    <div class="vet-avatar">
-                        <img src="<?= ROOT ?>/assets/images/vetAssistant/assistantprofile.avif" alt="assistant">
-                    </div>
-                    <div class="vet-details">
-                        <span class="vet-name">Dr. Emily Wong</span>
-                        <span class="vet-specialization">Exotic Pets</span>
-                    </div>
-                </div>
-            </td>
-            <td>
-                2025/12/16<br>
-                15:00 - 17:00
-            </td>
-            <td>22, Main Street, Colombo</td>
-            <td>8</td>
-            <!-- <td>
-                <span class="session-status status-pending">Pending</span>
-            </td> -->
-            <td>
-                <a href="<?= ROOT ?>/DoctorSessionHistory/session" class="view-btn">
-                    <i class='bx bx-right-arrow-circle'></i>
-                </a>
-            </td>
-        </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>
     </div>
 </div>
     <script src="<?= ROOT ?>/assets/js/calendar/calendar.js"></script>
     <script>
-        const sessionDates = ['2024-11-15', '2024-12-16'];
-        // this will pass the session dates to calendar for highlighting relevant dates
+        // Extract selected dates from PHP sessions array
+        const sessionDates = [
+            <?php 
+            // Loop through the sessions and echo the selectedDate values
+            foreach ($sessions as $data) {
+                echo '"' . htmlspecialchars($data['session']->selectedDate) . '",';
+            }
+            ?>
+        ];
+
+        // Print all the selectedDates in the console
+        console.log("Selected Dates:", sessionDates);
 
         const isActiveDate = true;
-    
     </script>
         
 </body>

@@ -1,4 +1,5 @@
 function showNotification(message, type = 'success') {
+    console.log('Showing notification:', message, type);
     // Remove any existing notifications
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
@@ -43,7 +44,6 @@ function showNotification(message, type = 'success') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Navigation Functionality
     const navButtons = document.querySelectorAll('.nav-button');
     const sections = document.querySelectorAll('.section');
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navButtons.forEach(btn => btn.classList.remove('active'));
             sections.forEach(section => section.classList.remove('active'));
 
-            // Add active classes
+            // addactive classes
             button.classList.add('active');
             const sectionId = button.getAttribute('data-section');
             document.getElementById(sectionId).classList.add('active');
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData();
             formData.append('profilePicture', file); // Send the actual file
     
-            fetch('/VetiPlusMVC/public/DoctorProfile/updateProfile', {
+            fetch('/VetiPlusMVC/public/AssisProfile/updateProfile', {
                 method: 'POST',
                 body: formData
             })
@@ -101,14 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData();
         formData.append('removeProfilePicture', 'true');
     
-        fetch('/VetiPlusMVC/public/DoctorProfile/removeProfile', {
+        fetch('/VetiPlusMVC/public/AssisProfile/removeProfile', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                profilePic.src = '/VetiPlusMVC/public/assets/images/vetDoctor/defaultProfile.png';
+                profilePic.src = '/VetiPlusMVC/public/assets/images/vetAssistant/defaultProfile.png';
                 showNotification(data.message || 'Profile picture reset to default successfully');
             } else {
                 showNotification(data.message || 'Failed to reset profile picture', 'error');
@@ -120,11 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Edit Functionality
+    // Edit Section Functionality
     function setupEditSection(editBtnId, formId, actionId) {
         const editBtn = document.getElementById(editBtnId);
         const form = document.getElementById(formId);
         const actions = document.getElementById(actionId);
+        // const inputs = form.querySelectorAll('input, select');
 
         if (!editBtn || !form || !actions) {
             console.error(`Element(s) not found: ${editBtnId}, ${formId}, ${actionId}`);
@@ -146,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleEditMode(inputs, actions);
         });
 
+        
         // Save Button
         const saveBtn = actions.querySelector('[id$="SaveBtn"]'); // Selects the element with an ID that ends with 'SaveBtn'.
         // window.alert(saveBtn);
@@ -174,14 +176,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleEditMode(inputs, actions) {
         const isEditing = actions.style.display !== 'none';
         inputs.forEach(input => {
-            // input.readOnly = isEditing;
-            input.disabled = isEditing;
+            if (input.tagName === 'TEXTAREA') {
+                input.readOnly = !isEditing;
+            } else {
+                input.disabled = isEditing;
+            }
         });
         actions.style.display = isEditing ? 'none' : 'block';
     }
 
     function personalSaveForm(formData) {
-        fetch('/VetiPlusMVC/public/DoctorProfile/updatePersonal', {
+        fetch('/VetiPlusMVC/public/AssisProfile/updatePersonal', {
             method: 'POST',
             body: formData
         })
@@ -201,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Do similar modifications for professionalSaveForm and passwordSaveForm
     function professionalSaveForm(formData) {
-        fetch('/VetiPlusMVC/public/DoctorProfile/updateProfessional', {
+        fetch('/VetiPlusMVC/public/AssisProfile/updateProfessional', {
             method: 'POST',
             body: formData
         })
@@ -220,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function passwordSaveForm(formData) {
-        fetch('/VetiPlusMVC/public/DoctorProfile/updatePassword', {
+        fetch('/VetiPlusMVC/public/AssisProfile/updatePassword', {
             method: 'POST',
             body: formData
         })
@@ -238,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initialize Edit Sections
     setupEditSection('personalEditBtn', 'personalInfoForm', 'personalEditActions');
     setupEditSection('professionalEditBtn', 'professionalInfoForm', 'professionalEditActions');
     setupEditSection('passwordEditBtn', 'passwordChangeForm', 'passwordEditActions');

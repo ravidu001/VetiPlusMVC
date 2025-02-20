@@ -36,6 +36,10 @@ class User
         $this->update($id, ['loginCount' => $loginCount], 'email');
     }
 
+    public function updatePassword($email, $password) {
+        $this->update($email, ['password' => $password], 'email');
+    }
+
 
     public function validate($data)
     {
