@@ -31,127 +31,49 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Time Slot</th>
                                             <th>User</th>
+                                            <th>Booked Date</th>
+                                            <th>Slot Date</th>
+                                            <th>Time Slot</th>
                                             <th>Service</th>
                                             <th>Contact Number</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>6.00 a.m - 6.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Mark Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6.30 a.m - 7.00 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Mark Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>7.00 a.m - 7.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Mark Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8.00 a.m - 8.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9.00 a.m - 9.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10.00 a.m - 10.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>11.00 a.m - 11.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Mark Completed</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>12.00 a.m - 12.30 a.m</td>
-                                            <td>
-                                                <div class="user">
-                                                    <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                    Abdual Rahim Vijepala
-                                                </div>
-                                            </td>
-                                            <td>Pet Bathing</td>
-                                            <td>0776533229</td>
-                                            <td>
-                                                <button class="ok">Completed</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                        <tbody>
+                                            <form action="<?= ROOT ?>/SalonTimeSlot/updateStatus" method="POST">
+                                                <?php if (!empty($appointments)) : ?>
+                                                    <?php foreach ($appointments as $appointment) : ?>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="user">
+                                                                    <?= htmlspecialchars($appointment['fullName']); ?>
+                                                                </div>
+                                                            </td>
+                                                            <td><?= date('Y-m-d', strtotime($appointment['bookedDate'])); ?></td>
+                                                            <td><?= htmlspecialchars($appointment['slotDate']); ?></td>
+                                                            <td><?= htmlspecialchars($appointment['timeSlot']); ?></td>
+                                                            <td><?= htmlspecialchars($appointment['service']); ?></td>
+                                                            <td><?= htmlspecialchars($appointment['contactNumber']); ?></td>
+                                                            <td>
+                                                                <!-- Pass groomingID as a hidden input -->
+                                                                <input type="hidden" name="groomingID" value="<?= $appointment['groomingID']; ?>">
+
+                                                                <!-- Completed button sends status 1 -->
+                                                                <button type="submit" class="ok" name="action" value="complete">Completed</button>
+
+                                                                <!-- Cancel button sends status 2 -->
+                                                                <button type="submit" class="ok" name="action" value="cancel">Cancelled</button>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                <?php else : ?>
+                                                    <tr>
+                                                        <td colspan="7">No appointments found.</td>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            </form>
+                                        </tbody>
                                 </table>
                             </div>
                         </div>    
