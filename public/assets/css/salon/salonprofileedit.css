@@ -1,0 +1,323 @@
+/* Salon Profile Edit Css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+    color: #2d3748;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Container Styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Page Close Icon*/ 
+.pageclose {
+    position: relative;
+    left: 99%;
+    font-size: 20px;
+    color: #6A0DAD;
+}
+
+.form-wrapper {
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-wrapper p {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Title */
+.form-title {
+    text-align: center;
+    color: #6A0DAD;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: #6A0DAD;
+}
+
+.tableform {
+    width: 30%;
+    margin-bottom: 25px;
+}
+
+.tableform label {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.tableform label i {
+    margin-right: 8px;
+    color: #6A0DAD;
+}
+
+.required {
+    color: #e53e3e;
+    margin-left: 4px;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+input[type="url"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #6A0DAD;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #6A0DAD;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+/* Textarea Styles */
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Image Upload Styles */
+.image-upload-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.image-upload-box {
+    border: 2px dashed #e2e8f0;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.image-upload-box:hover {
+    border-color: #6A0DAD;
+}
+
+.image-preview {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f7fafc;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-button {
+    position: relative;
+    cursor: pointer;
+}
+
+.upload-button i {
+    margin-right: 8px;
+    color: #6A0DAD;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Day Table */
+.day-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.day-table td {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f5f7fa;
+    border: 10px solid #ffffff;
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px rgba(207, 154, 243, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.day-table td.selected {
+    background-color: #6A0DAD;
+    color: white;
+}
+
+.day-table td:hover {
+    background-color: #e4e7ea;
+}
+
+
+
+/* Submit Button */
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #6A0DAD;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.submit-button:hover {
+    background-color: #6A0DAD;
+}
+
+.submit-button i {
+    font-size: 18px;
+}
+
+/* Dropdown and Select Box */
+select {
+    text-decoration: none;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #6A0DAD;
+}
+
+/* Error States */
+input:invalid,
+textarea:invalid,
+select:invalid {
+    border-color: #6A0DAD;
+}
+
+input:invalid:focus,
+textarea:invalid:focus,
+select:invalid:focus {
+    border-color: #6A0DAD;
+    box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-wrapper {
+        padding: 25px;
+    }
+
+    .form-title {
+        font-size: 24px;
+    }
+
+    .image-upload-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Input Placeholder Styles */
+::placeholder {
+    color: #a0aec0;
+}
+
+/* Focused Placeholder Styles */
+input:focus::placeholder,
+textarea:focus::placeholder {
+    color: #fff;
+}
+
+/* Custom Day Selection Table */
+#dayTable {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.day {
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.day:hover {
+    background-color: #f7fafc;
+}
+
+#toggleDays {
+    padding: 12px;
+    cursor: pointer;
+    border: 2px solid #6A0DAD;
+    background-color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 100%;
+    text-align: left;
+}
+
+#toggleDays:focus {
+    outline: none;
+    border-color: #6A0DAD;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+/* Optional: Add smooth scrolling for the whole page */
+html {
+    scroll-behavior: smooth;
+}

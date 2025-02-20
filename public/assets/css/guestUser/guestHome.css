@@ -1,0 +1,126 @@
+/* for the service cards */
+.serviceCards {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 0;
+    margin: 10px;
+}
+.serviceCard {
+    width: 15%;
+    padding: 1em;
+
+    text-align: center;
+
+    background-color: lightblue;
+    border: 1px solid var(--primary-border-color);
+    border-radius: 20px;
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+}
+.serviceCard img {
+    width: 90%;
+    object-fit: contain;
+}
+
+h1 {
+    font-size: 200%;
+    margin-left: 10%;
+}
+
+.sectionWithHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+
+}
+
+/* for the description divs */
+.homeDiv {
+    font-size: 1rem;
+    padding: 3em 10em;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.homeDiv img {
+    height: auto;
+    width: 60%;
+}
+.homeDivText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 5px;
+}
+
+/* for user types: */
+.userTypes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    margin-bottom: 3rem;
+}
+.userTypes .userCard {
+    width: 20%;
+    padding: 1rem;
+    background-color: var(--primary-bg-color);
+
+    /* border: 1px solid blue; */
+    border-radius: 20px;
+
+    font-size: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.userCard img {
+    width: 80%;
+    height: auto;
+
+    border-radius: 20px;
+}
+.userTypes .userCard .userTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.userTypes .userCard .userDescription {
+    font-size: 1em;
+}
+
+.happyCxContainer {
+    display: flex;
+    gap: 10px;
+
+    margin: 10px 10vw 10px 10vw;
+    overflow-x: scroll;
+}
+.happyCxCard {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-border-color);
+}
+.happyCxCard img {
+    height: 10rem;
+    width: auto;
+    border-radius: 10px;
+}
+.happyCxCard span {
+    display: block;
+}

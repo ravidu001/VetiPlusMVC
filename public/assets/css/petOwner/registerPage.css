@@ -1,0 +1,101 @@
+body {
+    background-image: linear-gradient(to top right, var(--background-color), var(--primary-color));
+}
+
+.formContainer {
+    border-radius: 20px;
+    padding: 2em;
+
+    width: 80vw;
+    margin: 3em auto;
+
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    background-color: rgba(248, 249, 250, 0.15);
+    backdrop-filter: blur(30px);
+}
+
+.formContainer .logoPart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 40%;
+    padding: 1em;
+}
+.logoPart img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+
+    animation: bounce 3s infinite;
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+form fieldset {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5px;
+
+    border: 1px solid var(--shadow-color);
+    border-radius: 5px;
+
+    padding: 15px;
+    margin-bottom: 15px;
+
+    font-size: 1.3em;
+}
+form fieldset legend {
+    font-weight: bold;
+}
+form label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+form input {
+    padding: 5px;
+    font-size: 1rem;
+
+    background-color: var(--background-color);
+    border-radius: 5px;
+}
+form input[type=radio] {
+    width: 1em;
+    height: 1em;
+}
+form input:valid {
+    border: 2px solid green;
+}
+form input:user-invalid {
+    border: 2px solid red;
+}
+form input[type=date]:invalid {
+    color: grey;
+}
+.formButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10vw;
+}
+.formButtons button {
+    padding: 5px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    width: 10vw;
+}

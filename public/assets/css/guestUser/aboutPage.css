@@ -1,0 +1,35 @@
+.aboutSections {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+
+    border-radius: 2rem;
+    padding: 1em;
+    margin: 5em;
+}
+.aboutSections img {
+    width: 40%;
+    object-fit: contain;
+}
+.aboutSections .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.aboutSections .text header {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+.aboutSections .text .mainH {
+    font-size: 4em;
+    font-weight: bolder;
+    align-self: end;
+}
+.aboutSections .text p {
+    text-align: justify;
+    font-size: 1.2em;
+    margin: 1em;
+}
