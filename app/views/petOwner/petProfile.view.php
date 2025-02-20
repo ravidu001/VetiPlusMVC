@@ -19,7 +19,6 @@
 
     </head>
     <body>
-        <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
         <div class="bodyArea">

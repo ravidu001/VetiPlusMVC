@@ -10,9 +10,7 @@
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
-
         <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">
 
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -21,7 +19,7 @@
         <div class="formContainer">
 
             <div class="logoPart">
-                <img src="<?= ROOT ?>/assets/images/guestUser/petOwner-welcome.png" alt="Pet Owner welcome image">
+                <img src="<?= ROOT ?>/assets/images/petOwner/poRegister.png" alt="Pet Owner welcome image">
                 <h3>Welcome to VetiPlus!</h3>
             </div>
 

@@ -64,7 +64,7 @@
                             </div>
                         <?php endif;
                     ?>
-                    <a class="card dashCard" href="./po_petRegister.php">
+                    <a class="card dashCard" href="./po_petRegister">
                         <i class="bx bxs-plus-circle bx-lg"></i>
                         <h3>Add Pet</h3>
                     </a>                   
