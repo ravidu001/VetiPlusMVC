@@ -60,6 +60,12 @@ class SalonRegisters {
     {
         $this->update($id, ['status' => $status] , 'email');
     }
+
+    //insert data
+    public function insertData($arr)
+    {
+        $this->insert($arr);
+    }
 }
 
 ?>
