@@ -231,3 +231,100 @@ align-items: center;
     font-size: 0.8em;
     color: var(--secondary-color);
 }
+
+.multiple-assistants {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.multiple-assistants .assistant-avatar {
+    position: relative;
+    width: 50px; /* Slightly larger for better visibility */
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.multiple-assistants .assistant-avatar:hover {
+    transform: scale(1.1);
+}
+
+.multiple-assistants .assistant-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.assistant-info {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: calc(100% + 15px); /* Adjusted for better spacing */
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background-color: #ffffff; /* White background for contrast */
+    color: #333; /* Dark text for readability */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Increased shadow for depth */
+    width: 280px; /* Wider for better content fit */
+    text-align: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.assistant-info .assistant-header {
+    font-weight: bold; /* Bold for emphasis */
+    font-size: 20px; /* Larger font size for the name */
+    color: #6a0dad; /* Primary color for the name */
+    margin-bottom: 5px; /* Space below the name */
+    border-bottom: 2px solid #e0e0e0; /* Underline for separation */
+    padding-bottom: 5px; /* Space below the underline */
+}
+
+.assistant-info .assistant-expertise {
+    font-size: 16px; /* Slightly larger font size */
+    color: #7f8c8d; /* Softer color for secondary text */
+    font-style: italic; /* Italic for differentiation */
+    margin-top: 5px; /* Spacing above expertise */
+}
+.assistant-avatar:hover .assistant-info {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.assistant-info::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 15px;
+    height: 15px;
+    background-color: #ffffff; /* Match tooltip background */
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+.assistant-info .assistant-avatar-large {
+    width: 90px; /* Larger avatar for better visibility */
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 10px;
+    border: 3px solid #f0f0f0;
+}
+
+.assistant-info .assistant-avatar-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+

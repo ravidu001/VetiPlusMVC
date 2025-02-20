@@ -11,148 +11,43 @@
 </head>
 
 <body>
-
-
   <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
   <section class="home">
     <div class="main-container">
       <div class="complain-container">
         <div class="complain-header">
-          <h1>Complain Management</h1>
+          <h1>Complaint Management</h1>
           <div class="search-filter">
-            <input type="text" placeholder="Search complaints...">
+            <input type="text" id="searchInput" placeholder="Search complaints...">
           </div>
         </div>
 
-        <table class="complain-table">
-          <thead>
-            <tr>
-              <th>User Name</th>
-              <th>Complaint Description</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John Doe</td>
-              <td>Service quality not meeting expectations</td>
-              <td>2023-06-15</td>
-              <td>
+        <div class="complaints-grid">
+          <?php foreach ($complain as $complaint): ?>
+            <div class="complaint-card">
+              <div class="complaint-info">
+                <div class="info-group">
+                  <h3>User Email</h3>
+                  <p><?= htmlspecialchars($complaint->email) ?></p>
+                </div>
+                <div class="info-group">
+                  <h3>Complaint Description</h3>
+                  <p><?= htmlspecialchars($complaint->issue) ?></p>
+                </div>
+                <div class="info-group">
+                  <h3>Date</h3>
+                  <p><?= htmlspecialchars($complaint->dateTime) ?></p>
+                </div>
                 <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a  href="<?= ROOT ?>/AdminComplain/complainlist"  class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a  href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a  href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a  href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a  href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Delayed response from customer support</td>
-              <td>2023-06-14</td>
-              <td>
-                <a  href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
-              </td>
-            </tr>
-            <!-- Add more rows as needed -->
-          </tbody>
-        </table>
-<!-- 
-        <div class="pagination">
-          <button>Previous</button>
-          <button class="active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>Next</button>
-        </div> -->
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
       </div>
     </div>
   </section>
+
 </body>
 
 </html>

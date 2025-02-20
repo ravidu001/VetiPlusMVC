@@ -1,0 +1,44 @@
+/* Apply blur when the body has the .popup-active class */
+body.popup-active > *:not(.popup) {
+    filter: blur(5px);
+    pointer-events: none;
+    transition: filter 0.3s ease; /* Smooth transition for blur */
+}
+
+/* Popup styling */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100px); /* Initial position (floated up) */
+
+    background-color: white;
+    padding: 20px;
+
+    border: 2px solid blue;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+    opacity: 0; /* Initially invisible */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.popup img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    animation: rotate 3s ease-in-out infinite;
+}
+.popup img:hover {
+    animation-play-state: paused;
+}
+@keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}

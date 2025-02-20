@@ -138,7 +138,6 @@ class OwnerAddAdmin extends Controller
     }
 
 
-
     public function deleteprofile()
     {
         $email = $_GET['email'];
