@@ -42,4 +42,30 @@ class SalonNewAppointment extends Controller
         $data['appointments'] = $appointments;
         $this->view('Salon/salonnewappointment', $data);
     }
+
+    //_______________________________________________________________________________________________________________________________________
+    public function updateStatus() 
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+        {
+            // Get form data
+            $groomingID = $_POST['groomingID'];
+            $action = $_POST['action'];
+
+            // Determine status based on action
+            $status = ($action === 'complete') ? 1 : 2;
+
+            // Update status in the grooming table
+            $grooming_table = new SalonBooked();
+            if ($grooming_table->updateStatus($groomingID, $status)) {
+                // Redirect with success message
+                header('Location: ' . ROOT . '/SalonTimeSlot?status=success');
+                exit;
+            } else {
+                // Redirect with error message
+                header('Location: ' . ROOT . '/SalonTimeSlot?status=error');
+                exit;
+            }
+        }
+    }
 }
