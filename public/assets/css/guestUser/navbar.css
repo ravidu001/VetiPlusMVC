@@ -45,7 +45,7 @@ nav.navBar {
 .navBar a:hover {
     transition: all 0.3s ease;
     transform: scale(1.05);
-    box-shadow: inset 3px 3px 10px var(--shadow-color);
+    box-shadow: 2px 2px 5px var(--shadow-color);
 }
 .navBar a:hover,
 .navBar a.active {

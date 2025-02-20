@@ -1,11 +1,18 @@
-<?php $current_pg = basename($_SERVER['PHP_SELF']); ?>
+<?php $current_pg = basename(trim($_SERVER['REQUEST_URI'], '/')); ?>
+
+<script>
+    let link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = "<?= ROOT ?>/assets/css/petOwner/navBar.css";
+    document.head.appendChild(link);
+</script>
 
 <nav class="navBar">
 
     <img src="<?= ROOT ?>/client/assets/images/vetiplus-logo.png" alt="VetiPlus logo" id="navBar-logo">
 
     <div class="links">
-        <a href="<?= ROOT ?>/petOwner"
+        <a href="<?= ROOT ?>/PO_home"
         class="<?= ($current_pg == 'home') ? 'active' : ''; ?>">
             <i class="bx bxs-home bx-sm" id="homeIcon"></i>
             <label for="homeIcon" class="collapsable">Home</label>
@@ -42,12 +49,6 @@
                 <label for="otherServiceIcon" class="collapsable">Pet Breeding</label>
             </a>
         </div>
-
-        <!-- <a href="<?= ROOT ?>/client/pages/petOwner/otherServices"
-        class="<?= ($current_pg == 'otherServices') ? 'active' : ''; ?>">
-            <i class="bx bxs-heart bx-sm" id="otherServiceIcon"></i>
-            <label for="otherServiceIcon" class="collapsable">Other Services</label>
-         </a> -->
 
         <a href="<?= ROOT ?>/PO_aboutUs"
         class="<?= ($current_pg == 'aboutUs') ? 'active' : ''; ?>">

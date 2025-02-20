@@ -17,18 +17,53 @@
         <?php require_once '../app/views/calendar.view.php'; ?>
 
         <div class="session-form-section"> <h2>Create Session</h2>
+        <form id="session-form" method="post" action="<?= ROOT ?>/doctorNewSession/createSession" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Selected Date</label>
-                <input type="text" id="selected-date" class="form-input" readonly>
+                <input type="text" id="selected-date" name="selectedDate" class="form-input" placeholder="select date from calendar" readonly>
             </div>
-            <form id="session-form">
+            
                 <div class="form-group">
                     <label>Start Time</label>
-                    <input type="time" class="form-input" required>
+                    <input type="time" name="startTime" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label>End Time</label>
-                    <input type="time" class="form-input" required>
+                    <input type="time" name="endTime" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Clinic Location</label>
+                    <input type="text" name="clinicLocation" class="form-input" placeholder="Enter Google Map Location" required>
+                </div>
+                <div class="form-group">
+                    <label for="district">District</label>
+                    <select id="district" name="district" class="form-input" required>
+                        <option value="" disabled selected>Select a district</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Badulla">Badulla</option>
+                        <option value="Batticaloa">Batticaloa</option>
+                        <option value="Colombo">Colombo</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Gampaha">Gampaha</option>
+                        <option value="Hambantota">Hambantota</option>
+                        <option value="Jaffna">Jaffna</option>
+                        <option value="Kalutara">Kalutara</option>
+                        <option value="Kandy">Kandy</option>
+                        <option value="Kegalle">Kegalle</option>
+                        <option value="Kilinochchi">Kilinochchi</option>
+                        <option value="Kurunegala">Kurunegala</option>
+                        <option value="Mannar">Mannar</option>
+                        <option value="Matale">Matale</option>
+                        <option value="Matara">Matara</option>
+                        <option value="Monaragala">Monaragala</option>
+                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                        <option value="Polonnaruwa">Polonnaruwa</option>
+                        <option value="Puttalam">Puttalam</option>
+                        <option value="Ratnapura">Ratnapura</option>
+                        <option value="Trincomalee">Trincomalee</option>
+                        <option value="Vavuniya">Vavuniya</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Need Assistant?</label>
@@ -40,10 +75,36 @@
                 <div id="assistant-select" class="assistant-section">
                     <div class="assistant-filter">
                         <label for="filterDistrict">Filter by district:</label>
-                        <input type="text" id="filterDistrict" class="form-input">
+                        <select name="filterDistrict" id="filterDistrict" class="form-input" required>
+                            <option value="" disabled selected>Select a district</option>
+                            <option value="Ampara">Ampara</option>
+                            <option value="Anuradhapura">Anuradhapura</option>
+                            <option value="Badulla">Badulla</option>
+                            <option value="Batticaloa">Batticaloa</option>
+                            <option value="Colombo">Colombo</option>
+                            <option value="Galle">Galle</option>
+                            <option value="Gampaha">Gampaha</option>
+                            <option value="Hambantota">Hambantota</option>
+                            <option value="Jaffna">Jaffna</option>
+                            <option value="Kalutara">Kalutara</option>
+                            <option value="Kandy">Kandy</option>
+                            <option value="Kegalle">Kegalle</option>
+                            <option value="Kilinochchi">Kilinochchi</option>
+                            <option value="Kurunegala">Kurunegala</option>
+                            <option value="Mannar">Mannar</option>
+                            <option value="Matale">Matale</option>
+                            <option value="Matara">Matara</option>
+                            <option value="Monaragala">Monaragala</option>
+                            <option value="Nuwara Eliya">Nuwara Eliya</option>
+                            <option value="Polonnaruwa">Polonnaruwa</option>
+                            <option value="Puttalam">Puttalam</option>
+                            <option value="Ratnapura">Ratnapura</option>
+                            <option value="Trincomalee">Trincomalee</option>
+                            <option value="Vavuniya">Vavuniya</option>
+                        </select>
                     </div>
-                    <div class="assistant-grid">
-                        <div class="assistant-card">
+                    <div class="assistant-grid" id="assistantList">
+                        <!-- <div class="assistant-card">
                             <div class="assistant-avatar">
                                 <img src="<?= ROOT ?>/assets/images/vetAssistant/assistant.jpg" alt="assistant">
                             </div>
@@ -102,13 +163,13 @@
                                 <input type="checkbox" name="assistant-select">
                                 <span class="checkmark"></span>
                             </label>
-                        </div>
+                        </div> -->
                         <!-- Repeat similar structure for other assistants -->
                     </div>
                 </div>
                 <div class="submit-section">
                     <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Session</button>
+                    <button type="submit" class="btn btn-primary" id="submit-button">Create Session</button>
                 </div>
             </form>
         </div>

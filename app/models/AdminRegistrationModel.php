@@ -35,4 +35,5 @@ class AdminRegistrationModel {
         return $count;  // Return the count value
 
     }
+    
 }

@@ -29,7 +29,16 @@
 }
 
 h1 {
+    font-size: 200%;
     margin-left: 10%;
+}
+
+.sectionWithHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+
 }
 
 /* for the description divs */
@@ -52,24 +61,6 @@ h1 {
     justify-content: center;
     text-align: center;
     gap: 5px;
-}
-
-.regBtn button {
-    font-size: 1.2em;
-    color: white;
-
-    border: 1px solid black;
-    background-color: blue;
-
-    padding: 1em;
-    margin-right: 1em;
-    border-radius: 10px;
-}
-.regBtn button:hover {
-    cursor: pointer;
-    color: black;
-    background-color: lightblue;
-    transition: ease 500ms;
 }
 
 /* for user types: */

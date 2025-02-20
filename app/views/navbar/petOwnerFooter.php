@@ -1,15 +1,17 @@
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/petOwner/myFooter.css">
+
 <footer class="myFooter">
     <div class="footerLinks">
         <div>
             <h2>Quick Links:</h2>
             <ul class="quickLinks">
-                <li><a href="<?= ROOT . '/petOwner' ?>">Dashboard</a></li>
-                <li><a href="<?= ROOT . '/PO-vetAppointments' ?>">Vet Appointments</a></li>
-                <li><a href="<?= ROOT . '/PO-salonAppointments' ?>">Salon Appointments</a></li>
-                <li><a href="<?= ROOT . '/PO-petAdoption' ?>">Pet Adoption</a></li>
-                <li><a href="<?= ROOT . '/PO-petBreeding' ?>">Pet Breeding</a></li>
-                <li><a href="<?= ROOT . '/PO-aboutUs' ?>">About Us</a></li>
-                <li><a href="<?= ROOT . '/PO-contactUs' ?>">Contact</a></li>
+                <li><a href="<?= ROOT . '/PO_home' ?>">Dashboard</a></li>
+                <li><a href="<?= ROOT . '/PO_vetAppointments' ?>">Vet Appointments</a></li>
+                <li><a href="<?= ROOT . '/PO_salonAppointments' ?>">Salon Appointments</a></li>
+                <li><a href="<?= ROOT . '/PO_petAdoption' ?>">Pet Adoption</a></li>
+                <li><a href="<?= ROOT . '/PO_petBreeding' ?>">Pet Breeding</a></li>
+                <li><a href="<?= ROOT . '/PO_aboutUs' ?>">About Us</a></li>
+                <li><a href="<?= ROOT . '/PO_contactUs' ?>">Contact</a></li>
             </ul>
         </div>
         <div>
@@ -23,7 +25,7 @@
         </div>
     </div>
     <div class="central">
-        <img src="<?= ROOT ?>/assets/images/vetiplus-logo.png" alt="logo">
+        <img src="<?= ROOT ?>/assets/images/petOwner/vp-logo.png" alt="logo">
         <h2>VetiPlus</h2>
         <p>
             Copyright 2024 vetiplus@gmail.com<br/>
