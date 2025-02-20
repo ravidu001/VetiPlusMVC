@@ -22,12 +22,12 @@
 
         <div class="bodyArea">
             
-            <div class="aloneContent profilePage">
+            <div class="dashArea profilePage">
                 <h1>My Profile</h1>
     
                 <div class="profilePicContainer">
-                    <?php if (isset($data['profilePicture'])) : ?>
-                        <img src="<?= ROOT.'/assets/images/profilePics/petOwner/'.$data['profilePicture'] ?>"
+                    <?php if (isset($this->po_details->profilePicture)) : ?>
+                        <img src="<?= ROOT.'/assets/images/profilePics/petOwner/'.$this->po_details->profilePicture ?>"
                             alt="Profile Picture">
                     <?php else: ?>
                         <span>No profile picture added.</span>
@@ -53,43 +53,43 @@
     
                     <!-- <div class="userData"> -->
                         <label for="name">Name: </label>
-                        <span class="display-field"><?= $data['fullName']; ?></span>
-                        <input type="text" id="name" class="input-field" name="name" value="<?= $data['fullName']; ?>" required>
+                        <span class="display-field"><?= $this->po_details->fullName; ?></span>
+                        <input type="text" id="name" class="input-field" name="name" value="<?= $this->po_details->fullName; ?>" required>
                     <!-- </div> -->
     
                     <button type="button" onclick="toggleEdit()">Edit</button>
     
                     <!-- <div class="userData"> -->
                         <label for="contact">Contact Number: </label>
-                        <span class="display-field"><?= $data['contactNumber']; ?></span>
-                        <input type="number" id="contact" class="input-field" name="contact" value="<?= $data['contactNumber']; ?>" required>
+                        <span class="display-field"><?= $this->po_details->contactNumber; ?></span>
+                        <input type="number" id="contact" class="input-field" name="contact" value="<?= $this->po_details->contactNumber; ?>" required>
                     <!-- </div> -->
     
                     <!-- <div class="userData"> -->
                         <label for="dob">Date of Birth: </label>
-                        <span class="display-field"><?= $data['DOB']; ?></span>
-                        <input type="date" id="dob" class="input-field" name="dob" value="<?= $data['DOB']; ?>" required>
+                        <span class="display-field"><?= $this->po_details->DOB; ?></span>
+                        <input type="date" id="dob" class="input-field" name="dob" value="<?= $this->po_details->DOB; ?>" required>
                     <!-- </div> -->
                     
                     <!-- <div class="userData"> -->
                         <label for="nic">NIC Number: </label>
-                        <span class="display-field"><?= $data['NIC']; ?></span>
-                        <input type="text" id="nic" class="input-field" name="nic" value="<?= $data['NIC']; ?>" required>
+                        <span class="display-field"><?= $this->po_details->NIC; ?></span>
+                        <input type="text" id="nic" class="input-field" name="nic" value="<?= $this->po_details->NIC; ?>" required>
                     <!-- </div> -->
                     
                     <!-- <div class="userData"> -->
                         <label id="address">Address: </label>
-                        <span class="display-field"><?= $data['houseNo'].', '.$data['streetName'].',<br/>'.$data['city']; ?></span>
+                        <span class="display-field"><?= $this->po_details->houseNo.', '.$this->po_details->streetName.',<br/>'.$this->po_details->city; ?></span>
     
-                        <input type="text" id="houseNo" class="input-field" name="houseNo" value="<?= $data['houseNo']; ?>" required>
-                        <input type="text" id="streetName" class="input-field" name="streetName" value="<?= $data['streetName']; ?>" required>
-                        <input type="text" id="city" class="input-field" name="city" value="<?= $data['city']; ?>" required>
+                        <input type="text" id="houseNo" class="input-field" name="houseNo" value="<?= $this->po_details->houseNo; ?>" required>
+                        <input type="text" id="streetName" class="input-field" name="streetName" value="<?= $this->po_details->streetName; ?>" required>
+                        <input type="text" id="city" class="input-field" name="city" value="<?= $this->po_details->city; ?>" required>
                     <!-- </div> -->
     
                     <button type="submit" style="display: none;" id="save-button">Save</button>
                 </form>
     
-                <form action="../login-singup/logout.php" method="post">
+                <form action="po_userProfile/logout" method="post">
                     <button type="submit">Logout</button>
                 </form>
     
