@@ -1,30 +1,24 @@
 <?php
 
-class Pet {
+class Pet 
+{
     use Model;
-    protected $table = 'Pet';
-    protected $order_column = 'petID';
-    protected $allowedColumns = [
-        'petID',
-        'petOwnerID',
-        'name',
-        'DOB',
-        'gender',
-        'weight',
-        'species',
-        'breed',
-        'breedAvailable',
-        'breedDescription',
-        'profilePicture'
-    ];
-    public $userID;
-    @use this function at start to get the petOwnerID:
-    private function getUserID () {
-        $this->userID = $_SESSION['userID'];
+    
+    protected $table = 'petowner';
+    
+
+    public function findPetDetailsByID($petID)
+    {
+        $this->order_colunm = 'petID';
+        return $this->first(['petID' => $petID ]);
     }
 
-    public function createPetProfile() {
-        $petOwnerID = ['petOwnerID' => $_SESSION['userID']];
-    }
 
 }
+
+
+
+
+    
+
+   
