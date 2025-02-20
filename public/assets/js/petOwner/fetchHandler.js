@@ -27,12 +27,12 @@ async function fetchHandler(event) {
         });
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
-        const data = await response.json();
+        const dataObject = await response.json();
 
         // check if php says that the form's input are invalid
-        if (queryObject.status == 'inputFail') {
+        if (dataObject.status == 'inputFail') {
             const errorMsgContainer = document.querySelector('.errorMsg');
-            const messages = queryObject.message.split(';');
+            const messages = dataObject.message.split(';');
             const ul = document.createElement('ul');
             
             messages.forEach(msg => {
@@ -46,7 +46,7 @@ async function fetchHandler(event) {
             return;
         }
         
-        displayPopUp(data);
+        displayPopUp(dataObject);
 
     } catch (error) {
         console.error('An error occurred\n' + error);
