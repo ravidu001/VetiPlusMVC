@@ -10,7 +10,7 @@ class Pet {
         'petID', 'petOwnerID', 'name', 'DOB', 'gender', 'weight', 
         'species', 'breed', 'breedAvailable', 'breedDescription', 'profilePicture'
     ];
-
+  
     public function __construct() {
         $this->order_column = 'petID ';  // Overriding order_column here
 
@@ -47,10 +47,17 @@ class Pet {
         $registerSuccess = $this->insert($data);
         return empty($registerSuccess) ? true : false;
     }
+    public $userID;
+    // Use this function at start to get the petOwnerID:
+    private function getUserID () {
+        $this->userID = $_SESSION['userID'];
+    }
 
     public function uploadProfilePicture ($petID, $data) {
         $uploadSuccess = $this->update($petID, $data);
         return empty($uploadSuccess) ? true : false;
     }
+
+    
 
 }

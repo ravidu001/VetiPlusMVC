@@ -1,0 +1,316 @@
+/* Main layout */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #2d3748;
+}
+
+.pagecontent {
+    margin-left: 250px;
+    transition: all 0.3s ease-in-out;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+body:has(#sidebar.close) .pagecontent {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+/* Header Styles */
+h1 {
+    color: #5a1699;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(106, 13, 173, 0.1);
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #6a0dad, #c8a2c8);
+    margin: 0.5rem auto;
+    border-radius: 2px;
+}
+
+/* Date Selection Box */
+.selectdatebox {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(197, 62, 224, 0.15);
+    border: none;
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.selectdatebox:hover {
+    transform: translateY(-5px);
+}
+
+.selectdateboxname {
+    font-size: 1.5rem;
+    padding: 0.5rem 0;
+    font-weight: 600;
+    color: #5a1699;
+    border-bottom: 3px solid #6A0DAD;
+    margin-bottom: 1rem;
+}
+
+/* Date Input Styling */
+.enterdate input[type="date"] {
+    padding: 0.8rem 1rem;
+    border: 2px solid #e0bdf9;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #4a5568;
+    background: #fff;
+    transition: all 0.3s ease;
+    margin: 1rem 0;
+}
+
+.enterdate input[type="date"]:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+    outline: none;
+}
+
+.SelectDateAndSlot a
+{
+    text-decoration: none;
+    color: white;
+}
+
+/* Buttons */
+.SelectDateAndSlot button {
+    background: #6a0dad;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.SelectDateAndSlot button:hover {
+    background: #5a1699;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 13, 173, 0.2);
+}
+
+/* Legend Styling */
+.legend {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.legendcontent {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.color-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.color-box:hover {
+    transform: scale(1.1);
+}
+
+.color-box.available {
+    background: linear-gradient(135deg, #c8a2c8, #dbbfdb);
+}
+
+.color-box.booked {
+    background: linear-gradient(135deg, #6a0dad, #8b31cf);
+}
+
+.color-box.blocked {
+    background: linear-gradient(135deg, #708090, #899099);
+}
+
+/* Time Slots Grid */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.time-slot {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 12px;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.time-slot.available {
+    background: linear-gradient(135deg, #fff, #f8f0f8);
+    border-left: 4px solid #c8a2c8;
+}
+
+.time-slot.booked {
+    background: linear-gradient(135deg, #fff, #f5f0fa);
+    border-left: 4px solid #6a0dad;
+}
+
+.time-slot.blocked {
+    background: linear-gradient(135deg, #fff, #f5f6f7);
+    border-left: 4px solid slategray;
+}
+
+.time-slot:hover:not(.booked):not(.blocked) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(106, 13, 173, 0.15);
+}
+
+.time-slot-time {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #5a1699;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.time-slot-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.status-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.status-icon::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Time Details Container */
+.container {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(197, 62, 224, 0.15);
+    margin-top: 2rem;
+}
+
+.container h2 {
+    color: #5a1699;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.times {
+    background: #f8f5ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.times h4 {
+    color: #6a0dad;
+    margin: 0 1rem;
+    font-weight: 600;
+}
+
+.times p {
+    color: #4a5568;
+    margin: 0 1rem;
+}
+
+/* Form Styling */
+form {
+    margin: 1.5rem 0;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+form input[type="date"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 2px solid #e0bdf9;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .time-slots {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .pagecontent {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .selectdatebox {
+        padding: 1rem;
+    }
+
+    .time-slots {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+}

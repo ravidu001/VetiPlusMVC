@@ -12,6 +12,23 @@ class Salons
         //if has return the row of the user data
         return $this->first(['salonID' => $salonId]);
     }
+
+    //update the salon time details
+    public function updateSalonTimeSlots($salonID, $data)
+    {
+       return $this->update( $salonID , $data , 'salonID');
+    }
+
+    //delete salon profile picture
+    public function DeleteProfile($salonID)
+    {
+        return $this->deleteOne( $salonID, 'profilePicture', 'salonID');
+    }
+
+    //insert the data in to the table
+    public function insertData($arr)
+    {
+        return $this->insert($arr);
+    }
 }
 
-?>

@@ -1,0 +1,482 @@
+/* Reset basic styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #E4E9F7;
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+    /* background-color: black; */
+}
+
+body:has(#sidebar.close) .pagecontent {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+
+.pagecontent{
+    margin-left: 250px; /*width of sidebar */ 
+    transition: margin-left 0.3s ease-in-out;
+    width: calc(100%- 250px);
+}
+
+
+/* Header Styling */
+.dashbardheader {
+    margin-top: 0.5%;
+    margin-left: 2%;
+    margin-right: 4%;
+    margin-bottom: 0.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    /* box-shadow: 5px 2px 5px rgba(213, 118, 235, 0.3); */
+    border: #e0bdf9 2px solid;
+    border-radius: 5px;
+}
+
+/* when sidebar is closed, reduce the margin
+#sidebar.close + .dashboardcontent {
+    margin-left: 90px; 
+} */
+
+.dashbardheader h3 {
+    color: #6A0DAD;
+    font-size: 24px;
+}
+
+.dashbardheader .icon i {
+    color: #6A0DAD;
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: black;
+}
+
+.profile img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.profile .name {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.profile button:hover{
+    background-color: #e0bdf9;
+    color: black;
+}
+
+
+.icondrop {
+    color: #6A0DAD;
+    font-size: 15px;
+}
+
+/* Dashcontent Styling */
+.dashcontent {
+    display: flex;
+    margin-left: 0.3%;
+}
+
+.dashcontent .part1{
+    margin-left: 1%;
+    /* margin-right: 5%; */
+    flex: 0 0 auto;
+}
+
+.dashcontent .part2{
+    flex:1;
+    overflow-y: auto;
+    margin-left: 0.2%;
+}
+
+.dashcontent .part1, .part2{
+    background-color: #eeddfa;
+    padding: 20px;
+    border-radius: 8px;
+    /* box-shadow: 10px 10px 15px rgba(202, 143, 225, 0.3); */
+}
+
+/* Part1 Content Styling */
+.appointmentCount {
+    display: grid;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    color: black;
+    margin-bottom: 20px;
+    /* box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3); */
+}
+
+/* .upcominappointments {
+    color: gray;
+    font-size: 10px;
+    padding: 3px;
+} */
+
+.appointmentCount .icon {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.appointmentCount .namewithicon{
+    display: flex;
+    margin: 5px;
+}
+
+.appointmentname {
+    font-family:  "Inter",sans-serif;
+    margin: 10px;
+    font-size: 20px;
+
+}
+
+.appointmentno {
+    margin-left: 30px;
+    color: #6A0DAD;
+    font-size: 20px;
+    text-align: center;
+    font-family:  "Inter",sans-serif;
+}
+
+/* Calendar Styling */
+.calendar .calandercolor {
+    flex: 0 0 auto;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.calandercolor .colorone,
+.calandercolor .colortwo,
+.calandercolor .colorthree {
+    display: flex;
+    align-items: center;
+}
+
+.coloricon1 {
+    font-size: 10px;
+    color: #6A0DAD;
+    margin-right: 5px;
+}
+
+.colordetail {
+    margin: 0;
+    color: #6A0DAD;
+}
+
+/* Part2 Content Styling */
+.part2header {
+    margin-bottom: 20px;
+}
+
+.part2 {
+    flex: 1;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 652px; /* Adjust height as needed */
+    padding: 20px; /* Optional: Add padding for better spacing */
+    border-radius: 8px; /* Optional: Match the design style */
+    background-color: #eeddfa; /* Match the existing design */
+}
+
+/* Add a custom scrollbar for better UI (optional) */
+.part2::-webkit-scrollbar {
+    width: 8px;
+}
+
+.part2::-webkit-scrollbar-thumb {
+    background-color: #6A0DAD; /* Scrollbar color */
+    border-radius: 4px;
+}
+
+.part2::-webkit-scrollbar-track {
+    background-color: #f0e6f9; /* Scrollbar track color */
+}
+
+
+.part2header p {
+    background-color: #fff;
+    margin: 0;
+    text-align: center;
+    font-family: "Inter",sans-serif;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 4px;
+    /* box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1); */
+}
+
+ .upcominappointments {
+    border-radius: 12px;
+    margin: 10px;
+}
+
+.realtime {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.appointmentbox {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.image {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.image img.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.petimage {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.userdetails {
+    flex-grow: 1;
+}
+
+.userdetails .icon {
+    color: gray;
+    size: 5px;
+    margin: 2px;
+
+}
+
+.username  {
+    display: inline;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 5px;
+    color:gray;
+}
+
+.servicename{
+    display: inline;
+    margin-left: 5px;
+    font-size: 13px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.fa-paw {
+    margin-right: 5px;
+}
+
+.number {
+    display: inline;
+    font-size: 12px;
+    color: gray;
+}
+
+.time {
+    display: inline;
+    color: #666;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+
+/* Optional: Add smooth scrolling for the whole page */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashbardheader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .dashbardheader h3 {
+        font-size: 20px;
+    }
+
+    .profile {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .profile img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .dashcontent {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .dashcontent .part1,
+    .dashcontent .part2 {
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    .appointmentCount {
+        padding: 10px;
+        grid-template-rows: auto 1fr;
+    }
+
+    .appointmentname {
+        font-size: 22px;
+    }
+
+    .appointmentno {
+        font-size: 20px;
+        margin-left: 0;
+    }
+
+    .calendar .calandercolor {
+        margin-top: 10px;
+    }
+
+    .calandercolor .coloricon1 {
+        font-size: 8px;
+    }
+
+    .part2header h2 {
+        font-size: 18px;
+        padding: 6px;
+    }
+
+    .upcominappointments {
+        gap: 5px;
+    }
+
+    .appointmentbox {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .appointmentbox .imageandview {
+        margin-left: 0;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .appointmentbox img.image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .appointmentbox .username {
+        font-size: 16px;
+    }
+
+    .appointmentbox .servicename,
+    .appointmentbox .time {
+        font-size: 14px;
+    }
+
+    .appointmentbox button {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashbardheader {
+        padding: 5px;
+    }
+
+    .dashbardheader h3 {
+        font-size: 18px;
+    }
+
+    .profile {
+        gap: 5px;
+    }
+
+    .dashcontent .part1,
+    .dashcontent .part2 {
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .appointmentCount {
+        padding: 8px;
+    }
+
+    .appointmentname {
+        font-size: 20px;
+    }
+
+    .appointmentno {
+        font-size: 18px;
+    }
+
+    .calendar .calandercolor {
+        gap: 5px;
+    }
+
+    .calandercolor .coloricon1 {
+        font-size: 6px;
+    }
+
+    .part2header h2 {
+        font-size: 16px;
+    }
+
+    .upcominappointments {
+        gap: 5px;
+    }
+
+    .appointmentbox {
+        padding: 8px;
+        border-radius: 5px;
+        box-shadow: none;
+    }
+
+    .appointmentbox img.image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .appointmentbox .username {
+        font-size: 14px;
+    }
+
+    .appointmentbox .servicename,
+    .appointmentbox .time {
+        font-size: 12px;
+    }
+
+    .appointmentbox button {
+        font-size: 12px;
+    }
+}

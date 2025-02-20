@@ -119,7 +119,7 @@ class SalonRegister extends Controller
             return;
         }
 
-        if($registration_table->insert($arr))
+        if($registration_table->insertData($arr))
         {
             $data['success'] = true;
         }

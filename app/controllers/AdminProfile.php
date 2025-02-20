@@ -6,4 +6,7 @@ class AdminProfile extends Controller
     {
         $this->view('admin/profile');
     }
+
+   
+    
 }
