@@ -23,7 +23,7 @@
                 console.log(<?= json_encode($this->po_details->fullName) ?>);
                 console.log(<?= json_encode($this->po_details) ?>);
             </script>
-        <!-- navbar on top: -->
+            
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
         <!-- actual content: -->

@@ -51,13 +51,13 @@
         </div>
 
         <a href="<?= ROOT ?>/PO_aboutUs"
-        class="<?= ($current_pg == 'aboutUs') ? 'active' : ''; ?>">
+        class="<?= ($current_pg == 'PO_aboutUs') ? 'active' : ''; ?>">
             <i class="bx bxs-group bx-sm" id="aboutIcon"></i>
             <label for="aboutIcon" class="collapsable">About Us</label>
         </a>
 
         <a href="<?= ROOT ?>/PO_contactUs"
-        class="<?= ($current_pg == 'contactUs') ? 'active' : ''; ?>">
+        class="<?= ($current_pg == 'PO_contactUs') ? 'active' : ''; ?>">
             <i class="bx bxs-phone-call bx-sm" id="contactIcon"></i>
             <label for="contactIcon" class="collapsable">Contact Us</label>
         </a>
@@ -69,8 +69,8 @@
             <label for="themeToggle" class="toggle-label"></label>
         </div>
     
-        <a href="<?= ROOT ?>/PO_petOwnerProfile"
-        class="<?= ($current_pg == 'profilePage') ? 'active' : ''; ?>">
+        <a href="<?= ROOT ?>/PO_userProfile"
+        class="<?= ($current_pg == 'PO_userProfile') ? 'active' : ''; ?>">
             <i class="bx bxs-user-circle bx-sm" id="profileIcon"></i>
             <label for="profileIcon" class="collapsable">Profile</label>
         </a>
