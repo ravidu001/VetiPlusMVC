@@ -16,7 +16,11 @@ class Pet {
 
         if (isset($_SESSION['petOwnerID'])) {
             $this->petOwnerID = $_SESSION['petOwnerID'];
-        } else {
+        } else if( $_SESSION['SALON_USER'])
+        {
+            $this->petOwnerID = $_SESSION['SALON_USER'];
+        }
+        else {
             redirect('Login');
         }
     }
