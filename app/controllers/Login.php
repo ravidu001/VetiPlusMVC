@@ -62,6 +62,7 @@ class Login extends Controller
                                 header('Location: ../Assistant');
                                 break;
                             case 'System Admin':
+                                $_SESSION['adminID'] = $registered->email;
                                 header('Location: ../Admin');
                                 break;
                             case 'Owner':
@@ -197,6 +198,7 @@ class Login extends Controller
                                 header('Location: ../Assistant');
                                 break;
                             case 'System Admin':
+                                $_SESSION['adminID'] = $registered->email;
                                 header('Location: ../Admin');
                                 break;
                             case 'Owner':
