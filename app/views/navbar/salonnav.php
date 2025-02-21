@@ -93,6 +93,13 @@
                     </a>
                 </li>
 
+                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonTimeSlotRavindu' ? 'active' : '' ?>"> 
+                    <a href="<?= ROOT?>/SalonTimeSlotRavindu">
+                        <i class='bx bxs-pie-chart-alt icon'></i>
+                        <span>Time Slot-ravindu</span>
+                    </a>
+                </li>
+
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonService' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonService">
                         <i class='bx bxs-briefcase icon'></i>

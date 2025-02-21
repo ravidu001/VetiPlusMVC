@@ -2,16 +2,13 @@
 <html lang="en">
     <head>
         <title>Salon Appointments</title>
-        <link rel="icon" href="<?= ROOT ?>/assets/images/vetiplus-logo.png" type="image/png">
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/petOwner/styles.css" rel="stylesheet">
-        
-        <link href="<?= ROOT ?>/assets/css/petOwner/navBar.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/petOwner/myFooter.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/petOwner/appointmentPages.css" rel="stylesheet">
 
@@ -19,10 +16,9 @@
 
     </head>
     <body>
-        <!-- navbar on top: -->
-        <?php include_once '../app/views/navbar/petOwnerNav.php'; ?>
+        <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
-        <div class="dashContent">
+        <div class="bodyArea">
 
             <section id="upcomingAppointments" class="dashArea">
                 <h2>Upcoming Appointments</h2>
@@ -116,10 +112,10 @@
                     <?php endfor; ?>
                 </div>
             </section>
+            
+            <!-- footer at page's bottom: -->
+            <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
         </div>
-
-        <!-- footer at page's bottom: -->
-        <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
 
         <script src="appointmentPages.js"></script>
     </body>

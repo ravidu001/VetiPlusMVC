@@ -51,7 +51,7 @@ nav.sideBar>* {
 .sideBar a:hover {
     transition: all 0.3s ease;
     transform: scale(1.05);
-    box-shadow: 3px 3px 10px var(--shadow-color);
+    box-shadow: 0px 0px 10px var(--shadow-color);
     z-index: 15;
 }
 .sideBar a:hover,
@@ -88,8 +88,7 @@ nav.sideBar>* {
     background-color: var(--nav-bg-color);
     border-bottom: 2px solid var(--primary-border-color);
     padding: 5px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 10px;
     z-index: 10;
 }
 
@@ -106,8 +105,7 @@ nav.sideBar>* {
     background-color: var(--nav-bg-color);
     border-bottom: 2px solid var(--primary-border-color);
     padding: 5px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 10px;
     z-index: 10;
 }
 
@@ -146,6 +144,7 @@ nav.sideBar>* {
     background-repeat: no-repeat;
     background-position: center;
     transition: background-color 0.3s, background-image 0.3s;
+    box-shadow: 0px 0px 10px #e5e9f6;
 }
 
 /* Dark Mode Background for Toggle */

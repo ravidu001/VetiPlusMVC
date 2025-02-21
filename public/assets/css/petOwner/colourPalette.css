@@ -1,13 +1,16 @@
 /* Light Theme by default*/
 body, body.lightTheme {
-    --background-color: #f8f9fa;           /* for body background */
+    --background-color: #e5e9f6;           /* for body background */
     
-    --primary-color: #6a0dad;               /* main colour for borders and other important stuff */
+    --primary-color: #8912de;               /* main colour for borders and other important stuff */
+
     --primary-bg-color: #ffffff;           /* for div backgrounds */
+    --secondary-bg-color: #f6f4fe;          /* for div backgrounds borders and such */
+
     --text-color: #43415b;                 /* for all text generally in body */
     
     /* Navigation and Sidebar */
-    --nav-bg-color: #6a0dad;               /* for sidebars and navbars bg */
+    --nav-bg-color: #8912de;               /* for sidebars and navbars bg */
     --nav-text-color: #c3b4cd;             /* normal navbar text colour */
     --nav-active-text-color: #ffff;       /* text colour when hovering and for active tab */
     --link-color: #4b97cf;
@@ -16,30 +19,36 @@ body, body.lightTheme {
     --shadow-color: #000000;               /* shadow effect colour */
 
     /* Button and Hover Effects */
-    --button-color: #9b009b;            /* when hovering */
+    --button-color: #8912de;            /* when hovering */
     --button-hover-color: #2c215c;      /* Darker blue for button hover */
     --button-text-color: #d6d6d6;          /* text on buttons */
 }
 
 /* Dark Theme - only changing the primary colour and stuff */
 body.darkTheme {
-    --background-color: #1a2e3b;           /* Dark blue-gray */
+    /* --background-color: #1a2e3b;           Dark blue-gray */
+    --background-color: #18181b;           /* Dark blue-gray */
     
-    --primary-color: #6a0dad;              /* Bright blue for main accents */
+    --primary-color: #450871;              /* Bright blue for main accents */
+    
     --primary-bg-color: #2c3e50;            /* mostly for div backgrounds */
+    --secondary-bg-color: #3a3b3c;          /* for div backgrounds borders and such */
+    
     --text-color: #f8f9fa;                 /* Light blue for readability */
     
     /* Navigation and Sidebar same as in light */
-    --nav-bg-color: #6A0DAD;               /* for sidebars and navbars bg */
+    
+    --nav-bg-color: #450871;               /* for sidebars and navbars bg */
     --nav-text-color: #c3b4cd;             /* normal navbar text colour */
     --nav-active-text-color: #ffff;       /* text colour when hovering and for active tab */
     --link-color: #4b97cf;
-       
-    --inset-shadow-color: #ffffff;         /* for box-shadow inset */
-    --shadow-color: #000000;               /* shadow effect colour */
-
+    
+    --inset-shadow-color: #000000;         /* for box-shadow inset */
+    --shadow-color: #ffffff;               /* shadow effect colour */
+    
     /* Button and Hover Effects same as light */
-    --button-color: #9b009b;            /* when hovering */
+    
+    --button-color: #450871;            /* when hovering */
     --button-hover-color: #2c215c;      /* Darker blue for button hover */
     --button-text-color: #d6d6d6;          /* text on buttons */
 }
@@ -61,3 +70,6 @@ button:hover {
     transition: 0.3s;
     cursor: pointer;
 }
+
+/* --nav-bg-color: #6a0dad;               for sidebars and navbars bg */
+/* --button-color: #9b009b;            when hovering */
