@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
+        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet"> -->
+        <!-- <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet"> -->
 
         <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">

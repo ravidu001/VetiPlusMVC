@@ -7,13 +7,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
+        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet"> -->
+
+        <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">
 
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-        <link href="<?= ROOT ?>/assets/css/petOwner/formStyles.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">
     </head>
     <body>
         <!-- <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?> -->
@@ -22,10 +21,10 @@
 
             <div class="logoPart">
                 <img src="<?= ROOT ?>/assets/images/petOwner/petRegister.png" alt="Pet Owner welcome image">
-                <h3>Welcome to VetiPlus!</h3>
+                <h3>Pet Registration</h3>
             </div>
 
-            <form id="petOwnerRegisterForm" method="post" action="<?= ROOT ?>/PO_register/petOwnerRegister">
+            <!-- <form id="petOwnerRegisterForm" method="post" action="<?= ROOT ?>/PO_register/petOwnerRegister">
                 <h1>Pet Owner Signup</h1>
                 <fieldset>
                     <legend>Personal Details</legend>
@@ -65,62 +64,65 @@
                     <button type="reset">Clear</button>
                     <button type="submit">Submit</button>
                 </div>
-            </form>
+            </form> -->
             
-                <form method="post" enctype="multipart/form-data" id="petRegisterForm"
-                    action="<?= ROOT.'/server/controllers/petOwner/petRegisterHandle.php' ?>">
-    
-                    <h2>Register Your Pet</h2><br/>
-    
-                    <label>Name:</label>
-                        <input type="text" id="name" name="name" required> 
-    
-                    <label for="dob">Date of Birth:</label>
-                        <input type="date" id="dob" name="dob" max="<?= (new DateTime("now"))->format('Y-m-d') ?>" required>
-                    
-                    <label>Gender:</label>
-                        <span>
-                            <label for="male" class="radioLabel">Male:</label>
-                                <input type="radio" id="male" name="gender" value="male" required>
-                            <label for="female" class="radioLabel">Female:</label>
-                                <input type="radio" id="female" name="gender" value="female" required>
-                        </span>
-    
-                    <label for="weight">Weight:</label>
-                        <input type="number" id="weight" name="weight" min="0" required>
+                <form id="petRegisterForm" method="post" enctype="multipart/form-data" action="<?= ROOT.'/PO_petRegister/petRegister' ?>">
+                    <h2>Register Your Pet</h2>
+                    <div class="noField">
+
+                        <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" minlength="3" placeholder="eg: Bingo" required> 
+        
+                        <label for="DOB">Date of Birth:</label>
+                            <input type="date" id="DOB" name="DOB" max="<?= (new DateTime("now"))->format('Y-m-d') ?>" required>
                         
-                    <label for="species">Species:</label>
-                        <input type="text" id="species" name="species" list="petSpecies">
-                        <datalist id="petSpecies">
-                            <option value="Dog">
-                            <option value="Cat">
-                            <option value="Rabbit">
-                            <option value="Bird">
-                            <option value="Hamster">
-                        </datalist>
+                        <label for="male">Gender</label>
+                            <div>
+                                <label for="male">Male</label>
+                                <input type="radio" id="male" value="male" name="gender" required>
+                                <label for="female">Female</label>
+                                <input type="radio" id="female" value="female" name="gender" required>
+                            </div>
+        
+                        <label for="weight">Weight (in kg):</label>
+                            <input type="number" id="weight" name="weight" min="0" placeholder="eg: 1" required>
+                            
+                        <label for="species">Species:</label>
+                            <input type="text" id="species" name="species" list="petSpecies">
+                            <datalist id="petSpecies">
+                                <option value="Dog">
+                                <option value="Cat">
+                                <option value="Rabbit">
+                                <option value="Bird">
+                                <option value="Hamster">
+                            </datalist>
+        
+                        <label for="breed">Breed:</label>
+                            <input type="text" id="breed" name="breed" placeholder="eg: German Shepherd" required>
+        
+                        <!-- <label for="breedAvailNo">Is your pet available for breeding?</label>
+                        <span>
+                            <label for="breedAvailYes" class="radioLabel">Yes</label>
+                                <input type="radio" id="breedAvailYes" name="breedAvailable" value="1" required onchange="toggleBreedDescription()">
+                            <label for="breedAvailNo" class="radioLabel">No</label>
+                                <input type="radio" id="breedAvailNo" name="breedAvailable" value="0" selected required onchange="toggleBreedDescription()">
+                        </span> -->
+        
+                        <!-- <label for="breedDescription" class="breedDesc" id="breedDescriptionLabel" style="display:none;">Provide a description for breeding your pet:</label>
+                            <textarea name="breedDescription" id="breedDescription" class="breedDesc input-field"
+                                cols="30" rows="5" style="resize: none; display:none;" required>
+                            </textarea> -->
+        
+                        <label for="profilePicture">Add a profile picture:</label>
+                            <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required>
+        
+                        <div class="errorMsg"></div>
+                        <div class="formButtons">
+                            <button type="reset">Clear</button>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
     
-                    <label for="breed">Breed:</label>
-                        <input type="text" id="breed" name="breed" required>
-    
-                    <label for="breedAvailNo">Is your pet available for breeding?</label>
-                    <span>
-                        <label for="breedAvailYes" class="radioLabel">Yes</label>
-                            <input type="radio" id="breedAvailYes" name="breedAvailable" value="1" required onchange="toggleBreedDescription()">
-                        <label for="breedAvailNo" class="radioLabel">No</label>
-                            <input type="radio" id="breedAvailNo" name="breedAvailable" value="0" selected required onchange="toggleBreedDescription()">
-                    </span>
-    
-                    <label for="breedDescription" class="breedDesc" id="breedDescriptionLabel" style="display:none;">Provide a description for breeding your pet:</label>
-                        <textarea name="breedDescription" id="breedDescription" class="breedDesc input-field"
-                            cols="30" rows="5" style="resize: none; display:none;" required>
-                        </textarea>
-    
-                    <label for="profilePicture">Add a profile picture:</label>
-                        <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required>
-    
-                    <span></span>   <!-- Empty span for grid layout -->
-                    <button type="reset">Clear</button>
-                    <button type="submit">Add Pet</button>
                     
                 </form>
         </div>
