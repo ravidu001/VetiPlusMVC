@@ -51,7 +51,7 @@
             
             <div class="contact-form">
                 <h2>Send us a Message</h2>
-                <form action="contactus.php" method="post" enctype="multipart/form-data">
+                <form action="<?= ROOT ?>/doctorcontactus/insertData" method="post" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Name</label>

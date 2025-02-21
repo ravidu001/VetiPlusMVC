@@ -12,4 +12,9 @@ class SalonBooked
         return $this->FindAll();
     }
 
+    // Find slots by salonsessionID
+    public function getSlotDetails($salSessionID) {
+        $this->order_column = 'salSessionID';
+        return $this->first(['salSessionID' => $salSessionID]);
+    }
 }

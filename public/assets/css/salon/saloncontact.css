@@ -42,6 +42,11 @@ body:has(#sidebar.close) .contact-container {
     font-family: Arial, sans-serif;
 }
 
+body {
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+}
+
+
 body
 {
     background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);

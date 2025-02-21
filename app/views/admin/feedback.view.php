@@ -29,23 +29,23 @@
     
 
 <!-- Feedback Cards -->
-<div class="feedback-container">
-<?php foreach ($feedback as $feedback): ?>
+<!-- <div class="feedback-container"> -->
+<!-- <?php //foreach ($feedback as $feedback): ?>
         <div class="feedback-card">
-            <img src="../../../public/assets/images/systemAdmin/user.png" class="user-avatar">
+            <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" class="user-avatar" alt="profile picture">
             <h3 class="user-name"><?= htmlspecialchars($feedback->name, ENT_QUOTES, 'UTF-8') ?></h3>
             <p class="user-feedback"><?= htmlspecialchars($feedback->comment, ENT_QUOTES, 'UTF-8') ?></p>
             <div class="rating">
-                <?php for ($i = 0; $i < $feedback->rating; $i++): ?>
+                <?php //for ($i = 0; $i < $feedback->rating; $i++): ?>
                     <i class="bx bxs-star star filled"></i>
-                <?php endfor; ?>
-                <?php for ($i = 0; $i < 5 - $feedback->rating; $i++): ?>
+                <?php //endfor; ?>
+                <?php //for ($i = 0; $i < 5 - $feedback->rating; $i++): ?>
                     <i class="bx bx-star star"></i>
-                <?php endfor; ?>
+                <?php //endfor; ?>
             </div>
         </div>
-        <?php endforeach; ?>
-    </div>
+        <?php //endforeach; ?>
+    </div> -->
             <!-- <div class="feedback-card">
                     <img src="../../../public/assets/images/common/logo.png " class="user-avatar">
                     <h3 class="user-name">Ramesh Peshala</h3>
@@ -101,6 +101,33 @@
                     </div>
                 </div> -->
         <!-- </div> -->
+
+
+<!-- Feedback Cards -->
+<div class="feedback-container">
+    <?php if (!empty($feedback)): ?>
+        <?php foreach ($feedback as $feedback_item): ?>
+            <div class="feedback-card">
+                <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" class="user-avatar" alt="profile picture">
+                <h3 class="user-name"><?= htmlspecialchars($feedback_item->name, ENT_QUOTES, 'UTF-8') ?></h3>
+                <p class="user-feedback"><?= htmlspecialchars($feedback_item->comment, ENT_QUOTES, 'UTF-8') ?></p>
+                <p class="user-name" style="color:black; font-size=14px;"><?= htmlspecialchars($feedback_item->contactNumber, ENT_QUOTES, 'UTF-8') ?></p>
+                
+                <div class="rating">
+                    <?php for ($i = 0; $i < $feedback_item->rating; $i++): ?>
+                        <i class="bx bxs-star star filled"></i>
+                    <?php endfor; ?>
+                    <?php for ($i = 0; $i < 5 - $feedback_item->rating; $i++): ?>
+                        <i class="bx bx-star star"></i>
+                    <?php endfor; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No feedback available.</p>
+    <?php endif; ?>
+</div>
+
         </div>
     </section>
 </body>
