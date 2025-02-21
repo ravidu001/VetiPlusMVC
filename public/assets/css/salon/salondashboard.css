@@ -1,6 +1,6 @@
 /* Reset basic styling */
 body {
-    margin: 0;
+    /* margin: 0; */
     font-family: Arial, sans-serif;
     background-color: #E4E9F7;
     background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
@@ -89,7 +89,7 @@ body:has(#sidebar.close) .pagecontent {
 }
 
 .dashcontent .part1{
-    margin-left: 1%;
+    margin-left: 2%;
     /* margin-right: 5%; */
     flex: 0 0 auto;
 }

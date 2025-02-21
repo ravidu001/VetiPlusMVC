@@ -2,15 +2,15 @@
 body, html {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    width: 150%;
+    height: 300%;
     display: flex;
     background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
 }
 
 .homecontent {
     width: 100%;
-    height: auto; /* Optional: to make it fill the full viewport height */
+    height: 100%; /* Optional: to make it fill the full viewport height */
 }
 
 .sideanddashbord {
