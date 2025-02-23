@@ -23,5 +23,16 @@ class SalonBooked
         $this->order_column = 'salSessionID';
         return $this->where(['salSessionID' => $salSessionID]);
     }
+
+    //get details using the grooming ID
+    public function getDEtailsByGroomingID($groomingID)
+    {
+        $this->order_column = 'groomingID';
+        return $this->first(['groomingID' => $groomingID]);
+    }
     
+    public function updateStatus($groomingID, $data)
+    {
+        return $this->update($groomingID, $data, 'groomingID');
+    }
 }
