@@ -59,33 +59,114 @@ function initCalendar() {
     for (let day = 1; day <= lastDay.getDate(); day++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
-        dayElement.textContent = day;
 
-        // Check if day is closed
+        // **Added: Wrapper for date and button**
+        const dateWrapper = document.createElement('div');
+        dateWrapper.className = 'date-wrapper';
+        dateWrapper.textContent = day;
+
+        // **Added: Button for each date**
+        const dayButton = document.createElement('button');
+        dayButton.className = 'date-button';
+        dayButton.textContent = 'Select';
+        dayButton.onclick = () => selectDate(day);
+
+        // **Check if day is closed**
         const monthKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
         if (closedDays[monthKey]?.includes(day)) {
             dayElement.classList.add('closed');
+            dayButton.disabled = true; // Disable button if closed
         } else {
             dayElement.classList.add('open');
-            dayElement.onclick = () => selectDate(day);
         }
 
+        // **Append elements**
+        dayElement.appendChild(dateWrapper);
+        dayElement.appendChild(dayButton);
         calendar.appendChild(dayElement);
     }
 
     updateMonthDisplay();
 }
 
+
 function selectDate(day) {
-    selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    document.querySelectorAll('.calendar-day').forEach(el => {
-        el.classList.remove('selected-date');
-        if (el.textContent == day) {
-            el.classList.add('selected-date');
-        }
-    });
-    generateTimeSlots();
+
+
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const date = `${year}-${month}-${String(day).padStart(2, '0')}`;
+
+    // Get backend URL from the calendar div
+    const calendarDiv = document.querySelector('.calendar');
+    const backendUrl = calendarDiv.getAttribute('data-backend-url'); // Dynamic URL
+
+    if (!backendUrl) {
+        alert('Backend URL is not defined!');
+        return;
+    }
+
+    // Prepare and send data
+    const formData = new FormData();//create the form
+    formData.append('selectedDate', date);//selectDate-value, date- key
+
+    fetch(backendUrl, 
+    {
+        method: 'POST',
+        body: new URLSearchParams({ selectedDate: date }), // Send the date as POST data
+    })
+        .then(response => response.json())
+        .then(data => 
+        {
+            const tableBody = document.getElementById('appointmentTableBody'); // Reference to tbody
+            
+            if(data.success && data.gotdata.length > 0) 
+            {
+                tableBody.innerHTML = ''; // Clear existing rows if any
+    
+                data.gotdata.forEach(item => {
+                    // Format booked date (optional, if needed)
+                    const bookedDate = item.bookedDate.split(' ')[0]; // Extract date part
+    
+                    const row = `
+                        <tr>
+                            <td>
+                                <div class="user">${item.fullName}</div>
+                            </td>
+                            <td>${bookedDate}</td>
+                            <td>${item.slotDate}</td>
+                            <td>${item.timeSlot}</td>
+                            <td>${item.service}</td>
+                            <td>${item.contactNumber || 'N/A'}</td>
+                            <td>
+                                <form action="SalonNewAppointment/updateStatus" method="POST">
+                                    <input type="hidden" name="groomingID" value="${item.groomingID}">
+                                    <button type="submit" class="ok" name="complete" value="complete">Completed</button>
+                                    <button type="submit" class="ok" name="cancel" value="cancel">Cancelled</button>
+                                </form>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+            }
+             else 
+             {
+                // Show "No appointments found" if no data
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7">No appointments found.</td>
+                    </tr>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    
+    
 }
+
+
 
 function generateTimeSlots() {
     const timeSlots = document.getElementById('time-slots');
