@@ -41,6 +41,8 @@
 
    
 </body>
-
-<script src="<?=ROOT?>/assets/js/salon/saloncalendar.js"></script>
+<script>
+    const BASE_URL = "<?= ROOT ?>";
+</script>
+<!-- <script src="<?=ROOT?>/assets/js/salon/saloncalendar.js"></script> -->
 </html>
