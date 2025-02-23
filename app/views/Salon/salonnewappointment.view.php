@@ -11,7 +11,7 @@
         <div class="sidebarandappointmentcontent">
                 <div>
                     <?php
-                        // include __DIR__ . '/../navbar/salonnav.php';
+                        include __DIR__ . '/../navbar/salonnav.php';
                     ?>
                 </div>
                 <div class="appointmentcontent">
@@ -63,6 +63,8 @@
     const BASE_URL = "<?=ROOT?>";
 </script> -->
     <script src="<?=ROOT?>/assets/js/navbar/salonnav.js"></script>
-<script src="<?=ROOT?>/assets/js/salon/saloncalendar.js"></script>
+    <script src="<?=ROOT?>/assets/js/salon/saloncalendar.js"></script>
+    <script src="<?=ROOT?>/assets/js/salon/salonnewappointments.js"></script>
+
 
 </html>
