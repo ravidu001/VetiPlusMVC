@@ -21,7 +21,20 @@ class SalonBooked
     // Find slots by salonsessionID
     public function getSlotDetailsByID($salSessionID) {
         $this->order_column = 'salSessionID';
-        return $this->where(['salSessionID' => $salSessionID]);
+        return $this->where(['salSessionID' => $salSessionID, 'status' => 0]);
+    }
+   
+
+    // Find slots by salonsessionID
+    public function  getCancelDetailsByID($salSessionID) {
+        $this->order_column = 'salSessionID';
+        return $this->where(['salSessionID' => $salSessionID, 'status' => 2]);
+    }
+
+    // Find slots by salonsessionID
+    public function getCompleteDetailsByID($salSessionID) {
+        $this->order_column = 'salSessionID';
+        return $this->where(['salSessionID' => $salSessionID, 'status' => 1]);
     }
 
     //get details using the grooming ID
