@@ -13,6 +13,7 @@
             <?php include __DIR__ . '/../navbar/salonnav.php'; ?>
         </div>
     <div class="timeslotdetails">
+        <button><a href="<?= ROOT?>/SalonSlotCreate">Edit</a></button>
         <div class="selecttime">
             <p>Create time slots for: <span class="highlight">Week</span></p>
         </div>

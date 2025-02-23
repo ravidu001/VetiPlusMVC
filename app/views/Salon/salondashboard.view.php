@@ -6,12 +6,6 @@
 <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"> -->
 
 </header>
-            <div>
-                <?php
-                    include __DIR__ . '/../navbar/salonnav.php';
-                ?>
-            </div>
-
 <div class="pagecontent">
     <div class="dashbardheader">
         <!-- <h3>Dashboard</h3> -->
@@ -28,7 +22,7 @@
 
     <div style="display: flex; margin-left:1%">
 
-        <div class="calander">
+        <div class="calander" >
                     <?php
                         require __DIR__ .'/salonoverviewchart.view.php';  
                     ?> 
@@ -41,7 +35,7 @@
             <div class="part1">
                 <div class="overview">
                 </div>
-                <div class="calendar">
+                <div class="calendar" data-backend-url="<?= ROOT ?>/Salon/findDataTab1">
                 
                     <?php
                         require __DIR__ .'/saloncalander.view.php'; 
@@ -51,28 +45,14 @@
 
             <div class="part2">
                 <div class="part2header">
-                    <p>
-                        Upcoming Appointments
-                    </p>
+                    <p>Upcoming Appointments</p>
                 </div>
 
-              
-                <div class="upcominappointments">
-                    <p class="realtime">8.30 a.m </p>
-                        <div class="appointmentbox">
-                            <div class="image">
-                                <!-- <img class="image" src="../../assets/images/salon/boy.jpg" alt="boy">
-                                <img class="petimage" src="../../assets/images/White Playful Pet Shop Logo.png"> -->
-                            </div>
-                            <div class="userdetails">
-                                <p class=" username">Abdul Rahim</p><br>
-                                <i class="fa-solid fa-paw icon" ><p class="servicename">Pet Bathing</p></i><br>
-                                <p class="number">077-5369984</p><br>
-                                <p class="time"><b>9.30a.m - 10.30p.m</b></p>
-                            </div>
-                        </div>
+                <div class="appointmentTableBody" id="appointmentContainer">
+                    <!-- Dynamic appointment cards will be added here by JavaScript -->
                 </div>
             </div>
+
         </div>
 
     </div>
