@@ -4,25 +4,7 @@ class Pet
 {
     use Model;
 
-    
-    protected $table = 'petowner';
-    
-
-    public function findPetDetailsByID($petID)
-    {
-        $this->order_colunm = 'petID';
-        return $this->first(['petID' => $petID ]);
-    }
-
-
-}
-
-
-
-
-    
-
-
+   
     protected $table = 'pet';
     public $petOwnerID;
 
@@ -31,12 +13,20 @@ class Pet
         'species', 'breed', 'breedAvailable', 'breedDescription', 'profilePicture'
     ];
   
-    public function __construct() {
+    public function __construct() 
+    {
         $this->order_column = 'petID ';  // Overriding order_column here
 
-        if (isset($_SESSION['petOwnerID'])) {
-            $this->petOwnerID = $_SESSION['petOwnerID'];
-        } else {
+        if (isset($_SESSION['petOwnerID'])) 
+        {
+            $this->petOwnerID = $_SESSION['petOwnerID'];  
+        }
+        else if( $_SESSION['SALON_USER'])
+        {
+            $this->petOwnerID = $_SESSION['SALON_USER'];
+        }
+        else 
+        {
             redirect('Login');
         }
     }
@@ -78,6 +68,11 @@ class Pet
         return empty($uploadSuccess) ? true : false;
     }
 
+    // public function findPetDetailsByID($petID)
+    // {
+    //     $this->order_colunm = 'petID';
+    //     return $this->first(['petID' => $petID ]);
+    // }
     
 
 }
