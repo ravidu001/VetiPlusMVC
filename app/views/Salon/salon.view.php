@@ -32,7 +32,5 @@
 </body>
     <script src="<?= ROOT?>/assets/js/salon/salonpopup.js"></script>
     <script src="<?= ROOT?>/assets/js/navbar/salonnav.js"></script>
-    <script src="<?= ROOT?>/assets/js/salon/saloncalendar.js"></script> 
-    <script src="<?= ROOT?>/assets/js/salon/salon.js"></script> 
 
 </html>
