@@ -13,7 +13,7 @@
             <?php include __DIR__ . '/../navbar/salonnav.php'; ?>
         </div>
     <div class="timeslotdetails">
-        <button><a href="<?= ROOT?>/SalonSlotCreate">Edit</a></button>
+        <button><a href="<?= ROOT?>/SalonSlotCreate">Create</a></button>
         <div class="selecttime">
             <p>Create time slots for: <span class="highlight">Week</span></p>
         </div>
@@ -38,6 +38,36 @@
                 <tbody>
                     <tr>
                         <td>Sunday</td>
+                        <td>10:00 AM</td>
+                        <td>12:00 PM</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Monday</td>
+                        <td>10:00 AM</td>
+                        <td>12:00 PM</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>10:00 AM</td>
+                        <td>12:00 PM</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Wensday</td>
+                        <td>10:00 AM</td>
+                        <td>12:00 PM</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>10:00 AM</td>
+                        <td>12:00 PM</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
                         <td>10:00 AM</td>
                         <td>12:00 PM</td>
                         <td>Yes</td>

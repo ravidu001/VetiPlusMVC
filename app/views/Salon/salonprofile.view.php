@@ -218,7 +218,15 @@
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email">
+                        <input type="email" name="email"   value="<?= htmlspecialchars($salon->salonID ?? 'N/A') ?>" readonly>
+                    </div>
+                    <div class="edit-actions" id="settingsEditActions" style="display: none;">
+                        <button class="btn btn-secondary" id="settingsResetBtn">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="settingsSaveBtn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
@@ -238,7 +246,10 @@
             <!-- Security Section -->
             <section id="security" class="section">
                 <div class="section-header">
-                    <h1>Account Security</h1>
+                    <h1>Change Password</h1>
+                    <button class="edit-btn" id="passwordEditBtn">
+                            <i class="fas fa-edit"></i> Edit
+                    </button>
                 </div>
                 <form class="security-form">
                     <div class="form-group">
@@ -256,7 +267,14 @@
                         <input type="password"  id="password" name="confirmPassword" required>
                         <span class="toggle-password" onclick="togglePassword()">👁️</span>
                     </div>
-                    <button type="submit" class="btn-primary"> <i class="fas fa-key"></i>Update Password</button>
+                    <div class="edit-actions" id="passwordEditActions" style="display: none;">
+                        <button class="btn btn-secondary" id="passwordResetBtn">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="passwordSaveBtn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
                 </form>
             </section>
         </div>

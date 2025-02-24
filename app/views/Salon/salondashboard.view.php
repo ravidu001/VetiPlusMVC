@@ -6,6 +6,9 @@
 <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"> -->
 
 </header>
+                <?php
+                    include __DIR__ . '/../navbar/salonnav.php';
+                ?>
 <div class="pagecontent">
     <div class="dashbardheader">
         <!-- <h3>Dashboard</h3> -->
@@ -35,7 +38,7 @@
             <div class="part1">
                 <div class="overview">
                 </div>
-                <div class="calendar" data-backend-url="<?= ROOT ?>/Salon/findDataTab1">
+                <div class="calendar" data-backend-url="<?= ROOT ?>/SalonDashboard/findDataTab1">
                 
                     <?php
                         require __DIR__ .'/saloncalander.view.php'; 
@@ -56,6 +59,8 @@
         </div>
 
     </div>
-    
+
+    <script src="<?= ROOT?>/assets/js/salon/saloncalendar.js"></script> 
+    <script src="<?= ROOT?>/assets/js/salon/salon.js"></script> 
     
 </div>

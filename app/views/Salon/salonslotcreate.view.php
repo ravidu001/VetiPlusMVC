@@ -12,13 +12,16 @@
     <div class="container">
       <h1>Salon Time Slot Configuration</h1>
       <a href="<?=ROOT?>/SalonSlot"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
-      <form action="submit_slots.php" method="post">
+      <form action="<?=ROOT?>/SalonSlotCreate" method="post">
         <div class="slots">
           <label>Time Duration per Slot (minutes):
-            <select name="duration">
+            <select name="duration" required>
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
+              <option value="30">40</option>
+              <option value="30">50</option>
+              <option value="30">60</option>
             </select>
           </label>
           <label>Appointments per Slot:
@@ -37,43 +40,57 @@
           </thead>
           <tbody>
             <tr>
-              <td>Sunday</td>
+              <td>Sunday
+                  <input type="hidden" value="sunday" name="sunday">
+              </td>
               <td><input type="time" name="start_sunday"></td>
               <td><input type="time" name="close_sunday"></td>
               <td><input type="checkbox" name="closed_sunday"></td>
             </tr>
             <tr>
-              <td>Monday</td>
+              <td>Monday
+                <input type="hidden" value="monday" name="monday">
+              </td>
               <td><input type="time" name="start_monday"></td>
               <td><input type="time" name="close_monday"></td>
               <td><input type="checkbox" name="closed_monday"></td>
             </tr>
             <tr>
-              <td>Tuesday</td>
+              <td>Tuesday
+                <input type="hidden" value="tuesday" name="tuesday">
+              </td>
               <td><input type="time" name="start_tuesday"></td>
               <td><input type="time" name="close_tuesday"></td>
               <td><input type="checkbox" name="closed_tuesday"></td>
             </tr>
             <tr>
-              <td>Wednesday</td>
+              <td>Wednesday
+                <input type="hidden" value="wednesday" name="wednesday">
+              </td>
               <td><input type="time" name="start_wednesday"></td>
               <td><input type="time" name="close_wednesday"></td>
               <td><input type="checkbox" name="closed_wednesday"></td>
             </tr>
             <tr>
-              <td>Thursday</td>
+              <td>Thursday
+                <input type="hidden" value="thursday" name="thursday">
+              </td>
               <td><input type="time" name="start_thursday"></td>
               <td><input type="time" name="close_thursday"></td>
               <td><input type="checkbox" name="closed_thursday"></td>
             </tr>
             <tr>
-              <td>Friday</td>
+              <td>Friday
+                <input type="hidden" value="friday" name="friday">
+              </td>
               <td><input type="time" name="start_friday"></td>
               <td><input type="time" name="close_friday"></td>
               <td><input type="checkbox" name="closed_friday"></td>
             </tr>
             <tr>
-              <td>Saturday</td>
+              <td>Saturday
+                <input type="hidden" value="saturday" name="saturday">
+              </td>
               <td><input type="time" name="start_saturday"></td>
               <td><input type="time" name="close_saturday"></td>
               <td><input type="checkbox" name="closed_saturday"></td>
@@ -88,47 +105,64 @@
         </div>
 
         <div class="holidays">
-            <p>Add holidays:</p>
-            <input type="date" id="holidayDate" />
-            <button onclick="addHoliday()">Add</button>
-            <ul id="holidayList"></ul>
-        </div>
+          <p>Add holidays:</p>
+          <input type="date" id="holidayDate" />
+          <button type="button" onclick="addHoliday()">Add</button>
+
+          <ul id="holidayList"></ul>
+
+          <!-- Hidden input to store holidays array -->
+        <div id="hiddenInputs"></div>
+    </div>
 
         <div class="submit-btn">
-          <button type="submit">Generate Time Slots</button>
+          <button type="submit" name="postdata">Generate Time Slots</button>
         </div>
       </form>
     </div>
 
-    <script>
-        const holidayList = document.getElementById("holidayList");
-        const holidays = [];
+<script>
+    const holidayList = document.getElementById("holidayList");
+    const hiddenInputs = document.getElementById("hiddenInputs");
+    const holidays = [];
 
-        function addHoliday() {
-            const dateInput = document.getElementById("holidayDate");
-            const dateValue = dateInput.value;
-            if (dateValue && !holidays.includes(dateValue)) {
-                holidays.push(dateValue);
-                updateHolidayList();
-                dateInput.value = "";
-            }
+    //  Function to add holidays
+    function addHoliday() {
+        const dateInput = document.getElementById("holidayDate");
+        const dateValue = dateInput.value;
+
+        if (dateValue && !holidays.includes(dateValue)) {
+            holidays.push(dateValue);
+            updateHolidayList();
+            updateHiddenInputs();
+            dateInput.value = "";
         }
+    }
 
-        function removeSpecificHoliday(date) {
-            const index = holidays.indexOf(date);
-            if (index !== -1) {
-                holidays.splice(index, 1);
-                updateHolidayList();
-            }
+    //  Function to remove specific holiday
+    function removeSpecificHoliday(date) {
+        const index = holidays.indexOf(date);
+        if (index !== -1) {
+            holidays.splice(index, 1);
+            updateHolidayList();
+            updateHiddenInputs();
         }
+    }
 
-        function updateHolidayList() {
-            holidayList.innerHTML = holidays
-                .map(date => `<li>${date} <button onclick="removeSpecificHoliday('${date}')">X</button></li>`)
-                .join('');
-        }
+    //  Update list in UI
+    function updateHolidayList() {
+        holidayList.innerHTML = holidays
+            .map(date => `<li>${date} <button type="button" onclick="removeSpecificHoliday('${date}')">X</button></li>`)
+            .join('');
+    }
 
-    </script>
+    //  Update hidden inputs to send holidays via PHP
+    function updateHiddenInputs() {
+        hiddenInputs.innerHTML = holidays
+            .map(date => `<input type="hidden" name="holidays[]" value="${date}" />`)
+            .join('');
+    }
+</script>
 
     <style>
       body {
