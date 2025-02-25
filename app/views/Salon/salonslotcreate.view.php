@@ -104,15 +104,15 @@
           <label><input type="radio" name="period" value="month" /> Per Month</label>
         </div>
 
-        <div class="holidays">
+        <!-- <div class="holidays">
           <p>Add holidays:</p>
           <input type="date" id="holidayDate" />
           <button type="button" onclick="addHoliday()">Add</button>
 
           <ul id="holidayList"></ul>
 
-          <!-- Hidden input to store holidays array -->
-        <div id="hiddenInputs"></div>
+          Hidden input to store holidays array -->
+        <!-- <div id="hiddenInputs"></div> -->
     </div>
 
         <div class="submit-btn">
@@ -121,48 +121,7 @@
       </form>
     </div>
 
-<script>
-    const holidayList = document.getElementById("holidayList");
-    const hiddenInputs = document.getElementById("hiddenInputs");
-    const holidays = [];
 
-    //  Function to add holidays
-    function addHoliday() {
-        const dateInput = document.getElementById("holidayDate");
-        const dateValue = dateInput.value;
-
-        if (dateValue && !holidays.includes(dateValue)) {
-            holidays.push(dateValue);
-            updateHolidayList();
-            updateHiddenInputs();
-            dateInput.value = "";
-        }
-    }
-
-    //  Function to remove specific holiday
-    function removeSpecificHoliday(date) {
-        const index = holidays.indexOf(date);
-        if (index !== -1) {
-            holidays.splice(index, 1);
-            updateHolidayList();
-            updateHiddenInputs();
-        }
-    }
-
-    //  Update list in UI
-    function updateHolidayList() {
-        holidayList.innerHTML = holidays
-            .map(date => `<li>${date} <button type="button" onclick="removeSpecificHoliday('${date}')">X</button></li>`)
-            .join('');
-    }
-
-    //  Update hidden inputs to send holidays via PHP
-    function updateHiddenInputs() {
-        hiddenInputs.innerHTML = holidays
-            .map(date => `<input type="hidden" name="holidays[]" value="${date}" />`)
-            .join('');
-    }
-</script>
 
     <style>
       body {

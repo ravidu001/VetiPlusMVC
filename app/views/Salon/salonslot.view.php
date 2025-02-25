@@ -8,9 +8,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
+
+<?php
+   if (isset($data['holidays'])) 
+   {
+       $holidays = $data['holidays'];
+   }
+    else 
+   {
+       $holidays = [];
+   }
+?>
+
 <body>
         <div>
-            <?php include __DIR__ . '/../navbar/salonnav.php'; ?>
+            <?php
+                 include __DIR__ . '/../navbar/salonnav.php';
+            ?>
         </div>
     <div class="timeslotdetails">
         <button><a href="<?= ROOT?>/SalonSlotCreate">Create</a></button>
@@ -35,7 +49,7 @@
                         <th>Closed</th>
                     </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                     <tr>
                         <td>Sunday</td>
                         <td>10:00 AM</td>
@@ -72,11 +86,14 @@
                         <td>12:00 PM</td>
                         <td>Yes</td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
         </div>
         <div class="holidays">
             <h2>Holidays</h2>
+            <button>
+                <a href="<?=ROOT?>/SalonHolidays">Add</a>
+            </button>
             <table>
                 <thead>
                     <tr>
@@ -85,12 +102,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2024-05-02</td>
-                        <td>
-                            <button class="remove-btn">Remove</button>
-                        </td>
-                    </tr>
+                    <?php
+                         if (!empty($holidays)) : 
+                    ?>
+                    <?php 
+                        foreach ($holidays as $holiday) : 
+                    ?> 
+                        <tr>
+                            <td><?= $holiday ?></td>
+                            <td>
+                                <button class="remove-btn">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr>
+                            <td colspan="2">Not yet added any holidays</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
