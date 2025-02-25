@@ -44,7 +44,7 @@ class AdminAccountDashboard extends Controller
             if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
                 // Retrieve the email from the GET request
                 $email = $_GET['email'];
-    
+                 
                 // Validate the email
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     // Instantiate the model
@@ -52,6 +52,8 @@ class AdminAccountDashboard extends Controller
     
                     // Fetch admin details using the email
                     $result = $adminModel->checkUser($email);
+
+                    show($result);
     
                     // Check if an admin exists with the provided email
                     if (!empty($result)) {
