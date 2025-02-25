@@ -54,4 +54,17 @@ class PetOwner {
         return empty($uploadSuccess) ? true : false;
     }
 
+    public function checkUser($email)
+    {
+        // echo $email;
+        $this->order_column = 'petOwnerID';
+        // $result = $this->where(['email' => $email]);
+        return $this->where(['petOwnerID' => $email]); // what this return is an array of user
+        // if($result) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
+    }
+
 }

@@ -28,28 +28,28 @@
                         <i class='bx bx-tag'></i>
                         <div class="info">
                             <h4>Pet ID</h4>
-                            <p>2200157</p>
+                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-male-sign'></i>
                         <div class="info">
                             <h4>Gender</h4>
-                            <p>Male</p>
+                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-calendar'></i>
                         <div class="info">
                             <h4>Age</h4>
-                            <p>3 Years</p>
+                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bxs-dog'></i>
                         <div class="info">
                             <h4>Breed</h4>
-                            <p>Persian</p>
+                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
