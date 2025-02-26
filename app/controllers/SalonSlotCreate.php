@@ -44,12 +44,20 @@ class SalonSlotCreate extends Controller
 
                 if($isinsert['success'])
                 {
-                    $configID = $timeslotconfig->getLastInsertedID($salonuser);
 
+                    $result = $timeslotconfig->getLastInsertedID($salonuser);
+                    if (!empty($result)) {
+                        $configID = $result[0]->config_id;
+                    }
+                    else 
+                    {
+                        echo "Error: No config ID found.";
+                    }
+                    
                     if($configID)
                     {
                         // $this->insertHolidays($configID);
-                        $this->insertWeekdays($configID);
+                        $this->insertWeekdays($configID, $salonuser);
                     }
                     else
                     {
@@ -110,16 +118,17 @@ class SalonSlotCreate extends Controller
 
         //________________________________________________________________________________________________________________________
         //insert the weekdays
-        private function insertWeekdays($configID)
+        private function insertWeekdays($configID, $salonuser)
         {
             $salonweekdayschedules = new SalonWeekdaySchedules();
             $weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
             //get slot frequency from timeslot table
             $timeslotconfig = new SalonTImeSLotConfig();
-            $config = $timeslotconfig->findById($configID);
-            show($config);
-            $slotfor = $config->slot_creation_frequency;
+            $result = $timeslotconfig->getLastInsertedID($salonuser);
+            // $config = $result[0]->config_id;
+            show($result);
+            $slotfor = $result[0] -> slot_creation_frequency;
 
             // set the date range based on slot frequency
             $startDate = new DateTime('tomorrow');
@@ -133,20 +142,34 @@ class SalonSlotCreate extends Controller
                 $currentDate->modify("+$i day");//modify function used to changed and adjust the dates/time/months
                 $dates[strtolower($currentDate->format('l'))] = $currentDate->format('Y-m-d'); // Store day name as key
             }
-        
-            //Insert data into the salonweekdayschedules table 
-            foreach ($weekdays as $day) {
-                $data = [
-                    'config_id' => $configID,
-                    'day_of_week' => $day,
-                    'date' => $dates[$day] ?? null, // Get the date from the array
-                    'start_time' => $_POST["start_$day"] ?? null,
-                    'end_time' => $_POST["close_$day"] ?? null,
-                    'is_closed' => isset($_POST["closed_$day"]) ? 1 : 0
-                ];
 
-                $salonweekdayschedules->InsertData($data);
+            foreach($weekdays as $day)
+            {
+                if((isset($_POST["start_$day"]) && isset($_POST["close_$day"])) || $_POST["closed_$day"])
+                {
+                    //Insert data into the salonweekdayschedules table 
+                    
+                        $data = [
+                            'config_id' => $configID,
+                            'day_of_week' => $day,
+                            'date' => $dates[$day] ?? null, // Get the date from the array
+                            'start_time' => $_POST["start_$day"] ?? null,
+                            'end_time' => $_POST["close_$day"] ?? null,
+                            'is_closed' => isset($_POST["closed_$day"]) ? 1 : 0
+                        ];
+
+                        $salonweekdayschedules->InsertData($data);
+
+                }
+                else 
+                {
+                    // Error message if neither start_time/end_time nor checkbox is provided
+                    $error_message = "Please provide the start and end times or mark the day as closed for $day.";
+                    echo $error_message; // You can replace this with your own error handling logic (e.g., add to an array, etc.)
+                }
             }
+        
+            
         }
 
 
