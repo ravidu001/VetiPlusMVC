@@ -3,7 +3,6 @@ function selectDate(day)
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const date = `${year}-${month}-${String(day).padStart(2, '0')}`;
-
     // Get backend URL from the calendar div
     const calendarDiv = document.querySelector('.calendar');
     const backendUrl = calendarDiv.getAttribute('data-backend-url'); // Dynamic URL
@@ -16,7 +15,6 @@ function selectDate(day)
     // Prepare and send data
     const formData = new FormData();//create the form
     formData.append('selectedDate', date);//selectDate-value, date- key
-
     //________________________________________________________________________________________________________________
     //fetch and get the upcoming page data using the backendUR
     fetch(backendUrl, 

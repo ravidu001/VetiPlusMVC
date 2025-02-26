@@ -3,7 +3,76 @@ let currentDate = new Date();
 console.log(currentDate);
 let selectedDate = null;
 
-function goToSelectedDate() {
+function highlightAndSelectDay(day) {
+    const dayElements = document.querySelectorAll('.calendar-day');
+
+    dayElements.forEach(element => {
+        if (parseInt(element.textContent) === day && !element.classList.contains('closed')) {
+            // Remove previous selection
+            dayElements.forEach(el => el.classList.remove('selected'));
+            
+            // Add selection class
+            element.classList.add('selected');
+            
+            // Simulate a click event to fetch slots
+            element.click();
+        }
+    });
+}
+
+
+function sendSelectedDateToBackend(selectedDate) {
+    if (!selectedDate) 
+    {
+        console.error('No date selected');
+        return;
+    }
+
+    const formattedDate = selectedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+    fetch(`${BASE_URL}/SalonCalendar/getSlots`, 
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ date: formattedDate }) // Sending as JSON
+    })
+    .then(response => response.json())
+    .then(data => 
+    {
+        console.log('Response from backend:', data);
+    })
+    .catch(error => 
+    {
+        console.error('Error:', error);
+    });
+}
+
+function displayTimeSlots(slots) {
+    const slotContainer = document.getElementById('slotContainer');
+    slotContainer.innerHTML = '';
+
+    slots.forEach(slot => {
+        const slotElement = document.createElement('div');
+        slotElement.textContent = slot.time_slot;
+        slotElement.classList.add('slot');
+
+        if (slot.status === 'available') {
+            slotElement.classList.add('available'); // Green
+        } else if (slot.status === 'booked') {
+            slotElement.classList.add('booked'); // Red
+        } else if (slot.status === 'blocked') {
+            slotElement.classList.add('blocked'); // Gray
+        }
+
+        slotContainer.appendChild(slotElement);
+    });
+}
+
+
+function goToSelectedDate() 
+{
     const datePicker = document.getElementById('datePicker');
     const selectedDate = new Date(datePicker.value);
     
@@ -15,6 +84,8 @@ function goToSelectedDate() {
         // Select the specific day
         const day = selectedDate.getDate();
         selectDate(day);
+        console.log(day);
+        highlightAndSelectDay(day);
         
         // Find and highlight the selected day
         const dayElements = document.querySelectorAll('.calendar-day');
@@ -23,6 +94,8 @@ function goToSelectedDate() {
                 element.click();
             }
         });
+
+        sendSelectedDateToBackend(selectedDate);
     }
 }
 
@@ -37,7 +110,8 @@ const closedDays = {
     '2024-08': [4, 11, 18, 25] // Sundays are closed
 };
 
-function initCalendar() {
+function initCalendar() 
+{
     const calendar = document.getElementById('calendar');
     calendar.innerHTML = '';
     
@@ -90,58 +164,7 @@ function initCalendar() {
 }
 
 
-function generateTimeSlots() {
-    const timeSlots = document.getElementById('time-slots');
-    timeSlots.innerHTML = '';
-    
-    const dateKey = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
-    
-    for (let hour = 9; hour <= 14; hour++) {
-        for (let minute = 0; minute < 60; minute += 20) {
-            const timeSlot = document.createElement('button');
-            timeSlot.className = 'time-slot';
-            
-            const startTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-            const endMinute = (minute + 20) % 60;
-            const endHour = minute + 20 >= 60 ? hour + 1 : hour;
-            const endTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
-            
-            // Check if time slot is blocked
-            if (blockedTimeSlots[dateKey]?.includes(startTime)) {
-                timeSlot.classList.add('blocked');
-            } else {
-                timeSlot.classList.add('available');
-            }
-            
-            timeSlot.textContent = `${startTime} - ${endTime}`;
-            timeSlot.onclick = () => {
-                if (!timeSlot.classList.contains('blocked')) {
-                    toggleTimeSlot(timeSlot, dateKey, startTime);
-                }
-            };
-            timeSlots.appendChild(timeSlot);
-        }
-    }
-}
 
-function toggleTimeSlot(timeSlot, dateKey, startTime) {
-    if (timeSlot.classList.contains('blocked')) {
-        timeSlot.classList.remove('blocked');
-        timeSlot.classList.add('available');
-        // Remove from blocked slots
-        if (blockedTimeSlots[dateKey]) {
-            blockedTimeSlots[dateKey] = blockedTimeSlots[dateKey].filter(time => time !== startTime);
-        }
-    } else {
-        timeSlot.classList.remove('available');
-        timeSlot.classList.add('blocked');
-        // Add to blocked slots
-        if (!blockedTimeSlots[dateKey]) {
-            blockedTimeSlots[dateKey] = [];
-        }
-        blockedTimeSlots[dateKey].push(startTime);
-    }
-}
 
 function previousMonth() {
     currentDate.setMonth(currentDate.getMonth() - 1);
@@ -153,7 +176,8 @@ function nextMonth() {
     initCalendar();
 }
 
-function updateMonthDisplay() {
+function updateMonthDisplay() 
+{
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 
                   'July', 'August', 'September', 'October', 'November', 'December'];
     document.getElementById('current-month').textContent = 
