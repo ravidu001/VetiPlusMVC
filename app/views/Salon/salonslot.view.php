@@ -18,6 +18,24 @@
    {
        $holidays = [];
    }
+
+   if(isset ($data['WeekdayDetails']))
+   {
+        $weekdays = $data['WeekdayDetails'];
+   }
+   else
+   {
+        $weekdays = [];
+   }
+
+   if(isset($data ['ConfigDetails']))
+   {
+        $ConfigDetails = $data['ConfigDetails'][0];
+   }
+   else
+   {
+        $ConfigDetails  = [];
+   }
 ?>
 
 <body>
@@ -29,65 +47,55 @@
     <div class="timeslotdetails">
         <button><a href="<?= ROOT?>/SalonSlotCreate">Create</a></button>
         <div class="selecttime">
-            <p>Create time slots for: <span class="highlight">Week</span></p>
-        </div>
-        <div class="timeslots">
-            <h2>Time Slot Details</h2>
-            <h4>Time Duration per Slot (minutes):</h4>
-            <p>20</p>
-            <h4>Appointments per Slot:</h4>
-            <p>3</p>
-        </div>
+        <?php if (!empty($ConfigDetails)) : ?>
+                <p>Create time slots for: <span class="highlight"><?= $ConfigDetails->slot_creation_frequency?></span></p>
+            </div>
+            <div class="timeslots">
+                <h2>Time Slot Details</h2>
+                <h4>Time Duration per Slot (minutes):</h4>
+                <p><?= $ConfigDetails->slot_duration_minutes?></p>
+                <h4>Appointments per Slot:</h4>
+                <p><?= $ConfigDetails->appointments_per_slot?></p>
+            </div>
+        <?php else : ?>
+                <p>Create time slots for: <span class="highlight">Not yet</span></p>
+            </div>
+            <div class="timeslots">
+                <h2>Time Slot Details</h2>
+                <h4>Time Duration per Slot (minutes):</h4>
+                <p>Not yet</p>
+                <h4>Appointments per Slot:</h4>
+                <p>Not yet</p>
+            </div> 
+        <?php endif; ?>  
         <div class="days">
             <h2>Weekly Schedule</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Start Time</th>
-                        <th>Close Time</th>
-                        <th>Closed</th>
-                    </tr>
-                </thead>
-                <!-- <tbody>
-                    <tr>
-                        <td>Sunday</td>
-                        <td>10:00 AM</td>
-                        <td>12:00 PM</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Monday</td>
-                        <td>10:00 AM</td>
-                        <td>12:00 PM</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Tuesday</td>
-                        <td>10:00 AM</td>
-                        <td>12:00 PM</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Wensday</td>
-                        <td>10:00 AM</td>
-                        <td>12:00 PM</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Friday</td>
-                        <td>10:00 AM</td>
-                        <td>12:00 PM</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Saturday</td>
-                        <td>10:00 AM</td>
-                        <td>12:00 PM</td>
-                        <td>Yes</td>
-                    </tr>
-                </tbody> -->
-            </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Start Time</th>
+                            <th>Close Time</th>
+                            <th>Closed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($weekdays)) : ?>
+                        <?php foreach ($weekdays as $weekday) : ?>
+                        <tr>
+                            <td><?= ucfirst($weekday->day_of_week); ?></td>
+                            <td><?= date("h:i A", strtotime($weekday->start_time)); ?></td>
+                            <td><?= date("h:i A", strtotime($weekday->end_time)); ?></td>
+                            <td><?= ($weekday->is_closed == 1) ? 'Yes' : 'No'; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr>
+                            <td colspan="4">Not yet added any holidays</td>
+                        </tr>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
         </div>
         <div class="holidays">
             <h2>Holidays</h2>
@@ -100,7 +108,7 @@
                         <th>Day</th>
                         <th>Status</th>
                     </tr>
-                </thead>
+                        </thead>
                 <tbody>
                     <?php
                          if (!empty($holidays)) : 
