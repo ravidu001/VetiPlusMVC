@@ -138,114 +138,11 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div>
-                            <div class="container">
-                                <h2>Time Details</h2>
-                                <button type="button">
-                                    <a href='<?= ROOT ?>/SalonTimeSlotEdit'>Edit</a> 
-                                </button>
-                                <div class="times" style="display: flex;">
-                                    <?php
-                                         if(isset($data['salondetails']))
-                                         { 
-                                    ?>
-                                        <h4 class="opentime">
-                                            Salon Open :-
-                                        </h4>
-                                        <p>
-                                            <?= date("H:i", strtotime($salondetails->open_time)) ?>
-                                        </p>
-                                        <h4 class="closetime">
-                                            Salon Close :-
-                                        </h4>
-                                        <p>
-                                            <?= date("H:i", strtotime($salondetails->close_time)) ?>
-                                        </p>
-                                        <h4 class="closetime">
-                                            Slot Duration :-
-                                        </h4>
-                                        <p>
-                                            <?= $salondetails->slot_duration ?> min
-                                        </p>
-                                    <?php
-                                         }
-                                    ?>
-                                    
-                                </div>
-                                <div>
-                                    <button type="button">
-                                        <a href='<?= ROOT ?>/SalonTimeSlotView'>View</a> 
-                                    </button>
-                                    <h3>Select the one day</h3>
-                                    <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
-                                        <label for="one-date">Date :</label>
-                                        <input type="date" name="date" required>
-
-                                        <button type="submit" class="edit-btn" name="onedate" style="margin-right:20px">
-                                            Add Slots
-                                        </button>
-                                    </form>
-
-                                    <h3>Select the date range</h3>
-                                    <form action="<?= ROOT ?>/SalonTimeSlot" method="POST">
-                                        <label for="start-date">Start Date:</label>
-                                        <input type="date" id="start-date" name="startDate" required>
-
-                                        <label for="end-date">End Date:</label>
-                                        <input type="date" id="end-date" name="endDate" required>
-
-                                        <label for="holidays">Holidays:</label>
-                                        <div id="holiday-container">
-                                            <input type="date" name="holidays[]" class="holiday-input">
-                                            <button type="button" class="remove-holiday-btn" onclick="removeHoliday(this)">Remove</button>
-                                        </div>
-                                        <button type="button" onclick="addHoliday()">Add Holidays</button>
-
-                                        <button type="submit" class="edit-btn" name="date_range" style="margin-right:20px">
-                                            Add Slots
-                                        </button>
-                                    </form>
-
-                                    <div id="saveSection" style="display:none; margin-top: 15px;">
-                                        <button class="save-btn" onclick="saveChanges()">Save Changes</button>
-                                        <button class="cancel-btn" onclick="cancelEdit()">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>      
-                        </div>
                     </div>
                 </div>
             </div>    
         </div>
     </div>
-
-    <script>
-        function addHoliday() {
-            let container = document.getElementById("holiday-container");
-            let input = document.createElement("input");
-            input.type = "date";
-            input.name = "holidays[]";
-            input.classList.add("holiday-input");
-
-            let removeButton = document.createElement("button");
-            removeButton.type = "button";
-            removeButton.classList.add("remove-holiday-btn");
-            removeButton.textContent = "Remove";
-            removeButton.setAttribute("onclick", "removeHoliday(this)");
-
-            container.appendChild(input);
-            container.appendChild(removeButton);
-        }
-
-        function removeHoliday(button) {
-            let container = document.getElementById("holiday-container");
-            container.removeChild(button.previousElementSibling); // Remove the input
-            container.removeChild(button); // Remove the button
-        }
-
-        
-    </script>
 
     <script src="<?=ROOT?>/assets/js/salon/salonavailabletime.js"></script>
 </body>

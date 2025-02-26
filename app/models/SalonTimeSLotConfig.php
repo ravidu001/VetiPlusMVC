@@ -24,17 +24,17 @@ class SalonTImeSLotConfig
 
     public function getLastInsertedID($salonID)
     {
-        $query = "SELECT config_id FROM $this->table WHERE salonID = :salonID ORDER BY config_id DESC LIMIT 1";
+        $query = "SELECT * FROM $this->table WHERE salonID = :salonID ORDER BY config_id DESC LIMIT 1";
         $result = $this->query($query, ['salonID' => $salonID]);
 
-        return $result ? $result[0]->config_id : null;
+        return $result;
     }
 
     //find the details using the config
-    public function findById($ConfigID)
+    public function findById($ConfigID, $salonID)
     {
         $this->order_column = 'config_id';
-        return $this->first(['config_id' => $ConfigID]);
+        return $this->where(['config_id' => $ConfigID,'salonID' => $salonID]);
     }
 
 
