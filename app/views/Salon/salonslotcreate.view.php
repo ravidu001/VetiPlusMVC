@@ -6,7 +6,6 @@
     <title>Salon Time Slots</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
   </head>
   <body>
     <div class="container">
@@ -19,9 +18,9 @@
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
-              <option value="30">40</option>
-              <option value="30">50</option>
-              <option value="30">60</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
             </select>
           </label>
           <label>Appointments per Slot:
@@ -39,62 +38,31 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Sunday
-                  <input type="hidden" value="sunday" name="sunday">
-              </td>
-              <td><input type="time" name="start_sunday"></td>
-              <td><input type="time" name="close_sunday"></td>
-              <td><input type="checkbox" name="closed_sunday"></td>
-            </tr>
-            <tr>
-              <td>Monday
-                <input type="hidden" value="monday" name="monday">
-              </td>
-              <td><input type="time" name="start_monday"></td>
-              <td><input type="time" name="close_monday"></td>
-              <td><input type="checkbox" name="closed_monday"></td>
-            </tr>
-            <tr>
-              <td>Tuesday
-                <input type="hidden" value="tuesday" name="tuesday">
-              </td>
-              <td><input type="time" name="start_tuesday"></td>
-              <td><input type="time" name="close_tuesday"></td>
-              <td><input type="checkbox" name="closed_tuesday"></td>
-            </tr>
-            <tr>
-              <td>Wednesday
-                <input type="hidden" value="wednesday" name="wednesday">
-              </td>
-              <td><input type="time" name="start_wednesday"></td>
-              <td><input type="time" name="close_wednesday"></td>
-              <td><input type="checkbox" name="closed_wednesday"></td>
-            </tr>
-            <tr>
-              <td>Thursday
-                <input type="hidden" value="thursday" name="thursday">
-              </td>
-              <td><input type="time" name="start_thursday"></td>
-              <td><input type="time" name="close_thursday"></td>
-              <td><input type="checkbox" name="closed_thursday"></td>
-            </tr>
-            <tr>
-              <td>Friday
-                <input type="hidden" value="friday" name="friday">
-              </td>
-              <td><input type="time" name="start_friday"></td>
-              <td><input type="time" name="close_friday"></td>
-              <td><input type="checkbox" name="closed_friday"></td>
-            </tr>
-            <tr>
-              <td>Saturday
-                <input type="hidden" value="saturday" name="saturday">
-              </td>
-              <td><input type="time" name="start_saturday"></td>
-              <td><input type="time" name="close_saturday"></td>
-              <td><input type="checkbox" name="closed_saturday"></td>
-            </tr>
+            <?php
+                $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                $timeSlots = [];
+                for ($hour = 0; $hour < 24; $hour++) {
+                  $timeSlots[] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+                  $timeSlots[] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':30';
+                }
+
+                foreach ($days as $day) {
+                  echo '<tr>';
+                  echo "<td>" . ucfirst($day) . "<input type='hidden' value='$day' name='$day'></td>";
+                  echo "<td><select name='start_$day' class='time-select'>";
+                  foreach ($timeSlots as $time) {
+                    echo "<option value='$time'>$time</option>";
+                  }
+                  echo "</select></td>";
+                  echo "<td><select name='close_$day' class='time-select'>";
+                  foreach ($timeSlots as $time) {
+                    echo "<option value='$time'>$time</option>";
+                  }
+                  echo "</select></td>";
+                  echo "<td><input type='checkbox' name='closed_$day' class='closed-checkbox'></td>";
+                  echo '</tr>';
+                }
+            ?>
           </tbody>
         </table>
 
@@ -104,23 +72,15 @@
           <label><input type="radio" name="period" value="month" /> Per Month</label>
         </div>
 
-        <!-- <div class="holidays">
-          <p>Add holidays:</p>
-          <input type="date" id="holidayDate" />
-          <button type="button" onclick="addHoliday()">Add</button>
-
-          <ul id="holidayList"></ul>
-
-          Hidden input to store holidays array -->
-        <!-- <div id="hiddenInputs"></div> -->
-    </div>
-
         <div class="submit-btn">
           <button type="submit" name="postdata">Generate Time Slots</button>
         </div>
       </form>
     </div>
 
+    
+  </body>
+</html>
 
 
     <style>
