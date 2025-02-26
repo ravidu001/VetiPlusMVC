@@ -24,11 +24,13 @@
             <label for="appointmentIcon" class="collapsable">Appointments</label>
         </a>
         <div id="appointmentTypes">
-            <a href="<?= ROOT ?>/PO_vetAppointments">
+            <a href="<?= ROOT ?>/PO_vetAppointments"
+            class="<?= ($current_pg == 'PO_vetAppointments') ? 'active' : ''; ?>">
                 <i class="bx bxs-injection bx-sm" id="vetAppointmentIcon"></i>
                 <label for="vetAppointmentIcon" class="collapsable">Vet</label>
             </a>
-            <a href="<?= ROOT ?>/PO_salonAppointments">
+            <a href="<?= ROOT ?>/PO_salonAppointments"
+            class="<?= ($current_pg == 'PO_salonAppointments') ? 'active' : ''; ?>">
                 <i class="bx bxs-brush bx-sm" id="salonAppointmentIcon"></i>
                 <label for="salonAppointmentIcon" class="collapsable">Salon</label>
             </a>
@@ -40,11 +42,13 @@
             <label for="otherServiceIcon" class="collapsable">Other Services</label>
         </a>
         <div id="otherServiceTypes">
-            <a href="<?= ROOT ?>/PO_petAdoption">
+            <a href="<?= ROOT ?>/PO_petAdoption"
+            class="<?= ($current_pg == 'PO_petAdoption') ? 'active' : ''; ?>">
                 <i class="bx bxs-dog bx-sm" id="otherServiceIcon"></i>
                 <label for="otherServiceIcon" class="collapsable">Pet Adoption</label>
             </a>
-            <a href="<?= ROOT ?>/PO_petBreeding">
+            <a href="<?= ROOT ?>/PO_petBreeding"
+            class="<?= ($current_pg == 'PO_petBreeding') ? 'active' : ''; ?>">
                 <i class="bx bxs-heart bx-sm" id="otherServiceIcon"></i>
                 <label for="otherServiceIcon" class="collapsable">Pet Breeding</label>
             </a>
@@ -78,6 +82,19 @@
 </nav>
 
 <script>
+    const dropDowns = [
+        document.getElementById('appointmentIcon'),
+        document.getElementById('otherServiceIcon')
+    ];
+    dropDowns.map(x => addEventListener('click', () => {
+        setTimeout(() => {
+            x.style.backgroundColor = 'black';
+        }, 3000)
+    }))
+
+
+
+
     const themeToggle = document.getElementById('themeToggle');
     const bodyClasses = document.body.classList
     
