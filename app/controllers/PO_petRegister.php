@@ -5,8 +5,31 @@ function sanitizeInput($input) {
 }
 
 class PO_petRegister extends Controller {
+
+    public $petOwnerID;
+
+    public $speciesBreeds;
+    public $speciesList;
+
     public function index () {
         $this->view('petowner/petRegister');
+    }
+
+    public function __construct() {
+        isset($_SESSION['petOwnerID'])
+            ? $this->petOwnerID = $_SESSION['petOwnerID']
+            : redirect('Login');
+
+        $this->speciesBreeds = new Species_Breeds;
+        $this->speciesList = $this->speciesBreeds->getSpeciesList();   
+    }
+
+    public function breedList ($species) {
+        $result = $this->speciesBreeds->getBreedsList($species);
+        
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
     }
 
     // the following 3 are used to validate the form inputs and add error messages

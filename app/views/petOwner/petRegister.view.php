@@ -8,8 +8,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
-        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet"> -->
-
         <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">
 
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -23,52 +21,14 @@
                 <img src="<?= ROOT ?>/assets/images/petOwner/petRegister.png" alt="Pet Owner welcome image">
                 <h3>Pet Registration</h3>
             </div>
-
-            <!-- <form id="petOwnerRegisterForm" method="post" action="<?= ROOT ?>/PO_register/petOwnerRegister">
-                <h1>Pet Owner Signup</h1>
-                <fieldset>
-                    <legend>Personal Details</legend>
-                    <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" name="fullName" minlength="5" placeholder="eg: John Doe" required>
-                    <?php 
-                        $today = new DateTime("now");
-                        $todayDate = $today->format('Y-m-d');
-                        $tenYearsAgoDate = (clone $today)->modify('-10 years')->format('Y-m-d');
-                    ?>
-                    <label for="DOB">Date of Birth</label>
-                        <input type="date" id="DOB" name="DOB" max="<?= $tenYearsAgoDate ?>" required>
-                    <label for="contactNumber">Contact Number</label>
-                        <input type="text" id="contactNumber" name="contactNumber" pattern="07\d\d\d\d\d\d\d\d" minlength="10" placeholder="eg: 0767130191" required>
-                    <label for="NIC">NIC number</label>
-                        <input type="text" id="NIC" name="NIC" placeholder="eg: 200229001015 or 712441524V" pattern="(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})" required>
-                    <label for="male">Gender</label>
-                        <div>
-                            <label for="male">Male</label>
-                            <input type="radio" id="male" value="male" name="gender" required>
-                            <label for="female">Female</label>
-                            <input type="radio" id="female" value="female" name="gender" required>
-                        </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Address</legend>
-                    <label for="houseNo">Apartment/ House no.</label>
-                        <input type="text" id="houseNo" name="houseNo" placeholder="eg: 103/1A" required>
-                    <label for="streetName">Street</label>
-                        <input type="text" id="streetName" name="streetName" placeholder="eg: Hena Road" required>
-                    <label for="city">City</label>
-                        <input type="text" id="city" name="city" placeholder="eg: Mount-Lavinia" required>
-                </fieldset>
-                
-                <div class="errorMsg"></div>
-                <div class="formButtons">
-                    <button type="reset">Clear</button>
-                    <button type="submit">Submit</button>
-                </div>
-            </form> -->
-            
                 <form id="petRegisterForm" method="post" enctype="multipart/form-data" action="<?= ROOT.'/PO_petRegister/petRegister' ?>">
                     <h2>Register Your Pet</h2>
                     <div class="noField">
+
+                        <img class="previewImage" src="" alt="Image Preview">
+
+                        <label for="profilePicture">Add a profile picture:</label>
+                            <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required>
 
                         <label for="name">Name:</label>
                             <input type="text" id="name" name="name" minlength="3" placeholder="eg: Bingo" required> 
@@ -76,7 +36,7 @@
                         <label for="DOB">Date of Birth:</label>
                             <input type="date" id="DOB" name="DOB" max="<?= (new DateTime("now"))->format('Y-m-d') ?>" required>
                         
-                        <label for="male">Gender</label>
+                        <label for="male">Gender:</label>
                             <div>
                                 <label for="male">Male</label>
                                 <input type="radio" id="male" value="male" name="gender" required>
@@ -86,20 +46,27 @@
         
                         <label for="weight">Weight (in kg):</label>
                             <input type="number" id="weight" name="weight" min="0" placeholder="eg: 1" required>
-                            
+                        
                         <label for="species">Species:</label>
-                            <input type="text" id="species" name="species" list="petSpecies">
-                            <datalist id="petSpecies">
-                                <option value="Dog">
-                                <option value="Cat">
-                                <option value="Rabbit">
-                                <option value="Bird">
-                                <option value="Hamster">
-                            </datalist>
-        
+                        <div class="selectOrOther">
+                            <div class="selectContainer">
+                                <select name="species" id="species" required>
+                                    <option hidden>Select your pet's Species</option>
+                                    <?php foreach ($this->speciesList as $sp) echo "<option value=\"{$sp->species}\">{$sp->species}</option>"; ?>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <input type="text" name="species" id="otherSpecies" class="other">
+                        </div>
+                        
                         <label for="breed">Breed:</label>
-                            <input type="text" id="breed" name="breed" placeholder="eg: German Shepherd" required>
-        
+                        <div class="selectOrOther">
+                            <div class="selectContainer">
+                                <select name="breed" id="breed"></select>
+                            </div>
+                            <input type="text" name="breed" id="otherBreed" class="other" hidden>
+                        </div>
+
                         <!-- <label for="breedAvailNo">Is your pet available for breeding?</label>
                         <span>
                             <label for="breedAvailYes" class="radioLabel">Yes</label>
@@ -113,17 +80,14 @@
                                 cols="30" rows="5" style="resize: none; display:none;" required>
                             </textarea> -->
         
-                        <label for="profilePicture">Add a profile picture:</label>
-                            <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required>
         
+                        </div>
                         <div class="errorMsg"></div>
                         <div class="formButtons">
                             <button type="reset">Clear</button>
                             <button type="submit">Submit</button>
                         </div>
-                    </div>
-    
-                    
+        
                 </form>
         </div>
 
@@ -133,6 +97,52 @@
 
 
         <script>
+            // to preview the uploaded image:
+            document.getElementById("profilePicture").addEventListener("change", function(event) {
+                let file = event.target.files[0];
+                let img = document.querySelector(".previewImage");
+
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = (e) => {
+                        img.src = e.target.result;
+                        img.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    img.style.display = "none"; // Hide the image if no file is selected
+                    img.src = "";
+                }
+            });
+
+            const species = document.getElementById('species');
+            const breed = document.getElementById('breed');
+
+            species.addEventListener('change', () => {
+                const speciesType = species.value;
+
+                if (speciesType == 'other') exit;
+                const action = `PO_petRegister/breedList/${encodeURIComponent(speciesType)}`;
+
+                fetch(action, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const optionsHTML = `
+                        <option hidden>Select your pet's Breed</option>
+                        ${data.map(x => `<option value=${x.breed}>${x.breed}</option>`).join('')}
+                        <option value="other">Other</option>
+                    `;
+                    breed.innerHTML = optionsHTML;
+                })
+                .catch(error => {
+                    console.error('An error occurred:', error);
+                    alert('An error occurred. Please try again later.');
+                });
+            })
+
+
             function toggleBreedDescription() {
                 const breedDescParts = document.querySelectorAll('.breedDesc')
                 if (document.getElementById('breedAvailYes').checked) {

@@ -30,12 +30,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
 
     width: 100%;
 }
 .bodyArea > *:not(footer) {
-    margin: 1rem 5rem;
+    margin: 1rem 8rem;
 }
 .bodyHeader, .dashHeader {
     font-size: 2em;
