@@ -13,4 +13,11 @@ class SalonWeekdaySchedules
         
     }
 
+    //FInd the slot by config ID 
+    public function FindByConfigId($configID)
+    {
+        $this->order_column = 'config_id';
+        return $this->where(['config_id' => $configID]);
+    }
+
 }    
