@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/salonnav.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/Salon/myreview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/VetDoctor/myreview.css">
 </head>
 <body>
 
@@ -36,7 +37,9 @@
 </div>
 
     <div class="main-content" id="mainContent">
-        <?php require_once '../app/views/navbar/doctornav.php'; ?>
+        <?php
+             require_once '../app/views/navbar/salonnav.php'; 
+        ?>
         <div class="home">
         <div class="reviews-container">
             <!-- Previous review container HTML -->
