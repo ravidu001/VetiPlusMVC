@@ -79,17 +79,19 @@ nav.sideBar>* {
 }
 
 #appointmentTypes, #otherServiceTypes {
-    margin-left: 10px;
-}
-
-#appointmentTypes {
     display: none;
     
+    margin-left: 10px;
     background-color: var(--nav-bg-color);
-    border-bottom: 2px solid var(--primary-border-color);
     padding: 5px;
     border-radius: 10px;
     z-index: 10;
+}
+/* 
+#appointmentTypes {
+} */
+#otherServiceTypes {
+    font-size: 0.9em;
 }
 
 #appointmentIcon:hover + #appointmentTypes,
@@ -98,22 +100,12 @@ nav.sideBar>* {
     display: block;
 }
 
-#otherServiceTypes {
-    display: none;
-    font-size: 0.9em;
-    
-    background-color: var(--nav-bg-color);
-    border-bottom: 2px solid var(--primary-border-color);
-    padding: 5px;
-    border-radius: 10px;
-    z-index: 10;
-}
-
 #otherServiceIcon:hover + #otherServiceTypes,
 #otherServiceIcon:focus + #otherServiceTypes,
 #otherServiceTypes:hover {
     display: block;
 }
+
 
 /* For theme toggler */
 /* Toggle Container Styles */
