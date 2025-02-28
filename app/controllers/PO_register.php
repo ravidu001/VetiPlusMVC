@@ -5,6 +5,11 @@ function sanitizeInput($input) {
 }
 
 class PO_register extends Controller {
+
+    public function __construct() {
+        !isset($_SESSION['petOwnerID']) && redirect('Login');
+    }
+
     public function index () {
         $this->view('petowner/register');
     }
@@ -63,6 +68,8 @@ class PO_register extends Controller {
 
         if($this->validInputs) {
             $newPetOwner = new PetOwner;
+            $newPetOwner->setPetOwnerID();
+
             $insertSuccess = $newPetOwner->register($sanitized);
             
             if ($insertSuccess) {

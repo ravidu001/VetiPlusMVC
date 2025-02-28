@@ -9,10 +9,15 @@ class PO_petProfile extends Controller {
     private $petOwnerID;
 
     public function __construct() {
-        if(!isset($_GET['petID'])) redirect('PO_home');
-        else $this->petID = $_GET['petID'];
+        isset($_GET['petID'])
+            ? $this->petID = $_GET['petID']
+            : redirect('PO_home');
 
-        $this->petOwnerID = $_SESSION['petOwnerID'];
+        // isset($_SESSION['petOwnerID'])
+        //     ? $this->petOwnerID = $_SESSION['petOwnerID']
+        //     : redirect('Login');
+        !isset($_SESSION['petOwnerID']) && redirect('Login');
+
     }
 
     public function index() {
@@ -36,6 +41,8 @@ class PO_petProfile extends Controller {
 
         if ($uploadDone) {
             $pet = new Pet;
+            $pet->setPetOwnerID();
+
             $updateDone = $pet->uploadProfilePicture($this->petID, ['profilePicture' => $newFileName]);
             if ($updateDone) {
                 echo json_encode(["status" => "success",

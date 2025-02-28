@@ -13,6 +13,8 @@ class PO_userProfile extends Controller {
             : redirect('Login');
 
         $this->petOwner = new PetOwner;
+        $this->petOwner->setPetOwnerID();
+        
         // an assoc array containing petOwner table details
         $this->po_details = $this->petOwner->getUserDetails();
     }

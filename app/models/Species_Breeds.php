@@ -7,7 +7,8 @@ class Species_Breeds {
     protected $allowedColumns = ['species', 'breed'];
 
     public function __construct() {
-        $this->limit = 30;     // override default limit 10
+        $this->order_column = 'breed';
+        $this->limit = 30;     // override default limit 10, since maybe more than 10 breeds.
     }
 
     /**

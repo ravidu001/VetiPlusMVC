@@ -25,10 +25,9 @@
                     <h2>Register Your Pet</h2>
                     <div class="noField">
 
-                        <img class="previewImage" src="" alt="Image Preview">
-
+                        <!-- <img class="previewImage" src="" alt="Image Preview">
                         <label for="profilePicture">Add a profile picture:</label>
-                            <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required>
+                            <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required> -->
 
                         <label for="name">Name:</label>
                             <input type="text" id="name" name="name" minlength="3" placeholder="eg: Bingo" required> 
@@ -43,29 +42,35 @@
                                 <label for="female">Female</label>
                                 <input type="radio" id="female" value="female" name="gender" required>
                             </div>
-        
-                        <label for="weight">Weight (in kg):</label>
-                            <input type="number" id="weight" name="weight" min="0" placeholder="eg: 1" required>
                         
-                        <label for="species">Species:</label>
-                        <div class="selectOrOther">
-                            <div class="selectContainer">
-                                <select name="species" id="species" required>
-                                    <option hidden>Select your pet's Species</option>
-                                    <?php foreach ($this->speciesList as $sp) echo "<option value=\"{$sp->species}\">{$sp->species}</option>"; ?>
-                                    <option value="other">Other</option>
-                                </select>
+                        <div class="species-breeds">
+                            <div class="selectOrOther">
+                                <label for="species">Species:</label>
+                                <div class="selectContainer">
+                                    <select name="species" id="species" required>
+                                        <option value="ph" hidden>Select your pet's Species</option>
+                                        <?php foreach ($this->speciesList as $sp) echo "<option value=\"{$sp->species}\">{$sp->species}</option>"; ?>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <input type="text" name="species" id="otherSpecies" class="other" placeholder="Enter your pet's general species" hidden>
                             </div>
-                            <input type="text" name="species" id="otherSpecies" class="other">
-                        </div>
-                        
-                        <label for="breed">Breed:</label>
-                        <div class="selectOrOther">
-                            <div class="selectContainer">
-                                <select name="breed" id="breed"></select>
+                            
+                            <div class="selectOrOther">
+                                <label for="breed">Breed:</label>
+                                <div class="selectContainer">
+                                    <select name="breed" id="breed">
+                                        <option value="ph" hidden> Select your pet's Species First. </option>
+                                    </select>
+                                </div>
+                                <input type="text" name="breed" id="otherBreed" class="other" placeholder="Enter your pet's breed/specific species" hidden>
                             </div>
-                            <input type="text" name="breed" id="otherBreed" class="other" hidden>
+
+                            <p style="font-size:0.8em; text-align:center;">Check out exactly what species and breed your pet is with
+                                <a href="https://images.google.com" target="_blank" style="text-decoration:none;">Google Images</a>
+                            </p>
                         </div>
+
 
                         <!-- <label for="breedAvailNo">Is your pet available for breeding?</label>
                         <span>
@@ -82,7 +87,9 @@
         
         
                         </div>
+
                         <div class="errorMsg"></div>
+
                         <div class="formButtons">
                             <button type="reset">Clear</button>
                             <button type="submit">Submit</button>
@@ -98,59 +105,124 @@
 
         <script>
             // to preview the uploaded image:
-            document.getElementById("profilePicture").addEventListener("change", function(event) {
-                let file = event.target.files[0];
-                let img = document.querySelector(".previewImage");
+            // document.getElementById("profilePicture").addEventListener("change", function(event) {
+            //     let file = event.target.files[0];
+            //     let img = document.querySelector(".previewImage");
 
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = (e) => {
-                        img.src = e.target.result;
-                        img.style.display = "block";
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    img.style.display = "none"; // Hide the image if no file is selected
-                    img.src = "";
-                }
-            });
+            //     if (file) {
+            //         let reader = new FileReader();
+            //         reader.onload = (e) => {
+            //             img.src = e.target.result;
+            //             img.style.display = "block";
+            //         };
+            //         reader.readAsDataURL(file);
+            //     } else {
+            //         img.style.display = "none"; // Hide the image if no file is selected
+            //         img.src = "";
+            //     }
+            // });
+
+            // the following parts are to handle user selecting other option for pet's species and/or breed and resetting them:
+            const formItself = document.getElementById('petRegisterForm');
 
             const species = document.getElementById('species');
+            const otherSpecies = document.getElementById('otherSpecies');
+
             const breed = document.getElementById('breed');
+            const otherBreed = document.getElementById('otherBreed');
 
             species.addEventListener('change', () => {
-                const speciesType = species.value;
+                let speciesType = species.value;
 
-                if (speciesType == 'other') exit;
-                const action = `PO_petRegister/breedList/${encodeURIComponent(speciesType)}`;
+                if (speciesType == 'other') {
 
-                fetch(action, {
-                    method: 'GET'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const optionsHTML = `
-                        <option hidden>Select your pet's Breed</option>
-                        ${data.map(x => `<option value=${x.breed}>${x.breed}</option>`).join('')}
-                        <option value="other">Other</option>
-                    `;
-                    breed.innerHTML = optionsHTML;
-                })
-                .catch(error => {
-                    console.error('An error occurred:', error);
-                    alert('An error occurred. Please try again later.');
-                });
+                    otherSpecies.hidden = false;
+                    otherSpecies.disabled = false;
+                    otherSpecies.required = true;
+
+                    breed.disabled = true;
+                    otherBreed.hidden = false;
+                    otherBreed.disabled = false;
+                    otherBreed.required = true;
+                }
+                else {
+                    otherSpecies.hidden = true;
+                    otherSpecies.disabled = true;
+                    otherSpecies.required = false;
+
+                    breed.disabled = false;
+                    otherBreed.hidden = true;
+                    otherBreed.disabled = true;
+                    otherBreed.required = false;
+
+                    const action = `PO_petRegister/breedList/${encodeURIComponent(speciesType)}`;
+    
+                    fetch(action, {
+                        method: 'GET'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const optionsHTML = `
+                            <option value="ph" hidden> Select your pet's Breed </option>
+                            ${data.map(x => `<option value=${x.breed}>${x.breed}</option>`).join('')}
+                            <option value="other">Other</option>
+                        `;
+                        breed.innerHTML = optionsHTML;
+                    })
+                    .catch(error => {
+                        console.error('An error occurred:', error);
+                        alert('An error occurred. Please try again later.');
+                    });
+                }
+            })
+            breed.addEventListener('change', () => {
+                let breedType = breed.value;
+
+                if (breedType == 'other') {
+
+                    otherBreed.hidden = false;
+                    otherBreed.disabled = false;
+                    otherBreed.required = true;
+
+                }
+                else {
+
+                    otherBreed.hidden = true;
+                    otherBreed.disabled = true;
+                    otherBreed.required = false;
+                }
+            })
+            formItself.addEventListener('reset', (e) => {
+                breed.innerHTML = `<option hidden> Select your pet's Species First. </option>`;
+                
+                otherSpecies.hidden = true;
+                otherSpecies.disabled = true;
+                otherSpecies.required = false;
+                
+                otherBreed.hidden = true;
+                otherBreed.disabled = true;
+                otherBreed.required = false;
+            })
+            formItself.addEventListener('submit', () => {
+                if (species.value == 'ph' || breed.value == 'ph') {
+                    console.log("Hmm");
+                    e.preventDefault();
+                }
             })
 
 
-            function toggleBreedDescription() {
-                const breedDescParts = document.querySelectorAll('.breedDesc')
-                if (document.getElementById('breedAvailYes').checked) {
-                    breedDescParts.forEach(x => x.style.display = "block")
-                } else if (document.getElementById('breedAvailNo').checked) {
-                    breedDescParts.forEach(x => x.style.display = "none")
-                }
-            }
+            // function toggleBreedDescription() {
+            //     const breedDescParts = document.querySelectorAll('.breedDesc')
+            //     if (document.getElementById('breedAvailYes').checked) {
+            //         breedDescParts.forEach(x => x.style.display = "block")
+            //     } else if (document.getElementById('breedAvailNo').checked) {
+            //         breedDescParts.forEach(x => x.style.display = "none")
+            //     }
+            // }
         </script>
+        
+        <script src="<?=ROOT?>/assets/js/petOwner/fetchHandler.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
+
     </body>
 </html>

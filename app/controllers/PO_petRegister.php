@@ -6,9 +6,9 @@ function sanitizeInput($input) {
 
 class PO_petRegister extends Controller {
 
-    public $petOwnerID;
+    // public $petOwnerID;
 
-    public $speciesBreeds;
+    public $speciesBreeds;  // a Species_Breeds object
     public $speciesList;
 
     public function index () {
@@ -16,9 +16,10 @@ class PO_petRegister extends Controller {
     }
 
     public function __construct() {
-        isset($_SESSION['petOwnerID'])
-            ? $this->petOwnerID = $_SESSION['petOwnerID']
-            : redirect('Login');
+        // isset($_SESSION['petOwnerID'])
+        //     ? $this->petOwnerID = $_SESSION['petOwnerID']
+        //     : redirect('Login');
+        !isset($_SESSION['petOwnerID']) && redirect('Login');
 
         $this->speciesBreeds = new Species_Breeds;
         $this->speciesList = $this->speciesBreeds->getSpeciesList();   
@@ -46,45 +47,33 @@ class PO_petRegister extends Controller {
     public function petRegister () {
         $sanitized = array_map('sanitizeInput', $_POST);
         
-        // $fullName = $sanitized['fullName']; 
-        // $DOB = $sanitized['DOB'];
-        // $contactNumber = $sanitized['contactNumber'];
-        // $NIC = $sanitized['NIC'];
-        // $gender = $sanitized['gender'];
-    
-        // $houseNo = $sanitized['houseNo'];
-        // $streetName = $sanitized['streetName'];
-        // $city = $sanitized['city'];
+        // $profilePicture = $_FILES['profilePicture'];
 
-        // if(empty($fullName)) $this->addError("Empty name value provided!");
-        // elseif (strlen($fullName) < 5) $this->addError("Name should be at least 5 characters.");
-    
-        // $today = new DateTime("now");
-        // $tenYearsAgo = (clone $today)->modify('-10 years')->format('Y-m-d');
-        // $dobDate = DateTime::createFromFormat('Y-m-d', $DOB);
-    
-        // if ($dobDate && $dobDate > new DateTime($tenYearsAgo)) $this->addError("Invalid date of birth: you should be 10 years at least.");
-    
-        // $contactRegex = '/07\\d\\d\\d\\d\\d\\d\\d\\d/i';
-        // if(empty($contactNumber)) $this->addError("No contact number provided!");
-        // elseif (!preg_match($contactRegex, $contactNumber)) $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
-    
-        // $nicRegex = '/(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})/';
-        // if(empty($NIC)) $this->addError("No NIC number provided!");
-        // elseif (!preg_match($nicRegex, $NIC)) $this->addError("NIC number does not follow Sri Lankan NIC number pattern.");
-    
-        // if($gender != 'male' && $gender != 'female') $this->addError("Gender is not selected!");
-    
-        // if(empty($houseNo)) $this->addError("No house number or apartment number provided for Address!");
-        // if(empty($streetName)) $this->addError("No street name provided for Address!");
-        // if(empty($city)) $this->addError("No city provided for Address!");
-    
+        $name = $sanitized['name']; 
+        $DOB = $sanitized['DOB'];
+        $gender = $sanitized['gender'];
 
+        $species = $sanitized['species'];
+        $breed = $sanitized['breed'];
+
+        if(empty($name)) $this->addError("Empty name value provided!");
+        elseif (strlen($name) < 3) $this->addError("Name should be at least 3 characters.");
+    
+        $today = new DateTime("now");
+        $dobDate = DateTime::createFromFormat('Y-m-d', $DOB);
+        if ($dobDate && $dobDate > $today) $this->addError("Invalid date of birth.");
+    
+        if($gender != 'male' && $gender != 'female') $this->addError("Gender is not selected!");
+
+        if(empty($species) || $species == "ph") $this->addError("No species selected!");
+        if(empty($breed) || $breed == "ph") $this->addError("No breed selected!");
+        
         header('Content-Type: application/json');
 
         if($this->validInputs) {
             $newPet = new Pet;
             $insertSuccess = $newPet->register($sanitized);
+            // $uploadSuccess = $newPet->uploadProfilePicture();
             
             if ($insertSuccess) {
                 echo json_encode(["status" => "success",
