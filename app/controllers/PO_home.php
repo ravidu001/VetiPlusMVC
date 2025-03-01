@@ -22,6 +22,9 @@ class PO_home extends Controller {
         // an assoc array containing petOwner table details
         $this->po_details = $this->petOwner->getUserDetails();
 
+        // if not properly registered, redirect
+        !isset($this->po_details->fullName) && redirect('po_register');
+
         $this->pets = new Pet;
         $this->pets->setPetOwnerID();
 
