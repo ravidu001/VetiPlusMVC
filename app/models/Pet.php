@@ -21,7 +21,6 @@ class Pet {
      */
     public function setPetOwnerID () {
         isset($_SESSION['petOwnerID']) && $this->petOwnerID = $_SESSION['petOwnerID'];
-        return;
     }
 
     /**
