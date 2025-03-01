@@ -76,7 +76,7 @@ class PO_register extends Controller {
                 echo json_encode(["status" => "success",
                                 "title" => "Success! 😺",
                                 "message" => "Registration successful! 😺\nWelcome to VetiPlus!",
-                                "icon" => ROOT."/assets/images/petOwner/success.png",
+                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
                                 "nextPage" => "PO_home"
                             ]);
                 exit();
@@ -84,7 +84,7 @@ class PO_register extends Controller {
                 echo json_encode(["status" => "failure",
                                 "title" => "Failure! 🙀",
                                 "message" => "Registration unsuccessful. 🙀\nPlease try again later.",
-                                "icon" => ROOT."/assets/images/petOwner/fail.png"
+                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
                             ]);
                 exit();
             }
