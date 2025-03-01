@@ -39,8 +39,10 @@ class PO_userProfile extends Controller {
         $uploadDone = move_uploaded_file($tempPath, $destination);
 
         if ($uploadDone) {
-            $petOwner = new PetOwner;
-            $updateDone = $petOwner->uploadProfilePicture($this->petOwnerID, ['profilePicture' => $newFileName]);
+            // $petOwner = new PetOwner;
+            // $petOwner->setPetOwnerID();
+
+            $updateDone = $this->petOwner->uploadProfilePicture($this->petOwnerID, ['profilePicture' => $newFileName]);
             if ($updateDone) {
                 echo json_encode(["status" => "success",
                                 "title" => "Success! 😺",
