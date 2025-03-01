@@ -104,23 +104,6 @@
 
 
         <script>
-            // to preview the uploaded image:
-            // document.getElementById("profilePicture").addEventListener("change", function(event) {
-            //     let file = event.target.files[0];
-            //     let img = document.querySelector(".previewImage");
-
-            //     if (file) {
-            //         let reader = new FileReader();
-            //         reader.onload = (e) => {
-            //             img.src = e.target.result;
-            //             img.style.display = "block";
-            //         };
-            //         reader.readAsDataURL(file);
-            //     } else {
-            //         img.style.display = "none"; // Hide the image if no file is selected
-            //         img.src = "";
-            //     }
-            // });
 
             // the following parts are to handle user selecting other option for pet's species and/or breed and resetting them:
             const formItself = document.getElementById('petRegisterForm');
