@@ -23,7 +23,7 @@ class Species_Breeds {
     }
 
     public function getSpeciesList () {
-        $speciesQuery = "SELECT DISTINCT species FROM `species_breeds`";
+        $speciesQuery = "SELECT DISTINCT species FROM $this->table";
         return $this->query($speciesQuery);
     }
 
