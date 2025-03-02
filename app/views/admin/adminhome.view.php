@@ -41,7 +41,7 @@
                     <div class="stats-card">
                         <i class='bx bxs-user-account icon'></i>
                         <div class="content">
-                            <h3>Total Accounts</h3>
+                            <h3>Total User Accounts</h3>
                             <h2><?php echo htmlspecialchars($userCount, ENT_QUOTES, 'UTF-8'); ?></h2>
                         </div>
                     </div>
