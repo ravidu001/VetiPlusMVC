@@ -1,5 +1,6 @@
 // ***********************************************************
 // this JS file is only to be included in view files that may need to display a popup message.
+// <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
 // ***********************************************************
 
 document.addEventListener('DOMContentLoaded', function() {
