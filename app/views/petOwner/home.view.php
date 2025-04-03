@@ -18,9 +18,7 @@
 
     <body>
             <script>
-                console.log(<?= json_encode($this->pet_details) ?>);
-                console.log(<?= json_encode($this->pet_details[1]->name) ?>);
-                console.log(<?= json_encode($this->po_details->fullName) ?>);
+                console.log(<?= json_encode($this->petCount) ?>);
                 console.log(<?= json_encode($this->po_details) ?>);
             </script>
             
@@ -49,11 +47,25 @@
             <section id="myPets" class="dashArea">
                 <h2 class="dashHeader">My Pets</h2>
 
-                <div class="dashContent">
+                <div class="tallCard-container pets-container"></div>
+                <template class="petCard-template">
+                    <a href="" title="Go to Pet Profile Page." class="card tallCard petCard">
+                        <img src="" class='profilePicture' alt='Pet Image'>
+                        <h3 class="name"></h3>
+                    </a>
+                </template>
+                <template class="registerPet-template">
+                    <a href="po_petRegister" title="Go to Pet Profile Page." class="card tallCard petCard">
+                        <p><i class="bx bxs-plus-circle bx-lg"></i></p>
+                        <p>Register pet</p>
+                    </a>
+                </template>
+
+                <!-- <div class="dashContent">
                     <?php
                         if($this->pet_details) :
                             foreach ($this->pet_details as $pet) : ?>
-                                <a href="po_petProfile?petID=<?= $pet->petID ?>" title="Go to Pet Profile Page." class="card dashCard">
+                                <a href="po_petProfile?petID=<?= $pet->petID ?>" title="Go to Pet Profile Page." class="card tallCard">
                                     <img src='<?= ROOT."/assets/images/petOwner/profilePics/pet/".$pet->profilePicture ?>' class='petImg' alt='Pet Image'>
                                     <h3><?= $pet->name ?></h3>
                                 </a>
@@ -68,7 +80,8 @@
                         <i class="bx bxs-plus-circle bx-lg"></i>
                         <h3>Add Pet</h3>
                     </a>                   
-                </div>
+                </div> -->
+
             </section>
         
         
@@ -111,5 +124,33 @@
             <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
 
         </div>
+        <script>
+            const cardTemplate = document.querySelector('.petCard-template');
+            const petsContainer = document.querySelector('.pets-container');
+
+            fetch('PO_home/getPets')
+            .then(result => result.json())
+            .then(data => {
+                // if no pets found, no need for mapping:
+                if (data.petCount == 0) return;
+
+                data.map(pet => {
+                    const card = cardTemplate.content.cloneNode(true).children[0];
+                
+                    card.setAttribute('href', `po_petProfile?petID=${pet.petID}`)
+                    card.querySelector('.profilePicture').src = 
+                        `<?=ROOT.'/assets/images/petOwner/profilePictures/pet/' ?>${pet.profilePicture}`;
+                    card.querySelector('.name').textContent = pet.name;
+
+                    petsContainer.append(card)
+                })
+            })
+            .finally(() => {
+                const regCardTemplate = document.querySelector('.registerPet-template');
+                const regCard = regCardTemplate.content.cloneNode(true).children[0];
+                petsContainer.append(regCard);
+            })
+
+        </script>
     </body>
 </html>

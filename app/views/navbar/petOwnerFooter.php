@@ -5,9 +5,9 @@
         <div>
             <h2>Quick Links:</h2>
             <ul class="quickLinks">
-                <li><a href="<?= ROOT.'/PO_home' ?>">Dashboard</a></li>
-                <li><a href="<?= ROOT.'/PO_vetAppointments' ?>">Vet Appointments</a></li>
-                <li><a href="<?= ROOT.'/PO_salonAppointments' ?>">Salon Appointments</a></li>
+                <li><a href="<?= ROOT.'/PO_home' ?>">Home</a></li>
+                <li><a href="<?= ROOT.'/PO_apptDashboard_Vet' ?>">Vet Appointments</a></li>
+                <li><a href="<?= ROOT.'/PO_apptDashboard_Salon' ?>">Salon Appointments</a></li>
                 <li><a href="<?= ROOT.'/PO_petAdoption' ?>">Pet Adoption</a></li>
                 <li><a href="<?= ROOT.'/PO_petBreeding' ?>">Pet Breeding</a></li>
                 <li><a href="<?= ROOT.'/PO_aboutUs' ?>">About Us</a></li>

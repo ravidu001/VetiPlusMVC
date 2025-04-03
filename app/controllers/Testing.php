@@ -10,6 +10,11 @@ class Testing extends Controller {
         $this->getText = $_GET['hmm'] ?? null;
 
         $this->oho = "Ayo";
+
+        
+        // in other models' construct
+        // set the value of petOwnerID from sessionStorage if exists; if not existing, nothing changes
+        // isset($_SESSION['petOwnerID']) && $this->petOwnerID = $_SESSION['petOwnerID'];
     }
 
     private function query($query) {
@@ -39,7 +44,7 @@ class Testing extends Controller {
     }
 
     public function getAllUsers () {
-        $myQuery = "SELECT email, type FROM user";   
+        $myQuery = "SELECT * FROM user";   
         $result = $this->query($myQuery);
         
         header('Content-Type: application/json');

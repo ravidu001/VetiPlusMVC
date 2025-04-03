@@ -11,6 +11,7 @@ class Pet {
     
     public function __construct() {
         $this->order_column = 'petID ';  // Overriding order_column here
+        $this->limit = 30;     // override default limit 10, since maybe more than 10 pets.
     }
     
     public $petOwnerID;
@@ -25,7 +26,7 @@ class Pet {
 
     /**
      * jm -  Based on the petOwner ID return all the pets' details
-     * @return 'array of arrays'|false 
+    //  * @return 'array of arrays'|false
     */
     public function getPetsDetails () {
         $petDetailsArray = $this->where(['petOwnerID' => $this->petOwnerID]);
