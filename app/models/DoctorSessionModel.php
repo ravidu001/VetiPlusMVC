@@ -29,6 +29,15 @@ class DoctorSessionModel {
         return $result;
     }
 
+    // this function is used to get the session details by sessionID
+    public function getsessionBySession($sessionID) {
+        $this->order_column = 'selectedDate';
+        $this->order_type = 'asc';
+        $result = $this->where(['sessionID' => $sessionID]);
+
+        return $result;
+    }
+
     public function deleteold($sessionID) {
         if (!is_numeric($sessionID)) {
             throw new InvalidArgumentException('Session ID must be numeric');
