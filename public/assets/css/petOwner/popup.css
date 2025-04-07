@@ -11,8 +11,10 @@ body.popup-active > *:not(.popup) {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -100px); /* Initial position (floated up) */
+    height: 50vh;
 
     background-color: white;
+    color: rgb(59, 58, 58);
     padding: 20px;
 
     border: 2px solid blue;
@@ -25,7 +27,7 @@ body.popup-active > *:not(.popup) {
 
     display: none; /* Hidden by default */
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     text-align: center;
 }
@@ -41,4 +43,10 @@ body.popup-active > *:not(.popup) {
 @keyframes rotate {
     from { transform: rotateY(0deg); }
     to { transform: rotateY(360deg); }
+}
+
+.popup-button {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.2em;
 }

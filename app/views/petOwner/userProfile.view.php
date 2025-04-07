@@ -89,11 +89,11 @@
                     <button type="submit" style="display: none;" id="save-button">Save</button>
                 </form>
     
-                <form action="po_userProfile/logout" method="post">
+                <!-- <form action="po_userProfile/logout" method="post">
                     <button type="submit">Logout</button>
-                </form>
+                </form> -->
     
-                <!-- <button id="logoutButton">Logout</button> -->
+                <button id="logoutButton">Logout</button>
     
             </div>
     
@@ -101,7 +101,26 @@
             <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
         </div>
 
+        <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
         <script>
+            // to preview the uploaded image:
+            // document.getElementById("profilePicture").addEventListener("change", function(event) {
+            //     let file = event.target.files[0];
+            //     let img = document.querySelector(".previewImage");
+
+            //     if (file) {
+            //         let reader = new FileReader();
+            //         reader.onload = (e) => {
+            //             img.src = e.target.result;
+            //             img.style.display = "block";
+            //         };
+            //         reader.readAsDataURL(file);
+            //     } else {
+            //         img.style.display = "none"; // Hide the image if no file is selected
+            //         img.src = "";
+            //     }
+            // });
+
             function toggleEdit() {
                 const displayFields = document.querySelectorAll('.display-field');
                 const inputFields = document.querySelectorAll('.input-field');
@@ -124,28 +143,15 @@
                 }
             }
 
-            // petOwner logout
-            document.getElementById('logoutButton').addEventListener('click', function () {
-                if (confirm('Are you sure you want to logout?')) {
-                    fetch('<?= ROOT ?>/client/pages/petOwner/logout.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            alert('Successfully logged out.')
-                            window.location.href = '<?= ROOT ?>/index.php';
-                        } else {
-                            alert('Failed to logout. Please try again.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Logout error:', error);
-                        alert('An error occurred while logging out.');
-                    });
-                }
-            });
+            const logoutPopObj = {
+                status: "success",
+                title: "Logout?",
+                message: "Are you sure you want to logout from your account?",
+                icon: `<?=ROOT?>/assets/images/petOwner/popUpIcons/confirm.png`,
+                askConfirm: true,
+                confirmPath: 'po_userProfile/logout'
+            };
+            document.getElementById('logoutButton').addEventListener('click', () => displayPopUp(logoutPopObj) );
 
         </script>
     </body>

@@ -1,7 +1,0 @@
-<?php
-
-class PO_vetAppointments extends Controller {
-    public function index() {
-        $this->view('petowner/vetAppointments');
-    }
-}

@@ -10,18 +10,18 @@ class PetOwner {
         ,'lastLogin'
     ];
     
-    public $petOwnerID;
-    public $petOwnerDetails;
-
     public function __construct() {
         $this->order_column = 'petOwnerID ';  // Overriding order_column here
+    }
 
-        if (isset($_SESSION['petOwnerID'])) {
-            $this->petOwnerID = $_SESSION['petOwnerID'];
-
-        // } else {
-        //     redirect('Login');
-        }
+    public $petOwnerID;
+    /**
+     * jm - Sets the value of petOwner ID from session storage.
+     * Controller itself should make sure ID is set in session.
+     * Call this function whenever petOwner or pet object created is created by me
+     */
+    public function setPetOwnerID () {
+        isset($_SESSION['petOwnerID']) && $this->petOwnerID = $_SESSION['petOwnerID'];
     }
 
     /**

@@ -1,13 +1,8 @@
 <?php
 
-class Pet 
-{
+class Pet {
     use Model;
-
     
-    protected $table = 'petowner';
-    
-
     public function findPetDetailsByID($petID)
     {
         $this->order_colunm = 'petID';
@@ -27,40 +22,30 @@ class Pet
         // } 
     }
 
-
-}
-
-
-
-
-    
-
-
     protected $table = 'pet';
     protected $allowedColumns = [
         'petID', 'petOwnerID', 'name', 'DOB', 'gender', 'weight', 
         'species', 'breed', 'breedAvailable', 'breedDescription', 'profilePicture'
     ];
     
-    public $petOwnerID;
-
     public function __construct() {
         $this->order_column = 'petID ';  // Overriding order_column here
-
-        if (isset($_SESSION['petOwnerID'])) {
-            $this->petOwnerID = $_SESSION['petOwnerID'];
-        } else if( $_SESSION['SALON_USER'])
-        {
-            $this->petOwnerID = $_SESSION['SALON_USER'];
-        }
-        else {
-            redirect('Login');
-        }
+        $this->limit = 30;     // override default limit 10, since maybe more than 10 pets.
+    }
+    
+    public $petOwnerID;
+    /**
+     * jm - Sets the value of petOwner ID from session storage.
+     * Controller itself should make sure ID is set in session.
+     * Call this function whenever petOwner or pet object created is created by me
+     */
+    public function setPetOwnerID () {
+        isset($_SESSION['petOwnerID']) && $this->petOwnerID = $_SESSION['petOwnerID'];
     }
 
     /**
      * jm -  Based on the petOwner ID return all the pets' details
-     * @return 'array of arrays'|false 
+    //  * @return 'array of arrays'|false
     */
     public function getPetsDetails () {
         $petDetailsArray = $this->where(['petOwnerID' => $this->petOwnerID]);

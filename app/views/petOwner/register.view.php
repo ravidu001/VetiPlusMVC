@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
+        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet"> -->
+        <!-- <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet"> -->
 
         <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">
@@ -34,12 +35,12 @@
                         $todayDate = $today->format('Y-m-d');
                         $tenYearsAgoDate = (clone $today)->modify('-10 years')->format('Y-m-d');
                     ?>
-                    <label for="DOB">Date of Birth</label>
-                        <input type="date" id="DOB" name="DOB" max="<?= $tenYearsAgoDate ?>" required>
+                    <!-- <label for="DOB">Date of Birth</label>
+                        <input type="date" id="DOB" name="DOB" max="<?= $tenYearsAgoDate ?>" required> -->
                     <label for="contactNumber">Contact Number</label>
                         <input type="text" id="contactNumber" name="contactNumber" pattern="07\d\d\d\d\d\d\d\d" minlength="10" placeholder="eg: 0767130191" required>
-                    <label for="NIC">NIC number</label>
-                        <input type="text" id="NIC" name="NIC" placeholder="eg: 200229001015 or 712441524V" pattern="(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})" required>
+                    <!-- <label for="NIC">NIC number</label>
+                        <input type="text" id="NIC" name="NIC" placeholder="eg: 200229001015 or 712441524V" pattern="(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})" required> -->
                     <label for="male">Gender</label>
                         <div>
                             <label for="male">Male</label>

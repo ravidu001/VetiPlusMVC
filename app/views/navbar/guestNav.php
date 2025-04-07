@@ -16,7 +16,7 @@
 
 <nav class="navBar">
 
-    <img src="<?= ROOT ?>/assets/images/common/logo-nobg.png" alt="VetiPlus logo" id="navBar-logo">
+    <img src="<?= ROOT ?>/assets/images/common/logo.png" alt="VetiPlus logo" id="navBar-logo">
 
     <div class="links">
         <a href="<?= ROOT ?>/guestUser"
@@ -40,7 +40,7 @@
             <label for="contactIcon" class="collapsable">Contact Us</label>
         </a>
     </div>
-    <a href="<?= ROOT . '/login' ?>" class="loginBtn">
+    <a href="<?= ROOT.'/login' ?>" class="loginBtn">
         <i class="bx bxs-user-circle bx-sm" id="loginIcon"></i>
         <label for="loginIcon">Login</label>
     </a>

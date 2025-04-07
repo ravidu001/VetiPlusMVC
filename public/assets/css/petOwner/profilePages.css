@@ -25,6 +25,18 @@
     gap: 10px;
 }
 
+.previewImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid var;
+
+    grid-column: span 2;
+    margin: auto;
+
+    display: none;
+}
+
 .profileDetailsEditForm {
     display: grid;
     grid-template-columns: 0.7fr 1fr 0.5fr;
