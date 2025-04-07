@@ -23,9 +23,9 @@
         </div>
 
         
-            <?php
-                $startTime = new DateTime($sessionsDetails[0]['session']->startTime);
-                $endTime = new DateTime($sessionsDetails[0]['session']->endTime);
+        <?php
+            $startTime = new DateTime($sessionsDetails[0]['session']->startTime);
+            $endTime = new DateTime($sessionsDetails[0]['session']->endTime);
         ?>
         
 
