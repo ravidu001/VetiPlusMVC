@@ -131,7 +131,7 @@ function filterCards(data, filters, containerSelector) {
 
             // Handle text filtering
             return String(item[key]).toLowerCase().includes(value.toLowerCase());
-        }) && (
+            }) && (
             // Check if the date falls within the range
             (!filters.startDate || new Date(item.date) >= filters.startDate) &&
             (!filters.endDate || new Date(item.date) <= filters.endDate)

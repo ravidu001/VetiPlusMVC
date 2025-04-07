@@ -29,9 +29,9 @@ class PO_register extends Controller {
         $sanitized = array_map('sanitizeInput', $_POST);
         
         $fullName = $sanitized['fullName']; 
-        $DOB = $sanitized['DOB'];
         $contactNumber = $sanitized['contactNumber'];
-        $NIC = $sanitized['NIC'];
+        // $DOB = $sanitized['DOB'];
+        // $NIC = $sanitized['NIC'];
         $gender = $sanitized['gender'];
     
         $houseNo = $sanitized['houseNo'];
@@ -42,18 +42,18 @@ class PO_register extends Controller {
         elseif (strlen($fullName) < 5) $this->addError("Name should be at least 5 characters.");
     
         $today = new DateTime("now");
-        $tenYearsAgo = (clone $today)->modify('-10 years')->format('Y-m-d');
-        $dobDate = DateTime::createFromFormat('Y-m-d', $DOB);
+        // $tenYearsAgo = (clone $today)->modify('-10 years')->format('Y-m-d');
+        // $dobDate = DateTime::createFromFormat('Y-m-d', $DOB);
     
-        if ($dobDate && $dobDate > new DateTime($tenYearsAgo)) $this->addError("Invalid date of birth: you should be 10 years at least.");
+        // if ($dobDate && $dobDate > new DateTime($tenYearsAgo)) $this->addError("Invalid date of birth: you should be 10 years at least.");
     
         $contactRegex = '/07\\d\\d\\d\\d\\d\\d\\d\\d/i';
         if(empty($contactNumber)) $this->addError("No contact number provided!");
         elseif (!preg_match($contactRegex, $contactNumber)) $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
     
-        $nicRegex = '/(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})/';
-        if(empty($NIC)) $this->addError("No NIC number provided!");
-        elseif (!preg_match($nicRegex, $NIC)) $this->addError("NIC number does not follow Sri Lankan NIC number pattern.");
+        // $nicRegex = '/(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})/';
+        // if(empty($NIC)) $this->addError("No NIC number provided!");
+        // elseif (!preg_match($nicRegex, $NIC)) $this->addError("NIC number does not follow Sri Lankan NIC number pattern.");
     
         if($gender != 'male' && $gender != 'female') $this->addError("Gender is not selected!");
     
