@@ -1,3 +1,47 @@
+function showNotification(message, type = 'success') {
+    // Remove any existing notifications
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.classList.add('notification', `notification-${type}`);
+    
+    // Set icon based on type
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️'
+    };
+
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${icons[type] || icons.success}</span>
+            <p>${message}</p>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+
+    // Add to body
+    document.body.appendChild(notification);
+
+    // Auto-remove after 5 seconds
+    const removeTimer = setTimeout(() => {
+        notification.classList.add('notification-exit');
+        setTimeout(() => notification.remove(), 500);
+    }, 5000);
+
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        clearTimeout(removeTimer);
+        notification.classList.add('notification-exit');
+        setTimeout(() => notification.remove(), 500);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Navigation Functionality
     const navButtons = document.querySelectorAll('.nav-button');
@@ -29,11 +73,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 profilePic.src = e.target.result;
             };
             reader.readAsDataURL(file);
+    
+            // Create FormData and append the file
+            const formData = new FormData();
+            formData.append('profilePicture', file); // Send the actual file
+    
+            fetch('/VetiPlusMVC/public/DoctorProfile/updateProfile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message || 'Profile picture updated successfully');
+                } else {
+                    showNotification(data.message || 'Failed to update profile picture', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('An error occurred while updating profile picture', 'error');
+            });
         }
     });
 
     removeProfilePicBtn.addEventListener('click', () => {
-        profilePic.src = 'default-profile.jpg';
+        const formData = new FormData();
+        formData.append('removeProfilePicture', 'true');
+    
+        fetch('/VetiPlusMVC/public/DoctorProfile/removeProfile', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                profilePic.src = '/VetiPlusMVC/public/assets/images/vetDoctor/defaultProfile.png';
+                showNotification(data.message || 'Profile picture reset to default successfully');
+            } else {
+                showNotification(data.message || 'Failed to reset profile picture', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('An error occurred while resetting profile picture', 'error');
+        });
     });
 
     // Edit Functionality
@@ -41,6 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const editBtn = document.getElementById(editBtnId);
         const form = document.getElementById(formId);
         const actions = document.getElementById(actionId);
+
+        if (!editBtn || !form || !actions) {
+            console.error(`Element(s) not found: ${editBtnId}, ${formId}, ${actionId}`);
+            return;
+        }
+
         const inputs = form.querySelectorAll('input, select');
 
         editBtn.addEventListener('click', () => {
@@ -50,42 +140,107 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset Button
         const resetBtn = actions.querySelector('[id$="ResetBtn"]');
         resetBtn.addEventListener('click', () => {
-            resetForm(inputs);
+            inputs.forEach(input => {
+                input.value = input.defaultValue;
+            });
             toggleEditMode(inputs, actions);
         });
 
         // Save Button
-        const saveBtn = actions.querySelector('[id$="SaveBtn"]');
+        const saveBtn = actions.querySelector('[id$="SaveBtn"]'); // Selects the element with an ID that ends with 'SaveBtn'.
+        // window.alert(saveBtn);
         saveBtn.addEventListener('click', () => {
-            saveForm(inputs);
-            toggleEditMode(inputs, actions);
+            const formData = new FormData(form);
+            
+            try {
+                if (saveBtn.id === 'personalSaveBtn') {
+                    personalSaveForm(formData);
+                } else if (saveBtn.id === 'professionalSaveBtn') {
+                    professionalSaveForm(formData);
+                } else if (saveBtn.id === 'passwordSaveBtn') {
+                    passwordSaveForm(formData);
+                } else {
+                    console.error('Unknown save button');
+                    return;
+                }
+                
+                toggleEditMode(inputs, actions);
+            } catch (error) {
+                console.error('Error saving form:', error);
+            }
         });
     }
 
     function toggleEditMode(inputs, actions) {
         const isEditing = actions.style.display !== 'none';
-        
-        actions.style.display = isEditing ? 'none' : 'flex';
         inputs.forEach(input => {
-            input.readOnly = isEditing;
+            // input.readOnly = isEditing;
             input.disabled = isEditing;
         });
+        actions.style.display = isEditing ? 'none' : 'block';
     }
 
-    function resetForm(inputs) {
-        inputs.forEach(input => {
-            input.value = input.defaultValue;
+    function personalSaveForm(formData) {
+        fetch('/VetiPlusMVC/public/DoctorProfile/updatePersonal', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification(data.message || 'Profile updated successfully');
+            } else {
+                showNotification(data.message || 'Failed to update profile', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('An error occurred while updating profile', 'error');
+            console.error('Error:', error);
+        });
+    }
+    
+    // Do similar modifications for professionalSaveForm and passwordSaveForm
+    function professionalSaveForm(formData) {
+        fetch('/VetiPlusMVC/public/DoctorProfile/updateProfessional', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification(data.message || 'Professional details updated successfully');
+            } else {
+                showNotification(data.message || 'Failed to update professional details', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('An error occurred while updating professional details', 'error');
+            console.error('Error:', error);
+        });
+    }
+    
+    function passwordSaveForm(formData) {
+        fetch('/VetiPlusMVC/public/DoctorProfile/updatePassword', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification(data.message || 'Password updated successfully');
+            } else {
+                showNotification(data.message || 'Failed to update password', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('An error occurred while updating password', 'error');
+            console.error('Error:', error);
         });
     }
 
-    function saveForm(inputs) {
-        // Logic to save the form data (e.g., send to server)
-        alert('Changes saved successfully!');
-    }
-
-    // Setup edit functionality for personal and professional sections
+    // Initialize Edit Sections
     setupEditSection('personalEditBtn', 'personalInfoForm', 'personalEditActions');
     setupEditSection('professionalEditBtn', 'professionalInfoForm', 'professionalEditActions');
     setupEditSection('passwordEditBtn', 'passwordChangeForm', 'passwordEditActions');
-    setupEditSection('settingsEditBtn', 'accountSettingsForm', 'settingsEditActions');
+    // setupEditSection('settingsEditBtn', 'accountSettingsForm', 'settingsEditActions');
 });

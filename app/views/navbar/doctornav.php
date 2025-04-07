@@ -155,7 +155,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li class="nav-link" style="display:block">
                 <a href="#" class="Profile-link">
                     <div class="profile">
-                        <img src='<?= ROOT ?>/assets/images/common/defaultProfile.png' alt='profile pictu'>
+                        <?php $profilePicture = isset($_SESSION['profilePicture']) ? htmlspecialchars($_SESSION['profilePicture'], ENT_QUOTES, 'UTF-8') : 'defaultProfile.png'; ?>
+                        <img src='<?= ROOT ?>/assets/images/vetDoctor/<?= $profilePicture ?>' alt='profile picture'>
                     </div>
                     <span class="text nav-text"> Profile</span>
                     <!-- <i class='bx bxs-down-arrow arrow first icon'></i> -->

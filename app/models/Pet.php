@@ -2,6 +2,25 @@
 
 class Pet {
     use Model;
+    
+    public function findPetDetailsByID($petID)
+    {
+        $this->order_colunm = 'petID';
+        return $this->first(['petID' => $petID ]);
+    }
+
+    public function checkUser($email)
+    {
+        // echo $email;
+        $this->order_column = 'petOwnerID';
+        // $result = $this->where(['email' => $email]);
+        return $this->where(['petOwnerID' => $email]); // what this return is an array of user
+        // if($result) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
+    }
 
     protected $table = 'pet';
     protected $allowedColumns = [
@@ -67,4 +86,6 @@ class Pet {
     }
 
 
+
 }
+
