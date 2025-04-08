@@ -28,7 +28,21 @@ class DoctorReview extends Controller {
             echo 'No reviews found for this doctor.';
         } else {
             // Proceed to access the reviews
-            print_r($reviews[0]->feedbackID); // This will work if there are reviews
+            //print_r($reviews[0]->feedbackID); // This will work if there are reviews
+
+            // Initialize variables for average rating calculation
+            $totalRating = 0;
+            $reviewCount = count($reviews);
+
+            // Check if there are any reviews
+            if ($reviewCount > 0) {
+                foreach ($reviews as $reviewItem) {
+                    $totalRating += $reviewItem->rating; // Assuming rating is a property of the review
+                }
+                $averageRating = $totalRating / $reviewCount; // Calculate average
+            } else {
+                $averageRating = 0; // No reviews, set average to 0
+            }
 
             // Initialize an array to hold consolidated session data
             $consolidatedReviews = [];
@@ -52,7 +66,7 @@ class DoctorReview extends Controller {
 
         // show($reviews);
 
-        $this->view('vetDoctor/doctorreview', ['reviews' => $consolidatedReviews]);
+        $this->view('vetDoctor/doctorreview', ['reviews' => $consolidatedReviews, 'averageRating' => $averageRating]);
     }
 
     public function sendReply() {

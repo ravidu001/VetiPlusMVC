@@ -25,7 +25,7 @@
             <h3>Woofderful Reviews Arrived!</h3>
             <p>3 Pet Parents Left Awesome Feedback</p>
             <div class="review-stats">
-                <span>⭐ 4.8/5 Average Rating</span>
+                <span>⭐ <?= $averageRating ?>/5 Average Rating</span>
                 <span>🏆 Top Rated Vet Clinic</span>
             </div>
         </div>
