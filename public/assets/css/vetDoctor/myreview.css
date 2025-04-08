@@ -186,6 +186,15 @@ body, html {
     gap: 10px;
 }
 
+.star {
+    font-size: 1.5rem; /* Adjust size as needed */
+    color: var(--primary-color); /* Color for filled stars */
+}
+
+.star.empty {
+    color: #ccc; /* Color for empty stars */
+}
+
 .btn {
     padding: 10px 15px;
     border: none;

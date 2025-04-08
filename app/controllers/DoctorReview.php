@@ -50,7 +50,7 @@ class DoctorReview extends Controller {
             }
         }
 
-        show($reviews);
+        // show($reviews);
 
         $this->view('vetDoctor/doctorreview', ['reviews' => $consolidatedReviews]);
     }

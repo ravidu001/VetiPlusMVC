@@ -181,7 +181,19 @@ function openDetailsModal(petOwnerID, formattedDate, rating, comment, appointmen
     // Populate the modal with the relevant review details
     document.querySelector('.review-detail-value[data-label="reviewer"]').textContent = petOwnerID;
     document.querySelector('.review-detail-value[data-label="date"]').textContent = formattedDate;
-    document.querySelector('.review-detail-value[data-label="rating"]').innerHTML = `<span style="color: #ffc107;">★★★★★</span> (${rating}/5)`;
+
+    // Generate star rating display
+    const ratingContainer = document.querySelector('.review-detail-value[data-label="rating"]');
+    ratingContainer.innerHTML = ''; // Clear previous content
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            ratingContainer.innerHTML += '<span class="star filled">★</span>'; // Filled star
+        } else {
+            ratingContainer.innerHTML += '<span class="star empty">☆</span>'; // Empty star
+        }
+    }
+    ratingContainer.innerHTML += ` (${rating}/5)`; // Append the rating text
+
     document.querySelector('.review-detail-value[data-label="content"]').textContent = comment;
     document.querySelector('.review-detail-value[data-label="appointmentID"]').textContent = `#${appointmentID}`;
     

@@ -66,7 +66,17 @@
                             <span class="review-date"><?= $formattedDate ?></span>
                         </div>
                         <div class="review-rating">
-                            ★★★★★ (<?= $review['reviewData']->rating ?>/5)
+                            <?php 
+                                $rating = $review['reviewData']->rating; // Assuming rating is out of 5
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $rating) {
+                                        echo '<span class="star filled">★</span>'; // Filled star
+                                    } else {
+                                        echo '<span class="star empty">☆</span>'; // Empty star
+                                    }
+                                }
+                            ?>
+                            <span>(<?= $rating ?>/5)</span>
                         </div>
                         <p class="review-content"><?= $review['reviewData']->comment ?></p>
                         <small>Appointment #<?= $review['reviewData']->appointmentID ?></small>
