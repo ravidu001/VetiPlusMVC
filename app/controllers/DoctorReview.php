@@ -33,16 +33,25 @@ class DoctorReview extends Controller {
             // Initialize variables for average rating calculation
             $totalRating = 0;
             $reviewCount = count($reviews);
+            $unreadCount = 0; // Initialize unread count
 
             // Check if there are any reviews
             if ($reviewCount > 0) {
                 foreach ($reviews as $reviewItem) {
                     $totalRating += $reviewItem->rating; // Assuming rating is a property of the review
+                    if ($reviewItem->status === 0) {
+                        $unreadCount++; // Count unread reviews
+                    }
                 }
                 $averageRating = $totalRating / $reviewCount; // Calculate average
             } else {
                 $averageRating = 0; // No reviews, set average to 0
             }
+
+            // Fetch doctor's name (assuming you have a method to get it)
+            $doctor = new DoctorModel(); // Assuming you have a Doctor model
+            $doctorData = $doctor->find($doctorId); // Fetch doctor data
+            $doctorName = $doctorData->fullName; // Assuming fullName is a property
 
             // Initialize an array to hold consolidated session data
             $consolidatedReviews = [];
@@ -66,7 +75,11 @@ class DoctorReview extends Controller {
 
         // show($reviews);
 
-        $this->view('vetDoctor/doctorreview', ['reviews' => $consolidatedReviews, 'averageRating' => $averageRating]);
+        $this->view('vetDoctor/doctorreview', 
+            ['reviews' => $consolidatedReviews, 
+            'averageRating' => $averageRating, 
+            'unreadCount' => $unreadCount, 
+            'doctorName' => $doctorName]);
     }
 
     public function sendReply() {
