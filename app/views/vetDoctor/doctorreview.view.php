@@ -56,51 +56,52 @@
                 </div>
             </div>
 
-            <div class="reviews-grid">
-                <!-- Previous review cards -->
-                <div class="review-card">
+            <?php foreach ($reviews as $review): ?>
+                <div class="review-card" style="margin-bottom: 15px;">
                     <div class="review-details">
                         <div class="review-header">
-                            <span class="review-author">Kasun Perera</span>
-                            <span class="review-date">17/11/2024</span>
+                            <span class="review-author"><?= $review['petOwner']->fullName ?></span>
+                            <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
+                            <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
+                            <span class="review-date"><?= $formattedDate ?></span>
                         </div>
                         <div class="review-rating">
-                            ★★★★★ (5/5)
+                            ★★★★★ (<?= $review['reviewData']->rating ?>/5)
                         </div>
-                        <p class="review-content">Great service! My pet received excellent care.</p>
-                        <small>Appointment #7</small>
+                        <p class="review-content"><?= $review['reviewData']->comment ?></p>
+                        <small>Appointment #<?= $review['reviewData']->appointmentID ?></small>
                     </div>
                     <div class="review-actions">
-                        <button class="btn btn-reply" onclick="openReplyModal()">Reply</button>
-                        <button class="btn btn-details" onclick="openDetailsModal()">View Details</button>
+                        <?php if ($review['reviewData']->status): ?>
+                            <!-- <span class="review-responded">Replied</span> -->
+                            <button class="btn btn-details" 
+                                    onclick="openDetailsModal(
+                                    '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
+                                    '<?= htmlspecialchars($formattedDate) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->respond) ?>'
+                                )">
+                                View Details
+                            </button>
+                        <?php else: ?>
+                        <button class="btn btn-reply" onclick="openReplyModal('<?= htmlspecialchars($review['reviewData']->feedbackID) ?>')">Reply</button>
+                        <button class="btn btn-details" 
+                                onclick="openDetailsModal(
+                                    '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
+                                    '<?= htmlspecialchars($formattedDate) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
+                                    '<?= htmlspecialchars($review['reviewData']->respond) ?>'
+                                )">
+                            View Details
+                        </button>
+                        <?php endif; ?>
                     </div>
                 </div>
-            
-
-           
-                <!-- Previous review cards -->
-                <div class="review-card">
-                    <div class="review-details">
-                        <div class="review-header">
-                            <span class="review-author">Saman Perera</span>
-                            <span class="review-date">15/11/2024</span>
-                        </div>
-                        <div class="review-rating">
-                            ★★★★★ (5/5)
-                        </div>
-                        <p class="review-content">
-                            Great service! My pet received excellent care. 
-                            Great service! My pet received excellent care. 
-                            Great service! My pet received excellent care. 
-                        </p>
-                        <small>Appointment #6</small>
-                    </div>
-                    <div class="review-actions">
-                        <button class="btn btn-reply" onclick="openReplyModal()">Reply</button>
-                        <button class="btn btn-details" onclick="openDetailsModal()">View Details</button>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
         
     <!-- Reply Modal -->
@@ -113,6 +114,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="feedbackID" /> <!-- Hidden input for feedbackID -->
                 <textarea 
                     id="replyTextarea" 
                     class="reply-textarea" 
@@ -145,25 +147,27 @@
             <div class="modal-body">
                 <div class="review-detail-item">
                     <span class="review-detail-label">Reviewer</span>
-                    <span class="review-detail-value">Kasun Perera</span>
+                    <span class="review-detail-value" data-label="reviewer"></span>
                 </div>
                 <div class="review-detail-item">
                     <span class="review-detail-label">Date</span>
-                    <span class="review-detail-value">17/11/2024</span>
+                    <span class="review-detail-value" data-label="date"></span>
                 </div>
                 <div class="review-detail-item">
                     <span class="review-detail-label">Rating</span>
-                    <span class="review-detail-value">
-                        <span style="color: #ffc107;">★★★★★</span> (5/5)
-                    </span>
+                    <span class="review-detail-value" data-label="rating"></span>
                 </div>
                 <div class="review-detail-item">
                     <span class="review-detail-label">Content</span>
-                    <span class="review-detail-value">Great service! My pet received excellent care.</span>
+                    <span class="review-detail-value" data-label="content"></span>
                 </div>
                 <div class="review-detail-item">
                     <span class="review-detail-label">Appointment ID</span>
-                    <span class="review-detail-value">#7</span>
+                    <span class="review-detail-value" data-label="appointmentID"></span>
+                </div>
+                <div class="review-detail-item">
+                    <span class="review-detail-label">Response</span>
+                    <span class="review-detail-value" data-label="response"></span>
                 </div>
             </div>
             <div class="modal-footer">

@@ -124,10 +124,11 @@ function closeModal(modalId) {
 }
 
 // Open reply modal function
-function openReplyModal() {
+function openReplyModal(feedbackID) {
     document.getElementById('replyTextarea').value = ''; // Clear previous content
     document.getElementById('charCount').textContent = '0 / 500'; // Reset character count
-    
+    document.getElementById('feedbackID').value = feedbackID; // Set the feedbackID
+
     const modal = document.getElementById('replyModal');
     modal.style.display = 'flex';
     setTimeout(() => {
@@ -135,8 +136,59 @@ function openReplyModal() {
     }, 10); // Allow time for display to take effect
 }
 
+// Send reply function
+function sendReply() {
+    const replyTextarea = document.getElementById('replyTextarea');
+    const replyContent = replyTextarea.value.trim();
+    const feedbackID = document.getElementById('feedbackID').value; // Get the feedbackID
+
+    if (replyContent) {
+        // Logic to send the reply (e.g., AJAX call to the server)
+        fetch('/VetiPlusMVC/public/DoctorReview/sendReply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                feedbackID: feedbackID,
+                replyContent: replyContent
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Reply sent successfully!');
+                closeModal('replyModal');
+                replyTextarea.value = ''; // Clear the textarea
+                document.getElementById('charCount').textContent = '0 / 500'; // Reset character count
+                
+                // Refresh the page
+                location.reload();
+            } else {
+                alert('Failed to send reply: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.log('Error sending reply: ' + error);
+        });
+    } else {
+        alert('Please write a reply before sending.');
+    }
+}
+
 // Open details modal function
-function openDetailsModal() {
+function openDetailsModal(petOwnerID, formattedDate, rating, comment, appointmentID, response) {
+    // Populate the modal with the relevant review details
+    document.querySelector('.review-detail-value[data-label="reviewer"]').textContent = petOwnerID;
+    document.querySelector('.review-detail-value[data-label="date"]').textContent = formattedDate;
+    document.querySelector('.review-detail-value[data-label="rating"]').innerHTML = `<span style="color: #ffc107;">★★★★★</span> (${rating}/5)`;
+    document.querySelector('.review-detail-value[data-label="content"]').textContent = comment;
+    document.querySelector('.review-detail-value[data-label="appointmentID"]').textContent = `#${appointmentID}`;
+    
+    const responseElement = document.querySelector('.review-detail-value[data-label="response"]');
+    responseElement.textContent = response ? response : 'No response yet';
+
+    // Show the modal
     const modal = document.getElementById('detailsModal');
     modal.style.display = 'flex';
     setTimeout(() => {
