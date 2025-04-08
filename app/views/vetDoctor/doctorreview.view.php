@@ -43,75 +43,79 @@
             <div class="reviews-header">
                 <h3 class="reviews-title">My Reviews</h3>
                 <div class="filter-section">
-                    <select class="filter-select">
-                        <option>Sort by Date</option>
-                        <option>Highest Rating</option>
-                        <option>Lowest Rating</option>
-                    </select>
-                    <select class="filter-select">
-                        <option>All Reviews</option>
-                        <option>Unread</option>
-                        <option>Replied</option>
+                    <div class="filter-section">
+                        <select class="filter-select" id="sortSelect">
+                            <option value="date">Sort by Date</option>
+                            <option value="highestRating">Highest Rating</option>
+                            <option value="lowestRating">Lowest Rating</option>
+                        </select>
+                    </div>
+                    <select class="filter-select" id="statusSelect">
+                        <option value="all">All Reviews</option>
+                        <option value="unread">Unread</option>
+                        <option value="replied">Replied</option>
                     </select>
                 </div>
             </div>
 
-            <?php foreach ($reviews as $review): ?>
-                <div class="review-card" style="margin-bottom: 15px;">
-                    <div class="review-details">
-                        <div class="review-header">
-                            <span class="review-author"><?= $review['petOwner']->fullName ?></span>
-                            <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
-                            <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
-                            <span class="review-date"><?= $formattedDate ?></span>
-                        </div>
-                        <div class="review-rating">
-                            <?php 
-                                $rating = $review['reviewData']->rating; // Assuming rating is out of 5
-                                for ($i = 1; $i <= 5; $i++) {
-                                    if ($i <= $rating) {
-                                        echo '<span class="star filled">★</span>'; // Filled star
-                                    } else {
-                                        echo '<span class="star empty">☆</span>'; // Empty star
+            <div class="review-fullcard">
+                <?php foreach ($reviews as $review): ?>
+                    <div class="review-card" style="margin-bottom: 15px;">
+                        <div class="review-details">
+                            <div class="review-header">
+                                <span class="review-author"><?= $review['petOwner']->fullName ?></span>
+                                <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
+                                <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
+                                <span class="review-date"><?= $formattedDate ?></span>
+                            </div>
+                            <div class="review-rating">
+                                <?php 
+                                    $rating = $review['reviewData']->rating; // Assuming rating is out of 5
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        if ($i <= $rating) {
+                                            echo '<span class="star filled">★</span>'; // Filled star
+                                        } else {
+                                            echo '<span class="star empty">☆</span>'; // Empty star
+                                        }
                                     }
-                                }
-                            ?>
-                            <span>(<?= $rating ?>/5)</span>
+                                ?>
+                                <span>(<?= $rating ?>/5)</span>
+                            </div>
+                            <p class="review-content"><?= $review['reviewData']->comment ?></p>
+                            <small>Appointment #<?= $review['reviewData']->appointmentID ?></small>
                         </div>
-                        <p class="review-content"><?= $review['reviewData']->comment ?></p>
-                        <small>Appointment #<?= $review['reviewData']->appointmentID ?></small>
-                    </div>
-                    <div class="review-actions">
-                        <?php if ($review['reviewData']->status): ?>
-                            <!-- <span class="review-responded">Replied</span> -->
+                        <div class="review-actions">
+                            <?php if ($review['reviewData']->status): ?>
+                                <!-- <span class="review-responded">Replied</span> -->
+                                <button class="btn btn-details" 
+                                        onclick="openDetailsModal(
+                                        '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
+                                        '<?= htmlspecialchars($formattedDate) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->respond) ?>'
+                                    )">
+                                    View Details
+                                </button>
+                            <?php else: ?>
+                            <button class="btn btn-reply" onclick="openReplyModal('<?= htmlspecialchars($review['reviewData']->feedbackID) ?>')">Reply</button>
                             <button class="btn btn-details" 
                                     onclick="openDetailsModal(
-                                    '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
-                                    '<?= htmlspecialchars($formattedDate) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->respond) ?>'
-                                )">
+                                        '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
+                                        '<?= htmlspecialchars($formattedDate) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
+                                        '<?= htmlspecialchars($review['reviewData']->respond) ?>'
+                                    )">
                                 View Details
                             </button>
-                        <?php else: ?>
-                        <button class="btn btn-reply" onclick="openReplyModal('<?= htmlspecialchars($review['reviewData']->feedbackID) ?>')">Reply</button>
-                        <button class="btn btn-details" 
-                                onclick="openDetailsModal(
-                                    '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
-                                    '<?= htmlspecialchars($formattedDate) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
-                                    '<?= htmlspecialchars($review['reviewData']->respond) ?>'
-                                )">
-                            View Details
-                        </button>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
         
     <!-- Reply Modal -->
@@ -188,6 +192,9 @@
         </div>
     </div>
     </div>
+    <script>
+        const reviews = <?= json_encode($reviews) ?>; // Pass PHP reviews to JavaScript
+    </script>
     <script src="<?= ROOT ?>/assets/js/vetDoctor/myreview.js"></script>
 </body>
 </html>
