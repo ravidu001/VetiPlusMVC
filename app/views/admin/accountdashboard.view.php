@@ -39,24 +39,24 @@
 
             <div class="search-section">
                 <div class="search-card">
-                    <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/petuser" method="post">
-                        <input type="text" name="user_id" placeholder="Search User ID">
+                    <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/petuserselect"method="GET">
+                        <input type="email" id="email" name="email" placeholder="Search User ID">
                         <input type="password" name="admin_password" placeholder="Admin Password">
-                        <button type="submit">Search Users</button>
+                        <button name="submit" type="submit">Search Users</button>
                     </form>
                 </div>
                 <div class="search-card">
-                    <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/doctor" method="post">
-                        <input type="text" name="doctor_id" placeholder="Search Doctor ID">
+                    <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/doctorselect" method="GET">
+                        <input type="email" id="email" name="email" placeholder="Search Doctor ID">
                         <input type="password" name="admin_password" placeholder="Admin Password">
-                        <button type="submit">Search Doctors</button>
+                        <button  name="submit"  type="submit">Search Doctors</button>
                     </form>
                 </div>
                 <div class="search-card">
-                    <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/pet" method="post">
-                        <input type="text" name="pet_id" placeholder="Search Pet ID">
+                    <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/petselect" method="GET">
+                        <input type="email" id="email" name="email" placeholder="Search Pet ID">
                         <input type="password" name="admin_password" placeholder="Admin Password">
-                        <button type="submit">Search Pets</button>
+                        <button  name="submit"  type="submit">Search Pets</button>
                     </form>
                 </div>
             </div>

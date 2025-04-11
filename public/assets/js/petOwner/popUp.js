@@ -1,5 +1,6 @@
 // ***********************************************************
 // this JS file is only to be included in view files that may need to display a popup message.
+// <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
 // ***********************************************************
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -14,7 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <h2 class="popUpTitle"></h2>
             <img src="" alt="popUpIcon" class="popUpIcon">
             <p class="popUpMsg"></p>
-            <button class="close-popup-button">Close</button>
+            <div class="popup-buttons">
+                <button class="confirm-popup popup-button">Confirm</button>
+                <button class="close-popup popup-button">Close</button>
+            </div>
         </div>
     `;
     document.body.insertAdjacentHTML('afterbegin', popupHTML);
@@ -42,8 +46,8 @@ function displayPopUp(queryObject) {
         myPopup.style.opacity = '1';
     }, 10);
 
-    if (queryObject.nextPage) {
-        document.querySelector('.close-popup-button').style.display = 'none';
+    if (!queryObject.askConfirm) {
+        document.querySelector('.confirm-popup').style.display = 'none';
 
         setTimeout(() => {
             myPopup.style.transform = 'translate(-50%, -100px)';
@@ -53,10 +57,22 @@ function displayPopUp(queryObject) {
         setTimeout(() => {
             window.location.href = queryObject.nextPage;
         }, 6000);
-
     }
 
-    document.querySelector('.close-popup-button').addEventListener('click', function() {
+    document.querySelector('.confirm-popup').addEventListener('click', function() {
+        myPopup.style.transform = 'translate(-50%, -100px)';
+        myPopup.style.opacity = '0';
+
+        setTimeout(() => {
+            myPopup.style.display = 'none';
+            document.body.classList.remove('popup-active');
+
+            if (queryObject.confirmPath)
+                window.location.href = queryObject.confirmPath;
+            
+        }, 500);
+    });
+    document.querySelector('.close-popup').addEventListener('click', function() {
         myPopup.style.transform = 'translate(-50%, -100px)';
         myPopup.style.opacity = '0';
 

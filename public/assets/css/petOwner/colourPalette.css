@@ -67,8 +67,6 @@ button {
 }
 button:hover {
     background-color: var(--button-hover-color);
-    transition: 0.3s;
-    cursor: pointer;
 }
 
 /* --nav-bg-color: #6a0dad;               for sidebars and navbars bg */

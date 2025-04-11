@@ -7,6 +7,7 @@
                 <li><a href="<?= ROOT . '/guestServices' ?>">Our Services</a></li>
                 <li><a href="<?= ROOT . '/guestAboutUs' ?>">About Us</a></li>
                 <li><a href="<?= ROOT . '/guestContactUs' ?>">Contact Us</a></li>
+                <li><a href="<?= ROOT . '/login' ?>">Login</a></li>
             </ul>
         </div>
         <div>

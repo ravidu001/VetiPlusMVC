@@ -7,14 +7,37 @@ class SalonTimeSlots {
     protected $table = 'salonsession';
 
     // Add a method to insert a new session
-    public function addSession($data) {
+    public function addSession($data) 
+    {
         return $this->insert($data);
     }
 
+    //Find slots using the salonID and date
+    public function fetchUpcomingAppointments($salonID, $today, $status)
+    {
+        $this->order_column = 'openday';
+        return $this->where(['openday' => $today, 'salonID' => $salonID, 'status' => $status]);
+    }
+
+    //Find slots using the salonID and date
+    public function slotsByDateAndSalon($salonID, $today)
+    {
+        $this->order_column = 'openday';
+        return $this->where(['openday' => $today, 'salonID' => $salonID]);
+    }
+
+
     // Find slots by date
-    public function findSlotsbyDate($openday) {
+    public function findSlotsbyDate($openday) 
+    {
         $this->order_column = 'openday';
         return $this->where(['openday' => $openday]);
+    }
+
+    // Find slots by date and staus
+    public function findSlotsbyDateAndStatus($openday, $status) {
+        $this->order_column = 'openday';
+        return $this->where(['openday' => $openday, 'status' => $status]);
     }
 
     // Find slots by ID
@@ -31,7 +54,8 @@ class SalonTimeSlots {
     }
 
     // Update slot status (available <-> blocked)
-    public function updateSlotStatus($salSessionID, $newStatus) {
+    public function updateSlotStatus($salSessionID, $newStatus) 
+    {
         return $this->update($salSessionID, ['status' => $newStatus], 'salSessionID');
     }
 

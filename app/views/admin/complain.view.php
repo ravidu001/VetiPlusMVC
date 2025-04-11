@@ -39,7 +39,7 @@
                   <h3>Date</h3>
                   <p><?= htmlspecialchars($complaint->dateTime) ?></p>
                 </div>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist" class="action-btn">View Details</a>
+                <a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>"  class="action-btn">View Details</a> 
               </div>
             </div>
           <?php endforeach; ?>

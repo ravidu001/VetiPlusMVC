@@ -10,18 +10,18 @@ class PetOwner {
         ,'lastLogin'
     ];
     
-    public $petOwnerID;
-    public $petOwnerDetails;
-
     public function __construct() {
         $this->order_column = 'petOwnerID ';  // Overriding order_column here
+    }
 
-        if (isset($_SESSION['petOwnerID'])) {
-            $this->petOwnerID = $_SESSION['petOwnerID'];
-
-        // } else {
-        //     redirect('Login');
-        }
+    public $petOwnerID;
+    /**
+     * jm - Sets the value of petOwner ID from session storage.
+     * Controller itself should make sure ID is set in session.
+     * Call this function whenever petOwner or pet object created is created by me
+     */
+    public function setPetOwnerID () {
+        isset($_SESSION['petOwnerID']) && $this->petOwnerID = $_SESSION['petOwnerID'];
     }
 
     /**
@@ -57,6 +57,19 @@ class PetOwner {
     public function uploadProfilePicture ($data) {
         $uploadSuccess = $this->update($this->petOwnerID, $data);
         return empty($uploadSuccess) ? true : false;
+    }
+
+    public function checkUser($email)
+    {
+        // echo $email;
+        $this->order_column = 'petOwnerID';
+        // $result = $this->where(['email' => $email]);
+        return $this->where(['petOwnerID' => $email]); // what this return is an array of user
+        // if($result) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
     }
 
 }

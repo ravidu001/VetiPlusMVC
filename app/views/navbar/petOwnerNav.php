@@ -19,16 +19,16 @@
         </a>
 
         <a href="#" id="appointmentIcon"
-        class="<?= ($current_pg == 'PO_vetAppointments' || $current_pg == 'PO_salonAppointments') ? 'active' : ''; ?>">
+        class="<?= ($current_pg == 'PO_apptDashboard_Vet' || $current_pg == 'PO_apptDashboard_Salon') ? 'active' : ''; ?>">
             <i class="bx bxs-calendar-event bx-sm" ></i>
             <label for="appointmentIcon" class="collapsable">Appointments</label>
         </a>
         <div id="appointmentTypes">
-            <a href="<?= ROOT ?>/PO_vetAppointments">
+            <a href="<?= ROOT ?>/PO_apptDashboard_Vet">
                 <i class="bx bxs-injection bx-sm" id="vetAppointmentIcon"></i>
                 <label for="vetAppointmentIcon" class="collapsable">Vet Appointments</label>
             </a>
-            <a href="<?= ROOT ?>/PO_salonAppointments">
+            <a href="<?= ROOT ?>/PO_apptDashboard_Salon">
                 <i class="bx bxs-brush bx-sm" id="salonAppointmentIcon"></i>
                 <label for="salonAppointmentIcon" class="collapsable">Salon Appointments</label>
             </a>

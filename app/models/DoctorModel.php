@@ -37,5 +37,18 @@ class DoctorModel {
         $this->update($doctorID, $data, 'doctorID');
     }
 
+    public function checkUser($email)
+    {
+        // echo $email;
+        $this->order_column = 'doctorID';
+        // $result = $this->where(['email' => $email]);
+        return $this->where(['doctorID' => $email]); // what this return is an array of user
+        // if($result) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
+    }
+
 }
 
