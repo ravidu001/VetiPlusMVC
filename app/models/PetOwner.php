@@ -10,23 +10,22 @@ class PetOwner {
         ,'lastLogin'
     ];
     
-    public $petOwnerID;
-    public $petOwnerDetails;
-
     public function __construct() {
         $this->order_column = 'petOwnerID ';  // Overriding order_column here
+    }
 
-        if (isset($_SESSION['petOwnerID'])) {
-            $this->petOwnerID = $_SESSION['petOwnerID'];
-        } else if (isset($_SESSION['SALON_USER'])) {
-            // set petOwnerID and other stuff for salon ??
-        } else {
-            redirect('Login');
-        }
+    public $petOwnerID;
+    /**
+     * jm - Sets the value of petOwner ID from session storage.
+     * Controller itself should make sure ID is set in session.
+     * Call this function whenever petOwner or pet object created is created by me
+     */
+    public function setPetOwnerID () {
+        isset($_SESSION['petOwnerID']) && $this->petOwnerID = $_SESSION['petOwnerID'];
     }
 
     /**
-     * Get the petOwner's details from the database
+     * jm -  Get the petOwner's details from the database
      * @return array The user details.
     */
     public function getUserDetails () {
@@ -35,7 +34,7 @@ class PetOwner {
     }
 
     /**
-     * Register and insert the user details into database
+     * jm -  Register and insert the user details into database
      * @param array $data The petOwner's details to be inserted
      * @return bool  whether registration successful or not.
     */
@@ -45,10 +44,27 @@ class PetOwner {
         $registerSuccess = $this->insert($data);
         return empty($registerSuccess) ? true : false;
     }
-    
+   
+    /**
+     * jm - 'upload' petOwner's profile pic and update database
+     * @return bool Whether successful or not
+     */ 
     public function uploadProfilePicture ($data) {
         $uploadSuccess = $this->update($this->petOwnerID, $data);
         return empty($uploadSuccess) ? true : false;
+    }
+
+    public function checkUser($email)
+    {
+        // echo $email;
+        $this->order_column = 'petOwnerID';
+        // $result = $this->where(['email' => $email]);
+        return $this->where(['petOwnerID' => $email]); // what this return is an array of user
+        // if($result) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
     }
 
 }

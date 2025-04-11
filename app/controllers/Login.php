@@ -46,7 +46,8 @@ class Login extends Controller
                         switch ($registered->type) 
                         {
                             case 'Vet Doctor':
-                                header('Location: ../Doctor');
+                                $_SESSION['user_id'] = $registered->email;
+                                header('Location: ../DoctorRegistration');
                                 break;
                             case 'Pet Owner':
                                 $_SESSION['petOwnerID'] = $registered->email;
@@ -59,9 +60,11 @@ class Login extends Controller
                                 redirect('SalonRegister');
                                 break;
                             case 'Vet Assistant':
+                                $_SESSION['user_id'] = $registered->email;
                                 header('Location: ../Assistant');
                                 break;
                             case 'System Admin':
+                                $_SESSION['adminID'] = $registered->email;
                                 header('Location: ../Admin');
                                 break;
                             case 'Owner':
@@ -80,7 +83,8 @@ class Login extends Controller
                         switch ($registered->type)
                         {
                             case 'Vet Doctor':
-                                header('Location: ../Doctor.php');
+                                $_SESSION['user_id'] = $registered->email;
+                                header('Location: ../Doctor');
                                 break;
                             case 'Pet Owner':
                                 $_SESSION['petOwnerID'] = $registered->email;
@@ -194,9 +198,11 @@ class Login extends Controller
                                 header('Location: ../Salon');
                                 break;
                             case 'Vet Assistant':
+                                $_SESSION['user_id'] = $registered->email;
                                 header('Location: ../Assistant');
                                 break;
                             case 'System Admin':
+                                $_SESSION['adminID'] = $registered->email;
                                 header('Location: ../Admin');
                                 break;
                             case 'Owner':

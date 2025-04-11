@@ -1,20 +1,31 @@
+/* font: */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+*{
+    font-family: 'Poppins', sans-serif;  
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
-    background-image: linear-gradient(to top right, var(--background-color), var(--primary-color));
+    background-image: linear-gradient(to top right, var(--primary-color), var(--background-color), var(--primary-color));
+
+    display: flex;
+    flex-direction: column;
 }
 
 .formContainer {
-    border-radius: 20px;
-    padding: 2em;
-
-    width: 80vw;
-    margin: 3em auto;
+    border-radius: 30px;
+    width: 75vw;
+    margin: 1.6em auto;
 
     display: flex;
-    justify-content: center;
-    gap: 2rem;
 
     background-color: rgba(248, 249, 250, 0.15);
     backdrop-filter: blur(30px);
+    box-shadow: 0 2px 5px black;
+
+    min-height: 85vh;
 }
 
 .formContainer .logoPart {
@@ -23,6 +34,12 @@ body {
     justify-content: center;
     flex-direction: column;
 
+    /* background-color: var(--primary-color); */
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+
+    text-align: center;
+    padding: 2em;
     width: 40%;
     padding: 1em;
 }
@@ -45,14 +62,21 @@ body {
 form {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-}
-form fieldset {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    justify-content: space-evenly;
     gap: 5px;
 
-    border: 1px solid var(--shadow-color);
+    background-color: var(--background-color);
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+
+    width: 60%;
+    padding: 2em;
+}
+form fieldset, .noField {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6px;
+
     border-radius: 5px;
 
     padding: 15px;
@@ -62,14 +86,16 @@ form fieldset {
 }
 form fieldset legend {
     font-weight: bold;
+    padding: 0 5px;
 }
 form label {
     font-size: 1rem;
     font-weight: 500;
 }
-form input {
+form input{
     padding: 5px;
     font-size: 1rem;
+    width: 100%;
 
     background-color: var(--background-color);
     border-radius: 5px;
@@ -87,6 +113,47 @@ form input:user-invalid {
 form input[type=date]:invalid {
     color: grey;
 }
+.errorMsg {
+    color: red;
+}
+
+.selectOrOther {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.selectOrOther > * {
+    width: 100%;
+}
+.selectContainer {
+    display: flex;
+    position: relative;
+    /* width: 70%; */
+}
+.selectContainer > select {
+    border: 2px solid black;
+    /* appearance: none; */
+
+    padding: 5px;
+    font-size: 0.9rem;
+    background-color: var(--background-color);
+    border-radius: 5px;
+    width: 100%;
+
+}
+.species-breeds {
+    grid-column: 1 / span 2;
+    padding: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+.species-breeds > .selectOrOther{
+    width: 60%;
+}
+
 .formButtons {
     display: flex;
     justify-content: center;
@@ -98,4 +165,26 @@ form input[type=date]:invalid {
     font-size: 1.2em;
     border-radius: 10px;
     width: 10vw;
+}
+
+
+@media (width <= 1200px) {
+    :root {
+        font-size: 0.9rem;
+    }
+}
+@media (width <= 900px) {
+    :root {
+        font-size: 0.8rem;
+    }
+}
+@media (width <= 750px) {
+    :root {
+        font-size: 0.7rem;
+    }
+}
+@media (width <= 500px) {
+    :root {
+        font-size: 0.6rem;
+    }
 }

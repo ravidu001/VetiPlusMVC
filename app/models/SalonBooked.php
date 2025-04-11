@@ -18,6 +18,7 @@ class SalonBooked
         return $this->first(['salSessionID' => $salSessionID]);
     }
 
+
     // Find slots by salonsessionID
     public function getSlotDetailsByID($salSessionID) {
         $this->order_column = 'salSessionID';
@@ -55,4 +56,5 @@ class SalonBooked
     {
         return $this->update($groomingID, $data, 'groomingID');
     }
+
 }

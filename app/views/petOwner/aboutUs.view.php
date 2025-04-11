@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>About VetiPlus</title>
-        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo-nobg.png" type="image/png">
+        <title> About VetiPlus </title>
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
         <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
-        <div class="bodyContents"> 
+        <div class="bodyArea"> 
 
         <section class="aboutSections">
             <img src="<?= ROOT ?>/assets\images\guestUser\aboutUs/ourStory.png" alt="Our Story">

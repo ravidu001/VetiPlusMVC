@@ -28,79 +28,31 @@
             <!-- Feedback Card 1 -->
     
 
-<!-- Feedback Cards -->
+
 <div class="feedback-container">
-<?php foreach ($feedback as $feedback): ?>
-        <div class="feedback-card">
-            <img src="../../../public/assets/images/systemAdmin/user.png" class="user-avatar">
-            <h3 class="user-name"><?= htmlspecialchars($feedback->name, ENT_QUOTES, 'UTF-8') ?></h3>
-            <p class="user-feedback"><?= htmlspecialchars($feedback->comment, ENT_QUOTES, 'UTF-8') ?></p>
-            <div class="rating">
-                <?php for ($i = 0; $i < $feedback->rating; $i++): ?>
-                    <i class="bx bxs-star star filled"></i>
-                <?php endfor; ?>
-                <?php for ($i = 0; $i < 5 - $feedback->rating; $i++): ?>
-                    <i class="bx bx-star star"></i>
-                <?php endfor; ?>
+    <?php if (!empty($feedback)): ?>
+        <?php foreach ($feedback as $feedback_item): ?>
+            <div class="feedback-card">
+                <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" class="user-avatar" alt="profile picture">
+                <h3 class="user-name"><?= htmlspecialchars($feedback_item->name, ENT_QUOTES, 'UTF-8') ?></h3>
+                <p class="user-feedback"><?= htmlspecialchars($feedback_item->comment, ENT_QUOTES, 'UTF-8') ?></p>
+                <p class="user-name" style="color:black; font-size=14px;"><?= htmlspecialchars($feedback_item->contactNumber, ENT_QUOTES, 'UTF-8') ?></p>
+                
+                <div class="rating">
+                    <?php for ($i = 0; $i < $feedback_item->rating; $i++): ?>
+                        <i class="bx bxs-star star filled"></i>
+                    <?php endfor; ?>
+                    <?php for ($i = 0; $i < 5 - $feedback_item->rating; $i++): ?>
+                        <i class="bx bx-star star"></i>
+                    <?php endfor; ?>
+                </div>
             </div>
-        </div>
         <?php endforeach; ?>
-    </div>
-            <!-- <div class="feedback-card">
-                    <img src="../../../public/assets/images/common/logo.png " class="user-avatar">
-                    <h3 class="user-name">Ramesh Peshala</h3>
-                    <p class="user-feedback"><?= htmlspecialchars($feedback[0]->comment) ?></p>
-                    <div class="rating">
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bx-star star'></i>
-                    </div>
-                </div> -->
+    <?php else: ?>
+        <p>No feedback available.</p>
+    <?php endif; ?>
+</div>
 
-            <!-- Feedback Card 2 -->
-            <!-- <div class="feedback-card">
-                    <img src="../../assets/images/user.png"  class="user-avatar">
-                    <h3 class="user-name">Sarah Johnson</h3>
-                    <p class="user-feedback">Quick and reliable service. My pets always receive top-notch care and attention.</p>
-                    <div class="rating">
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                    </div>
-                </div> -->
-
-            <!-- Feedback Card 3 -->
-            <!-- <div class="feedback-card">
-                    <img src="../../assets/images/user.png"  class="user-avatar">
-                    <h3 class="user-name">Michael Lee</h3>
-                    <p class="user-feedback">Knowledgeable and caring staff. They always take the time to explain everything thoroughly.</p>
-                    <div class="rating">
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bx-star star'></i>
-                        <i class='bx bx-star star'></i>
-                    </div>
-                </div> -->
-
-            <!-- Feedback Card 4 -->
-            <!-- <div class="feedback-card">
-                    <img src="../../assets/images/user.png"  class="user-avatar">
-                    <h3 class="user-name">Emily Davis</h3>
-                    <p class="user-feedback">The best experience I've had with a vet! Highly recommend to all pet owners.</p>
-                    <div class="rating">
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                        <i class='bx bxs-star star filled'></i>
-                    </div>
-                </div> -->
-        <!-- </div> -->
         </div>
     </section>
 </body>

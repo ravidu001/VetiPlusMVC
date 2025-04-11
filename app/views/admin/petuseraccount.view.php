@@ -19,7 +19,7 @@
         <div class="profile-container">
             <div class="profile-header">
                 <img src="https://via.placeholder.com/200" alt="Profile" class="profile-image">
-                <h2>Ramesh Peshala</h2>
+                <h2><?= htmlspecialchars($admin->fullName ?? 'N/A') ?></h2>
                 <p>Pet Owner</p>
             </div>
 
@@ -27,37 +27,37 @@
                 <div class="profile-details">
                     <div class="detail-card">
                         <i class='bx bx-envelope'></i>
-                        <div class="info">
+                        <div class="info">   
                             <h4>Email</h4>
-                            <p>rameshpeshala@gmail.com</p>
+                            <p><?= htmlspecialchars($admin->petOwnerID ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-phone'></i>
                         <div class="info">
                             <h4>Phone</h4>
-                            <p>076 216 3506</p>
+                            <p><?= htmlspecialchars($admin->contactNumber ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-home'></i>
                         <div class="info">
                             <h4>Address</h4>
-                            <p>419, Gangasirigama, Thissamaharama</p>
+                            <p><?= htmlspecialchars($admin->city ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-id-card'></i>
                         <div class="info">
                             <h4>NIC</h4>
-                            <p>200212702901</p>
+                            <p><?= htmlspecialchars($admin->NIC ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-male-female'></i>
                         <div class="info">
                             <h4>Gender</h4>
-                            <p>Male</p>
+                            <p><?= htmlspecialchars($admin->gender ?? 'N/A') ?></p>
                         </div>
                     </div>
                 </div>

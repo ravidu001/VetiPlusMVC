@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>Pet Profile</title>
-        <link rel="icon" href="<?= ROOT ?>/assets/images/vetiplus-logo.png" type="image/png">
+        <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,10 +19,9 @@
 
     </head>
     <body>
-        <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
-        <div class="dashContent">
+        <div class="bodyArea">
 
             <section class="dashArea">
                 <h2>Pet Profile</h2>
