@@ -20,4 +20,10 @@ class SalonWeekdaySchedules
         return $this->where(['config_id' => $configID]);
     }
 
+    //find the first SLot by shedule_id
+    public function FindSlotByScheduleID($sheduleID)
+    {
+        $this->order_column = 'config_id';
+        return $this->first(['schedule_id' => $sheduleID]);
+    }
 }    
