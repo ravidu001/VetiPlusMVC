@@ -21,32 +21,49 @@
             <h2>Veterinary Session Details</h2>
         </div>
 
+        <?php
+            $startTime = new DateTime($sessionsDetails[0]['session']->startTime);
+            $endTime = new DateTime($sessionsDetails[0]['session']->endTime);
+        ?>
+        
+
         <div class="session-details">
             <div class="detail-item">
                 <div class="detail-label">Start Date and Time</div>
-                <div class="detail-value">2024-08-10, 15:00</div>
+                <div class="detail-value"><?= htmlspecialchars($sessionsDetails[0]['session']->selectedDate) ?>, <?= $startTime->format('H:i') ?></div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">End Date and Time</div>
-                <div class="detail-value">2024-08-10, 17:00</div>
+                <div class="detail-value"><?= htmlspecialchars($sessionsDetails[0]['session']->selectedDate) ?>, <?= $endTime->format('H:i') ?></div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">Address</div>
-                <div class="detail-value">147, Galthude, Panadura</div>
+                <div class="detail-value"><?= htmlspecialchars($sessionsDetails[0]['session']->clinicLocation) ?></div>
             </div>
         </div>
 
-        <div class="assistant-profile">
-            <div class="assistant-avatar">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Assistant">
-            </div>
-            <div class="assistant-info">
-                <h3>John Doe</h3>
-                <p>Veterinary Assistant | 3 Years Experience</p>
-                <div id="assistant-rating"></div>
-                <div>Hourly Rate: $50/hr</div>
-            </div>
+        <div class="detail-item" style="margin-top: 20px; margin-bottom: 10px;">
+            <div class="detail-label">Assistant Details</div>
         </div>
+        <?php if (!empty($sessionsDetails[0]['assistants'])): ?>
+            <?php foreach($sessionsDetails[0]['assistants'] as $assistant): ?>
+                <div class="assistant-profile">
+                    <div class="assistant-avatar">
+                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>" alt="Assistant">
+                    </div>
+                    <div class="assistant-info">
+                        <h3><?= htmlspecialchars($assistant->fullName) ?></h3>
+                        <p><?= htmlspecialchars($assistant->expertise) ?> | <?= htmlspecialchars($assistant->experience) ?> Years Experience</p>
+                        <div id="assistant-rating"></div>
+                        <div>Hourly Rate: $<?= htmlspecialchars($assistant->chargePerHour) ?>/hr</div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="assistant-profile">
+                <span>No Assistant Assigned</span>
+            </div>
+        <?php endif; ?>
 
         <div class="session-container">
         <div class="status-buttons">

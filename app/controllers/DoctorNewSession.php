@@ -8,6 +8,10 @@ class DoctorNewSession extends Controller {
     public function createSession() {
         $doctorID = $_SESSION['user_id'];
         $session = new DoctorSessionModel();
+
+        $doctorData = new DoctorModel();
+        $doctor = $doctorData->find($doctorID);
+        $duration = $doctor->timeSlot; // Get the time slot duration from the doctor data
     
         $selectedDate = $_POST['selectedDate'];
         $dateTime = DateTime::createFromFormat('D M d Y', $selectedDate);
@@ -17,12 +21,34 @@ class DoctorNewSession extends Controller {
         $startTime = new DateTime($_POST['startTime']);
         $endTime = new DateTime($_POST['endTime']);
         $formattedStartTime = $startTime->format('H:i:s'); // Format to 'HH:MM:SS'
-        $formattedEndTime = $endTime->format('H:i:s'); // Format to 'HH:MM:SS'
+        $formattedEndTime = $endTime->format('H:i:s'); // Format to 'HH:MM:SS' 
+
+        // Check if the start time is before the end time
+        if ($startTime >= $endTime) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Start time must be before end time'
+            ]);
+            exit;
+        }
+
+        // take the difference between start and end time in minutes
+        $interval = $startTime->diff($endTime);
+        $minutes = ($interval->h * 60) + $interval->i;
+        $noOfAppointments = floor($minutes / $duration); // Calculate the number of appointments
+        if ($noOfAppointments <= 0) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Invalid time slot'
+            ]);
+            exit;
+        }
     
         $data = [
             'selectedDate' => $formattedDate,
             'startTime' => $formattedStartTime,
             'endTime' => $formattedEndTime,
+            'noOfAppointments' => $noOfAppointments,
             'clinicLocation' => $_POST['clinicLocation'],
             'district' => $_POST['district'],
             'doctorID' => $doctorID,

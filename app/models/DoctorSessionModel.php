@@ -5,7 +5,7 @@ class DoctorSessionModel {
 
     protected $table = 'session';
 
-    protected $allowedColumns = ['sessionID', 'selectedDate', 'startTime', 'endTime', 'publishedTime', 'clinicLocation', 'district', 'assistantID', 'doctorID', 'note', 'completeStatus'];
+    protected $allowedColumns = ['sessionID', 'selectedDate', 'startTime', 'endTime','noOfAppointments', 'publishedTime', 'clinicLocation', 'district', 'assistantID', 'doctorID', 'note', 'completeStatus'];
 
     public function insertData($data) {
         $this->insert($data);
@@ -25,6 +25,15 @@ class DoctorSessionModel {
         $this->order_type = 'asc';
         $this->limit = 100;
         $result = $this->where(['doctorID' => $doctorID]);
+
+        return $result;
+    }
+
+    // this function is used to get the session details by sessionID
+    public function getsessionBySession($sessionID) {
+        $this->order_column = 'selectedDate';
+        $this->order_type = 'asc';
+        $result = $this->where(['sessionID' => $sessionID]);
 
         return $result;
     }

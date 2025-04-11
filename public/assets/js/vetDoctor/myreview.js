@@ -52,6 +52,99 @@
 //     // Call the function to check reviews
 //     checkReviewNotifications();
 // });
+
+// sorting and filtering functions
+document.addEventListener('DOMContentLoaded', () => {
+    const sortSelect = document.getElementById('sortSelect');
+    const statusSelect = document.getElementById('statusSelect');
+    const reviewsContainer = document.querySelector('.review-fullcard');
+
+    // Assuming 'reviews' is available in the scope
+    // const reviews = <?= json_encode($reviews) ?>; // Pass PHP reviews to JavaScript
+
+    // Function to filter reviews based on status
+    function filterReviews(reviews, status) {
+        if (status === 'all') {
+            return reviews; // Return all reviews
+        } else if (status === 'unread') {
+            return reviews.filter(review => review.reviewData.status === 0); // Filter unread reviews
+        } else if (status === 'replied') {
+            return reviews.filter(review => review.reviewData.status === 1); // Filter replied reviews
+        }
+    }
+
+    // Function to sort reviews
+    function sortReviews(reviews, criteria) {
+        return reviews.sort((a, b) => {
+            if (criteria === 'date') {
+                return new Date(b.reviewData.feedbackDateTime) - new Date(a.reviewData.feedbackDateTime);
+            } else if (criteria === 'highestRating') {
+                return b.reviewData.rating - a.reviewData.rating;
+            } else if (criteria === 'lowestRating') {
+                return a.reviewData.rating - b.reviewData.rating;
+            }
+        });
+    }
+
+    // Function to render reviews
+    function renderReviews(reviews) {
+        reviewsContainer.innerHTML = ''; // Clear existing reviews
+        reviews.forEach(review => {
+            const reviewCard = document.createElement('div');
+            reviewCard.className = 'review-card';
+            reviewCard.style.marginBottom = '15px'; // Add margin similar to PHP
+    
+            const reviewDate = new Date(review.reviewData.feedbackDateTime).toLocaleString('en-GB', { // Format date to match PHP
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+    
+            reviewCard.innerHTML = `
+                <div class="review-details">
+                    <div class="review-header">
+                        <span class="review-author">${review.petOwner.fullName}</span>
+                        <span class="review-date">${reviewDate}</span>
+                    </div>
+                    <div class="review-rating">
+                        ${'★'.repeat(review.reviewData.rating)}${'☆'.repeat(5 - review.reviewData.rating)} (${review.reviewData.rating}/5)
+                    </div>
+                    <p class="review-content">${review.reviewData.comment}</p>
+                    <small>Appointment #${review.reviewData.appointmentID}</small>
+                </div>
+                <div class="review-actions">
+                    ${review.reviewData.status ? `
+                        <button class="btn btn-details" onclick="openDetailsModal('${review.petOwner.fullName}', '${reviewDate}', '${review.reviewData.rating}', '${review.reviewData.comment}', '${review.reviewData.appointmentID}', '${review.reviewData.respond}')">View Details</button>
+                    ` : `
+                        <button class="btn btn-reply" onclick="openReplyModal('${review.reviewData.feedbackID}')">Reply</button>
+                        <button class="btn btn-details" onclick="openDetailsModal('${review.petOwner.fullName}', '${reviewDate}', '${review.reviewData.rating}', '${review.reviewData.comment}', '${review.reviewData.appointmentID}', '${review.reviewData.respond}')">View Details</button>
+                    `}
+                </div>
+            `;
+            reviewsContainer.appendChild(reviewCard);
+        });
+    }
+
+    // Event listener for status filtering
+    statusSelect.addEventListener('change', () => {
+        const selectedStatus = statusSelect.value;
+        const filteredReviews = filterReviews(reviews, selectedStatus);
+        renderReviews(filteredReviews);
+    });
+
+    // Event listener for sorting
+    sortSelect.addEventListener('change', () => {
+        const selectedValue = sortSelect.value;
+        const sortedReviews = sortReviews(reviews, selectedValue);
+        renderReviews(sortedReviews);
+    });
+
+    // Initial render of reviews
+    renderReviews(reviews); // Assuming 'reviews' is available in the scope
+});
     
 document.addEventListener('DOMContentLoaded', () => {
 const loadingOverlay = document.getElementById('loadingOverlay');
@@ -124,10 +217,11 @@ function closeModal(modalId) {
 }
 
 // Open reply modal function
-function openReplyModal() {
+function openReplyModal(feedbackID) {
     document.getElementById('replyTextarea').value = ''; // Clear previous content
     document.getElementById('charCount').textContent = '0 / 500'; // Reset character count
-    
+    document.getElementById('feedbackID').value = feedbackID; // Set the feedbackID
+
     const modal = document.getElementById('replyModal');
     modal.style.display = 'flex';
     setTimeout(() => {
@@ -135,8 +229,71 @@ function openReplyModal() {
     }, 10); // Allow time for display to take effect
 }
 
+// Send reply function
+function sendReply() {
+    const replyTextarea = document.getElementById('replyTextarea');
+    const replyContent = replyTextarea.value.trim();
+    const feedbackID = document.getElementById('feedbackID').value; // Get the feedbackID
+
+    if (replyContent) {
+        // Logic to send the reply (e.g., AJAX call to the server)
+        fetch('/VetiPlusMVC/public/DoctorReview/sendReply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                feedbackID: feedbackID,
+                replyContent: replyContent
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Reply sent successfully!');
+                closeModal('replyModal');
+                replyTextarea.value = ''; // Clear the textarea
+                document.getElementById('charCount').textContent = '0 / 500'; // Reset character count
+                
+                // Refresh the page
+                location.reload();
+            } else {
+                alert('Failed to send reply: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.log('Error sending reply: ' + error);
+        });
+    } else {
+        alert('Please write a reply before sending.');
+    }
+}
+
 // Open details modal function
-function openDetailsModal() {
+function openDetailsModal(petOwnerID, formattedDate, rating, comment, appointmentID, response) {
+    // Populate the modal with the relevant review details
+    document.querySelector('.review-detail-value[data-label="reviewer"]').textContent = petOwnerID;
+    document.querySelector('.review-detail-value[data-label="date"]').textContent = formattedDate;
+
+    // Generate star rating display
+    const ratingContainer = document.querySelector('.review-detail-value[data-label="rating"]');
+    ratingContainer.innerHTML = ''; // Clear previous content
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            ratingContainer.innerHTML += '<span class="star filled">★</span>'; // Filled star
+        } else {
+            ratingContainer.innerHTML += '<span class="star empty">☆</span>'; // Empty star
+        }
+    }
+    ratingContainer.innerHTML += ` (${rating}/5)`; // Append the rating text
+
+    document.querySelector('.review-detail-value[data-label="content"]').textContent = comment;
+    document.querySelector('.review-detail-value[data-label="appointmentID"]').textContent = `#${appointmentID}`;
+    
+    const responseElement = document.querySelector('.review-detail-value[data-label="response"]');
+    responseElement.textContent = response ? response : 'No response yet';
+
+    // Show the modal
     const modal = document.getElementById('detailsModal');
     modal.style.display = 'flex';
     setTimeout(() => {

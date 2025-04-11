@@ -88,8 +88,14 @@
                         </td>
                         <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
                         <td>10</td>
+                        <!-- withiout encode the url -->
+                        <!-- <td>
+                            <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= htmlspecialchars($data['session']->sessionID) ?>&assistantIDs=<?= implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID'))) ?>" class="view-btn">
+                                <i class='bx bx-right-arrow-circle'></i>
+                            </a>
+                        </td> -->
                         <td>
-                            <a href="<?= ROOT ?>/DoctorViewSession/session" class="view-btn">
+                            <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= urlencode($data['session']->sessionID) ?>&assistantIDs=<?= urlencode(implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID')))) ?>" class="view-btn">
                                 <i class='bx bx-right-arrow-circle'></i>
                             </a>
                         </td>
