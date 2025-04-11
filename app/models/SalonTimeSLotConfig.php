@@ -37,5 +37,12 @@ class SalonTImeSLotConfig
         return $this->where(['config_id' => $ConfigID,'salonID' => $salonID]);
     }
 
+    //get the details using the configID
+    public function FindByConfigID($configID)
+    {
+        $this->order_column = 'config_id';
+        return $this->first(['config_id' => $configID]);
+    }
+
 
 }    
