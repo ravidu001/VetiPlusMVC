@@ -1,13 +1,77 @@
 //get the current data
 let currentDate = new Date();
-console.log(currentDate);
 let selectedDate = null;
 
-function highlightAndSelectDay(day) {
+//_____________________________________________________________
+//if not select show today
+window.onload = () => 
+{
+    const today = new Date();
+    // const formattedToday = today.toISOString().split('T')[0];
+    // currentSelectedDate = formattedToday;
+
+    // Highlight today's date in the calendar
+    highlightAndSelectDay(today.getDate());
+    
+    // Fetch slots from backend
+    sendSelectedDateToBackend(today);
+
+    // let currentFilter = 'upcoming'; // Default filter
+
+    // Load today's appointment data with default status (upcoming)
+    console.log(currentFilter);
+
+    // filterAppointments(currentFilter);
+    // console.log($result);
+};
+
+//add the select date function
+function selectDate(day) 
+{
+    //create a date object for selected day
+    const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+
+    // console.log(selected);
+    // console.log(day);
+
+    // Format the date as YYYY-MM-DD
+    // currentSelectedDate = selected;
+
+    // Send to backend to fetch slot details
+    // currentSelectedDate = formatted;
+
+    // Highlight selected day
+    highlightAndSelectDay(selected.getDate());
+
+    // Fetch slots from backend
+    sendSelectedDateToBackend(selected);
+
+    // let currentFilter = 'upcoming'; // Default filter
+
+    // Refresh appointments
+    // filterAppointments(currentFilter);
+}
+
+//default highlight the today
+const today = new Date();
+const isCurrentMonth = today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear();
+
+// if (!currentSelectedDate && isCurrentMonth) {
+//     const todayDay = today.getDate();
+//     highlightAndSelectDay(todayDay);
+// }
+
+
+//______________________________________________________________________________________
+
+
+function highlightAndSelectDay(day) 
+{
     const dayElements = document.querySelectorAll('.calendar-day');
 
     dayElements.forEach(element => {
-        if (parseInt(element.textContent) === day && !element.classList.contains('closed')) {
+        if (parseInt(element.textContent) === day && !element.classList.contains('closed')) 
+        {
             // Remove previous selection
             dayElements.forEach(el => el.classList.remove('selected'));
             
@@ -21,14 +85,20 @@ function highlightAndSelectDay(day) {
 }
 
 
-function sendSelectedDateToBackend(selectedDate) {
+function sendSelectedDateToBackend(selectedDate) 
+{
     if (!selectedDate) 
     {
         console.error('No date selected');
         return;
     }
 
-    const formattedDate = selectedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    // const formattedDate = selectedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const correctformattedDate = selectedDate.getFullYear() + '-' +
+                      String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(selectedDate.getDate()).padStart(2, '0');
+
+    const SalonEmailAddress = salonEmail;
 
     fetch(`${BASE_URL}/SalonCalendar/getSlots`, 
     {
@@ -36,20 +106,39 @@ function sendSelectedDateToBackend(selectedDate) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ date: formattedDate }) // Sending as JSON
+        body: JSON.stringify({ date: correctformattedDate, salonID: SalonEmailAddress }) // Sending as JSON
     })
     .then(response => response.json())
     .then(data => 
     {
-        console.log('Response from backend:', data);
+        console.log('uuuuuuuu');
+        //__________________________________________________
+        if(data.success)
+        {
+            console.log('kkkkkkkkk', data);
+            appointmentData = {
+                upcoming: data.upcoming || [],
+                complete: data.complete || [],
+                incomplete: data.incomplete || []
+            };
+            console.log(appointmentData);
+            filterAppointments(currentFilter);
+        }
+        else
+        {
+            document.getElementById('appointment-list').innerHTML = `<p>${data.message}</p>`;
+        }
+        //___________________________________________________________________________
     })
     .catch(error => 
     {
-        console.error('Error:', error);
+        console.error('Errotttttttttttr:',error);
+        document.getElementById('appointment-list').innerHTML = `<p>Error loading appointments.</p>`;
     });
 }
 
-function displayTimeSlots(slots) {
+function displayTimeSlots(slots) 
+{
     const slotContainer = document.getElementById('slotContainer');
     slotContainer.innerHTML = '';
 
@@ -70,37 +159,9 @@ function displayTimeSlots(slots) {
     });
 }
 
-
-function goToSelectedDate() 
-{
-    const datePicker = document.getElementById('datePicker');
-    const selectedDate = new Date(datePicker.value);
-    
-    // Only update if a valid date is selected
-    if (!isNaN(selectedDate.getTime())) {
-        currentDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-        initCalendar();
-        
-        // Select the specific day
-        const day = selectedDate.getDate();
-        selectDate(day);
-        console.log(day);
-        highlightAndSelectDay(day);
-        
-        // Find and highlight the selected day
-        const dayElements = document.querySelectorAll('.calendar-day');
-        dayElements.forEach(element => {
-            if (parseInt(element.textContent) === day && !element.classList.contains('closed')) {
-                element.click();
-            }
-        });
-
-        sendSelectedDateToBackend(selectedDate);
-    }
-}
-
 // Sample data for blocked time slots (you would typically get this from an API)
-const blockedTimeSlots = {
+const blockedTimeSlots = 
+{
     '2024-08-15': ['10:00', '10:20', '11:00'],
     '2024-08-16': ['09:00', '09:20', '09:40']
 };
@@ -126,23 +187,25 @@ function initCalendar()
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
     
-    for (let i = 0; i < firstDay.getDay(); i++) {
+    for (let i = 0; i < firstDay.getDay(); i++) 
+    {
         calendar.appendChild(document.createElement('div'));
     }
     
-    for (let day = 1; day <= lastDay.getDate(); day++) {
+    for (let day = 1; day <= lastDay.getDate(); day++) 
+    {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
 
         // **Added: Wrapper for date and button**
         const dateWrapper = document.createElement('div');
         dateWrapper.className = 'date-wrapper';
-        dateWrapper.textContent = day;
+        // dateWrapper.textContent = day;
 
         // **Added: Button for each date**
         const dayButton = document.createElement('button');
         dayButton.className = 'date-button';
-        dayButton.textContent = 'Select';
+        dayButton.textContent = day;
         dayButton.onclick = () => selectDate(day);
 
         // **Check if day is closed**
@@ -166,12 +229,14 @@ function initCalendar()
 
 
 
-function previousMonth() {
+function previousMonth() 
+{
     currentDate.setMonth(currentDate.getMonth() - 1);
     initCalendar();
 }
 
-function nextMonth() {
+function nextMonth() 
+{
     currentDate.setMonth(currentDate.getMonth() + 1);
     initCalendar();
 }
