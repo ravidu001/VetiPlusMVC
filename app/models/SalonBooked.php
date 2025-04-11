@@ -44,6 +44,13 @@ class SalonBooked
         return $this->first(['groomingID' => $groomingID]);
     }
     
+    //get details by status and id
+    public function getSlotDetailsByStatusAndDate($id, $status)
+    {
+        $this->order_column = 'groomingID';
+        return $this->first(['salsessionID'=> $id, 'status' => $status]);
+    }
+
     public function updateStatus($groomingID, $data)
     {
         return $this->update($groomingID, $data, 'groomingID');
