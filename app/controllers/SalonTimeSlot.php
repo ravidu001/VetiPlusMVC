@@ -83,12 +83,90 @@ class SalonTimeSlot extends Controller
             {
                 $data['error'] = "Config Status cannot find";
             }
-   
+
         }
+ 
         
         $this->view('Salon/salontimeslot');
     }
 
-    
 
+    public function RetriveTimeSlotsDataByDate()
+    {
+
+        if($_SESSION['REQUEST_METHOD'] === 'POST')
+        {
+            // $postData = json_decode(file_get_contents('php://input'), true);
+            if(isset($_POST['selectedDate']))
+            {
+                $date = isset($_POST['selectedDate']);
+            }
+            else
+            {
+                $date = date('y-m-d');
+            }
+
+            // Check if 'selectData' is received from the frontend
+            if(isset($date))
+            {
+                $session_table = new SalonTimeSlots();
+
+                $sessiondata = [];
+
+                    $salsessions = $session_table->findSlotsbyDate($date);
+
+                    if(isset($salsessions) && $salsessions != NULL)
+                    {
+                        foreach($salsessions as $salsession)
+                        {
+                            $sessiondata[] = [
+                                'status' => $salsession->status,
+                                'time-slot' => $salsession->time_slot
+                            ];
+                        }
+                    }
+
+                    if($sessiondata != NULL)
+                    {
+                        echo json_encode(['success' => true, 'message' => 'Date selected: ', 'sessiondata' => $sessiondata]);
+                    }
+                    else
+                    {
+                        echo json_encode(['success' => false, 'message' => 'Data not found']);
+                    }               
+            }
+            else
+            {
+                echo json_encode(['success' => false, 'message' => 'Date not find']);
+            }
+        }
+    }
 }    
+
+
+
+//_____________________________________________________________________________________________________________________        
+        // $salsession_table = new SalonTimeSlots();
+    
+    //     // Get data using the selected date
+    //     $postData = json_decode(file_get_contents('php://input'), true);
+        
+    //     if (isset($postData['selectedDate'])) {
+    //         $date = $postData['selectedDate'];
+    
+    //         // Validate date format (YYYY-MM-DD)
+    //         if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $date)) {
+    //             $date = date('Y-m-d'); // Set today's date if invalid
+    //         }
+    //     } else {
+    //         $date = date('Y-m-d');
+    //     }
+    
+    //     // Retrieve time slots from the database
+    //     $result = $salsession_table->findSlotsbyDate($date);
+    
+    //     // Return JSON response
+    //     header('Content-Type: application/json');
+    //     echo json_encode(['success' => true, 'salSessiondata' => $result]);
+    // }
+// }    
