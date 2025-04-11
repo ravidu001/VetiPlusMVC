@@ -14,6 +14,7 @@
         $current_page = basename($_SERVER['PHP_SELF']);
         // Check if any of the appointment pages are active
         // $appointment_active = in_array($current_page, ['Newappointment.php', 'Cancelappointment.php', 'Completeappointment.php']);
+        
     ?>
 
 </head>
@@ -61,15 +62,15 @@
                 <!-- <li> -->
 
 
-                <li class="nav-link <?= $current_page == '<?= ROOT ?>/SalonNewAppointment' ? 'active' : '' ?>"> 
-                    <a href="<?=ROOT?>/SalonNewAppointment">
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/SalonAppointments' ? 'active' : '' ?>"> 
+                    <a href="<?=ROOT?>/SalonAppointments">
                         <i class="fa-regular fa-calendar-plus icon"></i></i>
-                        <span>Upcoming Appointments</span>
+                        <span>Appointments </span>
                     </a>
                 </li>
 
 
-                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonCancelAppointment' ? 'active' : '' ?>"> 
+                <!-- <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonCancelAppointment' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonCancelAppointment">
                         <i class="fa-regular fa-calendar-xmark icon"></i>
                         <span>Cancel Appointments</span>
@@ -83,7 +84,7 @@
                     </a>
                 </li>
 
-
+ -->
 
 
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonTimeSlot' ? 'active' : '' ?>"> 
