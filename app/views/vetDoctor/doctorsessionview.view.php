@@ -88,42 +88,50 @@
                 </thead>
                 <tbody>
                     <?php foreach ($appointmentsDetails as $session) : ?>
-                        <?php
-                            // Calculate the age in years and months
-                            $dob = date_create($session['pet']->DOB);
-                            $now = date_create('now');
-                            $ageDiff = date_diff($dob, $now);
-                            $years = $ageDiff->y;
-                            $months = $ageDiff->m;
-
-                            // Format the age as "Nyr Mmons"
-                            $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                        <?php 
+                            // check the status of the appointment
+                            if ($session['appointment']->status == 'completed' || $session['appointment']->status == 'cancelled') {
+                                continue; // Skip completed appointments
+                            }
                         ?>
-                        <tr data-owner="<?= htmlspecialchars($session['petOwner']->fullName) ?>" 
-                            data-pet-img="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" 
-                            data-pet-name="<?= htmlspecialchars($session['pet']->name) ?>" 
-                            data-pet-type="<?= htmlspecialchars($session['pet']->breed) ?>" 
-                            data-pet-age="<?= $ageFormatted ?>" 
-                            data-contact="<?= htmlspecialchars($session['petOwner']->contactNumber) ?>" 
-                            data-session="<?= htmlspecialchars($session['appointment']->visitTime) ?>"> 
-                            <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
-                            <td>
-                                <div class="pet-profile">
-                                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
-                                </div>
-                            </td>
-                            <td>
-                                <p><?= htmlspecialchars($session['pet']->name) ?></p>
-                                <p><?= htmlspecialchars($session['pet']->breed) ?></p>
-                                <p><?= $ageFormatted ?></p>
-                            </td>
-                            <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
-                            <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
-                            <td class="table-actions">
-                                <button class="table-btn btn-complete">Completed</button>
-                                <button class="table-btn btn-cancel">Cancelled</button>
-                            </td>
-                        </tr>
+                            <?php
+                                // Calculate the age in years and months
+                                $dob = date_create($session['pet']->DOB);
+                                $now = date_create('now');
+                                $ageDiff = date_diff($dob, $now);
+                                $years = $ageDiff->y;
+                                $months = $ageDiff->m;
+
+                                // Format the age as "Nyr Mmons"
+                                $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                            ?>
+                            
+                            <tr data-appointment-id="<?= htmlspecialchars($session['appointment']->appointmentID) ?>"
+                                data-owner="<?= htmlspecialchars($session['petOwner']->fullName) ?>" 
+                                data-pet-img="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" 
+                                data-pet-name="<?= htmlspecialchars($session['pet']->name) ?>" 
+                                data-pet-type="<?= htmlspecialchars($session['pet']->breed) ?>" 
+                                data-pet-age="<?= $ageFormatted ?>" 
+                                data-contact="<?= htmlspecialchars($session['petOwner']->contactNumber) ?>" 
+                                data-session="<?= htmlspecialchars($session['appointment']->visitTime) ?>"> 
+                                <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                                <td>
+                                    <div class="pet-profile">
+                                        <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                    <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                    <p><?= $ageFormatted ?></p>
+                                </td>
+                                <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                                <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                                <td class="table-actions">
+                                    <button class="table-btn btn-complete">Completed</button>
+                                    <button class="table-btn btn-cancel">Cancelled</button>
+                                </td>
+                            </tr>
                     <?php endforeach; ?>      
                 </tbody>
             </table>
@@ -142,6 +150,40 @@
                 </thead>
                 <tbody>
                     <!-- Completed appointments will be dynamically added here -->
+                    <?php foreach ($appointmentsDetails as $session) : ?>
+                        <?php 
+                            // check the status of the appointment
+                            if ($session['appointment']->status != 'completed') {
+                                continue; // Skip non-completed appointments
+                            }
+                        ?>
+                        <?php
+                            // Calculate the age in years and months
+                            $dob = date_create($session['pet']->DOB);
+                            $now = date_create('now');
+                            $ageDiff = date_diff($dob, $now);
+                            $years = $ageDiff->y;
+                            $months = $ageDiff->m;
+
+                            // Format the age as "Nyr Mmons"
+                            $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                        ?>
+                        <tr>
+                            <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                            <td>
+                                <div class="pet-profile">
+                                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                </div>
+                            </td>
+                            <td>
+                            <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                <p><?= $ageFormatted ?></p>
+                            </td>
+                            <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                            <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -158,6 +200,40 @@
                 </thead>
                 <tbody>
                     <!-- Cancelled appointments will be dynamically added here -->
+                    <?php foreach ($appointmentsDetails as $session) : ?>
+                        <?php 
+                            // check the status of the appointment
+                            if ($session['appointment']->status != 'cancelled') {
+                                continue; // Skip non-completed appointments
+                            }
+                        ?>
+                        <?php
+                            // Calculate the age in years and months
+                            $dob = date_create($session['pet']->DOB);
+                            $now = date_create('now');
+                            $ageDiff = date_diff($dob, $now);
+                            $years = $ageDiff->y;
+                            $months = $ageDiff->m;
+
+                            // Format the age as "Nyr Mmons"
+                            $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                        ?>
+                        <tr>
+                            <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                            <td>
+                                <div class="pet-profile">
+                                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                </div>
+                            </td>
+                            <td>
+                            <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                <p><?= $ageFormatted ?></p>
+                            </td>
+                            <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                            <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

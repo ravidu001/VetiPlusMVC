@@ -5,6 +5,10 @@ class DoctorViewSession extends Controller {
         $doctorID = $_SESSION['user_id'];
         $session = new DoctorSessionModel;
 
+        // Call the autoUpdate function to auto update the session status when expired
+        $this->autoUpdate();
+
+        // Call the inserthistory function to insert old sessions into session history (change session status to 1)
         $update = $this->inserthistory();
     
         // Get all sessions for the doctor
@@ -152,5 +156,73 @@ class DoctorViewSession extends Controller {
         }
 
         $this->view('vetDoctor/doctorsessionview', ['sessionsDetails' => $consolidatedSessions, 'appointmentsDetails' => $sessionAppointments]);
+    }
+
+    public function updateAppointment() {
+        // Get the raw POST data
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $appointmentID = $data['appointmentID'];
+        $status = $data['status'];
+    
+        // Validate the input
+        if (isset($appointmentID) && isset($status)) {
+            // Update the appointment status in the database
+            $appointment = new AppointmentModel();
+            $result = $appointment->updateAppointmentStatus($appointmentID, $status);
+    
+            if (!($result)) {
+                // Return a success response
+                echo json_encode(['success' => true, 'message' => 'Appointment status updated successfully.']);
+            } else {
+                // Return an error response
+                echo json_encode(['success' => false, 'message' => 'Failed to update appointment status.']);
+            }
+        } else {
+            // Return an error response for invalid input
+            echo json_encode(['success' => false, 'message' => 'Invalid input.']);
+        }
+    } 
+
+    public function autoUpdate() {
+        $doctorID = $_SESSION['user_id'];
+    
+        // Get the current date and time
+        $currentDateTime = new DateTime();
+        $currentDate = $currentDateTime->format('Y-m-d');
+        $currentTime = $currentDateTime->format('H:i:s');
+    
+        // Fetch all the appointments by doctorID
+        $session = new DoctorSessionModel();
+    
+        // Fetch all sessions 
+        $alldata = $session->getsession($doctorID);
+       
+        // Insert old sessions into session history
+        foreach ($alldata as $oldSession) {
+            if ($oldSession->selectedDate <= $currentDate) {
+                $appointment = new AppointmentModel();
+                $appointmentDetails = $appointment->getAppointmentBySession($oldSession->sessionID);
+                
+                // Check if $appointmentDetails is valid
+                if (is_array($appointmentDetails) || is_object($appointmentDetails)) {
+                    foreach ($appointmentDetails as $appointmentItem) {
+                        // Add 2 hours to visitTime
+                        $newVisitTime = date('H:i:s', strtotime($appointmentItem->visitTime) + 2 * 60 * 60);
+    
+                        // Check if the session time is less than the current time
+                        if ($newVisitTime <= $currentTime) {
+                            // Update the appointment status to 'cancelled'
+                            $data = 'cancelled';
+                            $updateresult = $appointment->updateAppointmentStatus($appointmentItem->appointmentID, $data);
+                        }     
+                    }
+                } else {
+                    // Handle the case where no appointments are found
+                    // You can log this or handle it as needed
+                    error_log("No appointments found for session ID: " . $oldSession->sessionID);
+                }
+            } 
+        }   
     }
 }

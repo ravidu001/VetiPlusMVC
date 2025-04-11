@@ -17,4 +17,9 @@ class AppointmentModel {
         return $result;
     }
 
+    // update the status of an appointment
+    public function updateAppointmentStatus($appointmentID, $status) {
+        $this->update($appointmentID, ['status' => $status], 'appointmentID');
+    }
+
 }
