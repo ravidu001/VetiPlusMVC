@@ -20,7 +20,7 @@
             </div>
             <div class="appointmentcontent">
             <div class="calendarpart">
-                <div class="calendar">
+                <div class="calendar" data-backend-url="<?= ROOT ?>/SalonCancelAppointment/findDataTab3">
                     <?php
                         require __DIR__ .'/saloncalander.view.php';
                     ?>
@@ -41,19 +41,9 @@
                                         <th>Contact Number</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="appointmentTableBody">
                                     <tr>
-                                        <td>
-                                            <div class="user">
-                                                <!-- <img src="../../assets/images/salon/boy.jpg" alt="userimage"> -->
-                                                Abdual Rahim Vijepala
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>6.00 a.m - 6.30 a.m</td>
-                                        <td>Pet Bathing</td>
-                                        <td>0776533229</td>
+                                        <td colspan="7">No appointments found.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -66,4 +56,6 @@
     
 </body>
     <script src="<?=ROOT?>/assets/js/navbar/salonnav.js"></script>
+    <script src="<?=ROOT?>/assets/js/salon/saloncalendar.js"></script>
+    <script src="<?=ROOT?>/assets/js/salon/saloncancelapp.js"></script>   
 </html>
