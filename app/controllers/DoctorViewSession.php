@@ -101,30 +101,56 @@ class DoctorViewSession extends Controller {
 
         // Fetch the assistant details using the sessionID
         $assisSession = new AssistantSessionModel;
-            $assisSessionData = $assisSession->getAssistantsession($sessionID);
-    
-            // Prepare assistant data for this session
-            $sessionAssistants = [];
-    
-            // Check if assistant session data is found
-            if ($assisSessionData) {
-                foreach ($assisSessionData as $assisSessionItem) {
-                    $assistant = new AssisModel;
-                    $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
-    
-                    if ($assistantData) {
-                        // print_r($assistantData->fullName);
-                        $sessionAssistants[] = $assistantData;
-                    }
+        $assisSessionData = $assisSession->getAssistantsession($sessionID);
+
+        // Prepare assistant data for this session
+        $sessionAssistants = [];
+
+        // Check if assistant session data is found
+        if ($assisSessionData) {
+            foreach ($assisSessionData as $assisSessionItem) {
+                $assistant = new AssisModel;
+                $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
+
+                if ($assistantData) {
+                    // print_r($assistantData->fullName);
+                    $sessionAssistants[] = $assistantData;
                 }
             }
+        }
 
-            // Consolidate session data
-            $consolidatedSessions[] = [
-                'session' => $sessionDetails[0],
-                'assistants' => $sessionAssistants
-            ];
+        // Consolidate session data
+        $consolidatedSessions[] = [
+            'session' => $sessionDetails[0],
+            'assistants' => $sessionAssistants
+        ];
 
-        $this->view('vetDoctor/doctorsessionview', ['sessionsDetails' => $consolidatedSessions]);
+        // Fetch the appointment details using the sessionID
+        $appointment = new AppointmentModel();
+        $appointmentDetails = $appointment->getAppointmentBySession($sessionID);
+
+        // Prepare appointment data for this session
+        $sessionAppointments = [];
+
+        // Check if appointment data is found
+        if ($appointmentDetails) {
+            foreach ($appointmentDetails as $appointmentItem) {
+                $pet = new Pet;
+                $petData = $pet->findPetDetailsByID($appointmentItem->petID);
+
+                $petOwner = new PetOwner;
+                $petOwnerData = $petOwner->getUserDetailsByID($appointmentItem->petOwnerID);
+
+                // Structure the data
+                $sessionAppointments[] = [
+                    'appointment' => $appointmentItem,
+                    'pet' => $petData,
+                    'petOwner' => $petOwnerData,
+                ];
+            }
+            // show($sessionAppointments);
+        }
+
+        $this->view('vetDoctor/doctorsessionview', ['sessionsDetails' => $consolidatedSessions, 'appointmentsDetails' => $sessionAppointments]);
     }
 }

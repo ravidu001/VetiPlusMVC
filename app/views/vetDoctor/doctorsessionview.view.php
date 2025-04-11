@@ -87,101 +87,44 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-owner="John Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Roky" data-pet-type="Labrador" data-pet-age="2 years" data-contact="0771234567" data-session="15:00"> 
-                        <td>John Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Roky</p>
-                            <p>Labrador</p>
-                            <p>2 years</p>
-                        </td>
-                        <td>0771234567</td>
-                        <td>15:00</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>15:30</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>16:00</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>16:30</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>17:00</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
+                    <?php foreach ($appointmentsDetails as $session) : ?>
+                        <?php
+                            // Calculate the age in years and months
+                            $dob = date_create($session['pet']->DOB);
+                            $now = date_create('now');
+                            $ageDiff = date_diff($dob, $now);
+                            $years = $ageDiff->y;
+                            $months = $ageDiff->m;
+
+                            // Format the age as "Nyr Mmons"
+                            $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                        ?>
+                        <tr data-owner="<?= htmlspecialchars($session['petOwner']->fullName) ?>" 
+                            data-pet-img="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" 
+                            data-pet-name="<?= htmlspecialchars($session['pet']->name) ?>" 
+                            data-pet-type="<?= htmlspecialchars($session['pet']->breed) ?>" 
+                            data-pet-age="<?= $ageFormatted ?>" 
+                            data-contact="<?= htmlspecialchars($session['petOwner']->contactNumber) ?>" 
+                            data-session="<?= htmlspecialchars($session['appointment']->visitTime) ?>"> 
+                            <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                            <td>
+                                <div class="pet-profile">
+                                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                </div>
+                            </td>
+                            <td>
+                                <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                <p><?= $ageFormatted ?></p>
+                            </td>
+                            <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                            <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                            <td class="table-actions">
+                                <button class="table-btn btn-complete">Completed</button>
+                                <button class="table-btn btn-cancel">Cancelled</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>      
                 </tbody>
             </table>
         </div>
