@@ -9,19 +9,18 @@
 <body>
     <div class="calendar-container">
         <!-- add the go to date sector -->
-        <div class="date-selector">
+        <!-- <div class="date-selector">
             <input type="date" id="datePicker" class="selectdate">
             <button onclick="goToSelectedDate()" class="date-button">Go to Date</button>
-        </div>
+        </div> -->
 
-        <div class="calendar-header">
-            <h2 id="current-month">August 2024</h2>
-            <div>
-                <button onclick="previousMonth()">←</button>
-                <button onclick="nextMonth()">→</button>
-            </div>
+        <div class="current-month-display">
+            <button class="prev-month-btn" onclick="previousMonth()">←</button>
+            <h2 id="current-month"></h2>
+            <button class="next-month-btn" onclick="nextMonth()">→</button>
         </div>
-        <div class="status-indicators">
+        
+        <!-- <div class="status-indicators">
             <div class="status-indicator">
                 <div class="status-dot dot-available"></div>
                 <span>Available</span>
@@ -34,9 +33,9 @@
                 <div class="status-dot dot-closed"></div>
                 <span>Closed</span>
             </div>
-        </div>
+        </div> -->
         <div class="calendar-grid" id="calendar"></div>
-        <div class="time-slots" id="time-slots"></div>
+        <div class="time-slots" id="slotContainer"></div>
     </div>
 
    
