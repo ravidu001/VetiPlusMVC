@@ -64,4 +64,33 @@ class SalonTimeSlots {
     {
         return $this->delete($salSessionID, 'salSessionID');
     }
+
+    //Find details using the status, salonID, date
+    public function FindBooking($salonuser, $holiDate, $status)
+    {
+        $this->order_column = 'salSessionID';
+        return $this->where(['salonID' => $salonuser, 'openday' => $holiDate, 'status' => $status]);
+    }
+
+    //Update the status 
+    public function updateStatus($salonuser, $date, $status)
+    {
+        // First, find the ID of the timeslot for this salon and date
+        $query = "SELECT * FROM $this->table WHERE salonID = :salonID AND openday = :openday LIMIT 1";
+        $params = [
+            'salonID' => $salonuser,
+            'openday' => $date
+        ];
+        
+        $result = $this->query($query, $params);
+    
+        if ($result && count($result) > 0) {
+            $record = $result[0];
+            $id = $record->id;
+    
+            // Now update the status to 'blocked' using the reusable update method
+            $this->update($id, ['status' => $status]);
+        }
+    }
+    
 }

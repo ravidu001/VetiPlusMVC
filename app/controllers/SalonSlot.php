@@ -80,4 +80,36 @@ class SalonSlot extends Controller
             
         $this->view('salon/salonslot', $data);
     }
+
+         //__________________________________________________________________________________________________________________________
+        //remove the holiday
+        public function removeHoliday()
+        {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) 
+            {
+                $holiday = $_POST['remove'];
+                $salonID = $_SESSION['SALON_USER'];
+
+                // Load model and remove the holiday
+                $holidayModel = new SalonHoliday(); 
+                $salonSession = new SalonTimeSlots();
+                $result = $holidayModel->findDateAndID($salonID,$holiday);
+
+                if($result && isset($result[0]))
+                {
+                    $holidayID=$result[0]->holiday_id;
+                    $response = $holidayModel->deleteHoliday($holidayID);
+
+                    if($response)
+                    {
+                        $status = 'available';
+                        $salonSession->updateStatus($salonID, $holiday, $status);
+                    }
+                }
+                
+                // Redirect back to the same page to refresh view
+                redirect('SalonSlot');
+            }
+        }
+    
 }
