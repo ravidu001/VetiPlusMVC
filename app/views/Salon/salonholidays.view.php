@@ -32,11 +32,13 @@
     const holidays = [];
 
     //  Function to add holidays
-    function addHoliday() {
+    function addHoliday() 
+    {
         const dateInput = document.getElementById("holidayDate");
         const dateValue = dateInput.value;
 
-        if (dateValue && !holidays.includes(dateValue)) {
+        if (dateValue && !holidays.includes(dateValue)) 
+        {
             holidays.push(dateValue);
             updateHolidayList();
             updateHiddenInputs();
@@ -45,9 +47,11 @@
     }
 
     //  Function to remove specific holiday
-    function removeSpecificHoliday(date) {
+    function removeSpecificHoliday(date) 
+    {
         const index = holidays.indexOf(date);
-        if (index !== -1) {
+        if (index !== -1) 
+        {
             holidays.splice(index, 1);
             updateHolidayList();
             updateHiddenInputs();
@@ -55,14 +59,16 @@
     }
 
     //  Update list in UI
-    function updateHolidayList() {
+    function updateHolidayList() 
+    {
         holidayList.innerHTML = holidays
             .map(date => `<li>${date} <button type="button" onclick="removeSpecificHoliday('${date}')">X</button></li>`)
             .join('');
     }
 
     //  Update hidden inputs to send holidays via PHP
-    function updateHiddenInputs() {
+    function updateHiddenInputs() 
+    {
         hiddenInputs.innerHTML = holidays
             .map(date => `<input type="hidden" name="holidays[]" value="${date}" />`)
             .join('');

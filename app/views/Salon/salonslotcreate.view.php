@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
   <body>
+  <?php
+  if (!empty($data['error']) && is_string($data['error'])) {
+    echo "<script>alert('". addslashes($data['error']) ."');</script>";
+  }
+?>
+
     <div class="container">
       <h1>Salon Time Slot Configuration</h1>
       <a href="<?=ROOT?>/SalonSlot"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
@@ -25,6 +31,22 @@
           </label>
           <label>Appointments per Slot:
             <input type="number" name="appointments" min="1" required />
+          </label>
+        </div>
+
+        <div class="options">
+          <p>Create time slots for:</p>
+          <label><input type="radio" name="period" value="week" required /> Per Week</label>
+          <label><input type="radio" name="period" value="month" /> Per Month</label>
+        </div>
+
+        <div class="startDate">
+          <p>Slot Start Date:</p>
+          <labe>
+            <?php 
+              $today = date('Y-m-d'); 
+            ?>
+            <input type="date" name="startDate" value="<?= $today ?>" min="<?= $today ?>">
           </label>
         </div>
 
@@ -66,16 +88,11 @@
           </tbody>
         </table>
 
-        <div class="options">
-          <p>Create time slots for:</p>
-          <label><input type="radio" name="period" value="week" required /> Per Week</label>
-          <label><input type="radio" name="period" value="month" /> Per Month</label>
-        </div>
-
+        
         <div class="submit-btn">
           <button type="submit" name="postdata">Generate Time Slots</button>
         </div>
-      </form>
+    </form>
     </div>
 
     

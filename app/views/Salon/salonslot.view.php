@@ -102,36 +102,38 @@
             <button>
                 <a href="<?=ROOT?>/SalonHolidays">Add</a>
             </button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Status</th>
-                    </tr>
-                        </thead>
-                <tbody>
-                    <?php
-                         if (!empty($holidays)) : 
-                    ?>
-                    <?php 
-                        foreach ($holidays as $holiday) : 
-                    ?> 
+            <form method="POST" action="<?= ROOT ?>/SalonSlot/removeHoliday">    
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= $holiday ?></td>
-                            <td>
-                                <button class="remove-btn">
-                                    Remove
-                                </button>
-                            </td>
+                            <th>Day</th>
+                            <th>Status</th>
                         </tr>
-                    <?php endforeach; ?>
-                    <?php else : ?>
-                        <tr>
-                            <td colspan="2">Not yet added any holidays</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                            </thead>
+                    <tbody>
+                        <?php
+                            if (!empty($holidays)) : 
+                        ?>
+                        <?php 
+                            foreach ($holidays as $holiday) : 
+                        ?> 
+                            <tr>
+                                <td><?= $holiday ?></td>
+                                <td>
+                                    <button class="remove-btn" type="submit" name="remove" value="<?= $holiday ?>">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="2">Not yet added any holidays</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </form>    
         </div>
     </div>
 </body>
