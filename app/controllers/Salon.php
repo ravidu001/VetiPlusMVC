@@ -118,6 +118,12 @@ class Salon extends Controller
 
             $results = $groomingSessions->FindBookedDetails();
 
+            
+            if (!$results || !is_array($results)) 
+            {
+                return 0;
+            }
+
             foreach($results as $result)
             {
                $salsessionID =  $result->salSessionID;
@@ -143,6 +149,12 @@ class Salon extends Controller
             $salsessiontable = new SalonTimeSlots;
 
             $results = $groomingSessions->FindBookedDetails();
+            show($results);
+
+            if (!$results || !is_array($results)) 
+            {
+                return 0;
+            }
 
             foreach($results as $result)
             {

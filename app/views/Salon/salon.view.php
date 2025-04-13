@@ -56,6 +56,7 @@
                         <div class="stat-info">
                             <div class="stat-value">
                                 <?php
+                                    $countcustomer = 0;
                                     if(!empty($data['customers']))
                                     {
                                         $countcustomer = $data['customers'];

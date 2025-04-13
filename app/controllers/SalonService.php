@@ -17,26 +17,26 @@ class SalonService extends Controller
     public function delete($serviceID)
     {
         $servicetable = new SalonServices;
-        $result = $servicetable->servicedelete($serviceID);
+        $servicetable->servicedelete($serviceID);
         
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
         
-        if($result !== false)
-        {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Service deleted successfully.'
-            ]);
-        }
-        else
-        {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to delete the service.'
-            ]);
-        }
+        // if($result !== false)
+        // {
+        //     echo json_encode([
+        //         'success' => true,
+        //         'message' => 'Service deleted successfully.'
+        //     ]);
+        // }
+        // else
+        // {
+        //     echo json_encode([
+        //         'success' => false,
+        //         'message' => 'Failed to delete the service.'
+        //     ]);
+        // }
         
-        exit;
+        // exit;
 
     }
     //________________________________________________________________________________________________________________________________

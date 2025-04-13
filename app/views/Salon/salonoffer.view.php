@@ -8,86 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
-<style>
-       .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 25px;
-            border-radius: 8px;
-            width: 350px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-content p {
-            font-size: 16px;
-            color: #333;
-            margin: 15px 0 25px 0;
-        }
-
-        .close {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            font-size: 24px;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .modal-content button {
-            padding: 8px 25px;
-            margin: 0 8px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        #confirmDeleteBtn {
-            background-color: #6a0dad;
-            color: white;
-        }
-
-        #confirmDeleteBtn:hover {
-            background-color: #6a0dad;
-        }
-
-        .modal-content button:nth-child(4) {
-            background-color: #eee;
-            color: #333;
-        }
-
-        .modal-content button:nth-child(4):hover {
-            background-color: #ddd;
-        }
-
-        @media screen and (max-width: 400px) {
-            .modal-content {
-                width: 90%;
-                padding: 20px;
-            }
-        }
-    </style>
 <body>
     <div class="pagecontent">
         <div class="SidebarandSpecialOffers">
@@ -124,22 +44,36 @@
                                     ?>
                                     
                                     <tr>
-                                    <th><?= htmlspecialchars($x['serviceName'] ?? 'No Service Name') ?></th>
+                                        <th>
+                                            <div class="servicename">
+                                                <?= htmlspecialchars($x['serviceName'] ?? 'No Service Name') ?>
+                                            </div>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h2 class="discount">Discount</h2>
-                                            <h3><?= htmlspecialchars($x['discount']) ?>%</h3>
-                                            <h2 class="date">Open Date</h2>
-                                            <h3><?= date("d M Y", strtotime($x['startDate'])) ?></h3>
-                                            <h2 class="date">Close Date</h2>
-                                            <h3><?= date("d M Y", strtotime($x['closeDate'])) ?></h3>
-                                            <h2 class="date">Created Date</h2>
-                                            <h3><?= date("d M Y", strtotime($x['createDate'])) ?></h3>
+                                            <div class="colunmcontent" style="display: flex;">
+                                                <div class="one">
+                                                    <h5 class="discount">Discount</h5>
+                                                    <h3><?= htmlspecialchars($x['discount']) ?>%</h3>
+                                                </div>
+                                                <div class="two">
+                                                    <h5 class="date">Open Date</h5>
+                                                    <h3><?= date("d M Y", strtotime($x['startDate'])) ?></h3>
+                                                </div>
+                                                <div class="three">
+                                                    <h5 class="date">Close Date</h5>
+                                                    <h3><?= date("d M Y", strtotime($x['closeDate'])) ?></h3>
+                                                </div>
+                                                <div class="four">
+                                                    <h5 class="date">Created Date</h5>
+                                                    <h3><?= date("d M Y", strtotime($x['createDate'])) ?></h3>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td>
-                                            <p>
-                                            <?= htmlspecialchars($x['description']) ?> 
+                                            <p class='ServiceDescription'>
+                                                <?= htmlspecialchars($x['description']) ?> 
                                             </p>
                                         </td>
                                         <td>
