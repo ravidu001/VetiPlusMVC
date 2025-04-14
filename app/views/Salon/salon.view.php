@@ -25,7 +25,10 @@
                         <p class="name">Pabodya Nethsarani</p>
                     </div>
                     <div class="dashboard-icon" id="icon">
-                        <i class="fa-regular fa-bell icon"></i>
+                        <a href="<?=ROOT?>/SalonNotifications">
+                            <i class="fa-regular fa-bell icon">    
+                            </i>
+                        </a>
                     </div>
                 </div>
 

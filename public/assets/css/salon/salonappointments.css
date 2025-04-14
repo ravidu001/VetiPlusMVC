@@ -1,7 +1,7 @@
 body:has(#sidebar.close) .appointment-content 
 {
-    margin-left: 70px;
-    width: calc(100% - 70px);
+    margin-left: 100px;
+    width: calc(100% - 100px);
 }
 
 .appointments 

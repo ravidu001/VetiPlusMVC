@@ -9,26 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<?php
-    // if(isset($data['time_slot'])) 
-    // {
-    //     $time_slots = $data['time_slot'];
-    // } 
-    // else 
-    // {
-    //     $time_slots = [];
-    // }
-
-    // if(isset($data['salondetails']))
-    // {
-    //     $salondetails = $data['salondetails'];
-    // }
-    // else
-    // {
-    //     $salondetails = [];
-    // }
-?>
-
 <body>
     <div class="pagecontent">
         <div>
@@ -37,7 +17,14 @@
              ?>
             <!-- <php code for navbar here> -->
         </div>
+       
         <h1>Salon Time Slot Schedules</h1>
+        
+        <div class="buutons">
+            <button>Holidays</button>
+            <button>WeekDays And Slot Details</button>
+        </div>
+
         <div class="calandercolrs" style="display: flex;">
             <p class="closedays">Close Days</p>
             <p class="opendays">Open Days</p>

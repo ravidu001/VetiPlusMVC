@@ -79,7 +79,7 @@ body {
 }
 
 #sidebar.close {
-    width: 70px;
+    width: 100px;
 }
 
 #sidebar.close ul li.active a span,
@@ -91,7 +91,7 @@ body {
 
 #sidebar.close #toggle-btn {
     transform: rotate(180deg);
-    margin-left: 30px;
+    margin-left: 10px;
 }
 
 #sidebar ul {
