@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() 
+{
     const messageType = document.getElementById('messageType');
     const messageContainer = document.getElementById('messageContainer');
     const ratingContainer = document.getElementById('ratingContainer');

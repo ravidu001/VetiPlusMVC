@@ -44,8 +44,11 @@ class SalonSlot extends Controller
         //get the latest update details in the table
 
         $result =  $salontimeslotconfig -> getLastInsertedID($salonID);
-        $latestUpdateID = $result[0] -> config_id;
-        // show($latestUpdateID);
+        
+        if($result)
+        {
+            $latestUpdateID = $result[0] -> config_id;
+            // show($latestUpdateID);
 
             if($latestUpdateID != null)
             {
@@ -77,6 +80,9 @@ class SalonSlot extends Controller
             {
                 $data['message'] = "Not yet Upload the details";
             }
+        }
+
+        
             
         $this->view('salon/salonslot', $data);
     }

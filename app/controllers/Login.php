@@ -102,7 +102,7 @@ class Login extends Controller
                                 {
                                     // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
                                     $_SESSION['SALON_USER'] = $registered->email;
-                                    redirect('SalonDashboard');
+                                    redirect('Salon');
                                 }
                                 //email not in the accepted salon data table
                                 //so it will be rejected or pending  

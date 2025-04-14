@@ -26,118 +26,169 @@ class SalonTimeSlot extends Controller
         //find the latest update colunm in the timeslotconfig table
         $result = $timeslotconfig ->getLastInsertedID($salonID);
 
-        // show($result);
-      
-        $configID = $result[0]->config_id;  //put the config ID
-        $duration = $result[0] -> slot_duration_minutes; //put the time slot duration time(min)
-
-        // show($configID );
-        show($duration);
-
-        //find the data from the salonweekdays table passing the config ID
-        $weekdaysDetails =  $salonweekdays->FindByConfigId($configID);
-
-        // show($weekdaysDetails);
-
-        //catch the is_closed if it == 1 do not create the slots for them
-        foreach($weekdaysDetails as $day)
+        if($result)
         {
-            $closeStatus = $day->is_closed;
+            // show($result);
+      
+            $configID = $result[0]->config_id;  //put the config ID
+            $duration = $result[0] -> slot_duration_minutes; //put the time slot duration time(min)
 
-            // show($closeStatus);
-            // opendays only
-            if($closeStatus == 0)
+            // show($configID );
+            show($duration);
+
+            //find the data from the salonweekdays table passing the config ID
+            $weekdaysDetails =  $salonweekdays->FindByConfigId($configID);
+
+            // show($weekdaysDetails);
+
+            //catch the is_closed if it == 1 do not create the slots for them
+            foreach($weekdaysDetails as $day)
             {
-                $date = $day->date;
-                $startTime = strtotime($day->start_time);
-                $endTime = strtotime($day->end_time);
-                $slotDuration = $duration * 60; // Convert minutes to seconds
-                $sheduleID = $day->schedule_id;
+                $closeStatus = $day->is_closed;
 
-                //want to check the date in the holiday table
-                $checkholiday = $holidays->findHolidayByDate($date);
+                // show($closeStatus);
+                // opendays only
+                if($closeStatus == 0)
+                {
+                    $date = $day->date;
+                    $startTime = strtotime($day->start_time);
+                    $endTime = strtotime($day->end_time);
+                    $slotDuration = $duration * 60; // Convert minutes to seconds
+                    $sheduleID = $day->schedule_id;
 
-                $slotStatus = empty($checkholiday) ? 'available' : 'block';//if has the holiday then status == block
+                    //want to check the date in the holiday table
+                    $checkholiday = $holidays->findHolidayByDate($date);
 
-                // Generate time slots
-                   
-                    for ($time = $startTime; $time < $endTime; $time += $slotDuration) 
-                    {
-                        $timeSlot = date('H:i:s', $time) . " - " . date('H:i:s', min($time + $slotDuration, $endTime));
-                        $data = [
-                            'openday' => $date,
-                            'status' => $slotStatus,
-                            'time_slot' => $timeSlot, // Store as "HH:MM:SS - HH:MM:SS"
-                            'salonID' => $salonID,
-                            'schedule_id' => $sheduleID
-                        ];
-                        $salsession->addSession($data);
-                    }
+                    $slotStatus = empty($checkholiday) ? 'available' : 'block';//if has the holiday then status == block
+
+                    // Generate time slots
+                    
+                        for ($time = $startTime; $time < $endTime; $time += $slotDuration) 
+                        {
+                            $timeSlot = date('H:i:s', $time) . " - " . date('H:i:s', min($time + $slotDuration, $endTime));
+                            $data = [
+                                'openday' => $date,
+                                'status' => $slotStatus,
+                                'time_slot' => $timeSlot, // Store as "HH:MM:SS - HH:MM:SS"
+                                'salonID' => $salonID,
+                                'schedule_id' => $sheduleID
+                            ];
+                            $salsession->addSession($data);
+                        }
+
+                }
+                else if($closeStatus == 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    $data['error'] = "Config Status cannot find";
+                }
 
             }
-            else if($closeStatus == 1)
-            {
-                continue;
-            }
-            else
-            {
-                $data['error'] = "Config Status cannot find";
-            }
-
+            
         }
- 
         
         $this->view('Salon/salontimeslot');
     }
 
 
+    // public function RetriveTimeSlotsDataByDate()
+    // {
+
+    //     // if($_SESSION['REQUEST_METHOD'] === 'POST')
+    //     // {
+    //     //     // $postData = json_decode(file_get_contents('php://input'), true);
+    //     //     if(isset($_POST['selectedDate']))
+    //     //     {
+    //     //         $date = isset($_POST['selectedDate']);
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //         $date = date('y-m-d');
+    //     //     }
+
+    //     //     // Check if 'selectData' is received from the frontend
+    //     //     if(isset($date))
+    //     //     {
+    //     //         $session_table = new SalonTimeSlots();
+
+    //     //         $sessiondata = [];
+
+    //     //             $salsessions = $session_table->findSlotsbyDate($date);
+
+    //     //             if(isset($salsessions) && $salsessions != NULL)
+    //     //             {
+    //     //                 foreach($salsessions as $salsession)
+    //     //                 {
+    //     //                     $sessiondata[] = [
+    //     //                         'status' => $salsession->status,
+    //     //                         'time-slot' => $salsession->time_slot
+    //     //                     ];
+    //     //                 }
+    //     //             }
+
+    //     //             if($sessiondata != NULL)
+    //     //             {
+    //     //                 echo json_encode(['success' => true, 'message' => 'Date selected: ', 'sessiondata' => $sessiondata]);
+    //     //             }
+    //     //             else
+    //     //             {
+    //     //                 echo json_encode(['success' => false, 'message' => 'Data not found']);
+    //     //             }               
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //         echo json_encode(['success' => false, 'message' => 'Date not find']);
+    //     //     }
+    //     // }
+    // }
+
+
     public function RetriveTimeSlotsDataByDate()
     {
-
-        if($_SESSION['REQUEST_METHOD'] === 'POST')
+        if($_SERVER['REQUEST_METHOD'] === 'POST') 
         {
-            // $postData = json_decode(file_get_contents('php://input'), true);
-            if(isset($_POST['selectedDate']))
+            $data = json_decode(file_get_contents('php://input'), true);
+
+            $date = $data['date'] ?? null;
+            $salonID = $data['salonID'] ?? null;
+
+            if($date && $salonID)
             {
-                $date = isset($_POST['selectedDate']);
+                $salsession = new SalonTimeSlots();//slot details 
+
+                $results = $salsession -> slotsByDateAndSalon($salonID, $date);
+
+                if(!empty($results))
+                {
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'success' => true,
+                        'result' => $results
+                    ]);
+                    exit;
+                }
+                else
+                {
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'success' => true,
+                        'result' => [],
+                        'message' => 'No slots created for this day.'
+                    ]);
+                    exit;
+                }
             }
             else
             {
-                $date = date('y-m-d');
-            }
-
-            // Check if 'selectData' is received from the frontend
-            if(isset($date))
-            {
-                $session_table = new SalonTimeSlots();
-
-                $sessiondata = [];
-
-                    $salsessions = $session_table->findSlotsbyDate($date);
-
-                    if(isset($salsessions) && $salsessions != NULL)
-                    {
-                        foreach($salsessions as $salsession)
-                        {
-                            $sessiondata[] = [
-                                'status' => $salsession->status,
-                                'time-slot' => $salsession->time_slot
-                            ];
-                        }
-                    }
-
-                    if($sessiondata != NULL)
-                    {
-                        echo json_encode(['success' => true, 'message' => 'Date selected: ', 'sessiondata' => $sessiondata]);
-                    }
-                    else
-                    {
-                        echo json_encode(['success' => false, 'message' => 'Data not found']);
-                    }               
-            }
-            else
-            {
-                echo json_encode(['success' => false, 'message' => 'Date not find']);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => false, 
+                    'message' => 'Date  not provided OR user Cannot find'
+                ]);
+                exit;
             }
         }
     }
@@ -145,28 +196,3 @@ class SalonTimeSlot extends Controller
 
 
 
-//_____________________________________________________________________________________________________________________        
-        // $salsession_table = new SalonTimeSlots();
-    
-    //     // Get data using the selected date
-    //     $postData = json_decode(file_get_contents('php://input'), true);
-        
-    //     if (isset($postData['selectedDate'])) {
-    //         $date = $postData['selectedDate'];
-    
-    //         // Validate date format (YYYY-MM-DD)
-    //         if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $date)) {
-    //             $date = date('Y-m-d'); // Set today's date if invalid
-    //         }
-    //     } else {
-    //         $date = date('Y-m-d');
-    //     }
-    
-    //     // Retrieve time slots from the database
-    //     $result = $salsession_table->findSlotsbyDate($date);
-    
-    //     // Return JSON response
-    //     header('Content-Type: application/json');
-    //     echo json_encode(['success' => true, 'salSessiondata' => $result]);
-    // }
-// }    
