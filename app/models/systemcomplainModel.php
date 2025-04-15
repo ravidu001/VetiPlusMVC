@@ -29,7 +29,11 @@
         $this->insert($data);
      }
  
-     
+     public function checkUser($email) {
+        $this->order_column = 'email';
+        return $this->where(['email' => $email]); // what this return is an array of user
+
+    }
  
  }
  

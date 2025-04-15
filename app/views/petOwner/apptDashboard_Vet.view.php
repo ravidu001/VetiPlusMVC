@@ -10,7 +10,7 @@
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/petOwner/appointmentPages.css" rel="stylesheet">
+        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/appointmentPages.css" rel="stylesheet"> -->
 
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -20,8 +20,60 @@
         <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
 
         <div class="bodyArea">
+            
+            <section class="dashArea">
+                <h2 class="dashHeader">Upcoming Appointments</h2>
 
-            <section id="upcomingAppointments" class="dashArea">
+                <div class="longCard-container upcomingAppt-container"></div>
+                <template class="upcomingApptCard-template">
+                    <div class="card longCard upcomingApptCard">
+                        <img src="<?= ROOT.'/assets/images/petOwner/serviceIcons/vetIcon.png' ?>" class="apptIcon" alt="apptIcon">
+                        <div>
+                            <p>
+                                <span class="petName"></span>
+                                <strong><span class="apptDate"></span></strong>
+                            </p>
+                            <p class="apptDescription"></p>
+                            <p>
+                                <strong><span class="docName"></span></strong>
+                                <span class="docAddress"></span>
+                            </p>
+                        </div>
+                        <div class="apptOptions">
+                            <button class="editAppt cardBtn"><i class="bx bxs-edit bx-md"></i> Edit</button>
+                            <button class="rescheduleAppt cardBtn"><i class="bx bxs-calendar-edit bx-md"></i> Reschedule</button>
+                        </div>
+                    </div>
+                </template>
+
+            </section>
+
+            <section class="dashArea">
+                <h2 class="dashHeader">Appointment History</h2>
+
+                <div class="longCard-container histAppt-container"></div>
+                <template class="histApptCard-template">
+                    <div class="card longCard histApptCard">
+                        <img src="<?= ROOT.'/assets/images/petOwner/serviceIcons/vetIcon.png' ?>" class="apptIcon" alt="apptIcon">
+                        <div>
+                            <p>
+                                <span class="petName"></span>
+                                <strong><span class="apptDate"></span></strong>
+                            </p>
+                            <p class="apptDescription"></p>
+                            <p>
+                                <strong><span class="docName"></span></strong>
+                                <span class="docAddress"></span>
+                            </p>
+                        </div>
+                        <div class="apptRating"></div>
+                    </div>
+                </template>
+
+            </section>
+            
+
+            <!-- <section id="upcomingAppointments" class="dashArea">
                 <h2>Upcoming Appointments</h2>
                 <button class="expandCardSectionBtn" id="expandUpcomingAppointmentsBtn" title="Expand to view all"><i class="bx bxs-down-arrow-circle bx-lg"></i></button>
                 <div class="appointments-container scrollAppointments">
@@ -114,14 +166,25 @@
                         </div>
                     <?php endfor; ?>
                 </div>
-            </section>
+            </section> -->
 
             <!-- footer at page's bottom: -->
             <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
             
         </div>
-
-
-        <script src="appointmentPages.js"></script>
+        
+        <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
+        <script defer>
+            fetchAndAppendCards(
+                'PO_apptDashboard_Vet/getUpcomingAppointments',
+                '.upcomingApptCard-template',
+                '.upcomingAppt-container'
+            );
+            fetchAndAppendCards(
+                'PO_apptDashboard_Vet/getAppointmentHistory',
+                '.histApptCard-template',
+                '.histAppt-container'
+            );
+        </script>
     </body>
 </html>

@@ -10,6 +10,10 @@ class AdminProfile extends Controller
 
    public function profileview(){
         $adminuser = new AdminRegistrationModel();
+        $admin = $adminuser->checkUser($_SESSION['adminID']);
+        return $admin;
    }
+    
+
     
 }

@@ -20,19 +20,19 @@
                 <div class="profile-details">
                     <div class="detail-item">
                         <label>Name</label>
-                        <span>Ramesh Peshala</span>
+                        <span>ramesh</span>
                     </div>
                     <div class="detail-item">
                         <label>Email</label>
-                        <span>rameshpeshala84@gmail.com</span>
+                        <span><?= htmlspecialchars($admin->email ?? 'N/A') ?></span>
                     </div>
                     <div class="detail-item">
                         <label>Contact Number</label>
                         <span>0762163506</span>
                     </div>
                     <div class="detail-item">
-                        <label>Date</label>
-                        <span>2022/05/06</span>
+                        <label>Date & Time</label>
+                        <span><?= htmlspecialchars($admin->dateTime ?? 'N/A') ?></span>
                     </div>
                 </div>
             </div>
@@ -40,17 +40,12 @@
             <div class="complaint-section">
                 <div class="complaint-message">
                     <h2>Complaint Message</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
-                        nunc vel bibendum lacinia, nisl nunc tincidunt nunc, nec tincidunt
-                        nisl nunc vel bibendum. Sed euismod, nunc vel bibendum lacinia,
-                        nisl nunc tincidunt nunc, nec tincidunt nisl nunc vel bibendum.
-                    </p>
+                    <p><?= htmlspecialchars($admin->issue ?? 'N/A') ?></p>
                 </div>
                 <div class="complaint-images">
                     <h2>Complaint Images</h2>
                     <div class="image-gallery">
-                        <img src="../../assets/images/Owner/complain_image.png" alt="Complaint Image 1">
+                        <img src='<?= htmlspecialchars($admin->image ?? 'N/A') ?>' alt="Complaint Image 1">
                         <img src="../../assets/images/Owner/complain_image.png" alt="Complaint Image 2">
                     </div>
                 </div>

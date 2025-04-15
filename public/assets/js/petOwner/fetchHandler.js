@@ -1,5 +1,6 @@
 // ***************************************************************
 // this JS file is only to be included in view files that have forms that need to be submitted via fetch.
+// <script src="<?=ROOT?>/assets/js/petOwner/fetchHandler.js"></script>
 // ***************************************************************
 
 

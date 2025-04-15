@@ -1,10 +1,8 @@
 /* Reset basic styling */
 body {
-    margin: 0;
+    /* margin: 0; */
     font-family: Arial, sans-serif;
-    background-color: #E4E9F7;
-    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
-    /* background-color: black; */
+    background-color: #F4F7FA;
 }
 
 body:has(#sidebar.close) .pagecontent {
@@ -20,60 +18,85 @@ body:has(#sidebar.close) .pagecontent {
 }
 
 
-/* Header Styling */
 .dashbardheader {
-    margin-top: 0.5%;
-    margin-left: 2%;
-    margin-right: 4%;
-    margin-bottom: 0.5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
-    /* box-shadow: 5px 2px 5px rgba(213, 118, 235, 0.3); */
-    border: #e0bdf9 2px solid;
-    border-radius: 5px;
-}
-
-/* when sidebar is closed, reduce the margin
-#sidebar.close + .dashboardcontent {
-    margin-left: 90px; 
-} */
-
-.dashbardheader h3 {
-    color: #6A0DAD;
-    font-size: 24px;
-}
-
-.dashbardheader .icon i {
-    color: #6A0DAD;
-    font-size: 18px;
-    margin: 0 10px;
-    cursor: pointer;
+    background: #6A0DAD ;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .profile {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: black;
 }
 
 .profile img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
     object-fit: cover;
+    border: 2px solid var(--primary-color-light);
+}
+
+.owner {
+    font-size: 0.9rem;
+    color: white;
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--background-light);
+    margin-left: 8px;
+}
+
+.dashboard-icon {
     width: 40px;
     height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color-light);
     border-radius: 50%;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.profile .name {
-    font-weight: bold;
-    font-size: 17px;
+.dashboard-icon:hover {
+    background-color: var(--background-light);
+    transform: scale(1.05);
 }
 
-.profile button:hover{
-    background-color: #e0bdf9;
-    color: black;
+/* Fix for the nested icon class */
+.dashboard-icon i.dashboard-icon {
+    background: none;
+    width: auto;
+    height: auto;
+}
+
+/* Add notification indicator */
+.dashboard-icon i.fa-bell {
+    position: relative;
+}
+
+.dashboard-icon i.fa-bell::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: #FF5252;
+    border-radius: 50%;
+    border: 2px solid var(--sidebar-color);
 }
 
 
@@ -82,401 +105,295 @@ body:has(#sidebar.close) .pagecontent {
     font-size: 15px;
 }
 
-/* Dashcontent Styling */
-.dashcontent {
-    display: flex;
-    margin-left: 0.3%;
-}
+/* Salon Dashboard Isolated Styling */
+/* Using more specific selectors to avoid conflicts */
 
-.dashcontent .part1{
-    margin-left: 1%;
-    /* margin-right: 5%; */
-    flex: 0 0 auto;
-}
-
-.dashcontent .part2{
-    flex:1;
-    overflow-y: auto;
-    margin-left: 0.2%;
-}
-
-.dashcontent .part1, .part2{
-    background-color: #eeddfa;
-    padding: 20px;
-    border-radius: 8px;
-    /* box-shadow: 10px 10px 15px rgba(202, 143, 225, 0.3); */
-}
-
-/* Part1 Content Styling */
-.appointmentCount {
-    display: grid;
-    align-items: center;
-    background-color: white;
-    padding: 10px;
-    border-radius: 8px;
-    color: black;
-    margin-bottom: 20px;
-    /* box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3); */
-}
-
-/* .upcominappointments {
-    color: gray;
-    font-size: 10px;
-    padding: 3px;
+/* Dashboard Layout - Time Slots and Appointments */
+/* .dashcontent > .timeSlotforTOday,
+.dashcontent > .part2 
+{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 } */
 
-.appointmentCount .icon {
-    font-size: 20px;
-    margin-right: 15px;
+.dashcontent 
+{
+  display: flex;
+  gap: 30px;
 }
 
-.appointmentCount .namewithicon{
-    display: flex;
-    margin: 5px;
-}
-
-.appointmentname {
-    font-family:  "Inter",sans-serif;
-    margin: 10px;
-    font-size: 20px;
-
-}
-
-.appointmentno {
-    margin-left: 30px;
-    color: #6A0DAD;
-    font-size: 20px;
-    text-align: center;
-    font-family:  "Inter",sans-serif;
-}
-
-/* Calendar Styling */
-.calendar .calandercolor {
-    flex: 0 0 auto;
-    gap: 5px;
-    margin-top: 20px;
-}
-
-.calandercolor .colorone,
-.calandercolor .colortwo,
-.calandercolor .colorthree {
-    display: flex;
-    align-items: center;
-}
-
-.coloricon1 {
-    font-size: 10px;
-    color: #6A0DAD;
-    margin-right: 5px;
-}
-
-.colordetail {
-    margin: 0;
-    color: #6A0DAD;
-}
-
-/* Part2 Content Styling */
-.part2header {
-    margin-bottom: 20px;
-}
-
-.part2 {
+/* Time Slots Section */
+.dashcontent > .timeSlotforTOday {
     flex: 1;
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 652px; /* Adjust height as needed */
-    padding: 20px; /* Optional: Add padding for better spacing */
-    border-radius: 8px; /* Optional: Match the design style */
-    background-color: #eeddfa; /* Match the existing design */
+    background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 10px rgba(106, 13, 173, 0.1);
+    padding: 0; /* Removed padding to allow header to extend to edges */
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+    overflow: hidden; /* Added to ensure border-radius applies to the header too */
+  }
+  
+  .timeSlotforTOday .timeslots {
+    background: linear-gradient(100deg, #680181 0%, #6A0DAD 50%);
+    font-size: 22px;
+    padding: 10px 15px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0; /* Removed margin */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+  }
+
+.timeSlotforTOday .date,
+.timeSlotforTOday .slots {
+  padding: 0 25px;
 }
 
-/* Add a custom scrollbar for better UI (optional) */
-.part2::-webkit-scrollbar {
-    width: 8px;
+.timeSlotforTOday .date {
+  margin-top: 20px;
+  font-size: 16px;
+  color: var(--text-color);
+  font-weight: 600;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
 }
 
-.part2::-webkit-scrollbar-thumb {
-    background-color: #6A0DAD; /* Scrollbar color */
-    border-radius: 4px;
+/* Slot Colors and Legend */
+.timeSlotforTOday .slots {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 15px;
 }
 
-.part2::-webkit-scrollbar-track {
-    background-color: #f0e6f9; /* Scrollbar track color */
+.timeSlotforTOday .colorslots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-
-.part2header p {
-    background-color: #fff;
-    margin: 0;
-    text-align: center;
-    font-family: "Inter",sans-serif;
-    font-size: 15px;
-    padding: 5px;
-    border-radius: 4px;
-    /* box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1); */
+.timeSlotforTOday .timeblocks {
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
- .upcominappointments {
-    border-radius: 12px;
-    margin: 10px;
+.timeSlotforTOday .timeblocks:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.realtime {
-    color: #666;
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 10px;
+/* Slot Status Colors */
+.timeSlotforTOday .booked-slot {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-left: 4px solid #4a0980;
+  }
+  
+  .timeSlotforTOday .blocked-slot {
+    background-color: var(--background-light);
+    color: var(--text-clr);
+    border-left: 4px solid #a07ba0;
+  }
+  
+  .timeSlotforTOday .available-slot {
+    background-color: var(--list-item);
+    color: var(--text-primary);
+    border-left: 4px solid #efbfef;
+  }
+
+/* Time Slots Table */
+.timeSlotforTOday .slotdetails {
+  width: 40%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-top: 15px;
 }
 
-.appointmentbox {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    gap: 10px;
+.timeSlotforTOday .slotdetails td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
-.image {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
+.timeSlotforTOday .slotdetails td.timeblock {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
-.image img.image {
+.timeSlotforTOday .slotdetails tr:hover td {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Appointments Section */
+.dashcontent > .part2 {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.part2 .part2header {
+  background: linear-gradient(100deg, #680181 0%, #6A0DAD 50%);
+  color: white;
+  padding: 10px 20px;
+}
+
+.part2 .part2header h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Appointments Table */
+.part2 .appointmentTableBody {
+  padding: 25px;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.part2 .table {
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.part2 .table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.part2 .table thead th {
+  background: linear-gradient(to bottom, #f8fafc 0%, #f1f8fe 100%);
+  color: #2c3e50;
+  padding: 15px 20px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e9e9e9;
+  position: sticky;
+  top: 0;
+  letter-spacing: 0.5px;
+}
+
+.part2 .table tbody td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9e9e9;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.part2 .table tbody tr:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+.part2 .table tbody tr:hover td {
+  background-color: #f1f8fe;
+}
+
+/* Complete Button */
+.part2 .complete {
+    background-color: #6A0DAD;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.part2 .complete:hover {
+  background: linear-gradient(135deg, #27ae60 0%, #219d54 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.part2 .complete:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Empty State */
+.part2 .table tbody tr td[colspan="6"] {
+  text-align: center;
+  padding: 40px 15px;
+  color: #95a5a6;
+  font-style: italic;
+  font-size: 15px;
+}
+
+/* Responsive Design - Modified to work with stats section */
+@media (max-width: 1200px) {
+  .dashcontent {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .dashcontent {
+    flex-direction: column;
+  }
+  
+  .dashcontent > .timeSlotforTOday {
+    position: static;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .dashcontent > .part2 {
+    width: 100%;
+  }
 }
 
-.petimage {
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.userdetails {
-    flex-grow: 1;
-}
-
-.userdetails .icon {
-    color: gray;
-    size: 5px;
-    margin: 2px;
-
-}
-
-.username  {
-    display: inline;
-    font-weight: bold;
-    font-size: 15px;
-    margin-bottom: 5px;
-    color:gray;
-}
-
-.servicename{
-    display: inline;
-    margin-left: 5px;
-    font-size: 13px;
-    color: #666;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.fa-paw {
-    margin-right: 5px;
-}
-
-.number {
-    display: inline;
-    font-size: 12px;
-    color: gray;
-}
-
-.time {
-    display: inline;
-    color: #666;
-    font-size: 14px;
-    margin: 5px 0;
-}
-
-
-/* Optional: Add smooth scrolling for the whole page */
-html {
-    scroll-behavior: smooth;
-}
-
-
-/* Responsive Design */
 @media (max-width: 768px) {
-    .dashbardheader {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .dashbardheader h3 {
-        font-size: 20px;
-    }
-
-    .profile {
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .profile img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .dashcontent {
-        flex-direction: column;
-        gap: 15px;
-        margin-top: 10px;
-    }
-
-    .dashcontent .part1,
-    .dashcontent .part2 {
-        padding: 15px;
-        box-shadow: none;
-    }
-
-    .appointmentCount {
-        padding: 10px;
-        grid-template-rows: auto 1fr;
-    }
-
-    .appointmentname {
-        font-size: 22px;
-    }
-
-    .appointmentno {
-        font-size: 20px;
-        margin-left: 0;
-    }
-
-    .calendar .calandercolor {
-        margin-top: 10px;
-    }
-
-    .calandercolor .coloricon1 {
-        font-size: 8px;
-    }
-
-    .part2header h2 {
-        font-size: 18px;
-        padding: 6px;
-    }
-
-    .upcominappointments {
-        gap: 5px;
-    }
-
-    .appointmentbox {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-    }
-
-    .appointmentbox .imageandview {
-        margin-left: 0;
-        justify-content: flex-start;
-        gap: 10px;
-    }
-
-    .appointmentbox img.image {
-        width: 50px;
-        height: 50px;
-    }
-
-    .appointmentbox .username {
-        font-size: 16px;
-    }
-
-    .appointmentbox .servicename,
-    .appointmentbox .time {
-        font-size: 14px;
-    }
-
-    .appointmentbox button {
-        margin-left: 0;
-        width: 100%;
-    }
+  .timeSlotforTOday .timeslots {
+    font-size: 20px;
+  }
+  
+  .part2 .part2header h3 {
+    font-size: 20px;
+  }
+  
+  .part2 .table thead th, 
+  .part2 .table tbody td {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+  
+  .timeSlotforTOday .colorslots {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
-@media (max-width: 480px) {
-    .dashbardheader {
-        padding: 5px;
-    }
-
-    .dashbardheader h3 {
-        font-size: 18px;
-    }
-
-    .profile {
-        gap: 5px;
-    }
-
-    .dashcontent .part1,
-    .dashcontent .part2 {
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-    .appointmentCount {
-        padding: 8px;
-    }
-
-    .appointmentname {
-        font-size: 20px;
-    }
-
-    .appointmentno {
-        font-size: 18px;
-    }
-
-    .calendar .calandercolor {
-        gap: 5px;
-    }
-
-    .calandercolor .coloricon1 {
-        font-size: 6px;
-    }
-
-    .part2header h2 {
-        font-size: 16px;
-    }
-
-    .upcominappointments {
-        gap: 5px;
-    }
-
-    .appointmentbox {
-        padding: 8px;
-        border-radius: 5px;
-        box-shadow: none;
-    }
-
-    .appointmentbox img.image {
-        width: 40px;
-        height: 40px;
-    }
-
-    .appointmentbox .username {
-        font-size: 14px;
-    }
-
-    .appointmentbox .servicename,
-    .appointmentbox .time {
-        font-size: 12px;
-    }
-
-    .appointmentbox button {
-        font-size: 12px;
-    }
+@media (max-width: 576px) {
+  .part2 .table {
+    margin: 0 -15px;
+    width: calc(100% + 30px);
+    border-radius: 0;
+  }
+  
+  .part2 .table thead th {
+    padding: 10px 12px;
+  }
+  
+  .part2 .table tbody td {
+    padding: 10px 12px;
+  }
 }
