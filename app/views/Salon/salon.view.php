@@ -26,8 +26,21 @@
                     </div>
                     <div class="dashboard-icon" id="icon">
                         <a href="<?=ROOT?>/SalonNotifications">
-                            <i class="fa-regular fa-bell icon">    
-                            </i>
+                            <i class="fa-regular fa-bell icon"></i>
+                            <span class="notification-count">
+                                <?php
+                                    if(!empty($data['upcoming']))
+                                    {
+                                        ?>
+                                        <?=$data['upcoming'] ?>
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>0<?php
+                                    }
+                                ?>
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -76,7 +89,19 @@
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="stat-info">
-                            <div class="stat-value">20</div>
+                            <div class="stat-value">
+                                <?php
+                                    if(!empty($data['reviews']))
+                                    {
+                                        $ratingCount = $data['reviews'];
+                                    }
+                                    else
+                                    {
+                                        $ratingCount = 0;
+                                    }
+                                ?>
+                                <?= $ratingCount ?>
+                            </div>
                             <div class="stat-label">Total Reviews</div>
                         </div>
                     </div>
