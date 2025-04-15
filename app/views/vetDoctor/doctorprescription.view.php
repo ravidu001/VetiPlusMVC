@@ -12,6 +12,31 @@
 <body>
 <?php require_once '../app/views/navbar/doctornav.php'; ?>
 <div class="home">
+    <div id="petPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Select Pet</h2>
+            <label for="petID">Appointment ID:</label>
+            <select id="petID" class="form-input">
+                <option value="10011" data-name="Roky">1</option>
+                <option value="10012" data-name="Bella">2</option>
+                <option value="10013" data-name="Max">3</option>
+            </select>
+            
+            <label for="petID">Pet ID:</label>
+            <select id="petID" class="form-input">
+                <option value="10011" data-name="Roky">#10011</option>
+                <option value="10012" data-name="Bella">#10012</option>
+                <option value="10013" data-name="Max">#10013</option>
+            </select>
+            <label for="petName">Pet Name:</label>
+            <input type="text" id="petName" class="form-input" readonly>
+            <div class="button-container">
+                <button id="okButton" class="btn btn-primary">OK</button> <!-- OK Button -->
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
     <div class="prescription-wrapper">
         <div class="prescription-header">
             <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Patient Avatar" class="patient-avatar">
