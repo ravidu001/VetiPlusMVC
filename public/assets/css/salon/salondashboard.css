@@ -57,54 +57,31 @@ body:has(#sidebar.close) .pagecontent {
 }
 
 .dashboard-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--primary-color-light);
-    border-radius: 50%;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  position: relative;
+  margin-right: 10px;
 }
 
-.dashboard-icon:hover {
-    background-color: var(--background-light);
-    transform: scale(1.05);
+.dashboard-icon .icon {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* Fix for the nested icon class */
-.dashboard-icon i.dashboard-icon {
-    background: none;
-    width: auto;
-    height: auto;
+.notification-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color:var(--list-item);
+  color:var(--primary-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-/* Add notification indicator */
-.dashboard-icon i.fa-bell {
-    position: relative;
-}
-
-.dashboard-icon i.fa-bell::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    width: 8px;
-    height: 8px;
-    background-color: #FF5252;
-    border-radius: 50%;
-    border: 2px solid var(--sidebar-color);
-}
-
-
-.icondrop {
-    color: #6A0DAD;
-    font-size: 15px;
-}
-
 /* Salon Dashboard Isolated Styling */
 /* Using more specific selectors to avoid conflicts */
 

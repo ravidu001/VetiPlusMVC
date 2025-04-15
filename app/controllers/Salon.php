@@ -27,6 +27,9 @@ class Salon extends Controller
             //get the salon time slot data for today
             $data['slotdetails'] = $this->fetchTimeSlotData($salonID, $today);
 
+            //get the total reviews from the salon
+            $data['reviews'] = $this->fetchTotalReviews($salonID);
+
             //get the appointments count
             $data['count'] = $this->fetchAppointmentsCount($salonID);
 
@@ -149,7 +152,7 @@ class Salon extends Controller
             $salsessiontable = new SalonTimeSlots;
 
             $results = $groomingSessions->FindBookedDetails();
-            show($results);
+            // show($results);
 
             if (!$results || !is_array($results)) 
             {
@@ -172,6 +175,33 @@ class Salon extends Controller
             }
 
             return count($uniqueCustomers);
+        }
+
+
+        //find the total reviews in the site
+        private function fetchTotalReviews($salonID)
+        {
+            $feedbackModel = new SalonFeedbacks();
+            
+            $ratingCount = 0;
+
+            $feedbackdetails = $feedbackModel->getAllDetails($salonID);
+
+            // show($feedbackdetails);
+
+            foreach($feedbackdetails as $feedbackdetail)
+            {
+                $rating = $feedbackdetail->rating;
+
+                if($rating > 5)
+                {
+                    $rating = $rating/5;
+                }
+
+                $ratingCount += $rating;
+            }
+           
+            return $ratingCount;
         }
 }
 

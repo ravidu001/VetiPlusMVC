@@ -1,69 +1,45 @@
-<?php
+<?php 
 
 class SalonFeedbacks
 {
     use Model;
 
-    protected $table = 'salonfeedback'; // Feedback table name
+    protected $table = 'salonfeedback';
 
-    /**
-     * Get feedback details with pet owner details.
-     */
-    public function getFeedbackData()
+    protected $allowedColumns = ['feedbackID', 'rating', 'feedbackDateTime', 'status', 'comment', 'response', 'responseDateTime', 'groomingID', 'petOwner', 'salonID'];
+
+    public function getReviewsBySalonID($salonID)
     {
-        $query = "
-            SELECT 
-                 salonfeedback.*, 
-                petowner.fullName AS fullName, 
-                petowner.profilePicture  AS profilePicture 
-            FROM 
-                $this->table 
-            LEFT JOIN 
-                petowner 
-            ON 
-                 salonfeedback.petownerID = petowner.petownerID
-        ";
-        return $this->query($query);
+        // show($salonId);
+        $this->limit = 100;
+        $this->offset = 0;
+        $this->order_type = "desc";
+        $this->order_column = "feedbackDateTime";
+        return  $this->where(['salonID' => $salonID]);  
     }
 
-    /**
-     * Insert new feedback data.
-     */
-    public function addFeedback($data)
+    public function getAllDetails($salonID)
     {
-        return $this->insert($data);
+        $this->order_column = "feedbackDateTime";
+        return  $this->where(['salonID' => $salonID]); 
     }
 
-    /**
-     * Update existing feedback.
-     */
-    public function updateFeedback($feedbackID, $data)
+    public function saveReply($feedbackID, $replyContent)
     {
-        return $this->update($feedbackID, $data, 'feedbackID');
-    }
+        // Prepare the data to be updated
+        $data = [
+            'response' => $replyContent,
+            'status' => 1, // Assuming 1 means replied
+            'responseDateTime' => date('Y-m-d H:i:s') // Current date and time
+        ];
 
-    /**
-     * Delete feedback by ID.
-     */
-    public function deleteFeedback($feedbackID)
-    {
-        return $this->delete($feedbackID, 'feedbackID');
-    }
-
-    /**
-     * Find all feedback with sorting options.
-     */
-    public function findAllFeedback()
-    {
-        $this->order_column = 'feedbackID';
-        return $this->findAll();
-    }
-
-    /**
-     * Get feedback by specific conditions.
-     */
-    public function whereFeedback($conditions, $notConditions = [])
-    {
-        return $this->where($conditions, $notConditions);
+        // Update the record in the database
+        return $this->update($feedbackID, [
+            'status' => $data['status'], 
+            'response' => $data['response'], 
+            'responseDateTime' => $data['responseDateTime']
+        ], 'feedbackID');
+        
     }
 }
+

@@ -12,6 +12,13 @@ class SalonBooked
         return $this->FindAll();
     }
 
+    //Find the details by SalonSessions
+    public function getDetailsByStatus($status)
+    {
+        $this->order_column = 'groomingID';
+        return $this->where(['status' => $status]);
+    }
+
     // Find slots by salonsessionID
     public function getSlotDetails($salSessionID) {
         $this->order_column = 'salSessionID';

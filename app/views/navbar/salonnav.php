@@ -83,21 +83,13 @@
 
                 <li>
 
-                <li>
-                    <button onclick="toggleSubMenu(this)" class="dropdown-btn">
-                        <i class='bx bxs-message icon'></i>
+                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonFeedback' ? 'active' : '' ?>"> 
+                    <a href="<?= ROOT?>/SalonFeedback">
+                        <i class='bx  bxs-message icon' ></i>
                         <span>Feedback</span>
-                        <i class='bx bx-chevron-down'></i>
-                    </button>
-                    <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonFeedback' ? 'active' : '' ?>"> 
-                            <a href="<?= ROOT?>/SalonFeedback">My Reviews</a>
-                        </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonResponse' ? 'active' : '' ?>">
-                            <a href="<?= ROOT?>/SalonResponse">To Reviews</a>
-                        </li>
-                    </ul>
-                </li> 
+                    </a>
+                </li>
+
 
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonContact' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonContact">
@@ -129,7 +121,7 @@
         </nav>
     </div>
 </body>
-    <script src="/client/assets/jsFIles/salon/sidebar.js"></script>
+    <!-- <script src="<?=ROOT?>/assets/js/salon/sidebar.js"></script> -->
 </html>
 
 
