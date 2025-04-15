@@ -19,6 +19,13 @@ class SalonTimeSlots {
         return $this->where(['openday' => $today, 'salonID' => $salonID, 'status' => $status]);
     }
 
+    //Find the date and salonID details
+    public function fetchSessionByDate($salonID,$salsessionID, $date)
+    {
+        $this->order_column = 'salSessionID';
+        return $this->where(['openday' => $date, 'salSessionID' => $salsessionID, 'salonID' => $salonID]);
+    }
+
     //Find slots using the salonID and date
     public function slotsByDateAndSalon($salonID, $today)
     {
