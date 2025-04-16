@@ -115,14 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${'★'.repeat(review.reviewData.rating)}${'☆'.repeat(5 - review.reviewData.rating)} (${review.reviewData.rating}/5)
                     </div>
                     <p class="review-content">${review.reviewData.comment}</p>
-                    <small>Appointment #${review.reviewData.salonID}</small>
+                    <small>Appointment #${review.reviewData.groomingID}</small>
                 </div>
                 <div class="review-actions">
                     ${review.reviewData.status ? `
-                        <button class="btn btn-details" onclick="openDetailsModal('${review.petOwner.fullName}', '${reviewDate}', '${review.reviewData.rating}', '${review.reviewData.comment}', '${review.reviewData.salonID}', '${review.reviewData.response}')">View Details</button>
+                        <button class="btn btn-details" onclick="openDetailsModal('${review.petOwner.fullName}', '${reviewDate}', '${review.reviewData.rating}', '${review.reviewData.comment}', '${review.reviewData.groomingID}', '${review.reviewData.response}')">View Details</button>
                     ` : `
                         <button class="btn btn-reply" onclick="openReplyModal('${review.reviewData.feedbackID}')">Reply</button>
-                        <button class="btn btn-details" onclick="openDetailsModal('${review.petOwner.fullName}', '${reviewDate}', '${review.reviewData.rating}', '${review.reviewData.comment}', '${review.reviewData.salonID}', '${review.reviewData.response}')">View Details</button>
+                        <button class="btn btn-details" onclick="openDetailsModal('${review.petOwner.fullName}', '${reviewDate}', '${review.reviewData.rating}', '${review.reviewData.comment}', '${review.reviewData.groomingID}', '${review.reviewData.response}')">View Details</button>
                     `}
                 </div>
             `;
@@ -156,28 +156,34 @@ const mainContent = document.getElementById('mainContent');
 function removeLoadingOverlay() {
     loadingOverlay.classList.add('hidden');
     mainContent.classList.add('visible');
-    
-    // Enable scrolling
-    document.body.style.overflow = 'auto';
+    console.log('Loading Overlay Classes:', loadingOverlay.classList);
+    console.log('Main Content Classes:', mainContent.classList);
+
+    document.body.style.overflow = 'auto';// Enable scrolling
+
+    console.log('I am in the remove overlay');
+
 }
 
-// Add click event to the entire document
 document.addEventListener('click', (event) => {
-    if (loadingOverlay.classList.contains('hidden')) return;
-    
-    // Prevent multiple triggers
-    if (event.target.closest('#loadingOverlay')) {
+
+    if (!loadingOverlay.classList.contains('hidden') && event.target.closest('#loadingOverlay')) {
+        console.log('click the display');
         removeLoadingOverlay();
+
     }
+
 });
 
-// Optional: Add keyboard support
+
 document.addEventListener('keydown', (event) => {
-    if (loadingOverlay.classList.contains('hidden')) return;
-    
-    if (event.key === 'Enter' || event.key === ' ') {
+
+    if (!loadingOverlay.classList.contains('hidden') && (event.key === 'Enter' || event.key === ' ')) {
+
         removeLoadingOverlay();
+
     }
+
 });
 
 // Character count update function
@@ -272,7 +278,8 @@ function sendReply() {
 }
 
 // Open details modal function
-function openDetailsModal(petOwnerID, formattedDate, rating, comment, salonID, response) {
+function openDetailsModal(petOwnerID, formattedDate, rating, comment, groomingID, response) {
+    console.log(groomingID);
     // Populate the modal with the relevant review details
     document.querySelector('.review-detail-value[data-label="reviewer"]').textContent = petOwnerID;
     document.querySelector('.review-detail-value[data-label="date"]').textContent = formattedDate;
@@ -287,10 +294,10 @@ function openDetailsModal(petOwnerID, formattedDate, rating, comment, salonID, r
             ratingContainer.innerHTML += '<span class="star empty">☆</span>'; // Empty star
         }
     }
-    ratingContainer.innerHTML += ` (${rating}/5)`; // Append the rating text
+    ratingContainer.innerHTML += `(${rating}/5)`; // Append the rating text
 
     document.querySelector('.review-detail-value[data-label="content"]').textContent = comment;
-    document.querySelector('.review-detail-value[data-label="salonID"]').textContent = `#${salonID}`;
+    document.querySelector('.review-detail-value[data-label="groomingID"]').textContent = `#${groomingID}`;
     
     const responseElement = document.querySelector('.review-detail-value[data-label="response"]');
     responseElement.textContent = response ? response : 'No response yet';
