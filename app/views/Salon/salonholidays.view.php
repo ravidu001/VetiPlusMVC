@@ -3,76 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Holidays</title>
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonholiday.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salontimeslot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
+<?php
+     if (isset($data['holidays'])) 
+     {
+         $holidays = $data['holidays'];
+     }
+      else 
+     {
+         $holidays = [];
+     }
+?>
+
 <body>
-    <div class="holidays">
-        <a href="<?=ROOT?>/SalonSlot"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
 
-        <form action="<?=ROOT?>/SalonHolidays" method="post">
-            <div class="holidays">
-            <p>Add holidays:</p>
-            <input type="date" id="holidayDate" />
-            <button type="button" onclick="addHoliday()">Add</button>
+        <div>
+            <?php
+                include __DIR__ . '/../navbar/salonnav.php';
+             ?>
+            <!-- <php code for navbar here> -->
+        </div>
 
-            <ul id="holidayList"></ul>
+        <h1>Salon Time Slot Details</h1>
 
-            <!-- Hidden input to store holidays array -->
-            <div id="hiddenInputs"></div>
+        <div class="buttons">
+            <button style="background-color:darkorchid">
+                <a href="<?=ROOT?>/SalonHolidayView">
+                    Holidays
+                </a>    
+            </button>
+            <button>
+                <a href="<?=ROOT?>/SalonSlot">
+                    Create Slots
+                </a> 
+            </button>
+            <button>
+                <a href="<?=ROOT?>/SalonTimeSlot">
+                   View Slots
+                </a> 
+            </button>
+        </div>
 
-            <button type="submit" name="saveholidays">Save</button>
-        </form>
-    </div>
+    <div class="holiday">
+        <a href="<?=ROOT?>/SalonTimeSlot"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
+        <h2>Holidays</h2>
+        <button class="addbutton">
+            <a href="<?=ROOT?>/SalonHolidays">Add</a>
+        </button>
+        <form method="POST" action="<?= ROOT ?>/SalonHolidayView/removeHoliday">    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Status</th>
+                    </tr>
+                        </thead>
+                <tbody>
+                    <?php
+                        if (!empty($holidays)) : 
+                    ?>
+                    <?php 
+                        foreach ($holidays as $holiday) : 
+                    ?> 
+                        <tr>
+                            <td><?= $holiday ?></td>
+                            <td>
+                                <button class="remove-btn" type="submit" name="remove" value="<?= $holiday ?>">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr>
+                            <td colspan="2">Not yet added any holidays</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </form>   
+    </div> 
 </body>
-
-<script>
-    const holidayList = document.getElementById("holidayList");
-    const hiddenInputs = document.getElementById("hiddenInputs");
-    const holidays = [];
-
-    //  Function to add holidays
-    function addHoliday() 
-    {
-        const dateInput = document.getElementById("holidayDate");
-        const dateValue = dateInput.value;
-
-        if (dateValue && !holidays.includes(dateValue)) 
-        {
-            holidays.push(dateValue);
-            updateHolidayList();
-            updateHiddenInputs();
-            dateInput.value = "";
-        }
-    }
-
-    //  Function to remove specific holiday
-    function removeSpecificHoliday(date) 
-    {
-        const index = holidays.indexOf(date);
-        if (index !== -1) 
-        {
-            holidays.splice(index, 1);
-            updateHolidayList();
-            updateHiddenInputs();
-        }
-    }
-
-    //  Update list in UI
-    function updateHolidayList() 
-    {
-        holidayList.innerHTML = holidays
-            .map(date => `<li>${date} <button type="button" onclick="removeSpecificHoliday('${date}')">X</button></li>`)
-            .join('');
-    }
-
-    //  Update hidden inputs to send holidays via PHP
-    function updateHiddenInputs() 
-    {
-        hiddenInputs.innerHTML = holidays
-            .map(date => `<input type="hidden" name="holidays[]" value="${date}" />`)
-            .join('');
-    }
-</script>
-
 </html>
