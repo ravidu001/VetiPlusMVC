@@ -17,12 +17,12 @@ class SalonNotifications extends Controller
 
         //get the upcoming data
         // $data['upcoming'] = $this->FindUpcoming($salonID);
-        $data['upcoming'] = $this->FindUpcoming();
+        // $data['upcoming'] = $this->FindUpcoming();
 
-        if(!empty($data['upcoming']))
-        {
-            redirect('Salon/salon',$data);
-        }
+        // if(!empty($data['upcoming']))
+        // {
+        //     redirect('Salon/salon',$data);
+        // }
         
         // $response = $data['upcoming'];
 
@@ -103,7 +103,8 @@ class SalonNotifications extends Controller
             }
         }
         
-         return $count;
+        
+        //  return $count;
         header('Content-Type: application/json');
         echo json_encode($array);
         exit;

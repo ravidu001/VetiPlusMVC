@@ -6,23 +6,21 @@
     font-family: sans-serif;
     color: #333;
 }
-body {
+/* body {
     background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
 
-}
+} */
 
-body:has(#sidebar.close) .pagecontent {
+body:has(#sidebar.close) .main-content {
     margin-left: 70px;
     width: calc(100% - 70px);
 }
 
-
-.pagecontent{
+.main-content{
     margin-left: 260px; /*width of sidebar */ 
     transition: margin-left 0.3s ease-in-out;
     width: calc(100%- 260px);
 }
-
 
 :root {
     --body-color: #E4E9F7;
@@ -108,18 +106,21 @@ body, html {
 }
 
 .loading-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0; */
+    /* visibility: hidden; */
+    display: none;
 }
 
 /* Rest of the previous CSS remains the same */
 .main-content {
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    /* opacity: 0;
+    transition: opacity 0.5s ease; */
+    display: none;
 }
 
 .main-content.visible {
-    opacity: 1;
+    /* opacity: 1; */
+    display: block;
 }
 
 .reviews-container {
@@ -251,7 +252,7 @@ body, html {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 3;
     left: 0;
     top: 0;
     width: 100%;
@@ -273,6 +274,7 @@ body, html {
     background-color: white;
     border-radius: 15px;
     width: 500px;
+    z-index: 5;
     max-width: 95%;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     position: relative;

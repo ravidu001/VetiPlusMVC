@@ -104,7 +104,7 @@ class SalonHolidays extends Controller
                 }
 
                 // Redirect after successful insert
-                redirect('SalonSlot');
+                redirect('SalonHolidayView');
                 exit();
             } 
             else 
@@ -113,7 +113,7 @@ class SalonHolidays extends Controller
             }
         }
 
-        $this->view('Salon/salonholidays', $data);
+        $this->view('Salon/salonholidaysadd', $data);
     }
 }
 ?>
