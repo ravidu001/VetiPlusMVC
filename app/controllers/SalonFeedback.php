@@ -19,7 +19,7 @@ class SalonFeedback extends Controller
         //create  the logged-in user's ID
         $salonID = $_SESSION['SALON_USER'];
 
-        show($salonID);
+        // show($salonID);
 
         // Initialize these variables regardless of review results
         $consolidatedReviews = [];
@@ -30,10 +30,10 @@ class SalonFeedback extends Controller
         //Fetch the reviews for the logged-in doctor
         $reviews = $feedbacktable->getReviewsBySalonID($salonID);
 
-        show($reviews);
+        // show($reviews);
 
         //Check if the reviews were fetched successfully
-        if($reviews = false)
+        if($reviews == false)
         {
             //Handle the error (eg- show an error message)
             die('Error fetching reviews');
@@ -81,7 +81,7 @@ class SalonFeedback extends Controller
             foreach ($reviews as $reviewItem) 
             {
                 $petOwner = new PetOwner();
-                $petOwnerData = $petOwner->getUserDetails($reviewItem->petOwner);
+                $petOwnerData = $petOwner->getUserDetailsByID($reviewItem->petOwnerID);
 
                 if($petOwnerData)
                 {

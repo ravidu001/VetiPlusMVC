@@ -53,12 +53,12 @@
                     </a>
                 </li>
 
-                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonSlot' ? 'active' : '' ?>"> 
+                <!-- <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonSlot' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonSlot">
                         <i class='bx bxs-pie-chart-alt icon'></i>
                         <span>Time SlotCreate</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonService' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonService">
