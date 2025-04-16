@@ -20,9 +20,22 @@
        
         <h1>Salon Time Slot Schedules</h1>
         
-        <div class="buutons">
-            <button>Holidays</button>
-            <button>WeekDays And Slot Details</button>
+        <div class="buttons">
+            <button style="background-color:darkorchid">
+                <a href="<?=ROOT?>/SalonTimeSlot">
+                   View Slots
+                </a> 
+            </button>
+            <button>
+                <a href="<?=ROOT?>/SalonHolidayView">
+                    Holidays
+                </a>    
+            </button>
+            <button>
+                <a href="<?=ROOT?>/SalonSlot">
+                    Create Slots
+                </a> 
+            </button>
         </div>
 
         <div class="calandercolrs" style="display: flex;">
