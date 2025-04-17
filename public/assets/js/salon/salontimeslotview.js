@@ -68,8 +68,8 @@ function getTimeSlotsFromBackend(selectedDate)
 
                 row.innerHTML = `
                     <td>${slot.time_slot}</td>
-                    <td>${slot.status}</td>
-                    <td>${slot.openday}</td>
+                    <td>${slot.noOfBookings}</td>
+                    <td>${slot.noOfAvailable}</td>
                 `;
 
                 tableBody.appendChild(row);
@@ -86,4 +86,49 @@ function getTimeSlotsFromBackend(selectedDate)
         console.error('Error fetching slots:', error);
         document.getElementById('slotTableBody').innerHTML = `<tr><td colspan="3">Error loading appointment slots.</td></tr>`;
     });
+}
+
+// Global object to store fetched dates
+let calendarData = 
+{
+    opendays: [],
+    closedays: [],
+    holidays: [],
+};
+
+//__________________________________________________________________________________________________________________
+//get the dates to color in the calander 
+//open dates, close dates, past dates and holidays
+function getDatesFromBackEnd()
+{
+    const SalonEmailAddress = salonEmail;
+
+    if(!SalonEmailAddress)
+    {
+        redirect('Login');
+    }
+    else
+    {
+        fetch(`${BASE_URL}/SalonTimeSlot/getDates`, 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ salonID: SalonEmailAddress }) // Sending as JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success && data.results.length > 0)
+            {
+                calendarData.opendays = data.results.opendays || [];
+                calendarData.closedays = data.results.closedays || [];
+                calendarData.holidays = data.results.holidays || [];
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching calendar data:', error);
+        });
+
+    }
 }
