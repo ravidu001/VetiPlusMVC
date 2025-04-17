@@ -5,7 +5,7 @@ class DoctorReview extends Controller {
         // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
             // Redirect to the login page if not logged in
-            header('Location: ' . URLROOT . '/users/login');
+            header('Location: ' . ROOT . '/users/login');
             exit();
         }
 
@@ -28,7 +28,7 @@ class DoctorReview extends Controller {
             echo 'No reviews found for this doctor.';
         } else {
             // Proceed to access the reviews
-            //print_r($reviews[0]->feedbackID); // This will work if there are reviews
+            // print_r($reviews[0]->feedbackID); // This will work if there are reviews
 
             // Initialize variables for average rating calculation
             $totalRating = 0;
@@ -59,7 +59,7 @@ class DoctorReview extends Controller {
             // Iterate over each review to get petowner data
             foreach ($reviews as $reviewsItem) {
                 $petOwner = new PetOwner();
-                $petOwnerData = $petOwner->getUserDetails($reviewsItem->petOwnerID);
+                $petOwnerData = $petOwner->getUserDetailsByID($reviewsItem->petOwnerID);
                 // print_r($petOwnerData->fullName);
 
                 if ($petOwnerData) {
@@ -73,7 +73,7 @@ class DoctorReview extends Controller {
             }
         }
 
-        // show($reviews);
+        // show($consolidatedReviews);
 
         $this->view('vetDoctor/doctorreview', 
             ['reviews' => $consolidatedReviews, 
