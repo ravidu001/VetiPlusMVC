@@ -178,7 +178,7 @@ class SalonRegister extends Controller
             }
             elseif($status === 'approved')
             {
-                redirect('SalonDashboard');
+                redirect('Salon');
             }            
         }
         else

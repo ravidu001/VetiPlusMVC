@@ -38,7 +38,7 @@
         </div>
 
     <div class="timeslotdetails">
-        <h2>Salon Time Slot Details</h2>
+        <h1>Salon Time Slot Details</h1>
         <div class="buttons">
             <button style="background-color:darkorchid">
                 <a href="<?=ROOT?>/SalonSlot">

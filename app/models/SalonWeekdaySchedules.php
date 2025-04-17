@@ -19,6 +19,13 @@ class SalonWeekdaySchedules
         return $this->where(['config_id' => $configID]);
     }
 
+    //FInd the slot by config ID and Status
+    public function findByConfigIDStatus($configID, $status)
+    {
+        $this->order_column = 'config_id';
+        return $this->where(['config_id' => $configID, 'is_closed' => $status]);
+    }
+
     //find the first SLot by shedule_id
     public function FindSlotByScheduleID($sheduleID)
     {

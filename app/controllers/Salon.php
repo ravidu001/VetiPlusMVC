@@ -18,7 +18,7 @@ class Salon extends Controller
             }
     
             //define today
-            $today = Date('Y-m-d');
+            $today = '2025-04-23';
 
             $data = [];
 
@@ -189,18 +189,22 @@ class Salon extends Controller
 
             // show($feedbackdetails);
 
-            foreach($feedbackdetails as $feedbackdetail)
+            if($feedbackdetails)
             {
-                $rating = $feedbackdetail->rating;
-
-                if($rating > 5)
+                foreach($feedbackdetails as $feedbackdetail)
                 {
-                    $rating = $rating/5;
-                }
+                    $rating = $feedbackdetail->rating;
 
-                $ratingCount += $rating;
-            }
+                    if($rating > 5)
+                    {
+                        $rating = $rating/5;
+                    }
+
+                    $ratingCount += $rating;
+                }
            
+            }
+
             return $ratingCount;
         }
 }

@@ -144,6 +144,24 @@ function initCalendar()
             dayElement.classList.add('open');
         }
 
+        //___________________________________________________________________________________________________________________________________
+        //get the colours for the dates
+
+        // Check against opendays, closedays, holidays
+        // if (calendarData.closedays.includes(dateStr)) {
+        //     dayElement.classList.add('closed-day');
+        //     dayButton.disabled = true;
+        // } else if (calendarData.holidays.includes(dateStr)) {
+        //     dayElement.classList.add('holiday-day');
+        //     dayButton.disabled = true;
+        // } else if (calendarData.opendays.includes(dateStr)) {
+        //     dayElement.classList.add('open-day');
+        // } else {
+        //     dayElement.classList.add('normal-day');
+        // }
+
+        //___________________________________________________________________________________________________________________________________________
+
         // **Append elements**
         dayElement.appendChild(dateWrapper);
         dayElement.appendChild(dayButton);
@@ -160,12 +178,14 @@ function previousMonth()
 {
     currentDate.setMonth(currentDate.getMonth() - 1);
     initCalendar();
+    // getDatesFromBackEnd();
 }
 
 function nextMonth() 
 {
     currentDate.setMonth(currentDate.getMonth() + 1);
     initCalendar();
+    // getDatesFromBackEnd();
 }
 
 function updateMonthDisplay() 
@@ -178,3 +198,4 @@ function updateMonthDisplay()
 
 // Initialize the calendar
 initCalendar();
+// getDatesFromBackEnd();
