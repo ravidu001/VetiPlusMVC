@@ -21,7 +21,6 @@
 ?>
 
 <body>
-
         <div>
             <?php
                 include __DIR__ . '/../navbar/salonnav.php';
@@ -29,7 +28,7 @@
             <!-- <php code for navbar here> -->
         </div>
 
-        <h1>Salon Time Slot Details</h1>
+        <h2>Salon Time Slot Details</h2>
 
         <div class="buttons">
             <button style="background-color:darkorchid">

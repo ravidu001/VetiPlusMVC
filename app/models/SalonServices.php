@@ -40,10 +40,10 @@ class SalonServices
 
     // }
 
-    public function findAllServiceId()
+    public function findAllServiceId($salonID)
     {
         $this->order_column = 'serviceID';
-        return $this->findAll('serviceID');
+        return $this->where(['salonID' => $salonID]);
     }
 }
 

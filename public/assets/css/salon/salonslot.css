@@ -64,10 +64,10 @@ body {
 /* Time slots flex layout */
 .timeslots {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    /* flex-wrap: wrap; */
     gap: 10px;
-    padding: 10px;
+    
 }
 
 .timeslots .duration, 
@@ -124,7 +124,7 @@ p {
 }
 
 .selecttime .highlight,
-.timeslots .highlight {
+ .highlight {
     font-weight: 600;
     color: var(--primary-color);
 }

@@ -115,7 +115,7 @@
                             <?php
                                 $today = date('Y-m-d');
                             ?>
-                            <h4 class="date"><?= $today ?></h4>
+                            <h4 class="date">Today ..............................................................<?= $today ?></h4>
 
                             <div class="slots">
                                 <div class="colorslots">
@@ -126,6 +126,12 @@
                 
                                 <table class="slotdetails">
                                     <tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>Time Slot</th>
+                                                <th>Bookings</th>
+                                            </tr>
+                                        </thead>
                                         <?php
                                             if(!empty($data['slotdetails']))
                                             {
@@ -152,9 +158,13 @@
                                                     }
                                         ?>
                                                         <tr>
-                                                            <td class="timeblock <?= $class ?>">
+                                                            <td class="timeblock <?= $class ?>" style="margin-right: 20px;">
                                                                 <?= htmlspecialchars($timeslot->time_slot) ?>
                                                             </td>
+                                                            <td class="timeblock <?= $class ?>">
+                                                                <?= htmlspecialchars($timeslot->noOfBookings) ?>
+                                                            </td> 
+                                                            
                                                         </tr>
                                                     <?php
                                                 }

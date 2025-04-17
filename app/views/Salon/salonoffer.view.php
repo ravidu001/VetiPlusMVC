@@ -86,6 +86,12 @@
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
+                            <?php if(empty($data)){
+                                ?>
+                                <td colspan="4">No services Added yet</td>
+                                <?php
+                            }
+                                ?>
                         </tbody>
                     </table>
                 <!-- </div> -->

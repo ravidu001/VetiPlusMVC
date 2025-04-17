@@ -7,8 +7,17 @@ class SalonService extends Controller
     {
         $data = [];
         $servicedata = new SalonServices;
+
+        $salonID = $_SESSION['SALON_USER'];
+
+        //check the user login
+        if(!$salonID)
+        {
+            redirect('Login');
+        }
        
-        $data = $servicedata->findAllServiceId();
+        $data = $servicedata->findAllServiceId($salonID);
+        
         $this->view('Salon/salonservice', $data);
     }
 

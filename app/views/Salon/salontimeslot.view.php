@@ -38,14 +38,14 @@
             </button>
         </div>
 
-        <div class="calandercolrs" style="display: flex;">
-            <p class="closedays">Close Days</p>
-            <p class="opendays">Open Days</p>
-            <p class="pastdays">Past Days</p>
-            <p class="holidays">Holidays</p>
-        </div>
         <div class="pagecontent" style="display: flex;">
             <div class="calendar" data-backend-url="<?=ROOT ?>/SalonTimeSlot/RetriveTimeSlotsDataByDate">
+                <div class="calandercolrs" style="display: flex;">
+                    <p class="closedays">Close Days</p>
+                    <p class="opendays">Open Days</p>
+                    <p class="pastdays">Past Days</p>
+                    <p class="holidays">Holidays</p>
+                </div>
                 <?php
                     require __DIR__ .'/saloncalander.view.php';
                 ?>

@@ -10,6 +10,7 @@ class SalonSlotCreate extends Controller
        
         $salonuser = $_SESSION['SALON_USER'];
 
+        //check the 2salon user login or not
         if(empty($salonuser))
         {
             redirect('Login/login');
@@ -32,10 +33,13 @@ class SalonSlotCreate extends Controller
                 $startDate = Date('Y-m-d');
             }
 
-            if (!$startDate || !$slotfor) 
+            if (!$startDate && !$slotfor) 
             {
+                echo('select the time or date');
                 $data['error'] = "Start date and period must be selected.";
             }
+
+            
 
             //_____________________________check the slots dates open time and close time will added before
             if (isset( $slotfor) && isset($startDate))
@@ -166,7 +170,7 @@ class SalonSlotCreate extends Controller
             }
             else
             {
-                $data['error'][] = $result;
+                $data['error'] = $result;
             }   
            
         }
@@ -262,6 +266,7 @@ class SalonSlotCreate extends Controller
             $startingDate = $result[0] -> startDate;
             $configId = $result[0] -> config_id;
             $duration = $result[0] -> slot_duration_minutes;
+            $maxAppointments = $result[0] -> appointments_per_slot;
 
             if($startingDate == $today)
             {
@@ -335,7 +340,6 @@ class SalonSlotCreate extends Controller
 
                             $slotStatus = empty($checkholiday) ? 'available' : 'block';//if has the holiday then status == block
 
-
                              // Generate time slots
                    
                             for ($time = $startTime; $time < $endTime; $time += $slotDuration) 
@@ -346,7 +350,9 @@ class SalonSlotCreate extends Controller
                                     'status' => $slotStatus,
                                     'time_slot' => $timeSlot, // Store as "HH:MM:SS - HH:MM:SS"
                                     'salonID' => $salonuser,
-                                    'schedule_id' => $sheduleId
+                                    'schedule_id' => $sheduleId,
+                                    'noOfBookings' => 0,
+                                    'noOfAvailable' => $maxAppointments
                                 ];
                                 $salonSessions->addSession($data);
                             }
