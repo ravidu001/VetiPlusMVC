@@ -16,35 +16,82 @@
         <div class="popup-content">
             <span class="close-btn">&times;</span>
             <h2>Select Pet</h2>
-            <label for="petID">Appointment ID:</label>
-            <select id="petID" class="form-input">
-                <option value="10011" data-name="Roky">1</option>
-                <option value="10012" data-name="Bella">2</option>
-                <option value="10013" data-name="Max">3</option>
+            
+            <label for="sessionID">Session ID:</label>
+            <select id="sessionID" class="form-input">
+                <option value="">Select Session</option>
+                <?php 
+                $uniqueSessionIDs = []; // Array to track unique session IDs
+                foreach ($appointmentsWithPets as $item): 
+                    if (!in_array($item['session']->sessionID, $uniqueSessionIDs)): 
+                        $uniqueSessionIDs[] = $item['session']->sessionID; // Add to unique list
+                ?>
+                    <option value="<?= $item['session']->sessionID ?>"><?= $item['session']->sessionID ?></option>
+                <?php 
+                    endif; 
+                endforeach; 
+                ?>
             </select>
             
             <label for="petID">Pet ID:</label>
-            <select id="petID" class="form-input">
-                <option value="10011" data-name="Roky">#10011</option>
-                <option value="10012" data-name="Bella">#10012</option>
-                <option value="10013" data-name="Max">#10013</option>
+            <select id="petID" class="form-input" disabled>
+                <option value="">Select Pet</option>
             </select>
+            
             <label for="petName">Pet Name:</label>
-            <input type="text" id="petName" class="form-input" readonly>
+            <input type="text" id="petName" class="form-input" placeholder="Auto Fill" readonly>
+
+            <input type="hidden" id="appointmentID" value="<?= $item['appointment']->appointmentID; ?>"> 
+            
             <div class="button-container">
-                <button id="okButton" class="btn btn-primary">OK</button> <!-- OK Button -->
+                <button id="okButton" class="btn btn-primary">OK</button>
             </div>
         </div>
     </div>
     <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
+    <?php
+    // Initialize $petID to avoid undefined variable warning
+    $petID = null;
+
+    // prescription.php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Check if petID is set
+        if (isset($_POST['petID'])) {
+            $petID = $_POST['petID']; // Set $petID from POST data
+            // Now you can use $petID in your PHP code
+            echo "Received Pet ID: " . htmlspecialchars($petID);
+            exit; // Make sure to exit after handling the request
+        }
+    }
+    ?>
     <div class="prescription-wrapper">
         <div class="prescription-header">
-            <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Patient Avatar" class="patient-avatar">
-            <div class="patient-info">
-                <h1>Roky</h1>
-                <p>Patient ID: #10011</p>
-                <p>Breed: Golden Retriever | Age: 2 years 6 months</p>
-            </div>
+            <?php 
+            // Use the initialized $selectedPetID variable
+            foreach ($appointmentsWithPets as $item): 
+                if ($item['pet']->petID == $selectedPetID): // Use $selectedPetID instead of $petID
+                    // Calculate the age in years and months
+                    $dob = date_create($item['pet']->DOB);
+                    $now = date_create('now');
+                    $ageDiff = date_diff($dob, $now);
+                    $years = $ageDiff->y;
+                    $months = $ageDiff->m;
+
+                    // Format the age as "Nyr Mmons"
+                    $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+            ?>
+                    <h1>Prescription for <?= htmlspecialchars($item['pet']->name) ?></h1>
+
+                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($item['pet']->profilePicture) ?>" alt="Patient Avatar" class="patient-avatar">
+                    <div class="patient-info">
+                        <h1><?= htmlspecialchars($item['pet']->name) ?></h1>
+                        <p>Patient ID: #<?= htmlspecialchars($item['pet']->petID) ?></p>
+                        <p>Breed: <?= htmlspecialchars($item['pet']->breed) ?> | Age: <?= $ageFormatted ?></p>
+                    </div>
+            <?php 
+                endif; 
+            endforeach; 
+            ?>
         </div>
 
         <form action="#" method="post">
@@ -126,6 +173,20 @@
         </form>
     </div>
 </div>
+    <script>
+        const petsBySession = <?= json_encode($petsBySession) ?>; // Pass pets data to JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the popup should be shown
+            const shouldShowPopup = <?= isset($_SESSION['popupShown']) ? json_encode($_SESSION['popupShown']) : 'false' ?>;
+            
+            console.log(<?= json_encode($_SESSION); ?>)
+
+            if (shouldShowPopup) {
+                openPopup(); // Automatically open the popup on page load
+            }
+        });
+    </script>
     <script src="<?= ROOT ?>/assets/js/vetDoctor/prescription.js"></script>
+
 </body>
 </html>

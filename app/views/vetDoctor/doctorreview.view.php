@@ -19,34 +19,34 @@
             Hey, Dr. <?= htmlspecialchars($doctorName) ?>! Fetching your reviews...🤩🤩🤩
         </div>
         <div id="reviewNotification">
-    <div class="review-alert animated-bounce">
-        <span class="emoji-icon">🐾</span>
-        <div class="review-content">
-            <h3>Woofderful Reviews Arrived!</h3>
-            <p><?= $unreadCount ?> Pet Parents Left Awesome Feedback</p>
-            <div class="review-stats">
-                <span>⭐ <?= $averageRating ?>/5 Average Rating</span>
-                <span>
-                    <?php
-                    if ($averageRating >= 4) {
-                        echo '🏆 Top Rated Vet Doctor! Keep shining!';
-                    } elseif ($averageRating >= 3) {
-                        echo '🌟 Good job! You\'re on the right path!';
-                    } elseif ($averageRating >= 2) {
-                        echo '😊 Room for improvement! Engage with clients!';
-                    } elseif ($averageRating >= 1) {
-                        echo '⚠️ Below average. Let\'s work on this!';
-                    } elseif ($averageRating > 0) {
-                        echo '🔍 Every review counts! Aim higher!';
-                    } else {
-                        echo '❓ No ratings yet. Start gathering feedback!';
-                    }
-                    ?>
-                </span>
+            <div class="review-alert animated-bounce">
+                <span class="emoji-icon">🐾</span>
+                <div class="review-content">
+                    <h3>Woofderful Reviews Arrived!</h3>
+                    <p><?= $unreadCount ?> Pet Parents Left Awesome Feedback</p>
+                    <div class="review-stats">
+                        <span>⭐ <?= $averageRating ?>/5 Average Rating</span>
+                        <span>
+                            <?php
+                            if ($averageRating >= 4) {
+                                echo '🏆 Top Rated Vet Doctor! Keep shining!';
+                            } elseif ($averageRating >= 3) {
+                                echo '🌟 Good job! You\'re on the right path!';
+                            } elseif ($averageRating >= 2) {
+                                echo '😊 Room for improvement! Engage with clients!';
+                            } elseif ($averageRating >= 1) {
+                                echo '⚠️ Below average. Let\'s work on this!';
+                            } elseif ($averageRating > 0) {
+                                echo '🔍 Every review counts! Aim higher!';
+                            } else {
+                                echo '❓ No ratings yet. Start gathering feedback!';
+                            }
+                            ?>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
         <p class="click-prompt">Click anywhere to continue</p>
     </div>
 </div>
@@ -73,7 +73,11 @@
                     </select>
                 </div>
             </div>
-
+            <?php if (!empty($reviews)): ?>
+                <p>  reviews available</p>
+            <?php else: ?>
+                <p>  No reviews available</p>
+            <?php endif; ?>
             <div class="review-fullcard">
                 <?php foreach ($reviews as $review): ?>
                     <div class="review-card" style="margin-bottom: 15px;">
