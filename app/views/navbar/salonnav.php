@@ -15,6 +15,14 @@
         // Check if any of the appointment pages are active
         // $appointment_active = in_array($current_page, ['Newappointment.php', 'Cancelappointment.php', 'Completeappointment.php']);
         
+        //get the salon ID from the salon table 
+        $salonID = $_SESSION['SALON_USER'];
+
+        if(empty($salonID))
+        {
+            redirect('Login/login');
+        }
+
     ?>
 
 </head>
