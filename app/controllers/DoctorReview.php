@@ -5,7 +5,7 @@ class DoctorReview extends Controller {
         // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
             // Redirect to the login page if not logged in
-            header('Location: ' . ROOT . '/users/login');
+            header('Location: ' . ROOT . '/login');
             exit();
         }
 
@@ -38,7 +38,7 @@ class DoctorReview extends Controller {
             // Check if there are any reviews
             if ($reviewCount > 0) {
                 foreach ($reviews as $reviewItem) {
-                    $totalRating += $reviewItem->rating; // Assuming rating is a property of the review
+                    $totalRating += $reviewItem->rating; 
                     if ($reviewItem->status === 0) {
                         $unreadCount++; // Count unread reviews
                     }
@@ -48,10 +48,10 @@ class DoctorReview extends Controller {
                 $averageRating = 0; // No reviews, set average to 0
             }
 
-            // Fetch doctor's name (assuming you have a method to get it)
-            $doctor = new DoctorModel(); // Assuming you have a Doctor model
+            // Fetch doctor's name 
+            $doctor = new DoctorModel(); 
             $doctorData = $doctor->find($doctorId); // Fetch doctor data
-            $doctorName = $doctorData->fullName; // Assuming fullName is a property
+            $doctorName = $doctorData->fullName; 
 
             // Initialize an array to hold consolidated session data
             $consolidatedReviews = [];

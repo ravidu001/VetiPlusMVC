@@ -74,7 +74,7 @@
                 </div>
             </div>
             <?php if (!empty($reviews)): ?>
-                <p>  reviews available</p>
+                <!-- <p>  reviews available</p> -->
             <?php else: ?>
                 <p>  No reviews available</p>
             <?php endif; ?>
