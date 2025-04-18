@@ -24,10 +24,10 @@ class AssisContactus extends Controller {
                 
                 if (!$feedback->create($data)) {
                     echo "<script>alert('Feedback submitted successfully!');</script>";
-                    $this->view('vetDoctor/doctorcontactus');
+                    $this->view('assistant/assiscontactus');
                 } else {
                     echo "<script>alert('Failed to submit feedback!');</script>";
-                    $this->view('vetDoctor/doctorcontactus');
+                    $this->view('assistant/assiscontactus');
                 }
             } else {
                 $complain = new systemcomplainModel();
@@ -72,13 +72,13 @@ class AssisContactus extends Controller {
                                 'filename' => $uniqueFileName
                             ]);
                             echo "<script>alert('Complain submitted successfully!');</script>";
-                            $this->view('vetDoctor/doctorcontactus');
+                            $this->view('assistant/assiscontactus');
                         } else {
                             // Remove the uploaded file if database update fails
                             unlink($uploadPath);
                             echo json_encode(['success' => false, 'message' => 'Failed to update profile picture in the database']);
                             echo "<script>alert('Failed to upload complain image to the database!');</script>";
-                            $this->view('vetDoctor/doctorcontactus');
+                            $this->view('assistant/assiscontactus');
                         }
                     } else {
                         echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file']);
@@ -97,10 +97,10 @@ class AssisContactus extends Controller {
                    
                     if (!$complain->create($data)) {
                         echo "<script>alert('Complain submitted successfully!');</script>";
-                        $this->view('vetDoctor/doctorcontactus');
+                        $this->view('assistant/assiscontactus');
                     } else {
                         echo "<script>alert('Failed to submit complain!');</script>";
-                        $this->view('vetDoctor/doctorcontactus');
+                        $this->view('assistant/assiscontactus');
                     }
                 }
             }
