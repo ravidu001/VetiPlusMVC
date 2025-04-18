@@ -27,6 +27,8 @@ class Salon extends Controller
             //get the salon time slot data for today
             $data['slotdetails'] = $this->fetchTimeSlotData($salonID, $today);
 
+            // show( $data['slotdetails']);
+
             //get the total reviews from the salon
             $data['reviews'] = $this->fetchTotalReviews($salonID);
 
@@ -35,6 +37,9 @@ class Salon extends Controller
 
             //get the total customers 
             $data['customers'] = $this->fetchCustomerCount($salonID);
+
+            //get the total complete bookings
+            $data['completedCount'] = $groomingSessions->getCompletedAppointmentsCount($salonID);
 
             $results = $salonsessions->fetchUpcomingAppointments($salonID, $today, $status);
 
@@ -103,12 +108,24 @@ class Salon extends Controller
             $arr = [];
     
             $salonSession = new SalonTimeSlots();//salsession
+            $salonBooked = new SalonBooked();//grooming
     
-            $result = $salonSession->slotsByDateAndSalon($salonID, $today);
-    
-            $arr = $result;
-    
-            return $arr;
+            $results = $salonSession->slotsByDateAndSalon($salonID, $today);
+
+            $slotDetails = [];
+
+            foreach ($results as $result) 
+            {
+                $slotDetails[] = [
+                    'completeAppointments' => $salonBooked->getCompletedCountBySlot($result->salSessionID),
+                    'time_slot' => $result->time_slot,
+                    'noOfBookings' => $result->noOfBookings,
+                    'status' => $result->status
+                ];
+            }
+
+            // show($slotDetails);
+            return $slotDetails;
         }
 
         //get the total appointments
