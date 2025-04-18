@@ -16,6 +16,7 @@ class Salons
     //update the salon time details
     public function updateSalonTimeSlots($salonID, $data)
     {
+       $this->order_column = 'salonID'; 
        return $this->update( $salonID , $data , 'salonID');
     }
 

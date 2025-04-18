@@ -64,6 +64,24 @@
                             <div class="stat-label">Total Appointments</div>
                         </div>
                     </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">
+                                <?php
+                                    if(!empty($data['completedCount']))
+                                    {
+                                        $count = $data['completedCount'];
+                                    }
+                                ?>
+                                <?= $count ?>
+                            </div>
+                            <div class="stat-label">Total Complete Appointments</div>
+                        </div>
+                    </div>
                     
                     <div class="stat-card">
                         <div class="stat-icon">
@@ -130,16 +148,24 @@
                                             <tr>
                                                 <th>Time Slot</th>
                                                 <th>Bookings</th>
+                                                <th>Completed</th>
                                             </tr>
                                         </thead>
                                         <?php
-                                            if(!empty($data['slotdetails']))
+                                            if(!empty($data['slotdetails']) && is_array($data['slotdetails']))
                                             {
                                                 $timeslots = $data['slotdetails'];
 
-                                                foreach ($timeslots as $timeslot) 
+                                                // show($timeslots);
+
+                                                foreach ($data['slotdetails'] as $timeslot) 
                                                 {
-                                                    $slotstatus = $timeslot->status;
+                                                    // show($timeslot['status']);
+                                                    $slotstatus = isset($timeslot['status']) ? $timeslot['status'] : 'unknown';
+                                                    $timeSlot = isset($timeslot['time_slot']) ? $timeslot['time_slot'] : 'N/A';
+                                                    $noOfBookings = isset($timeslot['noOfBookings']) ? $timeslot['noOfBookings'] : 0;
+                                                    $completed = isset($timeslot['completeAppointments']) ? $timeslot['completeAppointments'] : 0;
+
                                                     if($slotstatus == 'booked')
                                                     {
                                                         $class = 'booked-slot';
@@ -154,20 +180,26 @@
                                                     }
                                                     else
                                                     {
-
+                                                        $class = '';
                                                     }
-                                        ?>
-                                                        <tr>
-                                                            <td class="timeblock <?= $class ?>" style="margin-right: 20px;">
-                                                                <?= htmlspecialchars($timeslot->time_slot) ?>
-                                                            </td>
-                                                            <td class="timeblock <?= $class ?>">
-                                                                <?= htmlspecialchars($timeslot->noOfBookings) ?>
-                                                            </td> 
-                                                            
-                                                        </tr>
+                                                ?>
+                                                    <tr>
+                                                        <td class="timeblock <?= $class ?>" style="margin-right: 20px;">
+                                                            <?= htmlspecialchars($timeSlot) ?>
+                                                        </td>
+                                                        <td class="timeblock <?= $class ?>">
+                                                            <?= htmlspecialchars($noOfBookings) ?>
+                                                        </td>
+                                                        <td class="timeblock <?= $class ?>">
+                                                            <?= htmlspecialchars($completed) ?>
+                                                        </td>
+                                                    </tr>
                                                     <?php
                                                 }
+                                            }
+                                            else
+                                            {
+                                                echo '<tr><td colspan="3">No time slots available</td></tr>';
                                             }
                                         ?>
                                     </tbody>
