@@ -114,19 +114,19 @@ class Login extends Controller
                                     $accepted = $salontable->FindUser($email);
     
                                     show($accepted);
-                                    if($accepted)
+                                    if($accepted){
 
                                     redirect('Salon');
-                                }
-                                //email not in the accepted salon data table
-                                //so it will be rejected or pending  
-                                else
-                                {
+                                    }
+                                    //email not in the accepted salon data table
+                                    //so it will be rejected or pending  
+                                    else
+                                    {
                                     //get the satus of the salon egister pending or not
                                     //this function in the salon registration model
                                     //get the first data row which match the email
                                     $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
-
+                                    }
                                     //check the status
                                     if ($salonStatus) 
 
