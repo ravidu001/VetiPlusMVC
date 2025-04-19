@@ -68,6 +68,8 @@ $notification = new Notification();
                                     <button class="btn btn-accept">
                                         <a href="<?= ROOT ?>/assisrequest/accept?sessionID=<?= urlencode($request['session']->sessionID) ?>&assistantID=<?= urlencode($request['assisSession']->assistantID) ?>" class="btn-accept">Accept</a>
                                     </button>
+                                </div>
+                                <div class="action-buttons">
                                     <button class="btn btn-reject">
                                         <a href="<?= ROOT ?>/assisrequest/reject?sessionID=<?= urlencode($request['session']->sessionID) ?>&assistantID=<?= urlencode($request['assisSession']->assistantID) ?>" class="btn-reject">Reject</a>
                                     </button>

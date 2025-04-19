@@ -29,7 +29,7 @@ class AssisAccepted extends Controller {
                     $endTime = new DateTime($sessionItem->endTime); // Create a DateTime object for the session start time
                     $currentTime = new DateTime(); // Get the current time
                     if ($sessionItem->selectedDate == date('Y-m-d')) {
-                        if ($endTime <= $currentTime) {
+                        if ($endTime >= $currentTime) {
                             $doctor = new DoctorModel();
                             $doctorData = $doctor->find($sessionItem->doctorID);
                             $consolidatedData[] = [
