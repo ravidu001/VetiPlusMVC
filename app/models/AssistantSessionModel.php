@@ -5,7 +5,7 @@ class AssistantSessionModel {
 
     protected $table = 'assistantSession';
 
-    protected $allowedColumns = ['sessionID', 'assistantID','status', 'comment', 'rating', 'dateTime', 'feedbackDateTime'];
+    protected $allowedColumns = ['sessionID', 'assistantID','status', 'comment', 'rating', 'dateTime', 'feedbackDateTime', 'action'];
 
     public function insertData($data) {
         $this->insert($data);
@@ -16,6 +16,15 @@ class AssistantSessionModel {
         $this->order_type = 'asc';
         $this->limit = 10;
         $result = $this->where(['sessionID' => $sessionID]);
+
+        return $result;
+    }
+
+    public function getSessionByAssistant($assisId) {
+        $this->order_column = 'sessionID';
+        $this->order_type = 'asc';
+        $this->limit = 100;
+        $result = $this->where(['assistantiD' => $assisId]);
 
         return $result;
     }
