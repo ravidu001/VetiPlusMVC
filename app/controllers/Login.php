@@ -20,7 +20,7 @@ class Login extends Controller
                 'email' => $_POST['email'],
                 'password' => $_POST['password']
             ];
-
+            
             $user = new User();
             $salonRegister = new SalonRegisters();
             $salontable = new Salons();
@@ -100,84 +100,13 @@ class Login extends Controller
                                         default:
                                             $this->view('logindetail/login', ['errors' => 'User type not recognized!']);
                                     }
+                                    break;
                                     
                                 case 'Pet Owner':
                                     $_SESSION['petOwnerID'] = $registered->email;
                                     redirect('PO_home');
                                     break;
                                 case 'Salon':
-                                    $_SESSION['SALON_USER'] = $registered->email;
-
-                                    //check the accepted email has or not
-                                    $email = $data['email']; 
-                                    //this function in the salons model file
-                                    $accepted = $salontable->FindUser($email);
-    
-                                    show($accepted);
-                                    if($accepted){
-
-                                    redirect('Salon');
-                                    }
-                                    //email not in the accepted salon data table
-                                    //so it will be rejected or pending  
-                                    else
-                                    {
-                                    //get the satus of the salon egister pending or not
-                                    //this function in the salon registration model
-                                    //get the first data row which match the email
-                                    $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
-                                    }
-                                    //check the status
-                                    if ($salonStatus) 
-
-                                    {
-                                        // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
-                                        $_SESSION['SALON_USER'] = $registered->email;
-                                        redirect('SalonDashboard');
-                                    }
-                                    //email not in the accepted salon data table
-                                    //so it will be rejected or pending  
-                                    else
-                                    {
-                                        //get the satus of the salon egister pending or not
-                                        //this function in the salon registration model
-                                        //get the first data row which match the email
-                                        $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
-    
-                                        //check the status
-                                        if ($salonStatus) 
-                                        {
-                                            switch ($salonStatus->status) 
-                                            {
-                                                case 'pending':
-                                                    // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/Pending']);
-                                                    $_SESSION['SALON_USER'] = $registered->email;
-                                                    redirect('Pending');
-                                                    break;
-                                               
-                                                case 'rejected':
-                                                    // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/Rejected']);
-                                                    $_SESSION['SALON_USER'] = $registered->email;
-                                                    redirect('Rejected');
-                                                    break;
-    
-                                                default:
-                                                    // show('Invalid status');
-                                                    // $message[] = 'Invalid status. Please contact support.';
-                                                    $this->view('logindetail/login', ['errors' => 'User type not recognized!']);
-                                                }
-                                        }
-                                        else 
-                                        {
-                                            // show('registration not found, not submit/ complete registration form');
-                                            $this->view('logindetail/login', ['errors' => 'Registration data not found. Please register again.']);
-                                        }
-    
-                                    }
-    
-                                
-                                    break;
-                                    header('Location: ../Salon');
                                     break;
                                 case 'Vet Assistant':
                                     $_SESSION['user_id'] = $registered->email;

@@ -19,6 +19,8 @@ class DoctorModel {
         'doctorCertificate',
         'timeSlot',
         'specialization',
+        'approvedStatus',
+        'rejectReason'
     ];
 
     public function find($doctorID) {
