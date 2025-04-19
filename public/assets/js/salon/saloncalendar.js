@@ -2,56 +2,6 @@
 let currentDate = new Date();
 let selectedDate = null;
 
-//_____________________________________________________________
-//if not select show today
-window.onload = () => 
-{
-    const today = new Date();
-    // const formattedToday = today.toISOString().split('T')[0];
-    // currentSelectedDate = formattedToday;
-
-    // Highlight today's date in the calendar
-    highlightAndSelectDay(today.getDate());
-    
-    // Fetch slots from backend
-    sendSelectedDateToBackend(today);
-
-    // let currentFilter = 'upcoming'; // Default filter
-
-    // Load today's appointment data with default status (upcoming)
-    console.log(currentFilter);
-
-    // filterAppointments(currentFilter);
-    // console.log($result);
-};
-
-//add the select date function
-function selectDate(day) 
-{
-    //create a date object for selected day
-    const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-
-    // console.log(selected);
-    // console.log(day);
-
-    // Format the date as YYYY-MM-DD
-    // currentSelectedDate = selected;
-
-    // Send to backend to fetch slot details
-    // currentSelectedDate = formatted;
-
-    // Highlight selected day
-    highlightAndSelectDay(selected.getDate());
-
-    // Fetch slots from backend
-    sendSelectedDateToBackend(selected);
-
-    // let currentFilter = 'upcoming'; // Default filter
-
-    // Refresh appointments
-    // filterAppointments(currentFilter);
-}
-
 //default highlight the today
 const today = new Date();
 const isCurrentMonth = today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear();
@@ -137,34 +87,11 @@ function sendSelectedDateToBackend(selectedDate)
     });
 }
 
-function displayTimeSlots(slots) 
-{
-    const slotContainer = document.getElementById('slotContainer');
-    slotContainer.innerHTML = '';
+//___________________________________________________________________________________________________________________________________
+//create the functions for get the time slots 
 
-    slots.forEach(slot => {
-        const slotElement = document.createElement('div');
-        slotElement.textContent = slot.time_slot;
-        slotElement.classList.add('slot');
 
-        if (slot.status === 'available') {
-            slotElement.classList.add('available'); // Green
-        } else if (slot.status === 'booked') {
-            slotElement.classList.add('booked'); // Red
-        } else if (slot.status === 'blocked') {
-            slotElement.classList.add('blocked'); // Gray
-        }
-
-        slotContainer.appendChild(slotElement);
-    });
-}
-
-// Sample data for blocked time slots (you would typically get this from an API)
-const blockedTimeSlots = 
-{
-    '2024-08-15': ['10:00', '10:20', '11:00'],
-    '2024-08-16': ['09:00', '09:20', '09:40']
-};
+//____________________________________________________________________________________________________________________________________
 
 // Sample data for closed days (e.g., weekends or holidays)
 const closedDays = {
@@ -217,6 +144,24 @@ function initCalendar()
             dayElement.classList.add('open');
         }
 
+        //___________________________________________________________________________________________________________________________________
+        //get the colours for the dates
+
+        // Check against opendays, closedays, holidays
+        // if (calendarData.closedays.includes(dateStr)) {
+        //     dayElement.classList.add('closed-day');
+        //     dayButton.disabled = true;
+        // } else if (calendarData.holidays.includes(dateStr)) {
+        //     dayElement.classList.add('holiday-day');
+        //     dayButton.disabled = true;
+        // } else if (calendarData.opendays.includes(dateStr)) {
+        //     dayElement.classList.add('open-day');
+        // } else {
+        //     dayElement.classList.add('normal-day');
+        // }
+
+        //___________________________________________________________________________________________________________________________________________
+
         // **Append elements**
         dayElement.appendChild(dateWrapper);
         dayElement.appendChild(dayButton);
@@ -233,12 +178,14 @@ function previousMonth()
 {
     currentDate.setMonth(currentDate.getMonth() - 1);
     initCalendar();
+    // getDatesFromBackEnd();
 }
 
 function nextMonth() 
 {
     currentDate.setMonth(currentDate.getMonth() + 1);
     initCalendar();
+    // getDatesFromBackEnd();
 }
 
 function updateMonthDisplay() 
@@ -251,3 +198,4 @@ function updateMonthDisplay()
 
 // Initialize the calendar
 initCalendar();
+// getDatesFromBackEnd();

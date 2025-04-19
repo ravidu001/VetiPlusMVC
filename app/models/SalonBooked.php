@@ -12,6 +12,13 @@ class SalonBooked
         return $this->FindAll();
     }
 
+    //Find the details by SalonSessions
+    public function getDetailsByStatus($status)
+    {
+        $this->order_column = 'groomingID';
+        return $this->where(['status' => $status]);
+    }
+
     // Find slots by salonsessionID
     public function getSlotDetails($salSessionID) {
         $this->order_column = 'salSessionID';
@@ -56,5 +63,27 @@ class SalonBooked
     {
         return $this->update($groomingID, $data, 'groomingID');
     }
+
+    //get the count of the complete bookings appointments
+    public function getCompletedAppointmentsCount($salonID)
+    {
+        $query = "SELECT COUNT(*) as total 
+                FROM groomingsession gs
+                JOIN salonsession ss ON gs.salSessionID = ss.salSessionID
+                WHERE ss.salonID = :salonID AND gs.status = 2";
+        
+        return $this->query($query, ['salonID' => $salonID])[0]->total ?? 0;
+    }
+
+    //get the count of complet by the slots
+    public function getCompletedCountBySlot($salSessionID) 
+    {
+        $query = "SELECT COUNT(*) as total 
+        FROM groomingsession 
+        WHERE salSessionID = :salSessionID AND status = 2";
+        return $this->query($query, ['salSessionID' => $salSessionID])[0]->total ?? 0;
+    }
+    
+
 
 }

@@ -59,10 +59,12 @@ class SalonOffers
      //__________________________________________________________________________________________
     //findall services to show the special offer add colunm
     
-    // public function findService()
-    // {
+    public function findByService($serviceID)
+    {
+        $this->order_column = 'specialOfferID';
+        return $this->where(['serviceID' => $serviceID]);
+    }
 
-    // }
 
 
     

@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () =>
             saveChanges(sectionId);
         } else {
             editBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+            // saveChanges(sectionId);
         }
     }
 
@@ -62,22 +63,34 @@ document.addEventListener('DOMContentLoaded', () =>
             formData[input.name] = input.value;
         });
 
+        console.log(formData);
+        console.log(sectionId);
+        console.log(BASE_URL);
+
         // Simulate API call (replace with actual API endpoint)
-        fetch('/update-profile', {
+        fetch(`${BASE_URL}/SalonProfile/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                section: sectionId,
+                sectionId : sectionId,
                 data: formData
             })
         })
         .then(response => response.json())
         .then(data => {
-            showNotification('✅ Changes saved successfully!', 'success');
+            if(data.status === 'success')
+            {
+                showNotification('✅ Changes saved successfully!', 'success');
+            }
+            else
+            {
+                showNotification('❌ Failed to save changes: ' + data.message, 'error');
+            }
         })
         .catch(error => {
+            console.error('Error:', error);
             showNotification('❌ Failed to save changes!', 'error');
         });
     }
@@ -96,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () =>
         }
 
         // Simulate password change API call
-        fetch('/change-password', {
+        fetch(`${BASE_URL}/SalonProfile/change-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

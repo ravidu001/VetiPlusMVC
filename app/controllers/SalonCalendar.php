@@ -22,7 +22,8 @@ class SalonCalendar extends Controller {
         $this->view('Salon/test', $data);
     }
 
-    // API endpoint to handle AJAX requests
+    // API endpoint to handle AJAX requests- get the appointments details
+    //______________________________________________________________________________________________________________________________
     public function getSlots() 
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST') 
@@ -178,6 +179,10 @@ class SalonCalendar extends Controller {
             exit;
         }
     }
+
+
+    //______________________________________________________________________________________________________________________________
+    // get the time slots 
 
 }
 

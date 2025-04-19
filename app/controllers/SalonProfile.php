@@ -75,21 +75,26 @@ class SalonProfile extends Controller
 
     public function update()
     {
+        // show('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
         // Set JSON response header - undestanding the client the data is JSON format not html
         header('Content-Type: application/json');
 
         // Read the raw JSON input
         //The function file_get_contents() is used to read a file or get the contents of a stream.
         //php://input is allow to read request the body data
-        $rawData = file_get_contents("php://input"); 
+        // $rawData = file_get_contents("php://input"); 
+        // $rowData = json_decode(file_get_contents('php://input'), true);
 
         //json_decode() converts the JSON string into a PHP array.
         //The second parameter true ensures it is converted into an associative array instead of an object.
-        $data = json_decode($rawData, true);
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        // show($data);
+        // echo $data;
 
         if($data) 
         {
-            if($data['sectionId']== 'salon-info')
+            if($data['sectionId'] == 'salon-info')
             {
                 // Debugging log
                 error_log('Data received in Salontest controller'); 
@@ -102,15 +107,15 @@ class SalonProfile extends Controller
                 }
 
                 //check the email is correct format or not
-                if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                    echo json_encode([
-                        "status" => "error",
-                        "message" => "Invalid email format."
-                    ]);
-                }
+                // if (!filter_var($data['salonID'], FILTER_VALIDATE_EMAIL)) {
+                //     echo json_encode([
+                //         "status" => "error",
+                //         "message" => "Invalid email format."
+                //     ]);
+                // }
 
                 //check the phone number is correct or not
-                if (!preg_match("/^[0-9]{10}$/", $data['phone'])) {
+                if (!preg_match("/^[0-9]{10}$/", $data['data']['phoneNumber'])) {
                     echo json_encode([
                         "status" => "error",
                         "message" => "Phone number must be exactly 10 digits."
@@ -122,13 +127,14 @@ class SalonProfile extends Controller
     
                 //input the data array to filter correct data
                 $data1 = [
-                    'name' => htmlspecialchars($data['salonName']),
-                    'ownerName' => htmlspecialchars($data['ownerName']),
-                    'phoneNumber' => htmlspecialchars($data['phone']),
-                    'email' => htmlspecialchars($data['email']),
-                    'address' => htmlspecialchars($data['address']),
-                    'GMapLocation' => htmlspecialchars($data['location']),
-                    'salonDetails' => htmlspecialchars($data['description']),
+                    'name' => htmlspecialchars($data['data']['name']),
+                    'ownerName' => htmlspecialchars($data['data']['ownerName']),
+                    'phoneNumber' => htmlspecialchars($data['data']['phoneNumber']),
+                    'salonType' => htmlspecialchars($data['data']['salonType']),
+                    // 'salonID' => htmlspecialchars($data['salonID']),
+                    'address' => htmlspecialchars($data['data']['address']),
+                    'GMapLocation' => htmlspecialchars($data['data']['GMapLocation']),
+                    'salonDetails' => htmlspecialchars($data['data']['salonDetails']),
                     'salonID' => $salonID
                 ];
     
@@ -137,64 +143,7 @@ class SalonProfile extends Controller
                     $salon = new Salons();
                     $updateSuccess = $salon->updateSalonTimeSlots($salonID, $data1);
                     
-                    if($updateSuccess) 
-                    {
-                        echo json_encode([
-                            "status" => "success",
-                            "message" => "Salon details updated successfully",
-                            "received_data" => $data1
-                        ]);
-                    } 
-                    else 
-                    {
-                        echo json_encode([
-                            "status" => "error",
-                            "message" => "Failed to update salon details"
-                        ]);
-                    }
-                } 
-                catch(Exception $e) 
-                {
-                    error_log("Error updating salon details: " . $e->getMessage());
-                    echo json_encode(["status" => "error", "message" => "Server error"]);
-                }
-                exit();
-            }
-            else if($data['sectionId']== 'schedule')
-            {
-                error_log('Data received in Salontest controller'); // Debugging log
-
-                //check the salon time slot is created 
-
-                // Check if the user is logged in
-                if(!isset($_SESSION['SALON_USER'])) 
-                {
-                    echo json_encode(["status" => "error", "message" => "Unauthorized access"]);
-                    exit();
-                }
-    
-                //not yet create the validation part
-                $salonID = $_SESSION['SALON_USER'];
-                $opentime =  $data['openTime'] ;
-                $closetime = $data['closeTime'] ;
-                $duration = $data['slotDuration'] ?? '';
-
-
-                //get the data in tot he array
-                $data1 = [
-                    'open_time' => $opentime,
-                    'close_time' => $closetime,
-                    'slot_duration' => $duration,
-                    'salonID' => $salonID
-                ];
-    
-
-                try 
-                {
-                    $salon = new Salons();
-                    $updateSuccess = $salon->updateSalonTimeSlots($salonID, $data1);
-                   
-                    if($updateSuccess) 
+                    if(!$updateSuccess) 
                     {
                         echo json_encode([
                             "status" => "success",

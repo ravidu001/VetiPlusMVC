@@ -1,50 +1,134 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the buttons and content sections
-    const openDaysBtn = document.getElementById('opendays');
-    const holidaysBtn = document.getElementById('holidaywithbooked');
-    const selsectContentDiv = document.querySelector('.selsectcontent');
-    const openDaysSection = document.querySelector('.opendays');
-    const holidaysSection = document.querySelector('.holidays');
-
-    // Initially show open days section and hide holidays section
-    openDaysSection.style.display = 'block';
-    holidaysSection.style.display = 'none';
-
-    // Set initial button styles
-    openDaysBtn.style.backgroundColor = '#28a745';
-    holidaysBtn.style.backgroundColor = '#dc3545';
-
-    // Add click event for open days button
-    openDaysBtn.addEventListener('click', function() {
-        // Show open days section
-        openDaysSection.style.display = 'block';
-        holidaysSection.style.display = 'none';
-        
-        // Update button styles
-        openDaysBtn.style.backgroundColor = '#28a745';
-        holidaysBtn.style.backgroundColor = '#dc3545';
-    });
-
-    // Add click event for holidays button
-    holidaysBtn.addEventListener('click', function() {
-        // Show holidays section
-        holidaysSection.style.display = 'block';
-        openDaysSection.style.display = 'none';
-        
-        // Update button styles
-        holidaysBtn.style.backgroundColor = '#28a745';
-        openDaysBtn.style.backgroundColor = '#dc3545';
-    });
-
-    // Populate year dropdown
-    const yearSelect = document.getElementById('year');
-    const currentYear = new Date().getFullYear();
+console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhh');
+//_____________________________________________________________
+//if not select show today
+window.onload = () => 
+{
+    const today = new Date();
     
-    // Add years from current year to next 5 years
-    for (let year = currentYear; year <= currentYear + 5; year++) {
-        const option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        yearSelect.appendChild(option);
+    // Highlight today's date in the calendar
+    highlightAndSelectDay(today.getDate());
+    
+    //fetch data for get time slots details
+    getTimeSlotsFromBackend(today);
+
+};
+
+//add the select date function
+function selectDate(day) 
+{
+    //create a date object for selected day
+    const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+
+    // Highlight selected day
+    highlightAndSelectDay(selected.getDate());
+
+    //fetch data for get time slots details
+    getTimeSlotsFromBackend(selected);
+
+};
+
+//_________________________________________________________________________________________________________________________________
+function getTimeSlotsFromBackend(selectedDate) 
+{
+    if (!selectedDate) 
+    {
+        console.error('No date selected');
+        return;
     }
-});
+
+    // const formattedDate = selectedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const correctformattedDate = selectedDate.getFullYear() + '-' +
+                      String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(selectedDate.getDate()).padStart(2, '0');
+
+    const SalonEmailAddress = salonEmail;
+
+    fetch(`${BASE_URL}/SalonTimeSlot/RetriveTimeSlotsDataByDate`, 
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ date: correctformattedDate, salonID: SalonEmailAddress }) // Sending as JSON
+    })
+    .then(response => response.json())
+    .then(data => 
+    {
+        console.log(data.success);
+
+        const tableBody = document.getElementById('slotTableBody');
+        tableBody.innerHTML = '';
+
+        // console.log('uuuuuuuu');
+        //__________________________________________________
+        if (data.success && data.result.length > 0) 
+        {
+            data.result.forEach(slot => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${slot.time_slot}</td>
+                    <td>${slot.noOfBookings}</td>
+                    <td>${slot.noOfAvailable}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        } 
+        else
+        {
+            tableBody.innerHTML = `<tr><td colspan="3">${data.message || 'No slots available for this date.'}</td></tr>`;
+        }    
+        //___________________________________________________________________________
+    })
+    .catch(error => 
+    {
+        console.error('Error fetching slots:', error);
+        document.getElementById('slotTableBody').innerHTML = `<tr><td colspan="3">Error loading appointment slots.</td></tr>`;
+    });
+}
+
+// Global object to store fetched dates
+let calendarData = 
+{
+    opendays: [],
+    closedays: [],
+    holidays: [],
+};
+
+//__________________________________________________________________________________________________________________
+//get the dates to color in the calander 
+//open dates, close dates, past dates and holidays
+function getDatesFromBackEnd()
+{
+    const SalonEmailAddress = salonEmail;
+
+    if(!SalonEmailAddress)
+    {
+        redirect('Login');
+    }
+    else
+    {
+        fetch(`${BASE_URL}/SalonTimeSlot/getDates`, 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ salonID: SalonEmailAddress }) // Sending as JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success && data.results.length > 0)
+            {
+                calendarData.opendays = data.results.opendays || [];
+                calendarData.closedays = data.results.closedays || [];
+                calendarData.holidays = data.results.holidays || [];
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching calendar data:', error);
+        });
+
+    }
+}

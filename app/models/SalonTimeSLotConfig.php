@@ -26,7 +26,6 @@ class SalonTImeSLotConfig
     {
         $query = "SELECT * FROM $this->table WHERE salonID = :salonID ORDER BY config_id DESC LIMIT 1";
         $result = $this->query($query, ['salonID' => $salonID]);
-
         return $result;
     }
 
@@ -42,6 +41,18 @@ class SalonTImeSLotConfig
     {
         $this->order_column = 'config_id';
         return $this->first(['config_id' => $configID]);
+    }
+
+    public function finAllDetails()
+    {
+        $this->order_column = 'config_id';
+        return $this->findAll();
+    }
+
+    public function findBySalonID($salonID)
+    {
+        $this->order_column = 'config_id';
+        return $this->where(['salonID' => $salonID]);
     }
 
 

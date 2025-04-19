@@ -24,4 +24,23 @@ class SalonHoliday
         return $this->where(['date' => $date]);
     }
 
+    public function findDateAndID($salonID, $date)
+    {
+        $this->order_column = 'holiday_id';
+        return $this->where(['date' => $date, 'salonID' => $salonID]);
+    }
+
+    public function findHolidayByID($salonID)
+    {
+        $this->order_column = 'holiday_id';
+        return $this->where([ 'salonID' => $salonID]);
+    }
+
+
+    public function deleteHoliday($holidayID)
+    {
+        $this->delete($holidayID, 'holiday_id');
+        return true;
+    }
+
 }    

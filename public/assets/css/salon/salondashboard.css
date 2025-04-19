@@ -6,8 +6,8 @@ body {
 }
 
 body:has(#sidebar.close) .pagecontent {
-    margin-left: 70px;
-    width: calc(100% - 70px);
+    margin-left: 100px;
+    width: calc(100% - 100px);
 }
 
 
@@ -57,54 +57,31 @@ body:has(#sidebar.close) .pagecontent {
 }
 
 .dashboard-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--primary-color-light);
-    border-radius: 50%;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  position: relative;
+  margin-right: 10px;
 }
 
-.dashboard-icon:hover {
-    background-color: var(--background-light);
-    transform: scale(1.05);
+.dashboard-icon .icon {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* Fix for the nested icon class */
-.dashboard-icon i.dashboard-icon {
-    background: none;
-    width: auto;
-    height: auto;
+.notification-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color:var(--list-item);
+  color:var(--primary-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-/* Add notification indicator */
-.dashboard-icon i.fa-bell {
-    position: relative;
-}
-
-.dashboard-icon i.fa-bell::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    width: 8px;
-    height: 8px;
-    background-color: #FF5252;
-    border-radius: 50%;
-    border: 2px solid var(--sidebar-color);
-}
-
-
-.icondrop {
-    color: #6A0DAD;
-    font-size: 15px;
-}
-
 /* Salon Dashboard Isolated Styling */
 /* Using more specific selectors to avoid conflicts */
 
@@ -211,10 +188,11 @@ body:has(#sidebar.close) .pagecontent {
 
 /* Time Slots Table */
 .timeSlotforTOday .slotdetails {
-  width: 40%;
+  width: 90%;
   border-collapse: separate;
   border-spacing: 0 8px;
   margin-top: 15px;
+  margin-left: 10px;
 }
 
 .timeSlotforTOday .slotdetails td {
@@ -225,6 +203,7 @@ body:has(#sidebar.close) .pagecontent {
   transition: all 0.3s ease;
   font-weight: 500;
 }
+
 
 .timeSlotforTOday .slotdetails td.timeblock {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);

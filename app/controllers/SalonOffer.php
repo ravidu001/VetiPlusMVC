@@ -8,8 +8,41 @@ class SalonOffer extends Controller
         $offerdata = new SalonOffers;
         $servicedata = new SalonServices;
 
+        $salonID = $_SESSION['SALON_USER'];
+
+        if(!$salonID)
+        {
+            redirect('Login');
+        }
+
+        //first get this salon service ID 
+        $serviceDetails = $servicedata->findAllServiceId($salonID);
+
+        $offers = [];
+
+        if($serviceDetails)
+        {
+            foreach($serviceDetails as $serviceDetail)
+            {
+                $serviceID = $serviceDetail->serviceID;
+                $serviceOffers = $offerdata->findByService($serviceID);
+
+                if ($serviceOffers) {
+                    foreach ($serviceOffers as $offer) {
+                        $offers[] = $offer;
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            echo "service Not fount yet";
+            $data['service'] = "service Not added yet";
+        }
+
         // Fetch all offers from salonspecialoffer table
-        $offers = $offerdata->findAllOfferId();
+        // $offers = $offerdata->findAllOfferId();
 
         $data = []; // Initialize $data array
 
@@ -53,8 +86,9 @@ class SalonOffer extends Controller
     public function addoffer() 
     {
         $data = [];
+        $salonID = $_SESSION['SALON_USER'];
         $servicedata = new SalonServices;
-        $services = $servicedata->findAllServiceId();
+        $services = $servicedata->findAllServiceId($salonID);
         $data['services'] = $services;
 
         if (isset($_POST['submit'])) 
@@ -131,9 +165,10 @@ class SalonOffer extends Controller
         $specialOfferID = (int)$specialOfferID; 
 
         $data = [];
+        $salonID = $_SESSION['SALON_USER'];
 
         $servicedata = new SalonServices;
-        $services = $servicedata->findAllServiceId();
+        $services = $servicedata->findAllServiceId($salonID);
         $data['services'] = $services;
 
         $offerModel = new SalonOffers;

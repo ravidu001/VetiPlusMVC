@@ -53,26 +53,36 @@
                                     // show($data);
                                  ?>
                                     <tr>
-                                    <td><p><?= htmlspecialchars($x->fullName) ?></p></td>
                                     <td>
                                         <img src="<?= htmlspecialchars($x->profilePicture) ?>" class="staff-picture">
                                     </td>
+                                    <td><p><?= htmlspecialchars($x->fullName) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->mobileNumber) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->NIC) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->address) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->workingType) ?></p></td>
                                     <td>
+                                    <div class="action-buttons">
                                         <button class='edit'>
                                             <a href='<?= ROOT ?>/SalonStaff/edit/<?= htmlspecialchars($x->staffID) ?>'>Edit</a>
                                         </button>
-                                        <button class='edit'>
+                                        <button class='delete'>
                                             <a href='<?= ROOT ?>/SalonStaff/delete/<?= htmlspecialchars($x->staffID) ?>'>Delete</a>
                                         </button>
+                                    </div>    
                                     </td>
                                 </tr>
 
                                 <?php
                                 }
+                            }
+                            else
+                            {
+                            ?>   
+                                <tr>
+                                    <td colspan="6">No Staff members Added Yet</td>
+                                </tr>
+                            <?php    
                             }
                         ?>
 

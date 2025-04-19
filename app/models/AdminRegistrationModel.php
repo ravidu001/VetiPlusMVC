@@ -35,5 +35,11 @@ class AdminRegistrationModel {
         return $count;  // Return the count value
 
     }
+
+    public function GetAdminDetails()
+    {
+        $this->order_column = 'email';
+        return $this->findAll();
+    }
     
 }

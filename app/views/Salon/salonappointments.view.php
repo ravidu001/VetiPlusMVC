@@ -134,6 +134,57 @@
     //________________________________________________________________________________________________
     //updateStatus function 
 
+    //_____________________________________________________________
+    //if not select show today
+    window.onload = () => 
+    {
+        const today = new Date();
+        // const formattedToday = today.toISOString().split('T')[0];
+        // currentSelectedDate = formattedToday;
+
+        // Highlight today's date in the calendar
+        highlightAndSelectDay(today.getDate());
+        
+        // Fetch slots from backend
+        sendSelectedDateToBackend(today);
+
+        // let currentFilter = 'upcoming'; // Default filter
+
+        // Load today's appointment data with default status (upcoming)
+        console.log(currentFilter);
+
+        // filterAppointments(currentFilter);
+        // console.log($result);
+    };
+
+    //add the select date function
+    function selectDate(day) 
+    {
+        //create a date object for selected day
+        const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+
+        // console.log(selected);
+        // console.log(day);
+
+        // Format the date as YYYY-MM-DD
+        // currentSelectedDate = selected;
+
+        // Send to backend to fetch slot details
+        // currentSelectedDate = formatted;
+
+        // Highlight selected day
+        highlightAndSelectDay(selected.getDate());
+
+        // Fetch slots from backend
+        sendSelectedDateToBackend(selected);
+
+        // let currentFilter = 'upcoming'; // Default filter
+
+        // Refresh appointments
+        // filterAppointments(currentFilter);
+    }
+
+
     function UpdateStatus(appintmentId, newStatus)
     {
       fetch(`${BASE_URL}/SalonAppointments/updateGroomingStatus`,

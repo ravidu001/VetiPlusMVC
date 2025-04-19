@@ -9,26 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<?php
-    if(isset($data['time_slot'])) 
-    {
-        $time_slots = $data['time_slot'];
-    } 
-    else 
-    {
-        $time_slots = [];
-    }
-
-    if(isset($data['salondetails']))
-    {
-        $salondetails = $data['salondetails'];
-    }
-    else
-    {
-        $salondetails = [];
-    }
-?>
-
 <body>
     <div class="pagecontent">
         <div>
@@ -37,20 +17,61 @@
              ?>
             <!-- <php code for navbar here> -->
         </div>
-        <div class="calendar" data-backend-url="<?=ROOT ?>/SalonTimeSlot/RetriveTimeSlotsDataByDate">
-            <?php
-                require __DIR__ .'/saloncalander.view.php';
-            ?>
+       
+        <h1>Salon Time Slot Schedules</h1>
+        
+        <div class="buttons">
+            <button style="background-color:darkorchid">
+                <a href="<?=ROOT?>/SalonTimeSlot">
+                   View Slots
+                </a> 
+            </button>
+            <button>
+                <a href="<?=ROOT?>/SalonHolidayView">
+                    Holidays
+                </a>    
+            </button>
+            <button>
+                <a href="<?=ROOT?>/SalonSlot">
+                    Create Slots
+                </a> 
+            </button>
         </div>
-        <div class="SelectDateAndSlot">
-            <h1>Salon Time Slot Schedules</h1>
-            <div class="DateAndScedule">
-                <div class="timeSlotsContainer">
-                    
+
+        <div class="pagecontent" style="display: flex;">
+            <div class="calendar" data-backend-url="<?=ROOT ?>/SalonTimeSlot/RetriveTimeSlotsDataByDate">
+                <div class="calandercolrs" style="display: flex;">
+                    <p class="closedays">Close Days</p>
+                    <p class="opendays">Open Days</p>
+                    <p class="pastdays">Past Days</p>
+                    <p class="holidays">Holidays</p>
                 </div>
-            </div>    
+                <?php
+                    require __DIR__ .'/saloncalander.view.php';
+                ?>
+            </div>
+            <div class="SelectDateAndSlot">
+               
+                <div class="DateAndScedule">
+                    <div class="timeSlotsContainer">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Salon Time Slot</th>
+                                    <th>Number Of Booking</th>
+                                    <th>Number of available Bookings</th>
+                                </tr>
+                            </thead>
+                            <tbody id="slotTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>    
+            </div>
         </div>
+        
     </div>
+    
     <style>
         .time-slot {
             display: inline-block;
@@ -80,9 +101,11 @@
 
     </style>
 
-    <script src="<?=ROOT?>/assets/js/salon/salonavailabletime.js"></script>
+    <script src="<?=ROOT?>/assets/js/salon/salontimeslotview.js"></script>
+    <script>
+        const salonEmail = "<?php echo $_SESSION['SALON_USER']; ?>";
+    </script>
     <script src="<?=ROOT?>/assets/js/salon/saloncalendar.js"></script>
-    <script src="<?=ROOT?>/assets/js/salon/salonavailabletime.js"></script>
 </body>
 </html>
 

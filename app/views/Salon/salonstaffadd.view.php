@@ -70,7 +70,7 @@
                     <input type="text" 
                            id="job" 
                            name="job" 
-                           placeholder="eg-: Pet Bathing"
+                           placeholder="eg-: Treatments for Dogs"
                            required>
                 </div>
 

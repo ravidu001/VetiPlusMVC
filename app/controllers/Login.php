@@ -107,6 +107,7 @@ class Login extends Controller
                                     break;
                                 case 'Salon':
                                     $_SESSION['SALON_USER'] = $registered->email;
+
                                     //check the accepted email has or not
                                     $email = $data['email']; 
                                     //this function in the salons model file
@@ -114,6 +115,21 @@ class Login extends Controller
     
                                     show($accepted);
                                     if($accepted)
+
+                                    redirect('Salon');
+                                }
+                                //email not in the accepted salon data table
+                                //so it will be rejected or pending  
+                                else
+                                {
+                                    //get the satus of the salon egister pending or not
+                                    //this function in the salon registration model
+                                    //get the first data row which match the email
+                                    $salonStatus = $salonRegister->getSalonRegisterStatus($registered->email);
+
+                                    //check the status
+                                    if ($salonStatus) 
+
                                     {
                                         // echo json_encode(['status' => 'success', 'redirect' => ROOT . '/SalonDashboard']);
                                         $_SESSION['SALON_USER'] = $registered->email;
