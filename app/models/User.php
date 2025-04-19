@@ -6,7 +6,7 @@ class User
 
     protected $table = 'User';
 
-    protected $allowedColumns = ['email', 'password', 'type', 'loginCount'];
+    protected $allowedColumns = ['email', 'password', 'type', 'loginCount', 'activeStatus'];
 
     public function create($data)
     {
