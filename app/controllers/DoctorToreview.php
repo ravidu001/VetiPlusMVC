@@ -80,7 +80,7 @@ class DoctorToreview extends Controller {
                 'status' => 1, // Mark as reviewed
                 'comment' => $comment,
                 'rating' => $rating,
-                'dateTime' => date('Y-m-d H:i:s')
+                'feedbackDateTime' => date('Y-m-d H:i:s')
             ];
             
             try {
@@ -115,7 +115,7 @@ class DoctorToreview extends Controller {
                 'status' => 0, // Mark as pending
                 'comment' => '',
                 'rating' => 0,
-                'dateTime' => date('Y-m-d H:i:s')
+                'feedbackDateTime' => date('Y-m-d H:i:s')
             ];
             
             // Update the record

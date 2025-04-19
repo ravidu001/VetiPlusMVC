@@ -2,25 +2,6 @@
 
 class Pet {
     use Model;
-    
-    public function findPetDetailsByID($petID)
-    {
-        $this->order_column = 'petID';
-        return $this->first(['petID' => $petID ]);
-    }
-
-    public function checkUser($email)
-    {
-        // echo $email;
-        $this->order_column = 'petOwnerID';
-        // $result = $this->where(['email' => $email]);
-        return $this->where(['petOwnerID' => $email]); // what this return is an array of user
-        // if($result) {
-        //     return true;
-        // } else {
-        //     return false;
-        // } 
-    }
 
     protected $table = 'pet';
     protected $allowedColumns = [
@@ -28,9 +9,9 @@ class Pet {
         'species', 'breed', 'breedAvailable', 'breedDescription', 'profilePicture'
     ];
    
-    public function __construct() 
-    {
+    public function __construct() {
         $this->order_column = 'petID ';  // Overriding order_column here
+        $this->limit = 30;     // override default limit 10, since maybe more than 10 pets.
 
         if (isset($_SESSION['petOwnerID'])) 
         {
@@ -42,14 +23,8 @@ class Pet {
         }
         else 
         {
-            redirect('Login');
+            // redirect('Login');
         }
-    }
-
-    
-    public function __construct() {
-        $this->order_column = 'petID ';  // Overriding order_column here
-        $this->limit = 30;     // override default limit 10, since maybe more than 10 pets.
     }
     
     public $petOwnerID;
@@ -109,6 +84,25 @@ class Pet {
     //     $this->order_colunm = 'petID';
     //     return $this->first(['petID' => $petID ]);
     // }
+
+    public function findPetDetailsByID($petID)
+    {
+        $this->order_column = 'petID';
+        return $this->first(['petID' => $petID ]);
+    }
+
+    public function checkUser($email)
+    {
+        // echo $email;
+        $this->order_column = 'petOwnerID';
+        // $result = $this->where(['email' => $email]);
+        return $this->where(['petOwnerID' => $email]); // what this return is an array of user
+        // if($result) {
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
+    }
 
 }
 
