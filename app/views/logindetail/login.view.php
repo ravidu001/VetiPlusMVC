@@ -1,89 +1,6 @@
 <?php
-
-    // $message = []; // Initialize message array
-
-    // if (isset($_POST['login'])) {
-    //     $email = mysqli_real_escape_string($conn, $_POST['email']); 
-    //     $password = $_POST['password'];
-
-    //     // Retrieve user by email
-    //     $select = mysqli_query($conn, "SELECT * FROM `User` WHERE email='$email'") or die('Query failed');
-
-    //     if (mysqli_num_rows($select) > 0) {
-    //         $row = mysqli_fetch_assoc($select);
-            
-    //         // Verify the password with the hashed password stored in the database
-    //         if (password_verify($password, $row['password'])) {
-    //             $_SESSION['user_id'] = $row['email'];
-                
-    //             // Check if the user is logging in for the first time
-    //             if ($row['loginCount'] == 0) {
-    //                 // increase the login count
-    //                 $loginCount = $row['loginCount'] + 1;
-    //                 $update = mysqli_query($conn, "UPDATE `User` SET loginCount='$loginCount' WHERE email='$email'") or die('Query failed');
-
-    //                 // Redirect based on user type
-    //                 switch ($row['type']) {
-    //                     case 'Vet Doctor':
-    //                         header('Location: ../vetDoctor/profile.php');
-    //                         break;
-    //                     case 'Pet Owner':
-    //                         header('Location: ../petOwner/petOwnerRegister.php');
-    //                         break;
-    //                     case 'Salon':
-    //                         header('Location: ../salon/FirstTimeRenderPage.php');
-    //                         break;
-    //                     case 'Vet Assistant':
-    //                         header('Location: ../vetAssistant/home.php');
-    //                         break;
-    //                     case 'System Admin':
-    //                         header('Location: ../systemAdmin/home.php');
-    //                         break;
-    //                     case 'Owner':
-    //                         header('Location: ../owner/home.php');
-    //                         break;
-    //                     default:
-    //                         $message[] = 'User type not recognized!';
-    //                 }
-    //                 exit();
-    //             } else {
-    //                 // increase the login count
-    //                 $loginCount = $row['loginCount'] + 1;
-    //                 $update = mysqli_query($conn, "UPDATE `User` SET loginCount='$loginCount' WHERE email='$email'") or die('Query failed');
-
-    //                 // Redirect based on user type
-    //                 switch ($row['type']) {
-    //                     case 'Vet Doctor':
-    //                         header('Location: ../vetDoctor/homeNew.php');
-    //                         break;
-    //                     case 'Pet Owner':
-    //                         header('Location: ../petOwner/home.php');
-    //                         break;
-    //                     case 'Salon':
-    //                         header('Location: ../salon/home.php');
-    //                         break;
-    //                     case 'Vet Assistant':
-    //                         header('Location: ../vetAssistant/home.php');
-    //                         break;
-    //                     case 'System Admin':
-    //                         header('Location: ../systemAdmin/home.php');
-    //                         break;
-    //                     case 'Owner':
-    //                         header('Location: ../owner/home.php');
-    //                         break;
-
-    //                     default:
-    //                         $message[] = 'User type not recognized!';
-    //                 }
-    //                 exit();
-    //             }
-    //         } else {
-    //             $message[] = 'Incorrect email or password';
-    //         }
-    //     } else {
-    //         $message[] = 'Account not exisits. Please register';
-    //     }
-    // }
+// Create an instance of the Notification controller
+$notification = new Notification();
 ?>
 
 
@@ -96,9 +13,11 @@
     <title>VetiPlus Login</title>
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/login/style.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+    <?php echo $notification->display(); ?>
     <div class="container">
         <div class="left-panel">
             

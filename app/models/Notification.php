@@ -10,7 +10,7 @@ class Notification {
 
         // Redirect back to the previous controller
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
+        //exit();
     }
 
     public function display() {
