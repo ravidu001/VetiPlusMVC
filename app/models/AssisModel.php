@@ -15,6 +15,7 @@ class AssisModel {
         'DOB',
         'gender',
         'district',
+        'bio',
         'certificateNumber',
         'expertise',
         'experience',
@@ -34,6 +35,10 @@ class AssisModel {
         } else {
             return false; // No record found
         }
+    }
+
+    public function create($data) {
+        $this->insert($data);
     }
 
     public function updateProfile($assisID, $data) {

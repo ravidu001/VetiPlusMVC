@@ -60,7 +60,7 @@ class Login extends Controller
                                 break;
                             case 'Vet Assistant':
                                 $_SESSION['user_id'] = $registered->email;
-                                header('Location: ../Assistant');
+                                header('Location: ../AssisRegistration');
                                 break;
                             case 'System Admin':
                                 $_SESSION['adminID'] = $registered->email;
