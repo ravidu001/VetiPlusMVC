@@ -58,4 +58,8 @@ class DoctorRegistration extends Controller {
             $this->view('vetDoctor/home');
         }
     }
+
+    public function errorUpdate() {
+        $this->view('vetDoctor/doctorregistration');
+    }
 }
