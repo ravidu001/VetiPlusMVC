@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +11,7 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/calendar/calendar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/myreview.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <!-- <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/"> -->
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/viewsession.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -202,6 +208,7 @@
 <body>
 <?php require_once '../app/views/navbar/doctornav.php'; ?>
 <div class="home">
+    <?php echo $notification->display(); ?>
     <div class="dashboard-container">
         <!-- Profile Header -->
         <div class="dashboard-header">

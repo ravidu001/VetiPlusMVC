@@ -35,6 +35,10 @@ class DoctorModel {
         }
     }
 
+    public function create($data) {
+        $this->insert($data);
+    }
+
     public function updateProfile($doctorID, $data) {
         $this->update($doctorID, $data, 'doctorID');
     }

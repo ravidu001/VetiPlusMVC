@@ -1,13 +1,20 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinarian Registration</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/registration.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 </head>
 <body>
+    <?php echo $notification->display(); ?>
     <div class="registration-container">
         <div class="registration-illustration">
             <img src="<?= ROOT ?>/assets/images/vetDoctor/vetreg.png" alt="Veterinarian Illustration">

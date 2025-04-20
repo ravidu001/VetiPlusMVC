@@ -24,7 +24,7 @@
         </div>
 
         <div class="contact-info">
-            <p>If you have any questions, please contact support at support@example.com</p>
+            <p>If you have any questions, please contact support at support@vetiplus.com</p>
         </div>
     </div>
 

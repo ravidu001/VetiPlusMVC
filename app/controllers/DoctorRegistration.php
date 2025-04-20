@@ -50,12 +50,26 @@ class DoctorRegistration extends Controller {
             ];
 
             // echo $data['doctorID'];
-            $doctor = new DoctorRegistrationModel();
-            $doctor->create($data);
+            $doctor = new DoctorModel();
+            $result = $doctor->create($data);
+
+            $notification = new Notification();
     
+            if(!$result) {
+                // echo "<script>window.alert('Registration successful!');</script>";
+                // header('Location: /vetiplusMVC/public/DoctorRegistration/home');
+                $notification->show("Your registration is successful. Please wait for the approval.", 'success');
+                redirect('login/index'); // this is not working because page is refreshed by the notification model.
+            } else {
+                // echo "<script>window.alert('Registration failed. Please try again.');</script>";
+                // header('Location: /vetiplusMVC/public/DoctorRegistration/errorUpdate');
+                $notification->show("Registration failed. Please try again.", 'error');
+                redirect('DoctorRegistration/index');
+            }
 
-
-            $this->view('vetDoctor/home');
+            if(!$result) {
+                $this->view('login/index');
+            }
         }
     }
 
