@@ -32,36 +32,61 @@
                 </tr>
             </thead>
             <tbody id="historyTableBody">
-                <!-- Rows will be dynamically populated -->
+                <?php if (!empty($data['consolidatedData'])): ?>
+                    <?php foreach ($data['consolidatedData'] as $request): ?>
+                        <tr>
+                            <td>
+                                <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= htmlspecialchars($request['doctor']->profilePicture) ?>" alt="Profile Picture" class="doctor-profile"><br>
+                                <?= htmlspecialchars($request['doctor']->fullName) ?><br>
+                                Gender: <?= htmlspecialchars($request['doctor']->gender) ?><br>
+                                <?php
+                                    $dob = new DateTime($request['doctor']->DOB); // Create a DateTime object for the DOB
+                                    $currentDate = new DateTime(); // Get the current date
+                                    $age = $currentDate->diff($dob)->y; // Calculate the difference in years
+                                ?>
+                                Age: <?= htmlspecialchars($age) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($request['session']->selectedDate) ?><br>
+                                <?php
+                                    $startTime = new DateTime($request['session']->startTime);
+                                    $endTime = new DateTime($request['session']->endTime);
+                                ?>
+                                <?= htmlspecialchars($startTime->format('H:i')) ?> - <?= htmlspecialchars($endTime->format('H:i')) ?>
+                            </td>
+                            <td><?= htmlspecialchars($request['session']->clinicLocation) ?></td>
+                            <td><?= htmlspecialchars($request['doctor']->contactNumber) ?></td>
+                            <td>
+                                <?php if ($request['assisSession']->action == 'accept'): ?>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-accept">Accepted</button>
+                                    </div>
+                                <?php elseif ($request['assisSession']->action == 'reject'): ?>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-reject">Rejected</button>
+                                    </div>
+                                <?php elseif ($request['assisSession']->action == 'expired'): ?>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-expired">Expired</button>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-pending">Pending</button>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5">No appointment request history available.</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
 </div>
 
-    <script src="<?= ROOT ?>/assets/js/vetAssistant/request.js"></script>
-    <script>
-        function renderHistoryTable() {
-            const tableBody = document.getElementById('historyTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-
-            window.appointmentManager.historyRequests.forEach(request => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>
-                        <img src="${request.profileImage}" alt="${request.doctor}" class="doctor-profile">
-                        ${request.doctor}
-                    </td>
-                    <td>${request.date}<br>${request.startTime} - ${request.endTime}</td>
-                    <td>${request.location}</td>
-                    <td>${request.contact}</td>
-                    <td class="${request.status === 'Rejected' ? 'status-rejected' : 'status-completed'}">${request.status}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Initial render
-        renderHistoryTable();
-    </script>
+    
 </body>
 </html>
