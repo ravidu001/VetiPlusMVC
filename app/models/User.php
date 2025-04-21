@@ -62,4 +62,9 @@ class User
         return $count;  // Return the count value
 
     }
+
+    public function updateActiveStatus($id, $status)
+    {
+        return $this->update($id, ['activeStatus' => $status], 'email');
+    }
 }
