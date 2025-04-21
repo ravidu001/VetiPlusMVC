@@ -124,6 +124,7 @@ function getDatesFromBackEnd()
                 calendarData.opendays = data.results.opendays || [];
                 calendarData.closedays = data.results.closedays || [];
                 calendarData.holidays = data.results.holidays || [];
+                initCalendar(); // render after data loaded
             }
         })
         .catch(error => {

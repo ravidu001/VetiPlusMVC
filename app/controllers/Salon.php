@@ -18,7 +18,9 @@ class Salon extends Controller
             }
     
             //define today
+            // $today = date('Y-m-d');
             $today = '2025-04-23';
+
 
             $data = [];
 
@@ -114,14 +116,17 @@ class Salon extends Controller
 
             $slotDetails = [];
 
-            foreach ($results as $result) 
+            if($results)
             {
-                $slotDetails[] = [
-                    'completeAppointments' => $salonBooked->getCompletedCountBySlot($result->salSessionID),
-                    'time_slot' => $result->time_slot,
-                    'noOfBookings' => $result->noOfBookings,
-                    'status' => $result->status
-                ];
+                foreach ($results as $result) 
+                {
+                    $slotDetails[] = [
+                        'completeAppointments' => $salonBooked->getCompletedCountBySlot($result->salSessionID),
+                        'time_slot' => $result->time_slot,
+                        'noOfBookings' => $result->noOfBookings,
+                        'status' => $result->status
+                    ];
+                }
             }
 
             // show($slotDetails);

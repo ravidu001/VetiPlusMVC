@@ -140,12 +140,27 @@ class SalonOffer extends Controller
         $this->view('Salon/salonofferadd', $data);
     }
 
-    public function deleteoffer($specialOfferID) 
+    public function deleteoffer() 
     {
+        $offerID = [];
+        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $offerID['offerID'] = $data;
+
+        $specialOfferID =  $offerID['offerID'] ?? null;
+
+        if($specialOfferID === null)
+        {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No offer ID provided.'
+            ]);
+        }
+
         $offertable = new SalonOffers;
         $result = $offertable->offerdelete($specialOfferID);
 
-        if ($result !== false) {
+        if ($result == false) {
             echo json_encode([
                 'success' => true,
                 'message' => 'Offer deleted successfully.'

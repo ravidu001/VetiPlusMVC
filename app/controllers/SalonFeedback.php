@@ -33,7 +33,7 @@ class SalonFeedback extends Controller
         // show($reviews);
 
         //Check if the reviews were fetched successfully
-        if($reviews == false)
+        if($reviews == true)
         {
             //Handle the error (eg- show an error message)
             die('Error fetching reviews');
