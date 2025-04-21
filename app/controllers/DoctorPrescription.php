@@ -9,7 +9,7 @@ class DoctorPrescription extends Controller {
         }
         if(!isset($_SESSION['popupShown']) || !isset($_GET['petID'])){
         $_SESSION['popupShown'] = true;
-    }
+        }
         else{
             $_SESSION['popupShown'] = false;
         }

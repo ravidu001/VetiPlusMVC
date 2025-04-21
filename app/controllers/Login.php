@@ -87,6 +87,10 @@ class Login extends Controller
                                     $doctor = new DoctorModel();
                                     $doctorData = $doctor->find($registered->email);
 
+                                    if (empty($doctorData)) {
+                                        header('Location: ../DoctorRegistration');
+                                        exit();
+                                    }
                                     switch ($doctorData->approvedStatus){
                                         case 'pending':
                                             header('Location: ../Pending');

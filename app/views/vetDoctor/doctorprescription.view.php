@@ -33,13 +33,10 @@
                 ?>
             </select>
             
-            <label for="petID">Pet ID:</label>
+            <label for="petID">Pet ID with Name:</label>
             <select id="petID" class="form-input" disabled>
                 <option value="">Select Pet</option>
             </select>
-            
-            <label for="petName">Pet Name:</label>
-            <input type="text" id="petName" class="form-input" placeholder="Auto Fill" readonly>
 
             <input type="hidden" id="appointmentID" value="<?= $item['appointment']->appointmentID; ?>"> 
             

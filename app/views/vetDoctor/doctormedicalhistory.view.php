@@ -11,6 +11,55 @@
 <body>
 <?php require_once '../app/views/navbar/doctornav.php'; ?>
 <div class="home">
+    <div id="petPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Select Pet</h2>
+            
+            <label for="sessionID">Session ID:</label>
+            <select id="sessionID" class="form-input">
+                <option value="">Select Session</option>
+                <?php 
+                $uniqueSessionIDs = []; // Array to track unique session IDs
+                foreach ($appointmentsWithPets as $item): 
+                    if (!in_array($item['session']->sessionID, $uniqueSessionIDs)): 
+                        $uniqueSessionIDs[] = $item['session']->sessionID; // Add to unique list
+                ?>
+                    <option value="<?= $item['session']->sessionID ?>"><?= $item['session']->sessionID ?></option>
+                <?php 
+                    endif; 
+                endforeach; 
+                ?>
+            </select>
+            
+            <label for="petID">Pet ID with Name:</label>
+            <select id="petID" class="form-input" disabled>
+                <option value="">Select Pet</option>
+            </select>
+
+            <input type="hidden" id="appointmentID" value="<?= $item['appointment']->appointmentID; ?>"> 
+            
+            <div class="button-container">
+                <button id="okButton" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
+    <?php
+    // Initialize $petID to avoid undefined variable warning
+    $petID = null;
+
+    // prescription.php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Check if petID is set
+        if (isset($_POST['petID'])) {
+            $petID = $_POST['petID']; // Set $petID from POST data
+            // Now you can use $petID in your PHP code
+            echo "Received Pet ID: " . htmlspecialchars($petID);
+            exit; // Make sure to exit after handling the request
+        }
+    }
+    ?>
     <div class="medical-history-container">
         <div class="profile-header">
             <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet Avatar" class="pet-avatar">
@@ -268,56 +317,68 @@
         </div>
     </div>
 </div>
+<script src="<?= ROOT ?>/assets/js/vetDoctor/medicalhistory.js"></script>
 <script>
-// Optional: More robust implementation
-document.addEventListener('DOMContentLoaded', () => {
-    const medicalSections = document.querySelectorAll('.medical-section');
+    const petsBySession = <?= json_encode($petsBySession) ?>; // Pass pets data to JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the popup should be shown
+            const shouldShowPopup = <?= isset($_SESSION['popupShown']) ? json_encode($_SESSION['popupShown']) : 'false' ?>;
+            
+            console.log(<?= json_encode($_SESSION); ?>)
 
-    medicalSections.forEach(section => {
-        const viewAllBtn = section.querySelector('.view-all-btn');
-        const entries = section.querySelectorAll('.medical-entry');
-        const totalEntries = entries.length;
-
-        // Initial setup
-        viewAllBtn.textContent = `View All (${totalEntries})`;
-
-        // Accessibility improvements
-        viewAllBtn.setAttribute('role', 'button');
-        viewAllBtn.setAttribute('tabindex', '0');
-
-        // Keyboard accessibility
-        viewAllBtn.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                viewAllBtn.click();
+            if (shouldShowPopup) {
+                openPopup(); // Automatically open the popup on page load
             }
         });
 
-        viewAllBtn.addEventListener('click', () => {
-            const isCollapsed = section.classList.toggle('medical-section-collapsed');
+    document.addEventListener('DOMContentLoaded', () => {
+        const medicalSections = document.querySelectorAll('.medical-section');
 
-            // Animate entries
-            entries.forEach((entry, index) => {
-                if (index >= 3) {
-                    entry.style.transition = 'opacity 0.3s ease';
-                    entry.style.opacity = isCollapsed ? '0' : '1';
+        medicalSections.forEach(section => {
+            const viewAllBtn = section.querySelector('.view-all-btn');
+            const entries = section.querySelectorAll('.medical-entry');
+            const totalEntries = entries.length;
+
+            // Initial setup
+            viewAllBtn.textContent = `View All (${totalEntries})`;
+
+            // Accessibility improvements
+            viewAllBtn.setAttribute('role', 'button');
+            viewAllBtn.setAttribute('tabindex', '0');
+
+            // Keyboard accessibility
+            viewAllBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    viewAllBtn.click();
                 }
             });
 
-            // Update button text
-            viewAllBtn.textContent = isCollapsed 
-                ? `View All (${totalEntries})` 
-                : 'Show Less';
+            viewAllBtn.addEventListener('click', () => {
+                const isCollapsed = section.classList.toggle('medical-section-collapsed');
 
-            // Accessibility attributes
-            section.setAttribute('aria-expanded', !isCollapsed);
-            viewAllBtn.setAttribute('aria-label', 
-                isCollapsed ? `Expand to see all ${totalEntries} entries` 
-                : 'Collapse entries'
-            );
+                // Animate entries
+                entries.forEach((entry, index) => {
+                    if (index >= 3) {
+                        entry.style.transition = 'opacity 0.3s ease';
+                        entry.style.opacity = isCollapsed ? '0' : '1';
+                    }
+                });
+
+                // Update button text
+                viewAllBtn.textContent = isCollapsed 
+                    ? `View All (${totalEntries})` 
+                    : 'Show Less';
+
+                // Accessibility attributes
+                section.setAttribute('aria-expanded', !isCollapsed);
+                viewAllBtn.setAttribute('aria-label', 
+                    isCollapsed ? `Expand to see all ${totalEntries} entries` 
+                    : 'Collapse entries'
+                );
+            });
         });
     });
-});
 </script>
 </body>
 </html>
