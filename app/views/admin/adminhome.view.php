@@ -49,7 +49,7 @@
                         <i class='bx bx-calendar-plus icon'></i>
                         <div class="content">
                             <h3>Total Appointments</h3>
-                            <h2>4,561</h2>
+                            <h2><?php echo htmlspecialchars($appointmentCount, ENT_QUOTES, 'UTF-8'); ?></h2>
                         </div>
                     </div>
                     <div class="stats-card">

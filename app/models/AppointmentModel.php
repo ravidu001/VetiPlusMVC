@@ -40,4 +40,9 @@ class AppointmentModel {
         $this->update($appointmentID, ['status' => $status], 'appointmentID');
     }
 
+    public function appointmentcount(){
+         $count = $this->getCount();
+         return $count;
+    }
+
 }
