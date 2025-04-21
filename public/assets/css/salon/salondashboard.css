@@ -1,24 +1,27 @@
 /* Reset basic styling */
-body {
-    /* margin: 0; */
+body 
+{
     font-family: Arial, sans-serif;
     background-color: #F4F7FA;
 }
 
-body:has(#sidebar.close) .pagecontent {
+body:has(#sidebar.close) .homecontent 
+{
     margin-left: 100px;
     width: calc(100% - 100px);
+    padding: 1%;
 }
 
-
-.pagecontent{
+.homecontent
+{
     margin-left: 250px; /*width of sidebar */ 
     transition: margin-left 0.3s ease-in-out;
     width: calc(100%- 250px);
+    padding: 1%;
 }
 
-
-.dashbardheader {
+.dashbardheader 
+{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,12 +32,14 @@ body:has(#sidebar.close) .pagecontent {
     margin-bottom: 20px;
 }
 
-.profile {
+.profile 
+{
     display: flex;
     align-items: center;
 }
 
-.profile img {
+.profile img 
+{
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -42,7 +47,8 @@ body:has(#sidebar.close) .pagecontent {
     border: 2px solid var(--primary-color-light);
 }
 
-.owner {
+.owner 
+{
     font-size: 0.9rem;
     color: white;
     margin-left: 15px;
@@ -82,17 +88,6 @@ body:has(#sidebar.close) .pagecontent {
   justify-content: center;
   align-items: center;
 }
-/* Salon Dashboard Isolated Styling */
-/* Using more specific selectors to avoid conflicts */
-
-/* Dashboard Layout - Time Slots and Appointments */
-/* .dashcontent > .timeSlotforTOday,
-.dashcontent > .part2 
-{
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-} */
 
 .dashcontent 
 {

@@ -103,96 +103,129 @@
     <!-- Modal for confirmation -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p>Are you sure you want to delete this service?</p>
-            <button id="confirmDeleteBtn">Yes</button>
-            <button onclick="closeModal()">No</button>
+            <span class="closebtn" onclick="closeModal()">&times;</span><br>
+            <p class="ask">Are you sure you want to delete this Offer?</p>
+            <button id="confirmDeleteBtn">Confirm</button>
+            <button onclick="closeModal()">Cancel</button>
         </div>
     </div>
 
-
-
     <script>
-    let serviceIDToDelete;
+         const BASE_URL = "<?=ROOT?>";
+    </script>
+   
+    <style>
+    /* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    overflow-y: auto;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 150%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
 
-    function confirmDelete(serviceID) {
-        serviceIDToDelete = serviceID;
-        document.getElementById("deleteModal").style.display = "block";
+/* Modal Content Box */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Close Button (X) */
+.closebtn {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ask {
+    margin: 10px;
+    padding: 10px 5px;
+}
+
+/* Buttons */
+.modal-content button {
+    padding: 10px 16px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content #confirmDeleteBtn {
+    background-color: #6a0dad;
+    color: white;
+}
+
+.modal-content button:hover {
+    opacity: 0.9;
+}
+</style>
+
+</body>
+</html>
+
+<script>
+    let deleteOfferId = null;
+
+    // Show the modal and set the ID to delete
+    function confirmDelete(offerId) {
+        deleteOfferId = offerId;
+        document.getElementById('deleteModal').style.display = 'block';
     }
 
+    // Close the modal
     function closeModal() {
-        document.getElementById("deleteModal").style.display = "none";
+        document.getElementById('deleteModal').style.display = 'none';
+        deleteOfferId = null;
     }
 
-    // Create popup function
-    function showPopup(message, isSuccess) {
-        // Create popup container
-        const popup = document.createElement('div');
-        popup.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: ${isSuccess ? '#6a0dad' : '#f44336'};
-            color: white;
-            padding:30x 2px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 1000;
-            text-align: center;
-            font-weight: bold;
-        `;
-        
-        popup.textContent = message;
-        document.body.appendChild(popup);
-
-        // Remove popup after 3 seconds
-        setTimeout(() => {
-            document.body.removeChild(popup);
-        }, 3000);
-    }
-
-    document.getElementById("confirmDeleteBtn").onclick = function() 
-    {
-        if (serviceIDToDelete) 
-        {
-            fetch('<?= ROOT ?>/SalonOffer/deleteoffer/' + serviceIDToDelete, {
-                method: 'POST'
+    // Handle confirmation
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+        if (deleteOfferId !== null) {
+            const formData = deleteOfferId;
+            
+            // console.log(deleteOfferId);
+            // console.log(formData);
+            
+            fetch(`${BASE_URL}/SalonOffer/deleteoffer`, {
+                method: 'POST',
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
-                // Show popup based on response
-                showPopup(data.message, data.success);
-
-                // If successful, remove the row
                 if (data.success) {
-                    const rowToRemove = document.querySelector(`button[onclick="confirmDelete(${serviceIDToDelete})"]`).closest('tr');
-                    if (rowToRemove) {
-                        rowToRemove.remove();
-                    }
+                    alert(data.message);
+                    location.reload(); // Refresh the page after deletion
+                } else {
+                    alert('Error: ' + data.message);
                 }
+                closeModal();
             })
             .catch(error => {
-                console.error('Error:', error);
-                showPopup('An error occurred while deleting the service.', false);
+                alert('An error occurred: ' + error);
+                closeModal();
             });
+        }
+    });
 
-            // Close the confirmation modal
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target === modal) {
             closeModal();
         }
     }
-
-    // Check for any existing messages on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        <?php if (isset($_SESSION['message'])): ?>
-            showPopup('<?= $_SESSION['message'] ?>', <?= isset($_SESSION['message_type']) && $_SESSION['message_type'] == 'success' ? 'true' : 'false' ?>);
-            <?php 
-            unset($_SESSION['message']);
-            unset($_SESSION['message_type']);
-            ?>
-        <?php endif; ?>
-    });
 </script>
-   
-</body>
-</html>

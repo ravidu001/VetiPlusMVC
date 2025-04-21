@@ -29,7 +29,15 @@ class SalonOffers
     {
         try {
             $result = $this->delete($specialOfferID, 'specialOfferID');
-            return true; // Successful deletion
+            if ($result) {
+
+                return true; // Successful deletion
+    
+            } else {
+    
+                throw new Exception('Deletion failed');
+    
+            }
     
         } catch (Exception $e) {
             // Log the error if needed

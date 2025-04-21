@@ -50,13 +50,13 @@
                                     <i class="fas fa-store"></i>
                                     <span>Salon Details</span>
                                 </li>
-                                <li class="nav-item" data-section="services">
-                                    <i class="fas fa-cog"></i>
-                                    <span>Account Setting</span>
-                                </li>
                                 <li class="nav-item" data-section="security">
                                     <i class="fas fa-lock"></i>
                                     <span>Security</span>
+                                </li>
+                                <li class="nav-item" data-section="account">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Account</span>
                                 </li>
                             </ul>
                         </nav>
@@ -115,35 +115,42 @@
                         </section>
 
                         <!-- Account Setting Section -->
-                        <section id="services" class="section">
+                        <section id="account" class="section">
                             <form class="acount-form">
                                 <div class="section-header">
                                     <h1>Account Setting</h1>
                                 </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" name="email"   value="<?= htmlspecialchars($salon->salonID ?? 'N/A') ?>" readonly>
+                                <div class="alert alert-warning">
+                                    <strong>Warning:</strong> 
+                                    <ul>
+                                        <li>Deleting your account will permanently remove all your data, including bookings and preferences. This action cannot be undone.</li>
+                                        <li>You cannot delete your account if you have existing bookings.</li>
+                                        <li>You cannot delete your account if you have created slots.</li>
+                                        <li>You can delete your account only after the end date of your created slots.</li>
+                                    </ul>
                                 </div>
-                                <div class="edit-actions" id="settingsEditActions" style="display: none;">
-                                    <button class="btn btn-secondary" id="settingsResetBtn">
-                                        <i class="fas fa-undo"></i> Reset
-                                    </button>
-                                    <button type="submit" class="btn btn-primary" id="settingsSaveBtn">
-                                        <i class="fas fa-save"></i> Save
-                                    </button>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" name="email">
-                                </div>
-                                <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" name="email">
-                                </div>
+                                <!-- <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input type="password" name="enterPassword" id="enterPassword">
+                                </div> -->
                                 <br>
-                                <p>Account Actions ?</p><br>
-                                
-                                <button class="btn-delete"> <i class="fas fa-trash-alt"> </i>Delete Account</button>
+                                <div class="delete-account-section">
+                                        <p>Do you want to Delete this Account ?</p><br>
+                                    <button class="btn-delete" id="deleteAccount">
+                                        <i class="fas fa-trash-alt"></i><p>Delete Account</p>
+                                    </button>
+                                </div>    
+
+                                <!-- Confirmation Modal -->
+                                <div id="confirmationModal" class="modal" style="display: none;">
+                                    <div class="modal-content">
+                                        <h3>Confirm Account Deletion</h3>
+                                        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                                        <input type="password" class="password" id="confirmPasswordInput" placeholder="Enter your password to confirm" required><br>
+                                        <button id="confirmDeleteButton">Confirm</button>
+                                        <button id="cancelDeleteButton">Cancel</button>
+                                    </div>
+                                </div>
                             </form>
                         </section>
 
@@ -158,18 +165,24 @@
                             <form class="security-form">
                                 <div class="form-group">
                                     <label>Current Password</label>
-                                    <input type="password" id="Currentpassword" name="currentPassword" required>
-                                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                                    <div style="display: flex;">
+                                        <input type="password" id="currentPassword" name="currentPassword" disabled>
+                                        <span class="toggle-password" onclick="togglePassword(event)">👁️</span>
+                                    </div>    
                                 </div>
                                 <div class="form-group">
                                     <label>New Password</label>
-                                    <input type="password"  id="Newpassword" name="newPassword" required>
-                                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                                    <div style="display: flex;">
+                                        <input type="password"  id="newPassword" name="newPassword" disabled>
+                                        <span class="toggle-password" onclick="togglePassword(event)">👁️</span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm New Password</label>
-                                    <input type="password"  id="Confirmpassword" name="confirmPassword" required>
-                                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                                    <div style="display: flex;">
+                                        <input type="password"  id="confirmPassword" name="confirmPassword" disabled>
+                                        <span class="toggle-password" onclick="togglePassword(event)">👁️</span>
+                                    </div>
                                 </div>
                                 <div class="edit-actions" id="passwordEditActions" style="display: none;">
                                     <button class="btn btn-secondary" id="passwordResetBtn">

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/navbar/salonnav.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salondashboard.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonchart.css"> 
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/guest/myFooter.css">
+    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/css/guest/myFooter.css"> -->
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonpopup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Document</title>
@@ -17,7 +17,7 @@
                     include __DIR__ . '/../navbar/salonnav.php';
                 ?>
             </div>
-            <div class="pagecontent">
+            <div>
                 <div class="dashbardheader">
                     <div class="profile">
                         <img class="profile" src="<?=ROOT?>/assets/images/salon/service/wallpaper.jpg" alt="profile.php">
@@ -199,7 +199,10 @@
                                             }
                                             else
                                             {
-                                                echo '<tr><td colspan="3">No time slots available</td></tr>';
+                                                echo '<tr><td colspan="3">
+                                                           <p style="color:gray"> No time slots available </p>
+                                                            </td>
+                                                    </tr>';
                                             }
                                         ?>
                                     </tbody>
@@ -276,7 +279,7 @@
 
         <div>
             <?php
-                // require "../../../app/views"; footer 
+                // require "../../../app/views"; 
             ?>
         </div> 
     </div> 

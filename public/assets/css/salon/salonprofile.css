@@ -1,5 +1,6 @@
 
-:root {
+:root 
+{
   --primary-color: rgb(83, 10, 166);
   --secondary-color: #f4f4f4;
   --text-color: #333;
@@ -22,13 +23,13 @@ body {
   color: var(--text-color);
 }
 
-body:has(#sidebar.close) .pagecontent {
+body:has(#sidebar.close) .home {
   margin-left: 70px;
   width: calc(100% - 70px);
 }
 
 
-.pagecontent{
+.home{
   margin-left: 280px; /*width of sidebar */ 
   transition: margin-left 0.3s ease-in-out;
   width: calc(100%- 280px);
@@ -37,7 +38,7 @@ body:has(#sidebar.close) .pagecontent {
 .profile-container {
   display: flex;
   max-width: 1200px;
-  height:600px;
+  height:650px;
   margin: 20px auto;
   background-color: var(--white);
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -220,7 +221,7 @@ body:has(#sidebar.close) .pagecontent {
 }
 
 .form-group input {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -238,55 +239,99 @@ body:has(#sidebar.close) .pagecontent {
   cursor: not-allowed;
 }
 
-/* Modal Styles */
+/* Modal backdrop */
 .modal {
+  /* When modal is hidden */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
 
-.modal-content {
-  background: var(--white);
-  padding: 30px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+/* When modal is visible */
+.modal[style*="display: block"] {
+  display: flex !important; /* This overrides the inline style */
+  justify-content: center;
+  align-items: center;
 }
 
-.modal-content h2 {
-  margin-bottom: 20px;
-  color: var(--accent-color);
-}
-
-.modal-content input {
+.password
+{
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 12px 16px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+  transition: border 0.2s ease;
 }
 
-.modal-actions {
+.password:focus
+{
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Modal container */
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  padding: 32px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  /* Remove any absolute positioning that might be causing issues */
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: 0;
+}
+
+/* Rest of your styling remains the same */
+.modal-content h3 {
+  margin-top: 0;
+  color: #d32f2f;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
 }
 
-.btn-cancel, .btn-primary {
+/* Button styling */
+.modal-content button {
   padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease;
+  border: none;
 }
 
+#confirmDeleteButton, .confirm-btn {
+  background-color: #d32f2f;
+  color: white;
+}
+
+#cancelDeleteButton, .cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
 .btn-update{
   padding: 10px 20px;
   border: none;
@@ -298,25 +343,67 @@ body:has(#sidebar.close) .pagecontent {
   width: 20%;
 }
 
+/* Container for the delete account section */
+.delete-account-section {
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+}
+
+/* Delete account warning text */
+.delete-account-section p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* Delete account button */
 .btn-delete {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  border: 1px solid #d32f2f;
+  color: #d32f2f;
+  padding: 10px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  background-color: var(--white);
-  border: var(--error-color) solid 2px;
-  color: var(--error-color);
-  width: 20%;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  font-weight: 500;
 }
 
-.btn-delete :hover {
-  color:var(--white);
-  background-color: var(--error-color);
-}
-
+/* Icon in the delete button */
 .btn-delete i {
-  color: #e74c3c;
-  font: 18px;
+  font-size: 16px;
+}
+
+/* Text in the delete button */
+.btn-delete p {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Hover state */
+.btn-delete:hover {
+  background-color: #d32f2f;
+  color: white;
+}
+
+/* Focus state for accessibility */
+.btn-delete:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.4);
+}
+
+/* Active state when clicking */
+.btn-delete:active {
+  transform: translateY(1px);
 }
 
 .btn-cancel {
@@ -382,6 +469,41 @@ select:disabled {
 
 select:hover {
   border-color: #3a393b 3px ;
+}
+/* Include the CSS styles here */
+.alert {
+    padding: 15px;
+    margin: 20px 0;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    position: relative;
+    background-color: #f0e4f4;
+    color: #6a0dad;
+}
+
+.alert strong {
+    font-weight: bold;
+}
+
+.alert ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.alert li {
+    margin-bottom: 5px;
+}
+
+.alert .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #af47f4;
+    cursor: pointer;
+}
+
+.alert .close:hover {
+    color: #7926a6;
 }
 
 
