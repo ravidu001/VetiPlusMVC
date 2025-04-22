@@ -5,7 +5,7 @@ class Pet {
     
     public function findPetDetailsByID($petID)
     {
-        $this->order_colunm = 'petID';
+        $this->order_column = 'petID';
         return $this->first(['petID' => $petID ]);
     }
 
@@ -30,7 +30,7 @@ class Pet {
     
     public function __construct() {
         $this->order_column = 'petID ';  // Overriding order_column here
-        $this->limit = 30;     // override default limit 10, since maybe more than 10 pets.
+        $this->limit = 30;               // override default limit 10, since maybe more than 10 pets.
     }
     
     public $petOwnerID;
@@ -44,14 +44,12 @@ class Pet {
     }
 
     /**
-     * jm -  Based on the petOwner ID return all the pets' details
-    //  * @return 'array of arrays'|false
+     * jm -  Based on the petOwner ID return ALL the pets' details
     */
-    public function getPetsDetails () {
+    public function getAllPetsUnderUser () {
         $petDetailsArray = $this->where(['petOwnerID' => $this->petOwnerID]);
         return $petDetailsArray;
     }
-
     public function getOnePet ($petID) {
         $petDetails = $this->first(['petOwnerID' => $this->petOwnerID,
                                     'petID' => $petID]);
@@ -75,14 +73,32 @@ class Pet {
      * @return bool Whether successful or not
      */
     public function uploadProfilePicture ($petID, $data) {
-        $uploadSuccess = $this->update($petID, $data);
+        $uploadSuccess = $this->update($petID, $data, 'petID');
         return empty($uploadSuccess) ? true : false;
     }
+
+    /**
+     * jm - Update the pet's details in the database - used in pet's profile page
+     */
+    public function editProfileDetails ($petID, $data) {
+        $updateSuccess = $this->update($petID, $data, 'petID');
+        return empty($updateSuccess) ? true : false;
+    }
+
+    /**
+     * jm - Delete the pet's details  -> actually only update status as 'deactive'
+     */
+    public function deletePet ($petID) {
+        $params = ['activeStatus' => 'deactive'];
+        $deleteSuccess = $this->update($petID, $params, 'petID');
+        return empty($deleteSuccess) ? true : false;
+    }
+
 
     public $userID;
     // Use this function at start to get the petOwnerID:
     private function getUserID () {
-        $this->userID = $_SESSION['userID'];
+        $this->userID = $_SESSION['petOwnerID'];
     }
 
 

@@ -46,8 +46,6 @@ class PO_petRegister extends Controller {
      */
     public function petRegister () {
         $sanitized = array_map('sanitizeInput', $_POST);
-        
-        // $profilePicture = $_FILES['profilePicture'];
 
         $name = $sanitized['name']; 
         $DOB = $sanitized['DOB'];
@@ -70,24 +68,26 @@ class PO_petRegister extends Controller {
         
         header('Content-Type: application/json');
 
+
         if($this->validInputs) {
             $newPet = new Pet;
             $newPet->setPetOwnerID();
-            $insertSuccess = $newPet->register($sanitized);
+            $insertSuccess = true;
+            // $insertSuccess = $newPet->register($sanitized);
             
             if ($insertSuccess) {
                 echo json_encode(["status" => "success",
-                                "title" => "Success! 😺",
-                                "message" => "Registration successful!",
-                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+                                "popUpTitle" => "Success! 😺",
+                                "popUpMsg" => "Registration successful! 😺",
+                                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
                                 "nextPage" => "PO_home"
                             ]);
                 exit();
             } else {
                 echo json_encode(["status" => "failure",
-                                "title" => "Failure! 🙀",
-                                "message" => "Registration unsuccessful. 🙀\nPlease try again later.",
-                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
+                                "popUpTitle" => "Failure! 🙀",
+                                "popUpMsg" => "Registration unsuccessful. 🙀\nPlease try again later.",
+                                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
                             ]);
                 exit();
             }

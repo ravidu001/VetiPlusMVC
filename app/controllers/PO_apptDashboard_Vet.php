@@ -4,106 +4,75 @@ class PO_apptDashboard_Vet extends Controller {
     // since custom queries need to be executed using query():
     use Database;
 
-    public $petOwner;
+    // public $petOwner;
+    public $petOwnerID;
+
+    public $petAppts;
+
+    public $availableSessions;
+    public $activeDocList;
+
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
+        $this->petOwnerID = $_SESSION['petOwnerID'];
 
-        $this->petOwner = new PetOwner;
-        $this->petOwner->setPetOwnerID();
+        // $this->petOwner = new PetOwner;
+        // $this->petOwner->setPetOwnerID();
+
+        $this->petAppts = new PO_PetAppts;
+
+        $this->availableSessions = new PO_AvailableSessions;
+        $this->activeDocList = $this->availableSessions->getActiveList_vet();
     }
 
     public function index() {
         $this->view('petowner/apptDashboard_Vet');
     }
 
-    /**
-    * Function to populate Upcoming Appointments for this user's pets 
-    */
-    public function getUpcomingAppointments () {
-        // $myQuery = "SELECT * FROM user";   
-        // $result = $this->query($myQuery);
-
-        $result = [
-            [
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => '103/1A, Hena Mawaththe, Mount-Lavinia, Colombo',
-                'apptDate' => '10/10/2025'
-            ],
-            [
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => '103/1A, Hena Mawaththe',
-                'apptDate' => '10/10/2025'
-            ],
-            [
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => 'Mount-Lavinia, Colombo',
-                'apptDate' => '10/10/2025'
-            ],
-            [
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => '103/1A, Hena Mawaththe, Colombo',
-                'apptDate' => '10/10/2025'
-            ]
+    public function getAppts_upcoming () {
+        $options = [
+            'petID' => null,
+            'petOwnerID' => $this->petOwnerID,
+            'type' => 'vet'
         ];
+        $result = $this->petAppts->getPetApptUpcoming($options) ?: ["fetchedCount" => 0];
         
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
     }
-    /**
-    * Function to populate Appointment History for this user's pets 
-    */
-    public function getAppointmentHistory () {
-        // $myQuery = "SELECT * FROM user";   
-        // $result = $this->query($myQuery);
 
-        $result = [
-            [
-                'petID' => 1,
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => '103/1A, Hena Mawaththe, Mount-Lavinia, Colombo',
-                'apptDate' => '10/10/2025',
-                'apptRating' => 2
-            ],
-            [
-                'petID' => 1,
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => '103/1A, Hena Mawaththe',
-                'apptDate' => '10/10/2025',
-                'apptRating' => 5
-            ],
-            [
-                'petID' => 1,
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => 'Mount-Lavinia, Colombo',
-                'apptDate' => '10/10/2025',
-                'apptRating' => null
-            ],
-            [
-                'petID' => 1,
-                'petName' => 'Bingo',
-                'apptDescription' => 'hello there',
-                'docName' => 'Dr Manikam',
-                'docAddress' => '103/1A, Hena Mawaththe, Colombo',
-                'apptDate' => '10/10/2025',
-                'apptRating' => 4
-            ]
+    public function getAppts_history () {
+        $options = [
+            'petID' => null,
+            'petOwnerID' => $this->petOwnerID,
+            'type' => 'vet'
         ];
-        
+        $result = $this->petAppts->getPetApptHistory($options) ?: ["fetchedCount" => 0];
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
+
+    public function getAvailableSessions () {
+        $params = [
+            'docName' => $_GET['docName'] ?? '',
+            'district' => $_GET['district'] ?? '',
+            'selectedDate' => $_GET['selectedDate'] ?? '',
+            'startTime' => $_GET['startTime'] ?? ''
+        ];
+
+        $result = $this->availableSessions->getSessions_vet($params) ?: ["fetchedCount" => 0];
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
+    public function checkBookedApptSlots_vet () {
+        $sessionID = $_GET['sessionID'];
+
+        $result = $this->availableSessions->checkBookedApptSlots_vet($sessionID) ?: ["fetchedCount" => 0];
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;

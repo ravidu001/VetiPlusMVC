@@ -9,10 +9,9 @@
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/cardStyles.css" rel="stylesheet">
 
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-        <link href="<?= ROOT ?>/assets/css/petOwner/appointmentPages.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     
     </head>
 
@@ -22,21 +21,15 @@
                 console.log(<?= json_encode($this->po_details) ?>);
             </script>
             
-        <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
+        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <!-- actual content: -->
         <div class="bodyArea">
             <h1 class="bodyHeader">Welcome!</h1>
 
-            <div class="card horizCard">
-
-                <?php if (!empty($this->po_details->profilePicture)): ?>
-                    <img class="profilePic" src="<?= ROOT.'/assets/images/petOwner/profilePictures/po_user/'.$this->po_details->profilePicture?>"
-                        alt="Profile picture.">
-                <?php else: ?>
-                    <img class="profilePic" src="<?= ROOT.'/assets/images/petOwner/profilePictures/po_user/noPicuser.png' ?>"
-                        alt="No Profile picture added.">
-                <?php endif; ?>
+            <div class="card longCard">
+                <img class="profilePic" alt="Profile picture"
+                    src="<?= ROOT.'/assets/images/petOwner/profilePictures/po_user/'.$this->po_details->profilePicture?>">
                 <span>
                     <h3>Welcome back!</h3>
                     <p><?= $this->po_details->fullName ?></p>
@@ -45,12 +38,13 @@
             </div>
 
             <section id="myPets" class="dashArea">
+
                 <h2 class="dashHeader">My Pets</h2>
 
                 <div class="tallCard-container pets-container"></div>
                 <template class="petCard-template">
                     <a href="" title="Go to Pet Profile Page." class="card tallCard petCard">
-                        <img src="" class='profilePicture' alt='Pet Image'>
+                        <img src="" class='petCardPic profilePicture' alt='Pet Image'>
                         <h3 class="name"></h3>
                     </a>
                 </template>
@@ -61,70 +55,47 @@
                     </a>
                 </template>
 
-                <!-- <div class="dashContent">
-                    <?php
-                        if($this->pet_details) :
-                            foreach ($this->pet_details as $pet) : ?>
-                                <a href="po_petProfile?petID=<?= $pet->petID ?>" title="Go to Pet Profile Page." class="card tallCard">
-                                    <img src='<?= ROOT."/assets/images/petOwner/profilePics/pet/".$pet->profilePicture ?>' class='petImg' alt='Pet Image'>
-                                    <h3><?= $pet->name ?></h3>
-                                </a>
-                            <?php endforeach;
-                        else: ?>
-                            <div class="card horizCard">
-                                <h3>No Pets<br/>added yet!</h3>
-                            </div>
-                        <?php endif;
-                    ?>
-                    <a class="card dashCard" href="./po_petRegister">
-                        <i class="bx bxs-plus-circle bx-lg"></i>
-                        <h3>Add Pet</h3>
-                    </a>                   
-                </div> -->
-
             </section>
         
-        
-                <section id="upcomingAppointments" class="dashArea">  
-                    <h2 class="dashHeader">Upcoming Appointments</h2>
-                    
-                    <div class="appointments-container scrollAppointments">
-                        <?php for ($i=0; $i<2; $i++) :?>
-                            <div class="appointmentCard">
-                                <img src="<?= ROOT.'/assets/images/petOwner/serviceIcons/salonIcon.png'?>" class="appointmentIcon" alt="appointmentIcon">
-                                <div class="appointmentDetails">
-                                    <h3>Bingo</h3>
-                                    <span>Full Bath - Mr.Perera</span>
-                                    <span><b>Example Salon</b> No.103\1A, Hena Road, Mount-Lavinia</span>
-                                    <h4>05.12.2024 | 6:00PM</h4>
-                                </div>
-                                <div class="appintmentOptions">
-                                    <button><i class="bx bxs-edit bx-md"></i> Edit</button>
-                                    <button><i class="bx bxs-calendar-edit bx-md"></i> Reschedule</button>
-                                </div>
-                            </div>
-                            <div class="appointmentCard">
-                                <img src="<?= ROOT.'/assets/images/petOwner/serviceIcons/vetIcon.png'?>" class="appointmentIcon" alt="appointmentIcon">
-                                <div class="appointmentDetails">
-                                    <h3>Bingo</h3>
-                                    <span>Monthly Check-up</span>
-                                    <span><b>Dr. Rajapakse</b> No.103\1A, Hena Road, Mount-Lavinia</span>
-                                    <h4>05.12.2024 | 6:00PM</h4>
-                                </div>
-                                <div class="appintmentOptions">
-                                    <button><i class="bx bxs-edit bx-md"></i> Edit</button>
-                                    <button><i class="bx bxs-calendar-edit bx-md"></i> Reschedule</button>
-                                </div>
-                            </div>
-                        <?php endfor; ?>
+            <section class="dashArea">
+                <h2>Upcoming Appointments</h2>
+                <div class="longCard-container apptUpcomingCard-container"></div>
+                <template class="apptUpcomingCard-template">
+                    <div class="card longCard apptUpcomingCard" type apptID providerID petOwnerID>
+                        <div class="cardPic-container">
+                            <img src="" alt="providerPic" class="cardPic providerPic">
+                            <img src="" alt="petPic" class="cardPic petPic">
+
+                        </div>
+                        <div class="cardDetails">
+                            <h4 class="petName"></h4>
+                            <span class="providerName"></span>
+                            <span class="reason"></span>
+                            <span class="petName"></span>
+                            <h4 class="apptDateTime"></h4>
+                        </div>
+                        <div class="cardBtn-container">
+                            <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button>
+                            <button class="cardBtn rescheduleBtn"><i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
+                            <button class="cardBtn cancelBtn"><i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
+                        </div>
                     </div>
-                </section>
+                </template>
+            </section>
 
             <!-- footer at page's bottom: -->
-            <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
+            <?php include_once '../app/views/navbar/po_Footer.php'; ?>
 
         </div>
-        <script>
+
+        
+        <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
+
+        <script defer>
+            const ROOT = `<?= ROOT ?>`;
+
+            // to populate the pets-container with pet cards:
             const cardTemplate = document.querySelector('.petCard-template');
             const petsContainer = document.querySelector('.pets-container');
 
@@ -151,6 +122,42 @@
                 petsContainer.append(regCard);
             })
 
+
+            fetchAndAppendCards (
+                'PO_home/getAppts_upcoming',
+                '.apptUpcomingCard-template',
+                '.apptUpcomingCard-container'
+            );
+
+            document.querySelector('.apptUpcomingCard-container').addEventListener('click', function(e) {
+                const button = e.target.closest('button');
+                if (button) {
+                    const cardDetailsObj = getCardDetails(button);
+                    (button.classList.contains('editBtn')) && displayPopUp('popup_editAppt', cardDetailsObj);
+                    (button.classList.contains('rescheduleBtn')) && displayPopUp('popup_rescheduleAppt', cardDetailsObj);
+                    (button.classList.contains('cancelBtn')) && displayPopUp('popup_cancelAppt', cardDetailsObj);
+                }
+            })
+            
+            // get details from the closest card class into an object and return it:
+            function getCardDetails (btn) {
+                const card = btn.closest('.card');
+
+                const cardDetails = {
+                    type: card.getAttribute('type'),
+                    apptID: card.getAttribute('apptID'),
+                    providerID: card.getAttribute('providerID'),
+                    petOwnerID: card.getAttribute('petOwnerID'),
+
+                    providerName: card.querySelector('.providerName').textContent,
+                    reason: card.querySelector('.reason').textContent,
+                    petName: card.querySelector('.petName').textContent,
+                    apptDateTime: card.querySelector('.apptDateTime').textContent,
+                    action: `${ROOT}/PO_petProfile/postFeedback`
+                };
+
+                return cardDetails;
+            }
         </script>
     </body>
 </html>

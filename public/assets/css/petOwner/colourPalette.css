@@ -28,8 +28,8 @@ body, body.lightTheme {
 body.darkTheme {
     /* --background-color: #1a2e3b;           Dark blue-gray */
     --background-color: #18181b;           /* Dark blue-gray */
-    
-    --primary-color: #450871;              /* Bright blue for main accents */
+    /* 450871 */
+    --primary-color: #561187;              /* Bright blue for main accents */
     
     --primary-bg-color: #2c3e50;            /* mostly for div backgrounds */
     --secondary-bg-color: #3a3b3c;          /* for div backgrounds borders and such */
@@ -38,7 +38,7 @@ body.darkTheme {
     
     /* Navigation and Sidebar same as in light */
     
-    --nav-bg-color: #450871;               /* for sidebars and navbars bg */
+    --nav-bg-color: #561187;               /* for sidebars and navbars bg */
     --nav-text-color: #c3b4cd;             /* normal navbar text colour */
     --nav-active-text-color: #ffff;       /* text colour when hovering and for active tab */
     --link-color: #4b97cf;
@@ -48,8 +48,8 @@ body.darkTheme {
     
     /* Button and Hover Effects same as light */
     
-    --button-color: #450871;            /* when hovering */
-    --button-hover-color: #2c215c;      /* Darker blue for button hover */
+    --button-color: #561187;            /* when hovering */
+    --button-hover-color: #4766b6;      /* Darker blue for button hover 2c215c*/
     --button-text-color: #d6d6d6;          /* text on buttons */
 }
 

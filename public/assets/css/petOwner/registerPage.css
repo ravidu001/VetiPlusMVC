@@ -166,25 +166,3 @@ form input[type=date]:invalid {
     border-radius: 10px;
     width: 10vw;
 }
-
-
-@media (width <= 1200px) {
-    :root {
-        font-size: 0.9rem;
-    }
-}
-@media (width <= 900px) {
-    :root {
-        font-size: 0.8rem;
-    }
-}
-@media (width <= 750px) {
-    :root {
-        font-size: 0.7rem;
-    }
-}
-@media (width <= 500px) {
-    :root {
-        font-size: 0.6rem;
-    }
-}

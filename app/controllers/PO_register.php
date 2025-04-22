@@ -30,7 +30,7 @@ class PO_register extends Controller {
         
         $fullName = $sanitized['fullName']; 
         $contactNumber = $sanitized['contactNumber'];
-        // $DOB = $sanitized['DOB'];
+        $DOB = $sanitized['DOB'];
         // $NIC = $sanitized['NIC'];
         $gender = $sanitized['gender'];
     
@@ -42,10 +42,10 @@ class PO_register extends Controller {
         elseif (strlen($fullName) < 5) $this->addError("Name should be at least 5 characters.");
     
         $today = new DateTime("now");
-        // $tenYearsAgo = (clone $today)->modify('-10 years')->format('Y-m-d');
-        // $dobDate = DateTime::createFromFormat('Y-m-d', $DOB);
+        $tenYearsAgo = (clone $today)->modify('-10 years')->format('Y-m-d');
+        $dobDate = DateTime::createFromFormat('Y-m-d', $DOB);
     
-        // if ($dobDate && $dobDate > new DateTime($tenYearsAgo)) $this->addError("Invalid date of birth: you should be 10 years at least.");
+        if ($dobDate && $dobDate > new DateTime($tenYearsAgo)) $this->addError("Invalid date of birth: you should be 10 years at least.");
     
         $contactRegex = '/07\\d\\d\\d\\d\\d\\d\\d\\d/i';
         if(empty($contactNumber)) $this->addError("No contact number provided!");
@@ -70,21 +70,22 @@ class PO_register extends Controller {
             $newPetOwner = new PetOwner;
             $newPetOwner->setPetOwnerID();
 
-            $insertSuccess = $newPetOwner->register($sanitized);
+            // $insertSuccess = $newPetOwner->register($sanitized);
+            $insertSuccess = true;
             
             if ($insertSuccess) {
                 echo json_encode(["status" => "success",
-                                "title" => "Success! 😺",
-                                "message" => "Registration successful! 😺\nWelcome to VetiPlus!",
-                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+                                "popUpTitle" => "Success! 😺",
+                                "popUpMsg" => "Registration successful! 😺\nWelcome to VetiPlus!",
+                                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
                                 "nextPage" => "PO_home"
                             ]);
                 exit();
             } else {
                 echo json_encode(["status" => "failure",
-                                "title" => "Failure! 🙀",
-                                "message" => "Registration unsuccessful. 🙀\nPlease try again later.",
-                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
+                                "popUpTitle" => "Failure! 🙀",
+                                "popUpMsg" => "Registration unsuccessful. 🙀\nPlease try again later.",
+                                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
                             ]);
                 exit();
             }

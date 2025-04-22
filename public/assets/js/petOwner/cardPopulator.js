@@ -13,6 +13,10 @@
 // ).then(data => {
 //     userData = data; // Save fetched data for filtering
 // });
+
+// add this line to the view file's <script> part before using the functions:
+// const ROOT = `<?= ROOT ?>`;
+
 // ----------
 // 2. filterCards() - if the displayed cards need to be filtered use something like this:
 // const emailFilter = document.querySelector('#emailFilter');
@@ -40,6 +44,32 @@
 
 // ***************************************************************
 
+// for displaying a serviceProvider's avg rating
+function displayStarRating(rating, container) {
+    if (!container) {
+        console.log('Container not found!');
+        return;
+    }
+    container.innerHTML = '';
+    
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    
+    for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('i');
+        star.className = 'bx';
+        
+        if (i <= fullStars)
+            star.classList.add('bxs-star');
+        else if (i === fullStars + 1 && hasHalfStar)
+            star.classList.add('bxs-star-half');
+        else star.classList.add('bx-star');
+        
+        star.classList.add('bx-sm');
+        container.appendChild(star);
+    }
+}
+
 /**
  * Creates a card element based on the template and data object.
  * @param {HTMLElement} template - The template element to clone.
@@ -48,34 +78,73 @@
  */
 function createCard(template, data) {
     const card = template.content.cloneNode(true).children[0];
+    const picTypes = ['petPic', 'providerPic'];
+    card.querySelectorAll('.cardPic').forEach(pic => {
+        pic.style.display = 'none';
+    });
 
+    function isDatTimeeString (str) {
+        if (typeof str !== 'string') return false;
+        return !isNaN(Date.parse(str));
+    }
+    
     // Iterate over the data object and populate the card
     for (const [key, value] of Object.entries(data)) {
         const element = card.querySelector(`.${key}`);
         if (element) {
-            // for rating data
-            if (key == 'apptRating') {
-                if (value == null) {
-                    console.log("Null apptRating!")
-                    element.innerHTML = `<button cardBtn><i class="bx bxs-star bx-md"></i> Rate Appointment</button>`;
+            // handle setting image src:
+            if (picTypes.includes(key)) {
+                if (value) {
+                    let imgSrc;
+                    if (key == 'providerPic') {
+                        if (data['type'] == 'vet') imgSrc = `${ROOT}/assets/images/vetDoctor/${value}`;
+                        else if (data['type'] == 'salon') imgSrc = `${ROOT}/${value}`;
+                    } else if (key == 'petPic') {
+                        imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
+                    }
+                    element.src = imgSrc;
+                    element.style.display = 'block';
                 } else {
-                    console.log(value)
-                    let stars = '';
-                    let i = 0;
-                    for (i; i < value; i++) stars += `<i class="bx bxs-star bx-sm"></i>`;
-                    for (i; i < 5; i++) stars += `<i class="bx bx-star bx-sm"></i>`;
-                    element.innerHTML = stars;
+                    element.style.display = 'none';
                 }
+            }
+            // for rating data
+            else if (key == 'rating') {
+                card.querySelectorAll('.cardBtn').forEach(btn => {
+                    btn.style.display = 'none';
+                })
+                if (value == null) {
+                    card.querySelector('.rating').style.display = 'none';
+                    card.querySelector('.ratingBtn').style.display = 'flex';
+                } else {
+                    displayStarRating(value, element);
+                }
+            }
+            else if (key == 'avgRating') {
+                if (value == null) {
+                    element.innerHTML = '<p style="opacity: 0.8;">No feedback for this user yet.</p>';
+                } else {
+                    displayStarRating(value, element);
+                }
+            }
+            else if (isDatTimeeString(value)) {
+                const dateStr = new Date(value);
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+                element.textContent =  dateStr.toLocaleTimeString('en-GB', options);
+            }
+            else if (element.tagName == 'A') {
+                element.hasAttribute('href') && element.setAttribute('href', value);
             }
             else element.textContent = value;
         } else {
-            const button = card.querySelector('button');
-            button && button.hasAttribute(key) && button.setAttribute(key, value);
+            if (card.hasAttribute(key)) {
+                card.setAttribute(key, value); // Set attributes for the card itself
+            }
         }
     }
-
     return card;
 }
+
 
 /**
  * Fetches data from a URL, creates cards, and appends them to a container.
@@ -92,21 +161,41 @@ async function fetchAndAppendCards(url, templateSelector, containerSelector) {
         console.error('Template or container not found!');
         return;
     }
+    container.innerHTML = '<p class="noResults">Loading...</p>';
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
+        container.innerHTML = '';
+
+        if (!Array.isArray(data)) {
+            if (data.fetchedCount === 0) {
+                container.innerHTML = '<p class="noResults">No results found.</p>';
+            }
+        }
+
         data.forEach(item => {
             const card = createCard(template, item);
+            card.classList.add('cardFloat');
+
+            // if (item.apptID == 1) card.classList.add('card-inactive');
+
             container.append(card);
+
+            card.addEventListener('animationend', () => {
+                card.classList.remove('cardFloat');
+            });
         });
 
-        return data; // Return the fetched data for filtering
+
+        return data;
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
+
+
 
 /**
  * Filters cards based on multiple filter criteria and updates their visibility.
@@ -115,6 +204,7 @@ async function fetchAndAppendCards(url, templateSelector, containerSelector) {
  * @param {string} containerSelector - The selector for the container holding the cards.
  */
 function filterCards(data, filters, containerSelector) {
+    console.log("filterStart");
     const container = document.querySelector(containerSelector);
     if (!container) {
         console.error('Container not found!');
@@ -130,6 +220,7 @@ function filterCards(data, filters, containerSelector) {
             if (key === 'startDate' || key === 'endDate') return true;  // Skip date range keys (handled separately)
 
             // Handle text filtering
+            console.log(`Filtering ${item[key]} with value: ${value}`)
             return String(item[key]).toLowerCase().includes(value.toLowerCase());
             }) && (
             // Check if the date falls within the range
@@ -139,4 +230,5 @@ function filterCards(data, filters, containerSelector) {
 
         card.classList.toggle('hide', !isVisible);
     });
+    console.log("filterEnd");
 }

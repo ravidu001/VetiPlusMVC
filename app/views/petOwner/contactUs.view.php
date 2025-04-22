@@ -10,17 +10,17 @@
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
 
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/petOwner/contactUs.css" rel="stylesheet">
         
     </head>
     <body>
         <!-- navbar on top: -->
-        <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
+        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea">
-            <!-- static contact us text -->
+            <!-- static contact-us text -->
             <div class="dashContent" id="staticContactUs">
     
                 <section class="dashArea" id="FAQs">
@@ -101,7 +101,7 @@
             </div>
             
             <!-- footer at page's bottom: -->
-            <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
+            <?php include_once '../app/views/navbar/po_Footer.php'; ?>
 
         </div>
 
