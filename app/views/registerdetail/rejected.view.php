@@ -30,7 +30,7 @@
                         echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
                     }
                 } elseif($salonDetails->rejectReason){
-                    $reasons = explode(',', $doctorDetails->rejectReason);
+                    $reasons = explode(',', $salonDetails->rejectReason);
                     foreach ($reasons as $reason) {
                         echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
                     }
