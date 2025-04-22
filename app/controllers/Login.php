@@ -106,7 +106,26 @@ class Login extends Controller
                                     $_SESSION['petOwnerID'] = $registered->email;
                                     redirect('PO_home');
                                     break;
+
                                 case 'Salon':
+                                    $_SESSION['SALON_USER'] = $registered->email;
+                                    // read data from the doctor table
+                                    $salon = new Salons();
+                                    $salonData = $salon->FindUser($registered->email);
+
+                                    switch ($salonData->approvedStatus){
+                                        case 'pending':
+                                            header('Location: ../Pending');
+                                            break;
+                                        case 'accepted':
+                                            header('Location: ../Salon');
+                                            break;
+                                        case 'rejected':
+                                            header('Location: ../Rejected');
+                                            break;
+                                        default:
+                                            $this->view('logindetail/login', ['errors' => 'User type not recognized!']);
+                                    }
                                     break;
                                 case 'Vet Assistant':
                                     $_SESSION['user_id'] = $registered->email;

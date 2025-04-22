@@ -41,6 +41,30 @@ class Rejected extends Controller {
             
         } elseif (isset($_SESSION['SALON_USER'])) {
             if ($_SESSION['type'] == 'Salon') {
+                $salonID = $_SESSION['SALON_USER'];
+                $salon = new Salons();
+
+                // get the doctor details
+                $salonDetails = $salon->FindUser($salonID);
+
+                if ($salonDetails->approvedStatus == 'rejected') {
+                    $this->view('registerdetail/rejected', [
+                        'salonDetails' => $salonDetails
+                    ]);
+                } else {
+                    // Redirect to the appropriate page based on the doctor's status
+                    switch ($salonDetails->approvedStatus) {
+                        case 'pending':
+                            header('Location: ' . ROOT . '/Pending');
+                            break;
+                        case 'accepted':
+                            header('Location: ' . ROOT . '/Salon');
+                            break;
+                        default:
+                            header('Location: ' . ROOT . '/login');
+                            exit();
+                    }
+                }
                 
             } else {
                 // Redirect to the login page if not logged in
