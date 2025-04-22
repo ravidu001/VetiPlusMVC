@@ -1,16 +1,19 @@
 <?php
 
 class Notification {
-    public function show($message, $type = 'success') {
+    public function show($message, $type = 'success', $refresh = 'true') {
         // Store the message and type in the session to access it later
         $_SESSION['notification'] = [
             'message' => $message,
             'type' => $type,
         ];
 
-        // Redirect back to the previous controller
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        //exit();
+        if ($refresh == 'true') {
+            // echo "<script>alert('Here');</script>";            
+            // Redirect back to the previous controller
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            // exit();
+        }
     }
 
     public function display() {

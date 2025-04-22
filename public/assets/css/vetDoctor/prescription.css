@@ -156,7 +156,9 @@ body {
 }
 
 #surgicalname-container,
-#allergyname-container {
+#surgicaldetail-container,
+#allergyname-container,
+#allergydetail-container {
     display: none;
 }
 
