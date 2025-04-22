@@ -2,16 +2,20 @@
 const surgicalYes = document.getElementById('surgical-yes');
 const surgicalNo = document.getElementById('surgical-no');
 const surgicalNameContainer = document.getElementById('surgicalname-container');
+const surgicalDetailContainer = document.getElementById('surgicaldetail-container');
+
 
 surgicalYes.addEventListener('change', function() {
     if (surgicalYes.checked) {
         surgicalNameContainer.style.display = 'block';
+        surgicalDetailContainer.style.display = 'block';
     }
 });
 
 surgicalNo.addEventListener('change', function() {
     if (surgicalNo.checked) {
         surgicalNameContainer.style.display = 'none';
+        surgicalDetailContainer.style.display = 'none';
     }
 });
 
@@ -19,16 +23,19 @@ surgicalNo.addEventListener('change', function() {
 const allergiesYes = document.getElementById('allergies-yes');
 const allergiesNo = document.getElementById('allergies-no');
 const allergyNameContainer = document.getElementById('allergyname-container');
+const allergyDetailContainer = document.getElementById('allergydetail-container');
 
 allergiesYes.addEventListener('change', function() {
     if (allergiesYes.checked) {
         allergyNameContainer.style.display = 'block';
+        allergyDetailContainer.style.display = 'block';
     }
 });
 
 allergiesNo.addEventListener('change', function() {
     if (allergiesNo.checked) {
         allergyNameContainer.style.display = 'none';
+        allergyDetailContainer.style.display = 'none';
     }
 });
 
@@ -144,7 +151,7 @@ document .getElementById('okButton').onclick = function() {
         .then(result => {
             if (result.status === 'success') {
                 // Redirect to the index method to show the updated UI without showing the popup
-                window.location.href = '/VetiPlusMVC/public/doctorprescription/index?petID=' + petID;
+                window.location.href = '/VetiPlusMVC/public/doctorprescription/index?petID=' + petID + '&sessionID=' + sessionID;
             } else {
                 alert(result.message);
             }
