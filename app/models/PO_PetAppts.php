@@ -155,34 +155,34 @@ class PO_PetAppts {
             return $this->makeBooking_salon($params);
         }
     }
+
     private function makeBooking_vet ($params) {
-        $this->beginTransaction();
+        $apptModel = new AppointmentModel;
+        $bookingSuccess = $apptModel->bookAppointment($params);
 
-
-        try {
-            // Insert appointment
-            $apptModel = new AppointmentModel;
-            $insertSuccess = $apptModel->bookAppointment($params);
-        
-            // // Update session
-            
-        
-            // if ($insertSuccess !== false && $updateSuccess !== false) {
-            //     $this->commit();
-            //     return true;
-            // }
-            
-            $this->rollBack();
-            return false;
-        
-        } catch (PDOException $e) {
-            $this->rollBack();
-            // Handle exception (log it, show error page, etc.)
-            error_log($e->getMessage());
-            return false;
-        }
+        return $bookingSuccess;
     }
+
     private function makeBooking_salon ($params) {
         
+        $this->beginTransaction();
+        try {
+            $apptModel = new SalonBooked;
+            $insertSuccess = $apptModel->bookAppointment($params);
+
+            $sessModel = new SalonSession;
+            $updateSuccess = $sessModel->updateBookingsCount($params['salSessionID']);
+        
+            if ($insertSuccess !== false && $updateSuccess !== false) {
+                $this->commit();
+                return true;
+            }
+            $this->rollBack();
+            return false;
+        } 
+        catch (PDOException $e) {
+            $this->rollBack();
+            return false;
+        }
     }
 }

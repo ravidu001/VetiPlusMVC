@@ -63,6 +63,13 @@ class PetOwner {
         return session_destroy();
     }
 
+    public function getStatistics_po () {
+        $query = "SELECT * FROM 
+
+                ";
+        $this->query("");
+    }
+
     public function checkUser($email)
     {
         // echo $email;

@@ -55,7 +55,7 @@ popUpTypes.popup_feedback = `
             </div>
             <div class="formGroup">
                 <label for="comment">Comment:</label>
-                <textarea id="comment" name="comment"></textarea>
+                <textarea id="comment" name="comment" required></textarea>
             </div>
 
             <input type="hidden" name="type" class="type" value="">
@@ -74,10 +74,6 @@ popUpTypes.popup_feedback = `
         </div>
 
     </div>
-`;
-
-popUpTypes.popup_apptBooking = `
-    
 `;
 
 popUpTypes.popup_apptCancel = ``;

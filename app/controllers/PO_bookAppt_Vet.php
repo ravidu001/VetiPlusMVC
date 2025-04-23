@@ -1,8 +1,6 @@
 <?php
 
 class PO_bookAppt_Vet extends Controller {
-    // since custom queries need to be executed using query():
-    use Database;
 
     public $petObj;
     public $petList;
@@ -14,22 +12,14 @@ class PO_bookAppt_Vet extends Controller {
     public $availableSessions;
     public $activeDocList;
 
-    public $sessionID;
     public $doctorID;
-
-    // public $thisSession;
+    public $sessionID;
 
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
         $this->petOwnerID = $_SESSION['petOwnerID'];
         
-        if (isset($_GET['sessionID']) || isset($_GET['doctorID'])) {
-            $_SESSION['sessionID'] = $_GET['sessionID'];
-            $_SESSION['doctorID'] = $_GET['doctorID'];
-            $this->sessionID = $_SESSION['sessionID'];
-            $this->doctorID = $_SESSION['doctorID'];
-        } 
-        else if (isset($_SESSION['sessionID']) || isset($_SESSION['doctorID'])) {
+        if (isset($_SESSION['sessionID']) || isset($_SESSION['doctorID'])) {
             $this->sessionID = $_SESSION['sessionID'];
             $this->doctorID = $_SESSION['doctorID'];
         } 
@@ -52,8 +42,30 @@ class PO_bookAppt_Vet extends Controller {
         $this->view('petowner/bookAppt_vet');
     }
 
+    public function getAvailableSessions () {
+        $params = [
+            'docName' => $_GET['docName'] ?? '',
+            'district' => $_GET['district'] ?? '',
+            'selectedDate' => $_GET['selectedDate'] ?? '',
+            'startTime' => $_GET['startTime'] ?? ''
+        ];
+
+        $result = $this->availableSessions->getSessions_vet($params) ?: ["fetchedCount" => 0];
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
     public function getSpecificSession () {
         $result = $this->availableSessions->getSpecificSession_vet($this->doctorID, $this->sessionID);
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
+
+    public function getAvailableSessions_specific () {
+        $result = $this->availableSessions->getSessions_specificVet($this->doctorID) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -69,14 +81,28 @@ class PO_bookAppt_Vet extends Controller {
     }
 
     public function bookAppt () {
-        $data = $_POST;
+        $data = $_POST; // im not checking each since its only data from select boxes
         $data['petOwnerID'] = $this->petOwnerID;
 
-        $bookingSuccess = $this->petAppts->makeBooking('vet', )
+        $bookingSuccess = $this->petAppts->makeBooking('vet', $data);
 
         header('Content-Type: application/json');
-        echo json_encode($data);
-        exit;
+        if ($bookingSuccess) {
+            echo json_encode(["status" => "success",
+                            "popUpTitle" => "Success! 😺",
+                            "popUpMsg" => "Booking Successful!<br/> Check upcoming Appointments for confirmation!",
+                            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+                            "nextPage" => "PO_home"
+                        ]);
+            exit();
+        } else {
+            echo json_encode(["status" => "failure",
+                            "popUpTitle" => "Failure! 🙀",
+                            "popUpMsg" => "Something went wrong! Please try again later.",
+                            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
+                        ]);
+            exit();
+        }
     }
 
 

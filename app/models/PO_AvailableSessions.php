@@ -19,6 +19,7 @@ class PO_AvailableSessions {
 
         return $this->query($query);
     }
+
     public function getSpecificSession_vet ($doctorID, $sessionID) {
         $query = "SELECT 'vet' as type,
                     s.sessionID as sessionID,
@@ -58,7 +59,6 @@ class PO_AvailableSessions {
         ];
         return $this->query($query, $params)[0];
     }
-
     public function getSessions_vet ($options) {
         $query = "SELECT 'vet' as type,
                     s.sessionID as sessionID,
@@ -89,6 +89,7 @@ class PO_AvailableSessions {
                     LEFT JOIN vetfeedback vf ON s.doctorID = vf.doctorID
                     INNER JOIN user u ON u.email = v.doctorID
                     WHERE s.completeStatus = '0'
+                    AND s.doctorID = COALESCE(:doctorID, s.doctorID)
                     AND s.selectedDate >= CURRENT_DATE
                     AND (s.selectedDate > CURRENT_DATE OR s.startTime >= CURRENT_TIME)
                     AND (
@@ -106,14 +107,21 @@ class PO_AvailableSessions {
                 ";
         
         $params = [
-            'docName' => '%'.$options['docName'].'%',
-            'selectedDate' => $options['selectedDate'],
-            'district' => '%'.$options['district'].'%',
-            'startTime' => $options['startTime']
+            'docName' => isset($options['']) ? '%'.$options['docName'].'%' : '%',
+            'selectedDate' => isset($options['']) ? $options['selectedDate'] : '%',
+            'district' => isset($options['']) ? '%'.$options['district'].'%' : '%',
+            'startTime' => isset($options['']) ? $options['startTime'] : '%',
+            'doctorID' => isset($options['doctorID']) ? $options['doctorID'] : null
         ];
         return $this->query($query, $params);
     }
 
+    public function getSessions_specificVet ($doctorID) {
+        $params = ['doctorID' => $doctorID];
+
+        $result = $this->getSessions_vet($params);
+        return $result;
+    }
     public function checkBookedApptSlots_vet ($sessionID) {
         $query = "SELECT a.visitTime
                     FROM appointment a
@@ -126,40 +134,30 @@ class PO_AvailableSessions {
 
 
 
-    private function getSessions_salon () {
+    public function getSalons ($options) {
         $query = "SELECT 'salon' as type,
-                    ss.sessionID as sessID, 
-                    ss.openday as sessDate, 
-                    TRIM(SUBSTRING_INDEX(time_slot, '-', 1)) AS sessStartTime,
-                    TRIM(SUBSTRING_INDEX(time_slot, '-', -1)) AS sessEndTime
-
-                    s.address as salonAddress,
-                    ss.noOfAvailable as availApptCount,
-                    ss.salonID as salonID, 
-
-                    s.name as providerName,
-                    s.open_time as salonOpenTime,
-                    s.close_time as salonCloseTime,
-                    s.phoneNumber as salonPhoneNumber,
-                    s.GMapLocation as mapLocation,
+                    s.*,
                     s.profilePicture as providerPic,
-                    s.salonDetails as details,
-                    s.salonType as salonType,
-
                     AVG(sf.rating) as avgRating
 
-                    FROM salonsession ss
-                    INNER JOIN salon s ON ss.salonID = s.salonID
-                    INNER JOIN salonfeedback sf ON ss.salonID = sf.salonID
+                    FROM salon s
+                    LEFT JOIN salonsession ss ON ss.salonID = s.salonID
+                    LEFT JOIN salonfeedback sf ON ss.salonID = sf.salonID
                     INNER JOIN user u ON u.email = s.salonID
-                    WHERE ss.status = 'available' OR ss.status = 'booked'
-                    AND ss.openday >= CURRENT_DATE
-                    AND TRIM(SUBSTRING_INDEX(time_slot, '-', 1)) >= CURRENT_TIME
-                    AND ss.noOfAvailable > 0
+
+                    WHERE ss.noOfAvailable > 0
                     AND u.activeStatus = 'active'
+                    GROUP BY s.salonID
+                    ORDER BY (s.name LIKE :salonName) DESC,
+                            (s.open_time <= :openHour AND s.close_time >= :openHour) DESC
                 ";
         
-        return $this->query($query);
+        $params = [
+            'salonName' => isset($options['salonName']) ? '%'.$options['salonName'].'%' : '%',
+            'openHour' => isset($options['openHour']) ? $options['openHour'] : date('H:i')
+            
+        ];
+        return $this->query($query, $params);
     }
 
 

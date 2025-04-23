@@ -92,7 +92,6 @@
     border: 1px solid var(--shadow-color);
 
     height: clamp(4em, 5vw, 5em);
-    /* max-width: 50%; */
     width: auto;
     aspect-ratio: 1/1;
 }
@@ -135,7 +134,7 @@
     grid-auto-flow: column;
     justify-items: center;
     align-content: center;
-    gap: 1px;
+    gap: 5px;
 
     margin: auto;
     height: 80%;
@@ -153,6 +152,11 @@
     justify-content: center;
     align-items: center;
 }
+.cardBtn:disabled {
+    filter: grayscale(0.8);
+    pointer-events: none;
+}
+
 .cardBtn:hover {
     transform: scale(1.02);
     box-shadow: 0 0 3px var(--shadow-color);
@@ -177,4 +181,36 @@
 
     display: flex;
     gap: 10px;
+}
+
+.bookingCard {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.apptDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.apptBookingForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 20px;
+    max-width: 600px;
+}
+.formGroup {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    justify-items: center;
+}
+.formSelect {
+    padding: 10px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    width: 100%;
 }

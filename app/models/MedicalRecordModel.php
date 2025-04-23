@@ -17,4 +17,9 @@ class MedicalRecordModel
         $this->order_type = 'DESC';
         return $this->where(['appointmentID' => $conditions['appointmentID'], 'petID' => $conditions['petID']]);
     }
+
+
+    // for pet:
+    public function getRecords_byPet ($petID) {}
+    public function getPrescriptions
 }
