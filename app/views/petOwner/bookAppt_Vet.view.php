@@ -9,23 +9,76 @@
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/cardStyles.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
     </head>
     <body>
-
+        <script>
+            const ROOT = `<?= ROOT ?>`;
+            console.log("SessionID: ", <?= json_encode($this->sessionID) ?>)
+            console.log("DoctorID: ", <?= json_encode($this->doctorID) ?>)
+        </script>
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea">
             
             <section class="dashArea">
-                <h2 class="dashHeader">Book a Vet Appointment</h2>
+                <h2 class="dashHeader">Book an Appointment</h2>
+                
+                <!-- sessionID doctorID sessDate availableAppts slotDuration -->
+                    <div class="card thisSession">
+                        <div class="cardPic-container">
+                            <img src="" alt="providerPic" class="cardPic providerPic">
+                        </div>
+                        <div class="cardDetails">
+                            <p>
+                                <span class="providerName" style="font-weight: 800;"></span>
+                                Specializing in <span class="doctorSpecialization"></span>
+                            </p>
+                            <p class="details"></p>
+                            <div class="avgRating loneBtn-container"></div>
+                        </div>
+                        <div class="cardDetails">
+                            <span class="sessNote"></span>
+                            <ul>
+                                <li>From: <b><span class="sessStartDateTime"></span></b></li>
+                                <li>To: <b><span class="sessEndDateTime"></span></b></li>
+                            </ul>
+                            <p>District: <b><span class="district"></span></b></p>
+                            <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
+                        </div>
+
+                        <form action="PO_bookAppt_Vet/bookAppt" method="post" class="apptBookingForm">
+
+                            <div class="formGroup">
+                                <label for="pet"> Pet:</label>
+                                <select id="petSelect" name="petID" required>
+                                    <option value="">Select a pet</option>
+                                </select>
+                            </div>
+                            <div class="formGroup">
+                                <label for="pet"> Time Slot:</label>
+                                <select id="timeSlotSelect" name="visitTime" required>
+                                    <option value="">Select a time slot</option>
+                                </select>
+                            </div>
+        
+                            <input type="hidden" name="sessionID" class="sessionID" value="">
+                            <!-- <input type="hidden" name="petOwnerID" class="petOwnerID" value=<?= $this->petOwnerID ?>> -->
+                            
+                            <button class="submitBtn popupBtn" type="submit">Submit</button>
+                            <button class="clearBtn popupBtn" type="reset">Clear</button>
+        
+                        </form>
+                    </div>
 
                 
 
             </section>
 
+            
             <section class="dashArea">
                 <h3 class="dashHeader">More sessions by this Doctor</h3>
             </section>
@@ -96,121 +149,72 @@
         </div>
 
         
-        <script>
-            function pad(num) {
-                return num.toString().padStart(2, '0');
-            }
-
-            function formatDate(date) {
-                // Format as 'YYYY-MM-DD HH:mm:00'
-                return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
-            }
-            const miDate = '2025-05-11 14:00:00'
-            console.log(formatDate(new Date(miDate)))
-
-            function divideTimeRangeBySlotDuration(start, end, slotDurationMin, apptCount) {
-                const startDateTime = new Date(start.replace(' ', 'T'));
-                const endDateTime = new Date(end.replace(' ', 'T'));
-                const slots = [];
-
-                let current = new Date(startDateTime);
-                let slotsCreated = 0;
-
-                while (current < endDateTime) {
-                    if (slotsCreated >= apptCount) break;
-
-                    const slotStart = new Date(current);
-                    const slotEnd = new Date(current.getTime() + slotDurationMin * 60000);
-
-                    if (slotEnd > endDateTime) break;
-
-                    slots.push({
-                        start: formatDate(slotStart),
-                        end: formatDate(slotEnd)
-                    });
-                    slotsCreated++;
-                    current = slotEnd;
-                }
-
-                return slots;
-            }
-
-            // Example usage:
-            const sessStartDateTime = "2025-05-11 14:00:00";
-            const sessEndDateTime = "2025-05-11 16:05:00";
-            const slotDurationMin = 30; // 30 minutes per slot
-
-            const slots = divideTimeRangeBySlotDuration(sessStartDateTime, sessEndDateTime, slotDurationMin, 3);
-            console.log(slots);
-
-        </script>
-        
+        <script src="<?=ROOT?>/assets/js/petOwner/slotsDivider.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
 
         <script src="<?=ROOT?>/assets/js/petOwner/searchableDropdown.js"></script>
+
         <script>
+            fetchAndAppendCards(
+                'PO_apptDashboard_Vet/getAvailableSessions',
+                '.availSessCard-template',
+                '.availSessCard-container'
+            );
+
+            fetch('PO_bookAppt_Vet/getSpecificSession')
+            .then(response => response.json())
+            .then(data => {
+                let thisSession = data;
+                console.log(thisSession)
+                fillDivData(thisSession, '.thisSession');
+
+                const slots = divideTimeRangeBySlotDuration(thisSession.sessStartDateTime, thisSession.sessEndDateTime,
+                                                    thisSession.slotDuration, thisSession.totApptCount);
+
+                fetch('PO_bookAppt_Vet/getBookedSessionSlots')
+                .then(response => response.json())
+                .then(data => {
+                    (data.fetchedCount == 0) && (data = {});
+
+                    let bookedSlots = Array.from(data);
+                    console.log(bookedSlots)
+
+                    const timeSlotSelect = document.getElementById('timeSlotSelect');
+                    slots.forEach(slot => {
+                        const start = new Date(slot.start);
+                        const end = new Date(slot.end);
+
+                        const startTime = `${pad(start.getHours())}:${pad(start.getMinutes())}`;
+                        const endTime = `${pad(end.getHours())}:${pad(end.getMinutes())}`;
+                        // console.log(startTime);
+                        // console.log(endTime);
+
+                        let optionHTML = document.createElement('option');
+                        optionHTML.value = `${startTime}`;
+                        optionHTML.textContent = `${startTime} - ${endTime}`;
+                        bookedSlots.includes(startTime) && optionHTML.classList.add('greyedOption');
+                        
+                        timeSlotSelect.appendChild(optionHTML);
+                    })
+                });
+            });
+
+            const petList = (<?= json_encode($this->petList) ?>).map(x => { return {petID: x.petID, petName: x.name} });
+            // console.log(petList);
+            const petSelect = document.getElementById('petSelect');
+            petList.forEach(pet => {
+                let optionHTML = document.createElement('option');
+                optionHTML.value = `${pet.petID}`;
+                optionHTML.textContent = `${pet.petName}`;
+    
+                petSelect.appendChild(optionHTML);
+            });
+
             const docNameList = (<?= json_encode($this->activeDocList) ?>).map(x => { return x.docName });
-            const docNameFilterContainer = document.getElementById('docNameFilter');
-            const docNameInput = docNameFilterContainer.querySelector('input');
-
-            const docNameFilter = new SearchableDropdown({
-                inputElement: docNameInput,
-                listElement: docNameFilterContainer.querySelector('ul'),
-                items: docNameList
-            });
-
-            const districtList = [
-                "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", 
-                "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", 
-                "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", 
-                "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", 
-                "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"
-            ];
-            const districtFilterContainer = document.getElementById('districtFilter');
-            const districtInput = districtFilterContainer.querySelector('input');
-            const districtFilter = new SearchableDropdown({
-                inputElement: districtInput,
-                listElement: districtFilterContainer.querySelector('ul'),
-                items: districtList
-            });
-
-            const dateFilterContainer = document.getElementById('dateFilter');
-            const dateInput = dateFilterContainer.querySelector('input');
-
-            const timeFilterContainer = document.getElementById('timeFilter');
-            const timeInput = timeFilterContainer.querySelector('input');
-
-            let debounceTimeout;
-            function handleSearchInputs () {
-                clearTimeout(debounceTimeout);
-
-                debounceTimeout = setTimeout(() => {
-                    const docName = docNameInput.value.trim();
-                    const district = districtInput.value.trim();
-                    const selectedDate = dateInput.value;
-                    const startTime = timeInput.value;
-
-                    const params = new URLSearchParams();
-
-                    if (docName) params.append('docName', docName);
-                    if (district) params.append('district', district);
-                    if (selectedDate) params.append('selectedDate', selectedDate);
-                    if (startTime) params.append('startTime', startTime);
-
-                    const url = `PO_apptDashboard_Vet/getAvailableSessions?${params.toString()}`;
-
-                    fetchAndAppendCards(
-                        url,
-                        '.availSessCard-template',
-                        '.availSessCard-container'
-                    )
-                }, 300);
-            }
-            document.querySelector('.searchFilter-container').addEventListener('input', handleSearchInputs)
-            document.querySelector('.searchFilter-container').addEventListener('change', handleSearchInputs)
         </script>
+        <script src="<?=ROOT?>/assets/js/petOwner/searchFilters_vet.js"></script>
 
     </body>
 </html>

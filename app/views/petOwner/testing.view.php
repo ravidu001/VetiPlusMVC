@@ -316,16 +316,6 @@
         </script> -->
 
         <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
-        <script>
-            // const retrivedObj = {
-            //     status: "success",
-            //     title: "Success! 😺",
-            //     message: "Registration successful!",
-            //     icon: `<?= ROOT ?>/assets/images/petOwner/popUpIcons/success.png`
-            // };
-            // displayPopUp ('popup_formResult', retrivedObj);
-            // displayPopUp ('popup_formResult', retrivedObj);
-        </script>
 
         <script>
             function createInteractiveRating(containerId, initialRating = 0) {

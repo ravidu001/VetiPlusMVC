@@ -14,10 +14,12 @@ class PO_PetAppts {
                     v.fullName as providerName, 
                     v.profilePicture as providerPic,
                     p.profilePicture as petPic,
-                    p.name as petName";
+                    p.name as petName,
+                    a.status as apptStatus";
         
         if ($type === 'history') {
-            $query .= ", vf.rating as rating";
+            $query .= ", vf.rating as rating,
+                        'history' as whenType";
         }
         
         $query .= " FROM appointment a 
@@ -32,12 +34,14 @@ class PO_PetAppts {
         $query .= " WHERE a.petOwnerID = COALESCE(:petOwnerID, a.petOwnerID)
                     AND a.petID = COALESCE(:petID, a.petID)";
         
+        // 
+        //  AND (a.status = 'completed' OR a.status = 'cancelled')
+        //  AND a.status = 'available'
+
         if ($type === 'history') {
-            $query .= " AND (a.status = 'completed' OR a.status = 'cancelled')
-                        AND CONCAT(s.selectedDate, ' ', a.visitTime) < CURRENT_TIMESTAMP";
+            $query .= " AND CONCAT(s.selectedDate, ' ', a.visitTime) < CURRENT_TIMESTAMP";
         } else {
-            $query .= " AND a.status = 'available'
-                        AND CONCAT(s.selectedDate, ' ', a.visitTime) > CURRENT_TIMESTAMP";
+            $query .= " AND CONCAT(s.selectedDate, ' ', a.visitTime) > CURRENT_TIMESTAMP";
         }
         
         $query .= " ORDER BY apptDateTime " . ($type === 'history' ? 'DESC' : 'ASC');
@@ -151,10 +155,34 @@ class PO_PetAppts {
             return $this->makeBooking_salon($params);
         }
     }
-    private function makeBooking_vet () {
+    private function makeBooking_vet ($params) {
+        $this->beginTransaction();
+
+
+        try {
+            // Insert appointment
+            $apptModel = new AppointmentModel;
+            $insertSuccess = $apptModel->bookAppointment($params);
         
+            // // Update session
+            
+        
+            // if ($insertSuccess !== false && $updateSuccess !== false) {
+            //     $this->commit();
+            //     return true;
+            // }
+            
+            $this->rollBack();
+            return false;
+        
+        } catch (PDOException $e) {
+            $this->rollBack();
+            // Handle exception (log it, show error page, etc.)
+            error_log($e->getMessage());
+            return false;
+        }
     }
-    private function makeBooking_salon () {
+    private function makeBooking_salon ($params) {
         
     }
 }

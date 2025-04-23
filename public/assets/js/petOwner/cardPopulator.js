@@ -98,7 +98,7 @@ function createCard(template, data) {
                     let imgSrc;
                     if (key == 'providerPic') {
                         if (data['type'] == 'vet') imgSrc = `${ROOT}/assets/images/vetDoctor/${value}`;
-                        else if (data['type'] == 'salon') imgSrc = `${ROOT}/${value}`;
+                        else if (data['type'] == 'salon') imgSrc = `${ROOT}/assets/images/${value}`;
                     } else if (key == 'petPic') {
                         imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
                     }
@@ -140,6 +140,9 @@ function createCard(template, data) {
             if (card.hasAttribute(key)) {
                 card.setAttribute(key, value); // Set attributes for the card itself
             }
+            // console.log(`${key}`)
+            // const button = card.querySelector('button');
+            // button && button.hasAttribute(key) && button.setAttribute(key, value);
         }
     }
     return card;
@@ -153,7 +156,7 @@ function createCard(template, data) {
  * @param {string} containerSelector - The selector for the container to append cards.
  * @returns {Promise<Array>} - A promise that resolves to the fetched data array.
  */
-async function fetchAndAppendCards(url, templateSelector, containerSelector) {
+async function fetchAndAppendCards (url, templateSelector, containerSelector) {
     const template = document.querySelector(templateSelector);
     const container = document.querySelector(containerSelector);
 
@@ -166,20 +169,22 @@ async function fetchAndAppendCards(url, templateSelector, containerSelector) {
     try {
         const response = await fetch(url);
         const data = await response.json();
-
         container.innerHTML = '';
 
         if (!Array.isArray(data)) {
             if (data.fetchedCount === 0) {
                 container.innerHTML = '<p class="noResults">No results found.</p>';
             }
+            return;
         }
 
         data.forEach(item => {
             const card = createCard(template, item);
             card.classList.add('cardFloat');
 
-            // if (item.apptID == 1) card.classList.add('card-inactive');
+            if (item.apptStatus == 'cancelled' || (item.apptStatus == 'available' && item.whenType == 'history')) {
+                card.classList.add('card-inactive');
+            }
 
             container.append(card);
 
@@ -187,48 +192,101 @@ async function fetchAndAppendCards(url, templateSelector, containerSelector) {
                 card.classList.remove('cardFloat');
             });
         });
-
-
         return data;
-    } catch (error) {
+
+    } 
+    catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
+async function fetchData (url) {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return data;
+}
 
 
-/**
- * Filters cards based on multiple filter criteria and updates their visibility.
- * @param {Array} data - The array of data objects used to create the cards.
- * @param {Object} filters - An object containing filter values (e.g., { email: 'example@test.com', type: 'vet doctor', startDate: Date, endDate: Date }).
- * @param {string} containerSelector - The selector for the container holding the cards.
- */
-function filterCards(data, filters, containerSelector) {
-    console.log("filterStart");
-    const container = document.querySelector(containerSelector);
-    if (!container) {
+function fillDivData (data, divConatinerSelector) {
+    const displayItem = document.querySelector(divConatinerSelector);
+
+    if (!displayItem) {
         console.error('Container not found!');
         return;
     }
 
-    const cards = Array.from(container.children);
-
-    cards.forEach((card, index) => {
-        const item = data[index];
-        const isVisible = Object.entries(filters).every(([key, value]) => {
-            if (!value) return true;                                    // Skip empty filters
-            if (key === 'startDate' || key === 'endDate') return true;  // Skip date range keys (handled separately)
-
-            // Handle text filtering
-            console.log(`Filtering ${item[key]} with value: ${value}`)
-            return String(item[key]).toLowerCase().includes(value.toLowerCase());
-            }) && (
-            // Check if the date falls within the range
-            (!filters.startDate || new Date(item.date) >= filters.startDate) &&
-            (!filters.endDate || new Date(item.date) <= filters.endDate)
-        );
-
-        card.classList.toggle('hide', !isVisible);
+    const picTypes = ['petPic', 'providerPic'];
+    displayItem.querySelectorAll('.cardPic').forEach(pic => {
+        pic.style.display = 'none';
     });
-    console.log("filterEnd");
+
+    function isDatTimeeString (str) {
+        if (typeof str !== 'string') return false;
+        return !isNaN(Date.parse(str));
+    }
+    
+    // Iterate over the data object and populate the card
+    if (data && typeof data === 'object') {
+        for (const [key, value] of Object.entries(data)) {
+            // console.log(key, value)
+            const element = displayItem.querySelector(`.${key}`);
+            if (element) {
+                // handle setting image src:
+                if (picTypes.includes(key)) {
+                    if (value) {
+                        let imgSrc;
+                        if (key == 'providerPic') {
+                            if (data['type'] == 'vet') imgSrc = `${ROOT}/assets/images/vetDoctor/${value}`;
+                            else if (data['type'] == 'salon') imgSrc = `${ROOT}/assets/images/${value}`;
+                        } else if (key == 'petPic') {
+                            imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
+                        }
+                        element.src = imgSrc;
+                        element.style.display = 'block';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                }
+                // for rating data
+                else if (key == 'rating') {
+                    displayItem.querySelectorAll('.cardBtn').forEach(btn => {
+                        btn.style.display = 'none';
+                    })
+                    if (value == null) {
+                        displayItem.querySelector('.rating').style.display = 'none';
+                        displayItem.querySelector('.ratingBtn').style.display = 'flex';
+                    } else {
+                        displayStarRating(value, element);
+                    }
+                }
+                else if (key == 'avgRating') {
+                    if (value == null) {
+                        element.innerHTML = '<p style="opacity: 0.8;">No feedback for this user yet.</p>';
+                    } else {
+                        displayStarRating(value, element);
+                    }
+                }
+                else if (isDatTimeeString(value)) {
+                    const dateStr = new Date(value);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+                    element.textContent =  dateStr.toLocaleTimeString('en-GB', options);
+                }
+                else if (element.tagName == 'A') {
+                    element.hasAttribute('href') && element.setAttribute('href', value);
+                }
+                else if (element.tagName == 'INPUT') {
+                    element.hasAttribute('value') && element.setAttribute('value', value);
+                }
+                else element.textContent = value;
+            } else {
+                if (displayItem.hasAttribute(key)) {
+                    displayItem.setAttribute(key, value);
+                }
+            }
+        }
+    } else {
+        console.error("Not an object!");
+    }
+    
 }

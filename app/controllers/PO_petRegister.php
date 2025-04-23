@@ -72,8 +72,7 @@ class PO_petRegister extends Controller {
         if($this->validInputs) {
             $newPet = new Pet;
             $newPet->setPetOwnerID();
-            $insertSuccess = true;
-            // $insertSuccess = $newPet->register($sanitized);
+            $insertSuccess = $newPet->register($sanitized);
             
             if ($insertSuccess) {
                 echo json_encode(["status" => "success",

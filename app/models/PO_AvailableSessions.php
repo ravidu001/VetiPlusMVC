@@ -19,10 +19,49 @@ class PO_AvailableSessions {
 
         return $this->query($query);
     }
+    public function getSpecificSession_vet ($doctorID, $sessionID) {
+        $query = "SELECT 'vet' as type,
+                    s.sessionID as sessionID,
+                    s.selectedDate as sessDate,
+                    CONCAT(s.selectedDate, ' ', s.startTime) as sessStartDateTime,
+                    CONCAT(s.selectedDate, ' ', s.endTime) as sessEndDateTime,
+
+                    s.clinicLocation as mapLocation, 
+                    s.district as district, 
+                    s.note as sessNote, 
+                    s.doctorID as doctorID, 
+
+                    v.fullName as providerName,
+                    v.profilePicture as providerPic,
+                    v.bio as details,
+                    v.specialization as doctorSpecialization,
+                    AVG(vf.rating) as avgRating,
+                    s.noOfAppointments - (
+                        SELECT COUNT(*) 
+                        FROM appointment a1 INNER JOIN session s2 ON a1.sessionID = s2.sessionID
+                        WHERE a1.sessionID = s.sessionID
+                        AND a1.status = 'available'
+                    ) as availApptCount,
+                    s.noOfAppointments as totApptCount,
+                    v.timeSlot as slotDuration
+
+                    FROM session s
+                    INNER JOIN vetdoctor v ON s.doctorID = v.doctorID
+                    LEFT JOIN vetfeedback vf ON s.doctorID = vf.doctorID
+                    INNER JOIN user u ON u.email = v.doctorID
+                    WHERE v.doctorID = :doctorID
+                    AND s.sessionID = :sessionID
+                ";
+        $params = [
+            'doctorID' => $doctorID, 
+            'sessionID' => $sessionID
+        ];
+        return $this->query($query, $params)[0];
+    }
 
     public function getSessions_vet ($options) {
         $query = "SELECT 'vet' as type,
-                    s.sessionID as sessID,
+                    s.sessionID as sessionID,
                     s.selectedDate as sessDate,
                     CONCAT(s.selectedDate, ' ', s.startTime) as sessStartDateTime,
                     CONCAT(s.selectedDate, ' ', s.endTime) as sessEndDateTime,
@@ -80,7 +119,7 @@ class PO_AvailableSessions {
                     FROM appointment a
                     WHERE a.sessionID = :sessionID
             ";
-        return $this->query($query);
+        return $this->query($query, ['sessionID' => $sessionID]);
     }
 
 

@@ -53,28 +53,6 @@ class PetOwner {
         return empty($uploadSuccess) ? true : false;
     }
 
-    // /**
-    //  * jm -  Get all the upcoming vet and salon appointments of the petOwner, to be called from view files.
-    //  */
-    // public function getAllUpcomingAppts () {
-    //     $myQuery = "Select type='vet', a.*, s.*, v.fullName, v.profilePicture 
-    //                 From appointment a
-    //                 Inner Join session s On a.sessionID = s.sessionID
-    //                 Inner Join vetdoctor v On s.doctorID = v.doctorID
-    //                 Inner join pet p On a.petID = p.petID
-    //                 Where a.petOwnerID = :petOwnerID
-    //                 And a.status = 'available'
-    //                 And s.selectedDate >= CURRENT_DATE
-    //                 And a.visitTime >= CURRENT_TIME
-    //                 Order By s.selectedDate, a.visitTime";
-    //     $params = [
-    //         'petOwnerID' => $this->petOwnerID
-    //     ];
-    //     $result = $this->query($myQuery, $params);
-
-    //     return $result;
-    // }
-
     public function logout() {
         $_SESSION = [];
         return session_destroy();

@@ -77,62 +77,7 @@ popUpTypes.popup_feedback = `
 `;
 
 popUpTypes.popup_apptBooking = `
-    <div class="popup popup_apptBooking">
-        <h2 class="popUpTitle"> Book an Appointment </h2>
-        
-        <div class="card sessionCard availSessCard" sessID providerID sessDate availableAppts slotDuration>
-        </div>
-            <div class="cardPic-container">
-                <img src="" alt="providerPic" class="cardPic providerPic">
-            </div>
-            <div class="cardDetails">
-                <p>
-                    <span class="providerName" style="font-weight: 800;"></span>
-                    Specializing in <span class="doctorSpecialization"></span>
-                </p>
-                <p class="details"></p>
-                <div class="avgRating loneBtn-container"></div>
-            </div>
-            <div class="cardDetails">
-                <span class="sessNote"></span>
-                <ul>
-                    <li>From: <b><span class="sessStartDateTime"></span></b></li>
-                    <li>To: <b><span class="sessEndDateTime"></span></b></li>
-                </ul>
-                <p>District: <b><span class="district"></span></b></p>
-                <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
-            </div>
-
-
-        <form action="" method="post" class="popupForm">
-            <div class="formGroup">
-                <label for="pet"> Pet:</label>
-                select pet from list
-                <select id="pet" name="pet" required>
-                    <option value="">Select a pet</option>
-                </select>
-            </div>
-            <div class="formGroup">
-                <label for="pet"> Pet:</label>
-                select pet from list
-                <select id="pet" name="pet" required>
-                    <option value="">Select a pet</option>
-                </select>
-            </div>
-
-            <input type="hidden" name="type" class="type" value="">
-            <input type="hidden" name="sessionID" class="sessionID" value="">
-            <input type="hidden" name="providerID" class="providerID" value="">
-            <input type="hidden" name="petOwnerID" class="petOwnerID" value="">
-            
-            <button class="submitBtn popupBtn" type="submit">Submit</button>
-            <button class="clearBtn popupBtn" type="reset">Clear</button>
-
-        </form>
-        <div class="popup-buttons">
-            <button class="closeBtn popupBtn">Close</button>
-        </div>
-    </div>
+    
 `;
 
 popUpTypes.popup_apptCancel = ``;

@@ -16,11 +16,6 @@
     </head>
 
     <body>
-            <script>
-                console.log(<?= json_encode($this->petCount) ?>);
-                console.log(<?= json_encode($this->po_details) ?>);
-            </script>
-            
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <!-- actual content: -->

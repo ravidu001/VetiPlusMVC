@@ -77,4 +77,10 @@ class PO_apptDashboard_Vet extends Controller {
         echo json_encode($result);
         exit;
     }
+
+    public function redirectToBookAppt () {
+        $_SESSION['sessionID'] = $_GET['sessionID'];
+        $_SESSION['doctorID'] = $_GET['doctorID'];
+
+    }
 }
