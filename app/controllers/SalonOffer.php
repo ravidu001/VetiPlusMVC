@@ -1,18 +1,55 @@
 <?php
 
-class SalonOffer extends Controller {
+class SalonOffer extends Controller 
+{
 
-    public function index() {
+    public function index() 
+    {
         $offerdata = new SalonOffers;
         $servicedata = new SalonServices;
 
+        $salonID = $_SESSION['SALON_USER'];
+
+        if(!$salonID)
+        {
+            redirect('Login');
+        }
+
+        //first get this salon service ID 
+        $serviceDetails = $servicedata->findAllServiceId($salonID);
+
+        $offers = [];
+
+        if($serviceDetails)
+        {
+            foreach($serviceDetails as $serviceDetail)
+            {
+                $serviceID = $serviceDetail->serviceID;
+                $serviceOffers = $offerdata->findByService($serviceID);
+
+                if ($serviceOffers) {
+                    foreach ($serviceOffers as $offer) {
+                        $offers[] = $offer;
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            echo "service Not fount yet";
+            $data['service'] = "service Not added yet";
+        }
+
         // Fetch all offers from salonspecialoffer table
-        $offers = $offerdata->findAllOfferId();
+        // $offers = $offerdata->findAllOfferId();
 
         $data = []; // Initialize $data array
 
-        if (!empty($offers)) {
-            foreach ($offers as $key => $offer) {
+        if (!empty($offers)) 
+        {
+            foreach ($offers as $key => $offer) 
+            {
                 $serviceID = $offer->serviceID;
                 $service = $servicedata->whereservice($serviceID);
 
@@ -26,7 +63,9 @@ class SalonOffer extends Controller {
                         'createDate' => $offer->createDate ?? '',
                         'specialOfferID' => $offer->specialOfferID ?? null
                     ];
-                } else {
+                } 
+                else 
+                {
                     // If service is not found, set placeholders
                     $data[$key] = [
                         'serviceName' => 'Unknown',
@@ -44,13 +83,16 @@ class SalonOffer extends Controller {
         $this->view('Salon/salonoffer', ['data' => $data]);
     }
 
-    public function addoffer() {
+    public function addoffer() 
+    {
         $data = [];
+        $salonID = $_SESSION['SALON_USER'];
         $servicedata = new SalonServices;
-        $services = $servicedata->findAllServiceId();
+        $services = $servicedata->findAllServiceId($salonID);
         $data['services'] = $services;
 
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['submit'])) 
+        {
             // Get the serviceID from the form
             $serviceID = $_POST['serviceID'] ?? '';
 
@@ -98,11 +140,27 @@ class SalonOffer extends Controller {
         $this->view('Salon/salonofferadd', $data);
     }
 
-    public function deleteoffer($specialOfferID) {
+    public function deleteoffer() 
+    {
+        $offerID = [];
+        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $offerID['offerID'] = $data;
+
+        $specialOfferID =  $offerID['offerID'] ?? null;
+
+        if($specialOfferID === null)
+        {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No offer ID provided.'
+            ]);
+        }
+
         $offertable = new SalonOffers;
         $result = $offertable->offerdelete($specialOfferID);
 
-        if ($result !== false) {
+        if ($result == false) {
             echo json_encode([
                 'success' => true,
                 'message' => 'Offer deleted successfully.'
@@ -117,13 +175,15 @@ class SalonOffer extends Controller {
         exit;
     }
 
-    public function editoffer($specialOfferID) {
+    public function editoffer($specialOfferID) 
+    {
         $specialOfferID = (int)$specialOfferID; 
 
         $data = [];
+        $salonID = $_SESSION['SALON_USER'];
 
         $servicedata = new SalonServices;
-        $services = $servicedata->findAllServiceId();
+        $services = $servicedata->findAllServiceId($salonID);
         $data['services'] = $services;
 
         $offerModel = new SalonOffers;
@@ -179,7 +239,8 @@ class SalonOffer extends Controller {
         $this->view('Salon/salonofferedit', $data);
     }
 
-    private function ValidateOfferData($arr, $newServicePrice) {
+    private function ValidateOfferData($arr, $newServicePrice) 
+    {
         $arr['errors'] = []; 
 
         // 1. Check if serviceID is selected

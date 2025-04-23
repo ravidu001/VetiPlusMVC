@@ -146,6 +146,8 @@ class SalonRegister extends Controller
 
         // Check if same login email exists
         $existingRecord = $registration_table->where(['email' => $_SESSION['SALON_USER']]);
+
+        $data = [];
         
         // If existing record exists
         if($existingRecord) 
@@ -178,10 +180,10 @@ class SalonRegister extends Controller
             }
             elseif($status === 'approved')
             {
-                redirect('SalonDashboard');
+                redirect('Salon');
             }            
         }
-        else
+        else 
         {
             // New registration
             $data = $this->getRegistrationdata($registration_table);

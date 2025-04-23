@@ -7,8 +7,17 @@ class SalonService extends Controller
     {
         $data = [];
         $servicedata = new SalonServices;
+
+        $salonID = $_SESSION['SALON_USER'];
+
+        //check the user login
+        if(!$salonID)
+        {
+            redirect('Login');
+        }
        
-        $data = $servicedata->findAllServiceId();
+        $data = $servicedata->findAllServiceId($salonID);
+        
         $this->view('Salon/salonservice', $data);
     }
 
@@ -17,26 +26,26 @@ class SalonService extends Controller
     public function delete($serviceID)
     {
         $servicetable = new SalonServices;
-        $result = $servicetable->servicedelete($serviceID);
+        $servicetable->servicedelete($serviceID);
         
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
         
-        if($result !== false)
-        {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Service deleted successfully.'
-            ]);
-        }
-        else
-        {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to delete the service.'
-            ]);
-        }
+        // if($result !== false)
+        // {
+        //     echo json_encode([
+        //         'success' => true,
+        //         'message' => 'Service deleted successfully.'
+        //     ]);
+        // }
+        // else
+        // {
+        //     echo json_encode([
+        //         'success' => false,
+        //         'message' => 'Failed to delete the service.'
+        //     ]);
+        // }
         
-        exit;
+        // exit;
 
     }
     //________________________________________________________________________________________________________________________________

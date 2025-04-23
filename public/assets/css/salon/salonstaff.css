@@ -1,168 +1,436 @@
-/* General Styles */
-body {
-    font-family:"Inter", sans-serif;
+/* Base Styles */
+:root 
+{
+    --primary-color: #6A0DAD;
+    --primary-light: #ab5fe1;
+    --primary-dark: #5c0b94;
+    --primary-lighter: #f8f3fb;
+    --white: #ffffff;
+    --black: #212121;
+    --gray-100: #f9f9f9;
+    --gray-200: #f0f0f0;
+    --gray-300: #e0e0e0;
+    --gray-400: #bdbdbd;
+    --gray-500: #9e9e9e;
+    --gray-600: #757575;
+    --gray-700: #4a5568;
+    --gray-800: #333333;
+    --danger: #9c27b0;
+    --danger-dark: #7b1fa2;
+    --box-shadow: 0 4px 12px rgba(106, 13, 173, 0.15);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+  }
+  
+  body 
+  {
+    font-family: "Inter", sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);   
-}
-
-body:has(#sidebar.close) .pagecontent {
+    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
+    color: var(--gray-800);
+    line-height: 1.6;
+  }
+  
+  /* Layout Styles */
+  .pagecontent 
+  {
+    margin-left: 250px; /* width of sidebar */
+    transition: var(--transition);
+    width: calc(100% - 250px);
+    min-height: 100vh;
+  }
+  
+  body:has(#sidebar.close) .pagecontent 
+  {
     margin-left: 70px;
     width: calc(100% - 70px);
-}
-
-.header-name {
-    font-family:"Inter", sans-serif;
-    text-align: center;
-    
-}
-
-.pagecontent{
-    margin-left: 250px; /*width of sidebar */ 
-    transition: margin-left 0.3s ease-in-out;
-    width: calc(100%- 250px);
-}
-
-
-.StaffandSidebar {
+  }
+  
+  .StaffandSidebar 
+  {
     display: flex;
-}
-
-.staff-content {
-    border: #6A0DAD solid 2px;
+  }
+  
+  .staff-content 
+  {
     width: 90%;
     margin: 50px auto;
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.staff-content a{
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.staff-topic {
-    color: #6A0DAD;
+    padding: 24px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-300);
+    position: relative;
+  }
+  
+  /* Typography */
+  .header-name 
+  {
+    font-family: "Inter", sans-serif;
     text-align: center;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-.content-0 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    color: var(--primary-color);
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .header-name::after 
+  {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-light);
+    border-radius: 2px;
+  }
+  
+  /* Buttons & Actions */
+  .content-0 
+  {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Changed to align content to right */
     align-items: center;
-    margin-bottom: 20px;
-}
-
-button.add {
-    display: table-column;
-    margin: 10px 0;
-    margin-right: auto;
-    padding: 8px 12px;
-    width: 70px;
-    font-size: 16px;
-    background-color: #ab5fe1;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+  
+  button.add 
+  {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 10px 18px;
+    min-width: 70px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button.add:hover {
-    background-color: #6A0DAD;
-    color: #fff;
-}
-
-button.edit {
-    background-color: #ab5fe1;
-    color: #ffffff;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(106, 13, 173, 0.2);
+  }
+  
+  button.add:hover 
+  {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(106, 13, 173, 0.3);
+  }
+  
+  button.add:active 
+  {
+    transform: translateY(0);
+  }
+  
+  /* Add icon to Add button */
+  button.add a::before 
+  {
+    content: "\f067"; /* Font Awesome plus icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+  }
+  
+  .staff-content a 
+  {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .action-buttons 
+  {
+    display: flex;
+    gap: 8px;
+    justify-content: center; /* Center the buttons */
+    align-items: center;
+  }
+  
+  button.edit 
+  {
+    background-color: var(--primary-light);
+    color: var(--white);
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button.edit:hover {
-    background-color: #6A0DAD;
-    color: white;
-}
-
-/* Table Styles */
-.table {
+    transition: var(--transition);
+    min-width: 80px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  button.edit:hover 
+  {
+    background-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  button.delete 
+  {
+    background-color: var(--danger);
+    color: var(--white);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 80px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  button.delete:hover 
+  {
+    background-color: var(--danger-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Add icons to Edit and Delete buttons */
+  button.edit a::before 
+  {
+    content: "\f044"; /* Font Awesome edit icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+  }
+  
+  button.delete a::before 
+  {
+    content: "\f1f8"; /* Font Awesome trash icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+  }
+  
+  /* Table Styles */
+  .table 
+  {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    font-size: 16px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 24px;
+    font-size: 15px;
     text-align: left;
-}
-
-.table th{
-    background-color: #f8f3fb;
-    color: #333;
-    padding: 1rem;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table th 
+  {
+    background-color: var(--primary-lighter);
+    color: var(--black);
+    padding: 14px 16px;
     font-weight: 600;
     text-align: left;
-    border-bottom: 2px solid #6A0DAD;
-}
-
-.table td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px solid var(--primary-color);
+    position: sticky;
+    top: 0;
+  }
+  
+  .table th:first-child 
+  {
+    border-top-left-radius: var(--border-radius);
+  }
+  
+  .table th:last-child 
+  {
+    border-top-right-radius: var(--border-radius);
+    text-align: center; /* Center the Action header */
+  }
+  
+  .table td 
+  {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-300);
     font-size: 15px;
-    color:#4a5568;
-}
-
-.table tbody tr:hover {
-    background-color: #f9f9f9;
-}
-
-/* Picture Styles */
-.staff-picture {
-    width: 70px;
-    height: 70px;
-    border-radius: 5%;
+    color: var(--gray-700);
+    vertical-align: middle;
+  }
+  
+  .table tbody tr:last-child td 
+  {
+    border-bottom: none;
+  }
+  
+  .table tbody tr:hover 
+  {
+    background-color: var(--gray-100);
+  }
+  
+  /* Table Action Column */
+  .table td:last-child 
+  {
+    text-align: center; /* Center the action buttons cell */
+  }
+  
+  /* Staff Picture Styles */
+  .staff-picture 
+  {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     object-fit: cover;
-}
-
-.staff-picture:hover {
-    transform: scale(2.1);
-    transition: transform 0.2s ease;
-}
-
-
-
-
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
+    border: 2px solid var(--primary-light);
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .staff-picture:hover 
+  {
+    transform: scale(2);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    position: relative;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 1200px) 
+  {
     .staff-content {
-        width: 100%;
-        padding: 15px;
+      width: 95%;
     }
-
-    .content-0 {
-        flex-direction: column;
-        align-items: flex-start;
+  }
+  
+  @media screen and (max-width: 992px) 
+  {
+    .table 
+    {
+      font-size: 14px;
     }
-
-    button.add
-    button.edit {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
+    
     .table th,
-    .table td {
-        padding: 10px;
+    .table td 
+    {
+      padding: 10px 12px;
     }
-}
-
-
-/* Optional: Add smooth scrolling for the whole page */
-html {
-    scroll-behavior: smooth;
-}
+  }
+  
+  @media screen and (max-width: 768px) 
+  {
+    .pagecontent 
+    {
+      margin-left: 0;
+      width: 100%;
+    }
+    
+    body:has(#sidebar.close) .pagecontent 
+    {
+      margin-left: 0;
+      width: 100%;
+    }
+    
+    .staff-content 
+    {
+      width: 90%;
+      padding: 16px;
+      margin: 30px auto;
+    }
+    
+    button.add,
+    button.edit,
+    button.delete 
+    {
+      padding: 8px 12px;
+    }
+  }
+  
+  @media screen and (max-width: 576px) 
+  {
+    .table 
+    {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    .header-name 
+    {
+      font-size: 24px;
+    }
+    
+    .staff-picture 
+    {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .table td:last-child 
+    {
+      min-width: 170px;
+    }
+  }
+  
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar 
+  {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track 
+  {
+    background: var(--gray-200);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb 
+  {
+    background: var(--primary-light);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover 
+  {
+    background: var(--primary-color);
+  }
+  
+  /* Animations */
+  @keyframes fadeIn 
+  {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .staff-content 
+  {
+    animation: fadeIn 0.5s ease;
+  }
+  
+  /* Empty state styling */
+  .table-empty-state 
+  {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--gray-500);
+  }
+  
+  .table-empty-state i 
+  {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: var(--gray-400);
+  }

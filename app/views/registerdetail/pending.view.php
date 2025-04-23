@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Pending</title>
+    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/register/pending.css">
 
 </head>
@@ -23,7 +24,7 @@
         </div>
 
         <div class="contact-info">
-            <p>If you have any questions, please contact support at support@example.com</p>
+            <p>If you have any questions, please contact support at support@vetiplus.com</p>
         </div>
     </div>
 

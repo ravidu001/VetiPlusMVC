@@ -11,3 +11,4 @@ require 'Database.php';  // is a class that contains all the functions that inte
 require 'Model.php'; // is a class that contains all the functions that interact with the model
 require 'Controller.php'; // is a class that contains all the functions that interact with the controller. common class like view are in this file. other controllers are in the controller folder
 require 'App.php'; // is a class that contains all the functions that interact with the app
+require '../app/models/Notification.php';

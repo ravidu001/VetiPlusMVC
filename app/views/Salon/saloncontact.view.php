@@ -11,7 +11,12 @@
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 </head>
 <body>
-    <?php include __DIR__ . '/../navbar/salonnav.php'; ?>
+    <?php 
+        include __DIR__ . '/../navbar/salonnav.php'; 
+    ?>
+    <?php
+        $email = $_SESSION['SALON_USER'];
+    ?>
     <div class="home">
     <div class="contact-container">
         <div class="contact-wrapper">
@@ -51,22 +56,22 @@
             
             <div class="contact-form">
                 <h2>Send us a Message</h2>
-                <form action="contactus.php" method="post" enctype="multipart/form-data">
+                <form action="<?=ROOT?>/SalonContact" method="post" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                            <!-- <label for="email">Email</label> -->
+                            <input type="hidden" id="email" name="email" value = "<?= $email ?>">
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
                             <label for="contact">Contact Number</label>
-                            <input type="tel" id="contact" name="contact" required>
+                            <input type="text" id="contact" name="contact" required>
                         </div>
                         <div class="form-group">
                             <label for="messageType">Message Type</label>

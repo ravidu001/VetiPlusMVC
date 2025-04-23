@@ -22,32 +22,50 @@
             <h2>Veterinary Session Details</h2>
         </div>
 
+        
+        <?php
+            $startTime = new DateTime($sessionsDetails[0]['session']->startTime);
+            $endTime = new DateTime($sessionsDetails[0]['session']->endTime);
+        ?>
+        
+
         <div class="session-details">
             <div class="detail-item">
                 <div class="detail-label">Start Date and Time</div>
-                <div class="detail-value">2024-08-10, 15:00</div>
+                <div class="detail-value"><?= htmlspecialchars($sessionsDetails[0]['session']->selectedDate) ?>, <?= $startTime->format('H:i') ?></div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">End Date and Time</div>
-                <div class="detail-value">2024-08-10, 17:00</div>
+                <div class="detail-value"><?= htmlspecialchars($sessionsDetails[0]['session']->selectedDate) ?>, <?= $endTime->format('H:i') ?></div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">Address</div>
-                <div class="detail-value">147, Galthude, Panadura</div>
+                <div class="detail-value"><?= htmlspecialchars($sessionsDetails[0]['session']->clinicLocation) ?></div>
             </div>
         </div>
 
-        <div class="assistant-profile">
-            <div class="assistant-avatar">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Assistant">
-            </div>
-            <div class="assistant-info">
-                <h3>John Doe</h3>
-                <p>Veterinary Assistant | 3 Years Experience</p>
-                <div id="assistant-rating"></div>
-                <div>Hourly Rate: $50/hr</div>
-            </div>
+        <div class="detail-item" style="margin-top: 20px; margin-bottom: 10px;">
+            <div class="detail-label">Assistant Details</div>
         </div>
+        <?php if (!empty($sessionsDetails[0]['assistants'])): ?>
+            <?php foreach($sessionsDetails[0]['assistants'] as $assistant): ?>
+                <div class="assistant-profile">
+                    <div class="assistant-avatar">
+                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>" alt="Assistant">
+                    </div>
+                    <div class="assistant-info">
+                        <h3><?= htmlspecialchars($assistant->fullName) ?></h3>
+                        <p><?= htmlspecialchars($assistant->expertise) ?> | <?= htmlspecialchars($assistant->experience) ?> Years Experience</p>
+                        <div id="assistant-rating"></div>
+                        <div>Hourly Rate: $<?= htmlspecialchars($assistant->chargePerHour) ?>/hr</div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="assistant-profile">
+                <span>No Assistant Assigned</span>
+            </div>
+        <?php endif; ?>
 
         <div class="session-container">
         <div class="status-buttons">
@@ -69,101 +87,52 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-owner="John Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Roky" data-pet-type="Labrador" data-pet-age="2 years" data-contact="0771234567" data-session="15:00"> 
-                        <td>John Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Roky</p>
-                            <p>Labrador</p>
-                            <p>2 years</p>
-                        </td>
-                        <td>0771234567</td>
-                        <td>15:00</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>15:30</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>16:00</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>16:30</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
-                    <tr data-owner="Jane Doe" data-pet-img="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" data-pet-name="Tom" data-pet-type="Persian" data-pet-age="1 year" data-contact="0777654321" data-session="16:30">
-                        <td>Jane Doe</td>
-                        <td>
-                            <div class="pet-profile">
-                                <img src="<?= ROOT ?>/assets/images/common/dogProfileimage.jpg" alt="Pet">
-                            </div>
-                        </td>
-                        <td>
-                            <p>Tom</p>
-                            <p>Persian</p>
-                            <p>1 year</p>
-                        </td>
-                        <td>0777654321</td>
-                        <td>17:00</td>
-                        <td class="table-actions">
-                            <button class="table-btn btn-complete">Completed</button>
-                            <button class="table-btn btn-cancel">Cancelled</button>
-                        </td>
-                    </tr>
+                    <?php foreach ($appointmentsDetails as $session) : ?>
+                        <?php 
+                            // check the status of the appointment
+                            if ($session['appointment']->status == 'completed' || $session['appointment']->status == 'cancelled') {
+                                continue; // Skip completed appointments
+                            }
+                        ?>
+                            <?php
+                                // Calculate the age in years and months
+                                $dob = date_create($session['pet']->DOB);
+                                $now = date_create('now');
+                                $ageDiff = date_diff($dob, $now);
+                                $years = $ageDiff->y;
+                                $months = $ageDiff->m;
+
+                                // Format the age as "Nyr Mmons"
+                                $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                            ?>
+                            
+                            <tr data-appointment-id="<?= htmlspecialchars($session['appointment']->appointmentID) ?>"
+                                data-owner="<?= htmlspecialchars($session['petOwner']->fullName) ?>" 
+                                data-pet-img="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" 
+                                data-pet-name="<?= htmlspecialchars($session['pet']->name) ?>" 
+                                data-pet-type="<?= htmlspecialchars($session['pet']->breed) ?>" 
+                                data-pet-age="<?= $ageFormatted ?>" 
+                                data-contact="<?= htmlspecialchars($session['petOwner']->contactNumber) ?>" 
+                                data-session="<?= htmlspecialchars($session['appointment']->visitTime) ?>"> 
+                                <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                                <td>
+                                    <div class="pet-profile">
+                                        <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                    <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                    <p><?= $ageFormatted ?></p>
+                                </td>
+                                <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                                <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                                <td class="table-actions">
+                                    <button class="table-btn btn-complete">Completed</button>
+                                    <button class="table-btn btn-cancel">Cancelled</button>
+                                </td>
+                            </tr>
+                    <?php endforeach; ?>      
                 </tbody>
             </table>
         </div>
@@ -181,6 +150,40 @@
                 </thead>
                 <tbody>
                     <!-- Completed appointments will be dynamically added here -->
+                    <?php foreach ($appointmentsDetails as $session) : ?>
+                        <?php 
+                            // check the status of the appointment
+                            if ($session['appointment']->status != 'completed') {
+                                continue; // Skip non-completed appointments
+                            }
+                        ?>
+                        <?php
+                            // Calculate the age in years and months
+                            $dob = date_create($session['pet']->DOB);
+                            $now = date_create('now');
+                            $ageDiff = date_diff($dob, $now);
+                            $years = $ageDiff->y;
+                            $months = $ageDiff->m;
+
+                            // Format the age as "Nyr Mmons"
+                            $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                        ?>
+                        <tr>
+                            <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                            <td>
+                                <div class="pet-profile">
+                                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                </div>
+                            </td>
+                            <td>
+                            <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                <p><?= $ageFormatted ?></p>
+                            </td>
+                            <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                            <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -197,6 +200,40 @@
                 </thead>
                 <tbody>
                     <!-- Cancelled appointments will be dynamically added here -->
+                    <?php foreach ($appointmentsDetails as $session) : ?>
+                        <?php 
+                            // check the status of the appointment
+                            if ($session['appointment']->status != 'cancelled') {
+                                continue; // Skip non-completed appointments
+                            }
+                        ?>
+                        <?php
+                            // Calculate the age in years and months
+                            $dob = date_create($session['pet']->DOB);
+                            $now = date_create('now');
+                            $ageDiff = date_diff($dob, $now);
+                            $years = $ageDiff->y;
+                            $months = $ageDiff->m;
+
+                            // Format the age as "Nyr Mmons"
+                            $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
+                        ?>
+                        <tr>
+                            <td><?= htmlspecialchars($session['petOwner']->fullName) ?></td>
+                            <td>
+                                <div class="pet-profile">
+                                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($session['pet']->profilePicture) ?>" alt="Pet">
+                                </div>
+                            </td>
+                            <td>
+                            <p><?= htmlspecialchars($session['pet']->name) ?></p>
+                                <p><?= htmlspecialchars($session['pet']->breed) ?></p>
+                                <p><?= $ageFormatted ?></p>
+                            </td>
+                            <td><?= htmlspecialchars($session['petOwner']->contactNumber) ?></td>
+                            <td><?= htmlspecialchars($session['appointment']->visitTime) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

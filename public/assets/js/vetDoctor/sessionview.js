@@ -6,6 +6,7 @@ const cancelledTableBody = document.querySelector('#cancelled tbody');
 completeButtons.forEach(button => {
     button.addEventListener('click', function() {
         const row = this.closest('tr');
+        const appointmentID = row.dataset.appointmentId;
         const ownerName = row.dataset.owner;
         const petImg = row.dataset.petImg;
         const petDetails = `${row.dataset.petName} (${row.dataset.petType}, ${row.dataset.petAge})`;
@@ -25,12 +26,16 @@ completeButtons.forEach(button => {
         </tr>`;
         completedTableBody.insertAdjacentHTML('beforeend', newRow);
         row.remove();
+
+        // Update the appointment status to completed
+        updateAppointmentStatus(appointmentID, 'completed');
     });
 });
 
 cancelButtons.forEach(button => {
     button.addEventListener('click', function() {
         const row = this.closest('tr');
+        const appointmentID = row.dataset.appointmentId;
         const ownerName = row.dataset.owner;
         const petImg = row.dataset.petImg;
         const petDetails = `${row.dataset.petName} (${row.dataset.petType}, ${row.dataset.petAge})`;
@@ -50,9 +55,41 @@ cancelButtons.forEach(button => {
         </tr>`;
         cancelledTableBody.insertAdjacentHTML('beforeend', newRow);
         row.remove();
+
+        // Update the appointment status to cancelled
+        updateAppointmentStatus(appointmentID, 'cancelled');
     });
 });
 
+// Function to update appointment status
+function updateAppointmentStatus(appointmentID, status) {
+    fetch('/VetiPlusMVC/public/DoctorViewSession/updateAppointment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            appointmentID: appointmentID,
+            status: status
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Optionally handle success (e.g., show a message)
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        // Optionally handle error (e.g., show an error message)
+    });
+}
+
+// Tab Switching Logic
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('click', function() {
         const target = this.dataset.target;
@@ -63,6 +100,7 @@ document.querySelectorAll('.btn').forEach(button => {
     });
 });
 
+// Smooth Animation for Tab Switching
 document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll('.status-buttons .btn');
     const sections = document.querySelectorAll('.animated-section');

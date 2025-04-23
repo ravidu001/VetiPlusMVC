@@ -33,6 +33,11 @@ class PetOwner {
         return $userDetails;
     }
 
+    public function getUserDetailsByID ($petOwnerID) {
+        $userDetails = $this->first(['petOwnerID' => $petOwnerID]);
+        return $userDetails;
+    }
+
     /**
      * jm -  Register and insert the user details into database
      * @param array $data The petOwner's details to be inserted

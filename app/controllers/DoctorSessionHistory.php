@@ -114,6 +114,56 @@ class DoctorSessionHistory extends Controller {
     }
 
     public function session() {
-        $this->view('vetDoctor/doctorsessionhistoryview');
+        // Decode the sessionID and assistantIDs
+        $sessionID = urldecode($_GET['sessionID']);
+        $assistantIDs = urldecode($_GET['assistantIDs']);
+
+        // Convert the assistantIDs string back to an array
+        $assistantIDsArray = explode(',', $assistantIDs);
+        // show($assistantIDsArray);
+        // show($sessionID);
+
+        // Initialize an array to hold consolidated session data
+        $consolidatedSessions = [];
+
+        // $consolidatedSessions[] = [
+        //     'session' => $sessionItem,
+        //     'assistants' => $sessionAssistants
+        // ];
+
+        $session = new DoctorSessionModel();
+
+        // Fetch the session details using the sessionID
+        $sessionDetails = $session->getsessionBySession($sessionID);
+        // print_r($sessionDetails[0]->sessionID);
+
+        // Fetch the assistant details using the sessionID
+        $assisSession = new AssistantSessionModel;
+            $assisSessionData = $assisSession->getAssistantsession($sessionID);
+    
+            // Prepare assistant data for this session
+            $sessionAssistants = [];
+    
+            // Check if assistant session data is found
+            if ($assisSessionData) {
+                foreach ($assisSessionData as $assisSessionItem) {
+                    $assistant = new AssisModel;
+                    $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
+    
+                    if ($assistantData) {
+                        // print_r($assistantData->fullName);
+                        $sessionAssistants[] = $assistantData;
+                    }
+                }
+            }
+
+            // Consolidate session data
+            $consolidatedSessions[] = [
+                'session' => $sessionDetails[0],
+                'assistants' => $sessionAssistants
+            ];
+
+        $this->view('vetDoctor/doctorsessionhistoryview', ['sessionsDetails' => $consolidatedSessions]);
+        // $this->view('vetDoctor/doctorsessionhistoryview');
     }
 }

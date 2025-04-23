@@ -16,7 +16,7 @@
 
     <section class="home">
         <div class="main-container">
-            <div class="payment-stats">
+            <!-- <div class="payment-stats">
                 <div class="stat-card">
                     <h3>Daily Transactions</h3>
                     <div class="stat-number">Rs. 25,000</div>
@@ -29,16 +29,16 @@
                     <h3>Total Revenue</h3>
                     <div class="stat-number">Rs. 500,000</div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="payment-search">
                 <form class="search-form" action="<?= ROOT ?>/AdminPayment/paymentlist" method="post">
                     <div class="search-inputs">
                         <input type="text" placeholder="Enter User ID">
-                        <input type="text" placeholder="Enter Pet ID">
-                        <input type="date">
+                        <!-- <input type="text" placeholder="Enter Pet ID">
+                        <input type="date"> -->
+                        <button type="submit" class="search-btn">Search Transactions</button>
                     </div>
-                    <button type="submit" class="search-btn">Search Transactions</button>
                 </form>
             </div>
 

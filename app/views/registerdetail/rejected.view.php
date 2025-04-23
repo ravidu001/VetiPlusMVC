@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Request Declined</title>
+    <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/register/rejected.css">
 
 </head>
@@ -18,22 +19,39 @@
         <div class="details-card">
             <div class="details-title">Potential Reasons</div>
             <ul class="details-list">
-                <li>Incomplete application details</li>
+                <!-- <li>Incomplete application details</li>
                 <li>Verification documents not meeting requirements</li>
                 <li>Inconsistent or unclear information provided</li>
-                <li>Additional review needed</li>
+                <li>Additional review needed</li> -->
+                <?php
+                if (isset($doctorDetails->rejectReason)) {
+                    $reasons = explode(',', $doctorDetails->rejectReason);
+                    foreach ($reasons as $reason) {
+                        echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
+                    }
+                } elseif($salonDetails->rejectReason){
+                    $reasons = explode(',', $salonDetails->rejectReason);
+                    foreach ($reasons as $reason) {
+                        echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
+                    }
+                } else {
+                    echo "<li>No specific reason provided.</li>";
+                }
+                ?>
             </ul>
         </div>
-
-        <form method="POST" action="<?=ROOT?>/SalonRegister">
+        <?php if (isset($doctorDetails->approvedStatus) && $doctorDetails->approvedStatus == 'rejected'): ?>
             <button class="action-btn" name="reapply" type="submit">
-                Reapply
+                <a href="<?= ROOT ?>/doctorregistration/errorUpdate?doctorID=<?= urlencode($doctorDetails->doctorID) ?>" class="action-btn">Reapply</a>
             </button>
-        </form>
-        
+        <?php elseif (isset($salonDetails->approvedStatus) && $salonDetails->approvedStatus == 'rejected'): ?>
+            <button class="action-btn" name="reapply" type="submit">
+                <a href="<?= ROOT ?>/salonregistration/errorUpdate?salonID=<?= urlencode($salonDetails->salonID) ?>" class="action-btn">Reapply</a>
+            </button>
+        <?php endif; ?>
 
         <p class="support-text">
-            Need help? Contact our support team at support@company.com
+            Need help? Contact our support team at support@vetiplus.com
         </p>
     </div>
 

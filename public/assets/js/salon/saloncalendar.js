@@ -1,43 +1,105 @@
 //get the current data
 let currentDate = new Date();
-console.log(currentDate);
 let selectedDate = null;
 
-function goToSelectedDate() {
-    const datePicker = document.getElementById('datePicker');
-    const selectedDate = new Date(datePicker.value);
-    
-    // Only update if a valid date is selected
-    if (!isNaN(selectedDate.getTime())) {
-        currentDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-        initCalendar();
-        
-        // Select the specific day
-        const day = selectedDate.getDate();
-        selectDate(day);
-        
-        // Find and highlight the selected day
-        const dayElements = document.querySelectorAll('.calendar-day');
-        dayElements.forEach(element => {
-            if (parseInt(element.textContent) === day && !element.classList.contains('closed')) {
-                element.click();
-            }
-        });
-    }
+//default highlight the today
+const today = new Date();
+const isCurrentMonth = today.getMonth() === currentDate.getMonth() && today.getFullYear() === currentDate.getFullYear();
+
+// if (!currentSelectedDate && isCurrentMonth) {
+//     const todayDay = today.getDate();
+//     highlightAndSelectDay(todayDay);
+// }
+
+
+//______________________________________________________________________________________
+
+
+function highlightAndSelectDay(day) 
+{
+    const dayElements = document.querySelectorAll('.calendar-day');
+
+    dayElements.forEach(element => {
+        if (parseInt(element.textContent) === day && !element.classList.contains('closed')) 
+        {
+            // Remove previous selection
+            dayElements.forEach(el => el.classList.remove('selected'));
+            
+            // Add selection class
+            element.classList.add('selected');
+            
+            // Simulate a click event to fetch slots
+            element.click();
+        }
+    });
 }
 
-// Sample data for blocked time slots (you would typically get this from an API)
-const blockedTimeSlots = {
-    '2024-08-15': ['10:00', '10:20', '11:00'],
-    '2024-08-16': ['09:00', '09:20', '09:40']
-};
+
+function sendSelectedDateToBackend(selectedDate) 
+{
+    if (!selectedDate) 
+    {
+        console.error('No date selected');
+        return;
+    }
+
+    // const formattedDate = selectedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const correctformattedDate = selectedDate.getFullYear() + '-' +
+                      String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(selectedDate.getDate()).padStart(2, '0');
+
+    const SalonEmailAddress = salonEmail;
+
+    fetch(`${BASE_URL}/SalonCalendar/getSlots`, 
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ date: correctformattedDate, salonID: SalonEmailAddress }) // Sending as JSON
+    })
+    .then(response => response.json())
+    .then(data => 
+    {
+        console.log('uuuuuuuu');
+        //__________________________________________________
+        if(data.success)
+        {
+            console.log('kkkkkkkkk', data);
+            appointmentData = {
+                upcoming: data.upcoming || [],
+                complete: data.complete || [],
+                incomplete: data.incomplete || []
+            };
+            console.log(appointmentData);
+            filterAppointments(currentFilter);
+        }
+        else
+        {
+            document.getElementById('appointment-list').innerHTML = `<p>${data.message}</p>`;
+        }
+        //___________________________________________________________________________
+    })
+    .catch(error => 
+    {
+        console.error('Errotttttttttttr:',error);
+        document.getElementById('appointment-list').innerHTML = `<p>Error loading appointments.</p>`;
+    });
+}
+
+//___________________________________________________________________________________________________________________________________
+//create the functions for get the time slots 
+
+
+//____________________________________________________________________________________________________________________________________
 
 // Sample data for closed days (e.g., weekends or holidays)
 const closedDays = {
     '2024-08': [4, 11, 18, 25] // Sundays are closed
 };
 
-function initCalendar() {
+function initCalendar() 
+{
     const calendar = document.getElementById('calendar');
     calendar.innerHTML = '';
     
@@ -52,105 +114,82 @@ function initCalendar() {
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
     
-    for (let i = 0; i < firstDay.getDay(); i++) {
+    for (let i = 0; i < firstDay.getDay(); i++) 
+    {
         calendar.appendChild(document.createElement('div'));
     }
     
-    for (let day = 1; day <= lastDay.getDate(); day++) {
+    for (let day = 1; day <= lastDay.getDate(); day++) 
+    {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
-        dayElement.textContent = day;
 
-        // Check if day is closed
+        // **Added: Wrapper for date and button**
+        const dateWrapper = document.createElement('div');
+        dateWrapper.className = 'date-wrapper';
+        // dateWrapper.textContent = day;
+
+        // **Added: Button for each date**
+        const dayButton = document.createElement('button');
+        dayButton.className = 'date-button';
+        dayButton.textContent = day;
+        dayButton.onclick = () => selectDate(day);
+
+        // **Check if day is closed**
         const monthKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
         if (closedDays[monthKey]?.includes(day)) {
             dayElement.classList.add('closed');
+            dayButton.disabled = true; // Disable button if closed
         } else {
             dayElement.classList.add('open');
-            dayElement.onclick = () => selectDate(day);
         }
 
+        //___________________________________________________________________________________________________________________________________
+        //get the colours for the dates
+
+        // Check against opendays, closedays, holidays
+        // if (calendarData.closedays.includes(dateStr)) {
+        //     dayElement.classList.add('closed-day');
+        //     dayButton.disabled = true;
+        // } else if (calendarData.holidays.includes(dateStr)) {
+        //     dayElement.classList.add('holiday-day');
+        //     dayButton.disabled = true;
+        // } else if (calendarData.opendays.includes(dateStr)) {
+        //     dayElement.classList.add('open-day');
+        // } else {
+        //     dayElement.classList.add('normal-day');
+        // }
+
+        //___________________________________________________________________________________________________________________________________________
+
+        // **Append elements**
+        dayElement.appendChild(dateWrapper);
+        dayElement.appendChild(dayButton);
         calendar.appendChild(dayElement);
     }
 
     updateMonthDisplay();
 }
 
-function selectDate(day) {
-    selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    document.querySelectorAll('.calendar-day').forEach(el => {
-        el.classList.remove('selected-date');
-        if (el.textContent == day) {
-            el.classList.add('selected-date');
-        }
-    });
-    generateTimeSlots();
-}
 
-function generateTimeSlots() {
-    const timeSlots = document.getElementById('time-slots');
-    timeSlots.innerHTML = '';
-    
-    const dateKey = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
-    
-    for (let hour = 9; hour <= 14; hour++) {
-        for (let minute = 0; minute < 60; minute += 20) {
-            const timeSlot = document.createElement('button');
-            timeSlot.className = 'time-slot';
-            
-            const startTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-            const endMinute = (minute + 20) % 60;
-            const endHour = minute + 20 >= 60 ? hour + 1 : hour;
-            const endTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
-            
-            // Check if time slot is blocked
-            if (blockedTimeSlots[dateKey]?.includes(startTime)) {
-                timeSlot.classList.add('blocked');
-            } else {
-                timeSlot.classList.add('available');
-            }
-            
-            timeSlot.textContent = `${startTime} - ${endTime}`;
-            timeSlot.onclick = () => {
-                if (!timeSlot.classList.contains('blocked')) {
-                    toggleTimeSlot(timeSlot, dateKey, startTime);
-                }
-            };
-            timeSlots.appendChild(timeSlot);
-        }
-    }
-}
 
-function toggleTimeSlot(timeSlot, dateKey, startTime) {
-    if (timeSlot.classList.contains('blocked')) {
-        timeSlot.classList.remove('blocked');
-        timeSlot.classList.add('available');
-        // Remove from blocked slots
-        if (blockedTimeSlots[dateKey]) {
-            blockedTimeSlots[dateKey] = blockedTimeSlots[dateKey].filter(time => time !== startTime);
-        }
-    } else {
-        timeSlot.classList.remove('available');
-        timeSlot.classList.add('blocked');
-        // Add to blocked slots
-        if (!blockedTimeSlots[dateKey]) {
-            blockedTimeSlots[dateKey] = [];
-        }
-        blockedTimeSlots[dateKey].push(startTime);
-    }
-}
 
-function previousMonth() {
+function previousMonth() 
+{
     currentDate.setMonth(currentDate.getMonth() - 1);
     initCalendar();
+    // getDatesFromBackEnd();
 }
 
-function nextMonth() {
+function nextMonth() 
+{
     currentDate.setMonth(currentDate.getMonth() + 1);
     initCalendar();
+    // getDatesFromBackEnd();
 }
 
-function updateMonthDisplay() {
+function updateMonthDisplay() 
+{
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 
                   'July', 'August', 'September', 'October', 'November', 'December'];
     document.getElementById('current-month').textContent = 
@@ -159,3 +198,4 @@ function updateMonthDisplay() {
 
 // Initialize the calendar
 initCalendar();
+// getDatesFromBackEnd();

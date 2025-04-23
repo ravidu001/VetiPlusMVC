@@ -14,6 +14,15 @@
         $current_page = basename($_SERVER['PHP_SELF']);
         // Check if any of the appointment pages are active
         // $appointment_active = in_array($current_page, ['Newappointment.php', 'Cancelappointment.php', 'Completeappointment.php']);
+        
+        //get the salon ID from the salon table 
+        $salonID = $_SESSION['SALON_USER'];
+
+        if(empty($salonID))
+        {
+            redirect('Login/login');
+        }
+
     ?>
 
 </head>
@@ -37,54 +46,13 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <button onclick="toggleSubMenu(this)" class="dropdown-btn">
-                        <i class='bx bx-calendar-event icon'></i>
-                        <span>Appointment</span>
-                        <i class='bx bx-chevron-down'></i>
-                    </button>
-                    <ul class="sub-menu">
-                        <li class="nav-link <?= ($current_page =='Newappointment.php') ? 'active' : '' ?>"> 
-                            <a href="../../pages/salon/Newappointment.php">New</a>
-                        </li>
-                        <li class="nav-link <?= ($current_page == 'Cancelappointment.php') ? 'active' : '' ?>">
-                            <a href="../../pages/salon/Cancelappointment.php">Cancel</a>
-                        </li>
-                        <li class="nav-link <?= ($current_page == 'Completeappointment.php') ? 'active' : '' ?>">
-                            <a href="../../pages/salon/Completeappointment.php">Complete</a>
-                        </li>
-                    </ul>
-                </li> -->
-
-
-
-                <!-- <li> -->
-
-
-                <li class="nav-link <?= $current_page == '<?= ROOT ?>/SalonNewAppointment' ? 'active' : '' ?>"> 
-                    <a href="<?=ROOT?>/SalonNewAppointment">
+              
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/SalonAppointments' ? 'active' : '' ?>"> 
+                    <a href="<?=ROOT?>/SalonAppointments">
                         <i class="fa-regular fa-calendar-plus icon"></i></i>
-                        <span>Upcoming Appointments</span>
+                        <span>Appointments </span>
                     </a>
                 </li>
-
-
-                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonCancelAppointment' ? 'active' : '' ?>"> 
-                    <a href="<?= ROOT?>/SalonCancelAppointment">
-                        <i class="fa-regular fa-calendar-xmark icon"></i>
-                        <span>Cancel Appointments</span>
-                    </a>
-                </li>
-
-                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonCompleteAppointment' ? 'active' : '' ?>"> 
-                    <a href="<?= ROOT?>/SalonCompleteAppointment">
-                        <i class="fa-regular fa-calendar-check icon"></i>
-                        <span>Complete Appointments</span>
-                    </a>
-                </li>
-
-
-
 
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonTimeSlot' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonTimeSlot">
@@ -93,12 +61,12 @@
                     </a>
                 </li>
 
-                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonTimeSlotRavindu' ? 'active' : '' ?>"> 
-                    <a href="<?= ROOT?>/SalonTimeSlotRavindu">
+                <!-- <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonSlot' ? 'active' : '' ?>"> 
+                    <a href="<?= ROOT?>/SalonSlot">
                         <i class='bx bxs-pie-chart-alt icon'></i>
-                        <span>Time Slot-ravindu</span>
+                        <span>Time SlotCreate</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonService' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonService">
@@ -123,31 +91,14 @@
 
                 <li>
 
-                <li>
-                    <button onclick="toggleSubMenu(this)" class="dropdown-btn">
-                        <i class='bx bxs-message icon'></i>
+                <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonFeedback' ? 'active' : '' ?>"> 
+                    <a href="<?= ROOT?>/SalonFeedback">
+                        <i class='bx  bxs-message icon' ></i>
                         <span>Feedback</span>
-                        <i class='bx bx-chevron-down'></i>
-                    </button>
-                    <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonFeedback' ? 'active' : '' ?>"> 
-                            <a href="<?= ROOT?>/SalonFeedback">My Reviews</a>
-                        </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonResponse' ? 'active' : '' ?>">
-                            <a href="<?= ROOT?>/SalonResponse">To Reviews</a>
-                        </li>
-                    </ul>
-                </li> 
-
-                <li>
-                <!-- <li class="nav-link "> 
-                    <a href="../../pages/salon/AboutUsSalon.php">
-                        <i class='bx bxs-user-account icon'></i>
-                        <span>About Us</span>
                     </a>
-                </li> -->
+                </li>
 
-                <li>
+
                 <li class="nav-link <?= $current_page == '<?= ROOT?>/SalonContact' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonContact">
                         <i class='bx bxs-phone-call icon' ></i>
@@ -175,11 +126,10 @@
                     </li>
                 </ul>
             </div>
-
         </nav>
     </div>
 </body>
-    <!-- <script src="/client/assets/jsFIles/salon/sidebar.js"></script> -->
+    <!-- <script src="<?=ROOT?>/assets/js/salon/sidebar.js"></script> -->
 </html>
 
 

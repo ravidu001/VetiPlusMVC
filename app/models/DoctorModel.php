@@ -19,7 +19,16 @@ class DoctorModel {
         'doctorCertificate',
         'timeSlot',
         'specialization',
+        'approvedStatus',
+        'rejectReason',
+        'registeredDate'
     ];
+
+    public function getalldata() {
+        $this->order_type = "desc";
+        $this->order_column = "doctorID";
+        return $this->findAll();
+    }
 
     public function find($doctorID) {
         // $this->order_column = 'doctorID';
@@ -31,6 +40,10 @@ class DoctorModel {
         } else {
             return false; // No record found
         }
+    }
+
+    public function create($data) {
+        $this->insert($data);
     }
 
     public function updateProfile($doctorID, $data) {
@@ -48,6 +61,10 @@ class DoctorModel {
         // } else {
         //     return false;
         // } 
+    }
+
+    public function updateStatus($doctorID, $data) {
+        $this->update($doctorID, ['approvedStatus'=>$data['approvedStatus'],'rejectReason'=>$data['rejectReason']], 'doctorID');
     }
 
 }

@@ -6,7 +6,7 @@ class User
 
     protected $table = 'User';
 
-    protected $allowedColumns = ['email', 'password', 'type', 'loginCount'];
+    protected $allowedColumns = ['email', 'password', 'type', 'loginCount', 'activeStatus'];
 
     public function create($data)
     {
@@ -73,5 +73,10 @@ class User
         $count = $this->getCount();
         return $count;  // Return the count value
 
+    }
+
+    public function updateActiveStatus($id, $status)
+    {
+        return $this->update($id, ['activeStatus' => $status], 'email');
     }
 }

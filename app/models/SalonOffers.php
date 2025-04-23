@@ -29,7 +29,15 @@ class SalonOffers
     {
         try {
             $result = $this->delete($specialOfferID, 'specialOfferID');
-            return true; // Successful deletion
+            if ($result) {
+
+                return true; // Successful deletion
+    
+            } else {
+    
+                throw new Exception('Deletion failed');
+    
+            }
     
         } catch (Exception $e) {
             // Log the error if needed
@@ -59,10 +67,12 @@ class SalonOffers
      //__________________________________________________________________________________________
     //findall services to show the special offer add colunm
     
-    // public function findService()
-    // {
+    public function findByService($serviceID)
+    {
+        $this->order_column = 'specialOfferID';
+        return $this->where(['serviceID' => $serviceID]);
+    }
 
-    // }
 
 
     

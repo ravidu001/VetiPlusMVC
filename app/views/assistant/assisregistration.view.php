@@ -1,9 +1,15 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Veterinary Assistant Registration</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/registration.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <!-- <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetAssistant/registration.css"> -->
     <style>
@@ -82,6 +88,7 @@
     </style>
 </head>
 <body>
+    <?php echo $notification->display(); ?>
     <div class="registration-container">
         <div class="registration-illustration">
             <img src="<?= ROOT ?>/assets/images/vetAssistant/assistantReg.png" alt="Veterinary Assistant Illustration">
@@ -191,6 +198,10 @@
                     <input type="number" class="form-input" id="experience"
                         min="0" max="50" name="experience" required 
                         placeholder="Enter Experience">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" class="form-input" name="bio" required placeholder="Enter a short biography"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="chargePerHour">Charge per Hour</label>

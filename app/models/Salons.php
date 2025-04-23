@@ -16,6 +16,7 @@ class Salons
     //update the salon time details
     public function updateSalonTimeSlots($salonID, $data)
     {
+       $this->order_column = 'salonID'; 
        return $this->update( $salonID , $data , 'salonID');
     }
 
@@ -29,6 +30,11 @@ class Salons
     public function insertData($arr)
     {
         return $this->insert($arr);
+    }
+
+    public function salonCount(){
+        $count = $this->getCount();
+        return $count;
     }
 }
 

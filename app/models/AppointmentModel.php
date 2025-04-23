@@ -58,4 +58,5 @@ class AppointmentModel {
         $bookingSuccess = $this->insert($data);
         return empty($bookingSuccess) ? true : false;
     }
+  
 }

@@ -17,8 +17,8 @@ class SalonStaff extends Controller
     public function delete($staffID)
     {
         $stafftable = new SalonStaffs;
-        $stafftable->deletestaff($staffID);
-        redirect('SalonService');
+        $data = $stafftable->deletestaff($staffID);
+        redirect('SalonStaff',$data);
     }
 
     //________________________________________________________________________________________________________________________________
@@ -39,7 +39,7 @@ class SalonStaff extends Controller
         // Check if the submit button is clicked
         if (isset($_POST['update'])) 
         {
-            // show('hi');
+            show('hi');
             // Get the form data as the data array index
             $data = [
                 'fullName' => htmlspecialchars(trim($_POST['MemberName'] ?? '')),
@@ -49,6 +49,8 @@ class SalonStaff extends Controller
                 'workingType' => htmlspecialchars(trim($_POST['job'] ?? '')),
                 'salonID' => $_SESSION['SALON_USER'] ?? ''
             ];
+
+            show($data);
 
             // Check if photo1 is uploaded
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) 
@@ -69,11 +71,12 @@ class SalonStaff extends Controller
                 ]);
             }
 
+
            
             // Validate the data
             $validateresult = $this->SalonDataValidation($data);
 
-            // show($validateresult);
+            show($validateresult);
 
             if (empty($validateresult['errors'])) 
             {
@@ -111,14 +114,19 @@ class SalonStaff extends Controller
                         show($result);
                         // If no exceptions occur, assume success
                         redirect('SalonStaff');
-                    } catch (Exception $e) {
+                    } 
+                    catch (Exception $e) 
+                    {
+                        // show($data['errors']);
                         // Handle the exception if something goes wrong
                         $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
                         // show( $data['errors']);
+
                     }
                 } 
                 else 
                 {
+                    
                     $data['errors'] = $validateresult['errors'];
                 }
             }

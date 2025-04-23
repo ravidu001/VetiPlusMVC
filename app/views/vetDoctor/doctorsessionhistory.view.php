@@ -100,7 +100,7 @@
             <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
             <td>10</td>
             <td>
-                <a href="<?= ROOT ?>/DoctorViewSession/session" class="view-btn">
+                <a href="<?= ROOT ?>/DoctorSessionHistory/session?sessionID=<?= urlencode($data['session']->sessionID) ?>&assistantIDs=<?= urlencode(implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID')))) ?>" class="view-btn">
                     <i class='bx bx-right-arrow-circle'></i>
                 </a>
             </td>
