@@ -6,7 +6,7 @@ class MedicalRecordModel
 
     protected $table = 'medicalrecord';
 
-    protected $allowedColumns = ['recordID', 'symptom', 'date_administered', 'doctorID', 'petID', 'appointmentID'];
+    protected $allowedColumns = ['recordID', 'symptom', 'date_administered', 'doctorID', 'assistantID', 'petID', 'appointmentID'];
 
     public function insertData($data) {
         $this->insert($data);

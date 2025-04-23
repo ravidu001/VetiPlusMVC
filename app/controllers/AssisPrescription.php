@@ -1,6 +1,6 @@
 <?php
 
-class DoctorPrescription extends Controller {
+class AssisPrescription extends Controller {
     public function index() {
         // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
@@ -13,46 +13,104 @@ class DoctorPrescription extends Controller {
         else{
             $_SESSION['popupShown'] = false;
         }
-        $doctorID = $_SESSION['user_id'];
+        $assisID = $_SESSION['user_id'];
+        echo "<script>console.log('ID " . json_encode($assisID) . "');</script>";
+        $assissessionModel = new AssistantSessionModel();
+        $assissessionData = $assissessionModel->getSessionByAssistant($assisID);
+
         $sessionModel = new DoctorSessionModel();
-        $sessionData = $sessionModel->getsession($doctorID);
-        // show($sessionData);
+        $sessionData = [];
+
+        // show($assissessionData);
+        // Check if assistant accepted the session
+        foreach ($assissessionData as $assissessionItem) {
+            $sessionModel = new DoctorSessionModel();
+            if ($assissessionItem->action == 'accept') { 
+                echo "<script>console.log('ID " . json_encode($assissessionItem->sessionID) . "');</script>";
+                $session = $sessionModel->getsessionBySession($assissessionItem->sessionID);
+                // show($session);
+                if ($session) { // Check if session data is not empty
+                    // Convert stdClass object to associative array
+                    foreach ($session as $s) {
+                        $sessionData[] = [
+                            'sessionID' => $s->sessionID,
+                            'selectedDate' => $s->selectedDate,
+                            'startTime' => $s->startTime,
+                            'endTime' => $s->endTime,
+                            'noOfAppointments' => $s->noOfAppointments,
+                            'publishedTime' => $s->publishedTime,
+                            'clinicLocation' => $s->clinicLocation,
+                            'district' => $s->district,
+                            'doctorID' => $s->doctorID,
+                            'note' => $s->note,
+                            'completeStatus' => $s->completeStatus,
+                        ];
+                    }
+                    
+                }
+            }
+        }
     
         // Initialize an array to hold appointment and pet data
         $appointmentsWithPets = [];
         $petsBySession = []; // New array to hold pets by session
-    
+        // show($sessionData);
         foreach ($sessionData as $sessionItem) {
-            if ($sessionItem->completeStatus == 0) {
-                $appointmentModel = new AppointmentModel();
-                $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
-    
-                foreach ($appointmentData as $appointmentItem) {
-                    $petModel = new Pet();
-                    $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
-    
-                    // Store the appointment and pet data in the array
-                    $appointmentsWithPets[] = [
-                        'session' => $sessionItem,
-                        'appointment' => $appointmentItem,
-                        'pet' => $petData
-                    ];
-    
-                    // Group pets by session
-                    if (!isset($petsBySession[$sessionItem->sessionID])) {
-                        $petsBySession[$sessionItem->sessionID] = [];
+            if ($sessionItem['completeStatus'] == 0) {
+                $appointmentModel = new AppointmentModel();echo "<script>console.log('IDAPP " . json_encode($sessionItem['sessionID']) . "');</script>";
+                $appointmentData = $appointmentModel->getAppointmentBySession($sessionItem['sessionID']);
+                // show($appointmentData);
+                if ($appointmentData && is_array($appointmentData)) {
+                    foreach ($appointmentData as $appointmentItem) {
+                        $petModel = new Pet();
+                        $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
+                
+                        $appointmentsWithPets[] = [
+                            'session' => $sessionItem,
+                            'appointment' => $appointmentItem,
+                            'pet' => $petData
+                        ];
+                
+                        if (!isset($petsBySession[$sessionItem['sessionID']])) {
+                            $petsBySession[$sessionItem['sessionID']] = [];
+                        }
+                        $petsBySession[$sessionItem['sessionID']][] = $petData;
                     }
-                    $petsBySession[$sessionItem->sessionID][] = $petData;
                 }
             }
         }
-        // show($appointmentsWithPets);
+        
+        // foreach ($sessionData as $sessionItem) {
+        //     if ($sessionItem->completeStatus == 0) {
+        //         $appointmentModel = new AppointmentModel();
+        //         $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
+    
+        //         foreach ($appointmentData as $appointmentItem) {
+        //             $petModel = new Pet();
+        //             $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
+    
+        //             // Store the appointment and pet data in the array
+        //             $appointmentsWithPets[] = [
+        //                 'session' => $sessionItem,
+        //                 'appointment' => $appointmentItem,
+        //                 'pet' => $petData
+        //             ];
+    
+        //             // Group pets by session
+        //             if (!isset($petsBySession[$sessionItem->sessionID])) {
+        //                 $petsBySession[$sessionItem->sessionID] = [];
+        //             }
+        //             $petsBySession[$sessionItem->sessionID][] = $petData;
+        //         }
+        //     }
+        // }
+         
 
         $vaccine = new VaccineDataModel();
         $vaccineData = $vaccine->getvaccine(); // all vaccine data
     
         // Pass the combined data to the view
-        $this->view('vetDoctor/doctorprescription', [
+        $this->view('assistant/assisprescription', [
             'appointmentsWithPets' => $appointmentsWithPets,
             'petsBySession' => $petsBySession,
             'vaccineData' => $vaccineData,
@@ -99,7 +157,12 @@ class DoctorPrescription extends Controller {
     public function saveData() {
         $sessionID = $_GET['sessionID'];
         $petID = $_GET['petID'];
-        $doctorID = $_SESSION['user_id'];
+        $assisID = $_SESSION['user_id'];
+
+        $doctorsession = new DoctorSessionModel();
+        $doctorData = $doctorsession->getsessionBySession($sessionID);
+        show($doctorData);
+        $doctorID = $doctorData[0]->doctorID;
 
         $appointment = new AppointmentModel();
         $appointmentData = $appointment->getAppointmentBySessionwithEmpty($sessionID);
@@ -184,6 +247,7 @@ class DoctorPrescription extends Controller {
         $medicalRecord = [
             'symptom' => trim($_POST['symptoms']) ?? null,
             'doctorID' => $doctorID,
+            'assistantID' => $assisID,
             'petID' => $petID,
             'appointmentID' => $appointmentID
         ];

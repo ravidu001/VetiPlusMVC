@@ -79,14 +79,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <i class='bx bxs-down-arrow arrow first icon'></i>
                     </a>
                     <ul class="sub-menu">
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorPrescription/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorPrescription/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisPrescription/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisPrescription/index">
                                 <i class='bx bx-book-add icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Add Prescription</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/DoctorMedicalHistory/index' ? 'active' : '' ?>">
-                            <a href="<?= ROOT ?>/DoctorMedicalHistory/index">
+                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisMedicalHistory/index' ? 'active' : '' ?>">
+                            <a href="<?= ROOT ?>/AssisMedicalHistory/index">
                                 <i class='bx bx-history icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">Medical History</span>
                             </a>
