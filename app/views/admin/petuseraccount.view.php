@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +21,7 @@
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
+    <?php echo $notification->display(); ?>
         <div class="profile-container">
             <div class="profile-header">
                 <img src="https://via.placeholder.com/200" alt="Profile" class="profile-image">
@@ -63,15 +69,14 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="#" class="btn btn-primary" onclick="resetPassword()">
+                 <a href="<?= ROOT ?>/AdminAccountDashboard/accept?petOwnerID=<?= urlencode($request['session']->petOwnerID) ?>" class="btn btn-primary">
                         <i class='bx bx-reset'></i> Reset Password
-                    </a>
+                      </a>
                     <a href="#" class="btn btn-danger" onclick="deleteAccount()">
                         <i class='bx bx-trash'></i> Delete Account
                     </a>
                 </div>
-
-                <div class="stats-section">
+                <!-- <div class="stats-section">
                     <div class="stat-card">
                         <h3>40</h3>
                         <p>Total Appointments</p>
@@ -84,7 +89,7 @@
                         <h3>3</h3>
                         <p>Number of Pets</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>

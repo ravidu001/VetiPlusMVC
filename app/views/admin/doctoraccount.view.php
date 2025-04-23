@@ -74,11 +74,10 @@
                             <i class='bx bx-reset'></i> Reset Password
                         </a>
                         <a href="#" class="btn btn-danger" onclick="deleteAccount()">
-                            <i class='bx b <i class=' bx bx-trash'></i> Delete Account
-                        </a>
+                            <i class='bx bx-trash'></i> Delete Account</a>
                     </div>
 
-                    <div class="stats-section">
+                    <!-- <div class="stats-section">
                         <div class="stat-card">
                             <h3>100</h3>
                             <p>Total Appointments</p>
@@ -91,7 +90,7 @@
                             <h3>20</h3>
                             <p>Years of Experience</p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
