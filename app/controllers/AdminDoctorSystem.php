@@ -6,7 +6,7 @@ class AdminDoctorSystem extends Controller
     {
         $doctor = new doctorModel();
         $doctorData = $doctor->getalldata();
-        show($doctorData);
+        // show($doctorData);
        
         $this->view('admin/doctorsystem', ['doctorItem' =>$doctorData]);
 
