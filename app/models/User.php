@@ -39,6 +39,18 @@ class User
     public function updatePassword($email, $password) {
         $this->update($email, ['password' => $password], 'email');
     }
+
+    public function po_changePassword ($petOwnerID, $oldPass, $newPass) {
+        $petOwner = $this->first(['email' => $petOwnerID]);
+        if ( password_hash($oldPass, PASSWORD_DEFAULT) == $petOwner->password ) {
+            $newPassHash = password_hash($newPass, PASSWORD_DEFAULT);
+
+            $changeSuccess = $this->update($petOwnerID, ['password' => $newPassHash], 'email');
+            return empty($changeSuccess) ? true : false;
+        } else {
+            return false;
+        }
+    }
     
     public function deactivateUser($email, $status) {
         $this->update($email, ['activeStatus' => $status], 'email');

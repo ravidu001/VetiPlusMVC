@@ -53,5 +53,10 @@ class AppointmentModel {
         $result = $this->where(['petOwnerID' => $petOwnerID]);
         return $result;
     }
-}
 
+    public function bookAppointment ($data) {
+        $bookingSuccess = $this->insert($data);
+        return empty($bookingSuccess) ? true : false;
+    }
+  
+}

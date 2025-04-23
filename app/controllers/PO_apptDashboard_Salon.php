@@ -4,12 +4,17 @@ class PO_apptDashboard_Salon extends Controller {
     // since custom queries need to be executed using query():
     use Database;
 
-    public $petOwner;
+    public $petOwnerID;
+    public $petAppts;
+
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
+        $this->petOwnerID = $_SESSION['petOwnerID'];
 
-        $this->petOwner = new PetOwner;
-        $this->petOwner->setPetOwnerID();
+        // $this->petOwner = new PetOwner;
+        // $this->petOwner->setPetOwnerID();
+
+        $this->petAppts = new PO_PetAppts;
     }
 
     public function index() {
@@ -57,5 +62,29 @@ class PO_apptDashboard_Salon extends Controller {
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
+    }
+
+    public function getAppts_history () {
+        $options = ['petOwnerID' => $this->petOwnerID,
+                    'petID' => null,
+                    'type' => 'salon'
+                ];
+        $result = $this->petAppts->getPetApptHistory($options) ?: ['fetchedCount' => 0];
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit();
+    }
+
+    public function getAppts_upcoming () {
+        $options = ['petOwnerID' => $this->petOwnerID,
+                    'petID' => null,
+                    'type' => 'salon'
+                ];
+        $result = $this->petAppts->getPetApptUpcoming($options) ?: ['fetchedCount' => 0];
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit();
     }
 }

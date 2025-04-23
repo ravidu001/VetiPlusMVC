@@ -8,13 +8,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
-        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet"> -->
-        <!-- <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet"> -->
-
-        <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/registerPage.css" rel="stylesheet">
 
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
         <div class="formContainer">
@@ -35,8 +32,8 @@
                         $todayDate = $today->format('Y-m-d');
                         $tenYearsAgoDate = (clone $today)->modify('-10 years')->format('Y-m-d');
                     ?>
-                    <!-- <label for="DOB">Date of Birth</label>
-                        <input type="date" id="DOB" name="DOB" max="<?= $tenYearsAgoDate ?>" required> -->
+                    <label for="DOB">Date of Birth</label>
+                        <input type="date" id="DOB" name="DOB" max="<?= $tenYearsAgoDate ?>" required>
                     <label for="contactNumber">Contact Number</label>
                         <input type="text" id="contactNumber" name="contactNumber" pattern="07\d\d\d\d\d\d\d\d" minlength="10" placeholder="eg: 0767130191" required>
                     <!-- <label for="NIC">NIC number</label>
@@ -69,9 +66,12 @@
         
         <!-- footer at page's bottom: -->
         <?php include_once '../app/views/navbar/guestFooter.php'; ?>
-
-        <script src="<?=ROOT?>/assets/js/petOwner/fetchHandler.js"></script>
+        
         <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
+        <script>
+            document.getElementById('petOwnerRegisterForm').addEventListener('submit', submitForm);
+        </script>
 
     </body>
 </html>

@@ -49,14 +49,18 @@ class PetOwner {
         $registerSuccess = $this->insert($data);
         return empty($registerSuccess) ? true : false;
     }
-   
     /**
      * jm - 'upload' petOwner's profile pic and update database
      * @return bool Whether successful or not
      */ 
     public function uploadProfilePicture ($data) {
-        $uploadSuccess = $this->update($this->petOwnerID, $data);
+        $uploadSuccess = $this->update($this->petOwnerID, $data, 'petOwnerID');
         return empty($uploadSuccess) ? true : false;
+    }
+
+    public function logout() {
+        $_SESSION = [];
+        return session_destroy();
     }
 
     public function checkUser($email)

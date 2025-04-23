@@ -11,7 +11,7 @@ class _404 extends Controller {
                 header('Location: ../Doctor');
                 break;
             case 'Pet Owner':
-                header('Location: ../PetOwner');
+                header('Location: ../PO_home');
                 break;
             case 'Salon':
                 header('Location: ../Salon');
