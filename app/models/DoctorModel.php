@@ -20,7 +20,8 @@ class DoctorModel {
         'timeSlot',
         'specialization',
         'approvedStatus',
-        'rejectReason'
+        'rejectReason',
+        'registeredDate'
     ];
 
     public function find($doctorID) {

@@ -46,7 +46,8 @@ class DoctorRegistration extends Controller {
                 'doctorCertificate' => $doctorCertificate,
                 'timeSlot' => $_POST['timeSlot'],
                 'specialization' => $_POST['special'],
-                'approvedStatus' => 'Pending'
+                'approvedStatus' => 'Pending',
+                'registeredDate' => date('Y-m-d H:i:s')
             ];
 
             // echo $data['doctorID'];
@@ -152,7 +153,8 @@ class DoctorRegistration extends Controller {
                 'doctorCertificate' => $doctorCertificate,
                 'timeSlot' => $_POST['timeSlot'],
                 'specialization' => $_POST['special'],
-                'approvedStatus' => 'Pending'
+                'approvedStatus' => 'Pending',
+                'registeredDate' => date('Y-m-d H:i:s')
             ];
 
             // echo $data['doctorID'];
