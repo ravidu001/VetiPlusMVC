@@ -54,28 +54,35 @@
             </div>
 
             <div class="appointments-list">
-            <table class="appointments-table">
-        <thead>
-          <tr>
-            <th>Appointment ID</th>
-            <th>Pet Name</th>
-            <th>Date and Time</th>
-            <th>Session ID</th>
-            <th>Visit Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($admin as $data): ?>
-            <tr>
-              <td><?= $data->appointmentID ?? 'N/A' ?></td>
-              <td><?= htmlspecialchars($data->petID ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Pet Name</th>
+                            <th>Date and Time</th>
+                            <th>Session ID</th>
+                            <th>Visit Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($data['appointmentdata'])) : ?>
+                            <?php foreach ($data['appointmentdata'] as $appointment) : ?>
+                                <tr>
+                                    <td><?= $appointment->appointmentID ?></td>
+                                    <td><?= $appointment->petID ?></td>
+                                    <td><?= $appointment->bookedDateTime ?></td>
+                                    <td><?= $appointment->sessionID ?></td>
+                                    <td><?= $appointment->visitTime ?></td>
+                                    <!-- <td><a class="view-btn">View</a></td> -->
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="6">No appointment data available.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

@@ -7,6 +7,12 @@ class AppointmentModel {
 
     protected $allowedColumns = ['appointmentID', 'bookedDateTime', 'visitTime', 'status','petID', 'petOwnerID', 'sessionID'];
 
+    public function getalldata() {
+        $this->order_column = 'bookedDateTime';
+        $this->order_type = 'DESC';
+        return $this->findAll();
+    }
+
     // get appointment by sessionID
     public function getAppointmentBySession($sessionID) {
         $this->limit = 100;
