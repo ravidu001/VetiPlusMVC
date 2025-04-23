@@ -31,5 +31,10 @@ class Salons
     {
         return $this->insert($arr);
     }
+
+    public function salonCount(){
+        $count = $this->getCount();
+        return $count;
+    }
 }
 
