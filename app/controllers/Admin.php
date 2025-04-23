@@ -5,10 +5,14 @@ class Admin extends Controller
     {
         $userCount = $this->countUser();
         $appointmentCount = $this->appointmentcount();
+        $salonCount = $this->salonCount();
+        $complain = $this->Complain();
     
         $data = [
             'userCount' => $userCount,
-            'appointmentCount' => $appointmentCount
+            'appointmentCount' => $appointmentCount,
+            'salonCount' => $salonCount,
+            'complain' => $complain
         ];
     
         $this->view('admin/adminhome', $data);
@@ -26,5 +30,16 @@ class Admin extends Controller
         $count = $appointment->appointmentcount();
         return $count;
     }
+
+    public function salonCount(){
+        $salon = new Salons();
+        $count = $salon->salonCount();
+        return $count;
+    }
+    public function Complain(){
+        $complainuser = new systemcomplainModel();
+        $complain =  $complainuser->getcomplain();
+        return $complain;
+     }
 }
 
