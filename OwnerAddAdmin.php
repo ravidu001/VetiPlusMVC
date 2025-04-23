@@ -61,27 +61,7 @@ class OwnerAddAdmin extends Controller
 
                 $admin = new  AdminRegistrationModel();
                 $admin->create($data);
-
-                $user = new User();
-                $password = $_POST['password'];
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                $userData = [
-                    'email' => $_POST['email'],
-                    'password' => $hashedPassword,
-                    'type' => 'System Admin',
-                    'loginCount' => 0,
-                    'activeStatus' => 'active'
-                ];
-
-                $resulr = $user->create($userData);
-
-                $notification = new Notification();
-                if($result) {
-                    $notification->show("Admin registration successful.", "success");
-                } else {
-                    $notification->show("Admin registration failed.", "error");
-                }
-                // $this->redirectToIndex();
+                $this->redirectToIndex();
             }
         }
     }
