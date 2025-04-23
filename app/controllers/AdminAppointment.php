@@ -5,6 +5,7 @@ class AdminAppointment extends Controller
     public function index()
     {   
         $admin = $this->appointmentlist();
+        //show($admin);
         $data = [
             'userCount' => $admin,
         ];

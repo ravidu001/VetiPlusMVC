@@ -39,7 +39,10 @@ class User
     public function updatePassword($email, $password) {
         $this->update($email, ['password' => $password], 'email');
     }
-
+    
+    public function deactivateUser($email, $status) {
+        $this->update($email, ['activeStatus' => $status], 'email');
+    }
 
     public function validate($data)
     {
