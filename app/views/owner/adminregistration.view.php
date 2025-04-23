@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +12,7 @@
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <title>Admin Registration | VetiPlus</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/ownernav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/owner/adminregistration.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
@@ -14,6 +20,7 @@
 <body>
     <?php require_once '../app/views/navbar/ownernav.php'; ?>
     <section class="home">
+    <?php echo $notification->display(); ?>
         <div class="container">
             <div class="form-container">
                 <div class="form-title">

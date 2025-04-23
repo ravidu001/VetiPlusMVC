@@ -50,7 +50,10 @@ class User
         } else {
             return false;
         }
-
+    }
+    
+    public function deactivateUser($email, $status) {
+        $this->update($email, ['activeStatus' => $status], 'email');
     }
 
     public function validate($data)
