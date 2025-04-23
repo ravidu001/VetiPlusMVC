@@ -45,4 +45,13 @@ class AppointmentModel {
          return $count;
     }
 
+    public function getAppointmentBypetownerID($petOwnerID) {
+        $this->limit = 100;
+        $this->order_column = 'bookedDateTime';
+        $this->order_type = 'DESC';
+
+        $result = $this->where(['petOwnerID' => $petOwnerID]);
+        return $result;
+    }
 }
+
