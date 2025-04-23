@@ -4,12 +4,9 @@ class AdminAppointment extends Controller
 {
     public function index()
     {   
-        $admin = $this->appointmentlist();
-        //show($admin);
-        $data = [
-            'userCount' => $admin,
-        ];
-        $this->view('admin/appointment',$data);
+        $appointment = new AppointmentModel();
+        $appointmentdata = $appointment->getalldata(); 
+        $this->view('admin/appointment',['appointmentdata' => $appointmentdata,]);
     }
     public function appointmentlist()
     {
