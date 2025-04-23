@@ -6,14 +6,38 @@
     animation: fadeIn 0.5s ease-out;
 
 }
+.card{
+    display: flex;
+    flex-direction: column;
+}
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 30px;
     margin-bottom: 30px;
 }
-
+ .stats-cards {
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.stats-cards::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(-45deg);
+}
 .stats-card {
     background: var(--gradient-primary);
     color: white;
@@ -65,17 +89,16 @@
 
 .dashboard-main {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 10px;
+    grid-template-columns: 2fr 2fr;
 }
 
 .chart-container {
     background: white;
     border-radius: 15px;
-    padding: 20px;
-    height: 50vh;
-    width: 90%;
+    height: 65vh;
+    width: 80%;
     box-shadow: var(--card-shadow);
+    
 }
 
 .complaints-container {
