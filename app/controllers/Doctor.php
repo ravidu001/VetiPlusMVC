@@ -24,7 +24,7 @@ class Doctor extends Controller {
         if (!$doctorData) {
             // Handle the case where the doctor data is not found
             // You can redirect or show an error message
-            header('Location: ' . ROOT . '/error');
+            header('Location: ' . ROOT . '/login');
             exit();
         }
 
