@@ -59,6 +59,7 @@ class SalonService extends Controller
         //fetch the all data in the database and push it in to the edit form for values
         $data = [];
         $serviceModel = new SalonServices;
+        $notifications = new Notification();
 
         $serviceData = $serviceModel->whereservice($serviceID);
         $data['olddata'] = $serviceData;
@@ -130,7 +131,8 @@ class SalonService extends Controller
                 
                     if (!move_uploaded_file($validateresult['tempphoto1'], $validateresult['photo1'])) 
                     {
-                        $validateresult['errors'] = "Failed to upload photo1.";
+                        // $validateresult['errors'] = "Failed to upload photo1.";
+                        $notifications->show("Failed to Upload Photo one",'error');
                     }
                 }
 
@@ -141,7 +143,8 @@ class SalonService extends Controller
                 
                     if (!move_uploaded_file($validateresult['tempphoto2'], $validateresult['photo2'])) 
                     {
-                        $validateresult['errors'] = "Failed to upload photo2.";
+                        // $validateresult['errors'] = "Failed to upload photo2.";
+                        $notifications->show("Failed to Upload Photo two",'error');
                     }
                 }
 
@@ -161,13 +164,17 @@ class SalonService extends Controller
                         // Call the insert method
                         $result=$servicetable->serviceupdate($serviceID, $validateresult);
 
-                        show($result);
-                
-                        // If no exceptions occur, assume success
-                        redirect('SalonService');
+                        // show($result);
+                        if($result)
+                        {
+                            $notifications->show("Succssfully Upload the image",'success');
+                            // If no exceptions occur, assume success
+                            redirect('SalonService');
+                        }
                     } catch (Exception $e) {
                         // Handle the exception if something goes wrong
-                        $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
+                        // $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
+                        $notifications->show("Data update unsuccessful!",'error');
                     }
                 } 
                 else 
