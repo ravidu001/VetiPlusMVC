@@ -59,42 +59,39 @@
         <button>
             <a href="<?= ROOT?>/SalonSlotCreate">Create</a>
         </button>
-        <div class="selecttime">
-        <?php if (!empty($ConfigDetails)) : ?>
-                
-            <h2>Time Slot Details</h2>
-            <div class="timeslots" style="display: flex;">
-                <div class="duration">
-                    <h4>Time Duration per Slot (minutes):</h4>
-                    <p><?= $ConfigDetails->slot_duration_minutes?></p>
+            <div class="selecttime">
+                <?php if (!empty($ConfigDetails)) : ?>
+                <h2>Latest Update Schedule Details</h2>
+                <div class="slotdetails" style="display: flex;">
+                    <div class="duration" style="display: flex; gap:20px;">
+                        <h4>Time Duration per Slot (minutes):</h4>
+                        <?= $ConfigDetails->slot_duration_minutes?>
+                    </div>
+                    <div class="appointment" style="display: flex;gap:20px;">
+                        <h4>Appointments per Slot:</h4>
+                        <?= $ConfigDetails->appointments_per_slot?>
+                    </div>
+                        <p>Create time slots for: <span class="highlight" style="gap:20px;"><?= $ConfigDetails->slot_creation_frequency?></span></p>
                 </div>
-               <div class="appointment" >
+            </div>    
+                    <?php else : ?>
+                    <p>Create time slots for: <span class="highlight">Not yet</span></p>
+                </div>
+                <div class="timeslots">
+                    <h2>Time Slot Details</h2>
+                    <h4>Time Duration per Slot (minutes):</h4>
+                    <p>Not yet</p>
                     <h4>Appointments per Slot:</h4>
-                    <p><?= $ConfigDetails->appointments_per_slot?></p>
-               </div>
-               <p>Create time slots for: <span class="highlight"><?= $ConfigDetails->slot_creation_frequency?></span></p>
-            </div>
-        </div>    
-        <?php else : ?>
-                <p>Create time slots for: <span class="highlight">Not yet</span></p>
-            </div>
-            <div class="timeslots">
-                <h2>Time Slot Details</h2>
-                <h4>Time Duration per Slot (minutes):</h4>
-                <p>Not yet</p>
-                <h4>Appointments per Slot:</h4>
-                <p>Not yet</p>
-            </div> 
-        <?php endif; ?>  
-        <!-- <div class="daysdetails" > -->
-            <div class="days">
-                <h2>Weekly Schedule</h2>
+                    <p>Not yet</p>
+                </div> 
+                <?php endif; ?>  
+                <div class="days">
                     <table>
                         <thead>
                             <tr>
                                 <th>Day</th>
                                 <th>Start Time</th>
-                                <th>Close Time</th>
+                                <th>End Time</th>
                                 <th>Closed</th>
                             </tr>
                         </thead>
@@ -107,18 +104,15 @@
                                 <td><?= ($weekday->is_closed == 0) ? date("h:i A", strtotime($weekday->end_time)) : '________'; ?></td>
                                 <td><?= ($weekday->is_closed == 1) ? 'Yes' : 'No'; ?></td>
                             </tr>
-                        <?php endforeach; ?>
-                        <?php else : ?>
+                            <?php endforeach; ?>
+                            <?php else : ?>
                             <tr>
                                 <td colspan="4">Not yet added any holidays</td>
                             </tr>
-                        <?php endif; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
-            </div>
-           
-        <!-- </div> -->
-       
+                </div>       
     </div>
 </body>
 </html>

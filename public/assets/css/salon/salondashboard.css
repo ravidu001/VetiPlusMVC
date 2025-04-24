@@ -104,8 +104,9 @@ body:has(#sidebar.close) .homecontent
     padding: 0; /* Removed padding to allow header to extend to edges */
     position: sticky;
     top: 20px;
-    height: fit-content;
-    overflow: hidden; /* Added to ensure border-radius applies to the header too */
+    height: 500px;
+    overflow-x: hidden; 
+    overflow-y: auto;
   }
   
   .timeSlotforTOday .timeslots {
@@ -312,6 +313,117 @@ body:has(#sidebar.close) .homecontent
   font-size: 15px;
 }
 
+/* General table styling */
+.slotdetails {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+/* Header styling */
+.slotdetails thead th {
+  background-color: #6A0DAD;
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid #680181;
+}
+
+/* Table body styling */
+.slotdetails tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.slotdetails tbody tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+
+.slotdetails tbody tr:last-of-type {
+  border-bottom: 2px solid #3498db;
+}
+
+/* Cell styling */
+.slotdetails td {
+  padding: 12px 15px;
+}
+
+/* Time block general styling */
+.timeblock {
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+
+/* Specific styling for timeSlotforTOday class */
+.timeSlotforTOday .booked-slot {
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  border-left: 4px solid #4a0980;
+}
+ 
+.timeSlotforTOday .blocked-slot {
+  background-color: var(--background-light);
+  color: var(--text-clr);
+  border-left: 4px solid #a07ba0;
+}
+ 
+.timeSlotforTOday .available-slot {
+  background-color: var(--list-item);
+  color: var(--text-primary);
+  border-left: 4px solid #efbfef;
+}
+
+/* No time slots message styling */
+.slotdetails p {
+  padding: 15px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .slotdetails {
+    border: 0;
+  }
+  
+  .slotdetails thead {
+    display: none;
+  }
+  
+  .slotdetails tr {
+    margin-bottom: 15px;
+    display: block;
+    border-bottom: 2px solid #6A0DAD;
+  }
+  
+  .slotdetails td {
+    display: block;
+    text-align: right;
+    font-size: 14px;
+    border-bottom: 1px dotted #ccc;
+    position: relative;
+    padding-left: 50%;
+  }
+  
+  .slotdetails td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: -10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+}
+
 /* Responsive Design - Modified to work with stats section */
 @media (max-width: 1200px) {
   .dashcontent {
@@ -355,6 +467,8 @@ body:has(#sidebar.close) .homecontent
     gap: 8px;
   }
 }
+
+
 
 @media (max-width: 576px) {
   .part2 .table {
