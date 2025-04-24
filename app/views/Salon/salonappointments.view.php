@@ -117,7 +117,7 @@
                   <td class="subdetail">${app.contactNumber}</td>
                   ${status === 'upcoming' ? `
                     <td class="subdetail">
-                      <button class="complete" onclick="UpdateStatus(${app.groomingID}, 2)">Done</button>
+                      <button class="complete" onclick="UpdateStatus(${app.groomingID}, 2)">Complete</button>
                     </td>
                   ` : ''}
                 </tr>
