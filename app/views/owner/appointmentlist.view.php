@@ -18,11 +18,11 @@
       <div class="appointments-header">
         <h1>Appointment Management</h1>
         <div class="search-filter">
-          <select>
+          <!-- <select>
             <option>All Status</option>
             <option>Accepted</option>
             <option>Cancelled</option>
-          </select>
+          </select> -->
         </div>
       </div>
 
@@ -38,30 +38,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>#AP22001</td>
-            <td>Fluffy</td>
-            <td>2024/04/15</td>
-            <td>2:30 PM</td>
-            <td>Dr. Emily Johnson</td>
-            <td><span class="status-accepted">Accepted</span></td>
-          </tr>
-          <tr>
-            <td>#AP22002</td>
-            <td>Buddy</td>
-            <td>2024/04/16</td>
-            <td>3:00 PM</td>
-            <td>Dr. John Smith</td>
-            <td><span class="status-cancelled">Cancelled</span></td>
-          </tr>
-          <tr>
-            <td>#AP22003</td>
-            <td>Max</td>
-            <td>2024/04/17</td>
-            <td>1:00 PM</td>
-            <td>Dr. Sarah Lee</td>
-            <td><span class="status-accepted">Accepted</span></td>
-          </tr>
+          <?php foreach ($owner as $data): ?>
+            <tr>
+              <td><?= $data->appointmentID ?? 'N/A' ?></td>
+              <td><?= htmlspecialchars($data->petID ?? 'N/A') ?></td>
+              <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
+              <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
+              <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
+              <td><?= htmlspecialchars($data->status ?? 'N/A') ?></td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>
