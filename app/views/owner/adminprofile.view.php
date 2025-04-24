@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,12 +13,14 @@
     <title>VetiPlus - Admin Profile</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/ownernav.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/owner/adminprofile.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
     <?php require_once '../app/views/navbar/ownernav.php'; ?>
     <section class="home">
+        <?php echo $notification->display(); ?>
         <div class="profile-container">
             <div class="profile-header">
                 <img src="https://via.placeholder.com/200" alt="Admin Profile" class="profile-image">
@@ -69,19 +76,39 @@
 
                 <div class="action-buttons">
                     <a href="<?= ROOT ?>/OwnerAddAdmin/editprofile?email=<?= ($admin->email) ?>" class="btn btn-primary">Edit Profile</a>
-                    <script>
-                        const deleteProfile = () => {
-                            if (confirm("Are you sure you want to delete this profile?")) {
-                                window.location.href = `<?= ROOT ?>/OwnerAddAdmin/deleteprofile?email=<?= ($admin->email) ?>`;
-                            }
-                        }
-                    </script>
-
-                    <button onclick="deleteProfile()" class="btn btn-danger">Delete Profile</button>
+                    <button onclick="deleteAccount()" class="btn btn-danger">Delete Profile</button>
+                </div>
+            </div>
+        </div>
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Confirm Delete</h2>
+                <p>Are you sure you want to delete this admin account?</p>
+                <div class="modal-actions">
+                    <a href="<?= ROOT ?>/OwnerAddAdmin/deleteprofile?email=<?= ($admin->email) ?>" class="btn btn-danger">Yes, Delete</a>
+                    <button onclick="closeModal()" class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        function deleteAccount() {
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('deleteModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

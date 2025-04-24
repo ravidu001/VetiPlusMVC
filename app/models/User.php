@@ -77,9 +77,23 @@ class User
         return $count;  // Return the count value
 
     }
+    public function admincountUser() {
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE type = 'System Admin'";
+        $result = $this->query($query);
+        return $result[0]->total;
+    }  
+    public function deactiveusercount(){
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE type = 'System Admin' AND activeStatus = 'deactive'";
+        $result = $this->query($query);
+        return $result[0]->total;
+    }  
 
     public function updateActiveStatus($id, $status)
     {
         return $this->update($id, ['activeStatus' => $status], 'email');
+    }
+
+    public function changestatus($email){
+         return $this->update($email, ['activeStatus' => 'deactive'], 'email');
     }
 }

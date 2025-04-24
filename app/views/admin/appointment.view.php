@@ -20,7 +20,7 @@
             <div class="appointment-stats">
                 <div class="stat-card">
                     <h3>Daily Appointments</h3>
-                    <div class="stat-number">345</div>
+                    <div class="stat-number"><?php echo htmlspecialchars($dailyappointmentcount, ENT_QUOTES, 'UTF-8'); ?></div>
                 </div>
                 <div class="stat-card">
                     <h3>Canceled Appointments</h3>

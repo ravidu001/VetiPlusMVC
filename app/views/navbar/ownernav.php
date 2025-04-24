@@ -38,12 +38,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="text nav-text">Appointment</span>
                     </a>
                 </li>
-                <li class="nav-link <?= $current_page == '<?= ROOT ?>/OwnerAccount/index' ? 'active' : '' ?>">
+                <!-- <li class="nav-link <?= $current_page == '<?= ROOT ?>/OwnerAccount/index' ? 'active' : '' ?>">
                     <a href="<?= ROOT ?>/OwnerAccount/index">
                         <i class='bx bx-group icon'></i>
                         <span class="text nav-text"> Account</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-link <?= $current_page == '<?= ROOT ?>/OwnerPayment/index' ? 'active' : '' ?>">
                 <a href="<?= ROOT ?>/OwnerPayment/index">
                 <i class='bx bx-dollar icon'></i>
