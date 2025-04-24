@@ -5,13 +5,27 @@ class OwnerAddAdmin extends Controller
     public function index()
     {
         $userCount = $this->countUser();
-        $this->view('owner/addadmin', ['userCount' => $userCount]);
+        $admincount = $this->totalcountUser();
+        $deactiveusercount = $this->deactiveusercount();
+        $this->view('owner/addadmin', [
+            'userCount' => $userCount,
+            'admincount' => $admincount,
+            'deactiveusercount' => $deactiveusercount,
+        ]);
     }
 
     public function redirectToIndex($data = [])
     {
         $userCount = $this->countUser();
-        $this->view('owner/addadmin', [...$data, 'userCount' => $userCount]);
+        $admincount = $this->totalcountUser();
+        $deactiveusercount = $this->deactiveusercount();
+
+        $this->view('owner/addadmin', [...$data, 
+        'userCount' => $userCount,
+        'admincount' => $admincount,
+        'deactiveusercount' => $deactiveusercount,
+
+    ]);
     }
 
     public function adminregistration()
@@ -76,7 +90,7 @@ class OwnerAddAdmin extends Controller
                 $result = $user->create($userData);
 
                 $notification = new Notification();
-                if($result) {
+                if(!$result) {
                     $notification->show("Admin registration successful.", "success");
                 } else {
                     $notification->show("Admin registration failed.", "error");
@@ -88,6 +102,8 @@ class OwnerAddAdmin extends Controller
 
     public function select()
     {
+        $notification = new Notification();
+        
         if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
             // Retrieve the email from the GET request
             $email = $_GET['email'];
@@ -103,14 +119,18 @@ class OwnerAddAdmin extends Controller
                 // Check if an admin exists with the provided email
                 if (!empty($result)) {
                     // Pass the admin details to the admin profile view
-                    $this->view('owner/adminprofile', ['admin' => $result[0]]);
+                    $this->view('owner/adminprofile', [
+                        'admin' => $result[0],
+                    ]);
+                  
                 } else {
-                    // If admin not found, redirect to a 'not found' page or display a message
-                    $this->redirectToIndex(['error' => 'No admin found with this email.']);
+                    // If admin not found, redirect to a 'not found' page or display a message .
+                    $notification->show("No admin found with this email !", 'error');
+
                 }
             } else {
                 // Handle invalid email input
-                $this->redirectToIndex(['error' => 'Invalid email format. Please try again.']);
+                $notification->show("invalid email format. Please try again !", 'error');
             }
         }
     }
@@ -157,12 +177,30 @@ class OwnerAddAdmin extends Controller
         return $count;
     }
 
+    public function totalcountUser() {
+        $user = new User();
+        $count = $user->admincountUser();
+        return $count;
+    }
+
+    public function deactiveusercount(){
+        $user = new User();
+        $count = $user->deactiveusercount();
+        return $count;
+
+    }
+    
+
 
     public function deleteprofile()
     {
         $email = $_GET['email'];
         $adminModel = new AdminRegistrationModel();
         $adminModel->delete($email, 'email');
+
+        $email = $_GET['email'];
+        $chnagestatus = new User();
+        $chnagestatus->changestatus($email);
         $this->redirectToIndex();
     }
 }
