@@ -57,12 +57,13 @@ class DoctorMedicalHistory extends Controller {
         //     $this->getpetMedicalhistory($selectedPetID, $selectedSessionID);
         // }
     
+        //var_dump($_SESSION);
         // Pass the combined data to the view
         $this->view('vetDoctor/doctormedicalhistory', [
             'appointmentsWithPets' => $appointmentsWithPets,
             'petsBySession' => $petsBySession,
-            //'selectedPetID' => $_GET['petID'] ?? null, // Pass the selected pet ID if available
-            //'selectedSessionID' => $_GET['sessionID'] ?? null // Pass the selected session ID if available
+            'selectedPetID' => $_GET['petID'] ?? null, // Pass the selected pet ID if available
+            'selectedSessionID' => $_GET['sessionID'] ?? null // Pass the selected session ID if available
         ]);
     }
 

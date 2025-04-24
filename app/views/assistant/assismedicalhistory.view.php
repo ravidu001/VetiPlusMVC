@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,46 +12,48 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/medicalhistory.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/jsnotification.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 </head>
 
 <body>
-    <?php require_once '../app/views/navbar/doctornav.php'; ?>
+    <?php require_once '../app/views/navbar/assistantnav.php'; ?>
     <div class="home">
-        <div id="petPopup" class="popup">
-            <div class="popup-content">
-                <span class="close-btn">&times;</span>
-                <h2>Select Pet</h2>
-
-                <label for="sessionID">Session ID:</label>
-                <select id="sessionID" class="form-input">
-                    <option value="">Select Session</option>
-                    <?php 
+    <?php echo $notification->display(); ?>
+    <div id="petPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Select Pet</h2>
+            
+            <label for="sessionID">Session ID:</label>
+            <select id="sessionID" class="form-input">
+                <option value="">Select Session</option>
+                <?php 
                 $uniqueSessionIDs = []; // Array to track unique session IDs
                 foreach ($appointmentsWithPets as $item): 
-                    if (!in_array($item['session']->sessionID, $uniqueSessionIDs)): 
-                        $uniqueSessionIDs[] = $item['session']->sessionID; // Add to unique list
+                    if (!in_array($item['session']['sessionID'], $uniqueSessionIDs)): 
+                        $uniqueSessionIDs[] = $item['session']['sessionID']; // Add to unique list
                 ?>
-                    <option value="<?= $item['session']->sessionID ?>"><?= $item['session']->sessionID ?></option>
-                    <?php 
+                    <option value="<?= $item['session']['sessionID'] ?>"><?= $item['session']['sessionID'] ?></option>
+                <?php 
                     endif; 
                 endforeach; 
                 ?>
-                </select>
+            </select>
+            
+            <label for="petID">Pet ID with Name:</label>
+            <select id="petID" class="form-input" disabled>
+                <option value="">Select Pet</option>
+            </select>
 
-                <label for="petID">Pet ID with Name:</label>
-                <select id="petID" class="form-input" disabled>
-                    <option value="">Select Pet</option>
-                </select>
-
-                <input type="hidden" id="appointmentID" value="<?= $item['appointment']->appointmentID; ?>">
-
-                <div class="button-container">
-                    <button id="okButton" class="btn btn-primary">OK</button>
-                </div>
+             
+            
+            <div class="button-container">
+                <button id="okButton" class="btn btn-primary">OK</button>
             </div>
         </div>
-        
+            </div>
         <?php
     // Initialize $petID to avoid undefined variable warning
     $petID = null;
@@ -62,11 +69,12 @@
         }
     }
     ?>
-        <?php if($selectedPetID != null && $selectedSessionID != null): ?>
-            <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
+
+    <?php if($selectedPetID != null && $selectedSessionID != null): ?>
+        <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
         <div class="medical-history-container">
             <div class="profile-header">
-                <?php 
+            <?php 
             // Use the initialized $selectedPetID variable
             foreach ($appointmentsWithPets as $item): 
                 if ($item['pet']->petID == $selectedPetID&& $item['appointment']->sessionID == $selectedSessionID): // Use $selectedPetID instead of $petID
@@ -76,18 +84,18 @@
                     $ageDiff = date_diff($dob, $now);
                     $years = $ageDiff->y;
                     $months = $ageDiff->m;
-
+                    $selectedPetType = htmlspecialchars($item['pet']->species);
                     // Format the age as "Nyr Mmons"
                     $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
             ?>
-                <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($item['pet']->profilePicture) ?>"
-                    alt="Patient Avatar" class="pet-avatar">
-                <div class="profile-details">
-                    <h1><?= htmlspecialchars($item['pet']->name) ?></h1>
-                    <p>Patient ID: #<?= htmlspecialchars($item['pet']->petID) ?></p>
-                    <p>Breed: <?= htmlspecialchars($item['pet']->breed) ?> | Age: <?= $ageFormatted ?></p>
-                </div>
-                <?php 
+                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($item['pet']->profilePicture) ?>" alt="Patient Avatar" class="pet-avatar">
+                    <div class="patient-info">
+                        <h1><?= htmlspecialchars($item['pet']->name) ?></h1>
+                        <p>Patient ID: #<?= htmlspecialchars($item['pet']->petID) ?></p>
+                        <p>Breed: <?= htmlspecialchars($item['pet']->breed) ?> | Age: <?= $ageFormatted ?></p>
+                    </div>
+                    
+            <?php 
                 endif; 
             endforeach; 
             ?>
@@ -357,11 +365,26 @@
                 </div>
             <?php endif; ?>
         </div>
-        <?php endif; ?>
+    <?php else: ?>
+        <!-- <div id="errorMessage" class="error-container hidden">
+            <div class="error-content">
+                <img src="path/to/your/image.avif" alt="Error Image" class="error-image">
+                <h2>Oops! Something went wrong.</h2>
+                <p>Please select a Pet and a Session to proceed.</p>
+                <button id="retryButton" class="btn btn-primary">Select Pet</button>
+            </div>
+        </div>   -->
+    <?php endif; ?>
     </div>
-
-
+    </div>
+    
+    <script src="<?= ROOT ?>/assets/js/vetAssistant/jsnotification.js"></script>
     <script>
+    // declare openPopup in the global scope
+    function openPopup() {
+        const petPopup = document.getElementById("petPopup");
+        petPopup.style.display = "block";
+    }
     const petsBySession = <?= json_encode($petsBySession) ?>; // Pass pets data to JavaScript
     document.addEventListener('DOMContentLoaded', function() {
         // Popup functionality
@@ -425,16 +448,15 @@
     document.getElementById("okButton").onclick = function() {
         const petID = petIDSelect.value;
         const sessionID = document.getElementById("sessionID").value;
-        const appointmentID = document.getElementById("appointmentID").value;
+        //const appointmentID = document.getElementById("appointmentID").value;
 
-        if (petID && sessionID && appointmentID) {
+        if (petID && sessionID) {
             const data = {
                 petID: petID,
                 sessionID: sessionID,
-                appointmentID: appointmentID,
             };
 
-            fetch("/VetiPlusMVC/public/doctormedicalhistory/getpetdetails", {
+            fetch("/VetiPlusMVC/public/assismedicalhistory/getpetdetails", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -446,19 +468,16 @@
                     if (result.status === "success") {
                         // Redirect to the index method to show the updated UI without showing the popup
                         window.location.href =
-                            "/VetiPlusMVC/public/doctormedicalhistory/getpetMedicalhistory?petID=" +
-                            petID +
-                            "&sessionID=" +
-                            sessionID;
+                            "/VetiPlusMVC/public/assismedicalhistory/getpetMedicalhistory?petID=" + petID + "&sessionID=" + sessionID;
                     } else {
-                        alert(result.message);
+                        showNotification("Failed to fetch pet details.", 'error');
                     }
                 })
                 .catch((error) => {
                     console.error("Error:", error);
                 });
         } else {
-            alert("Please select a Pet and Session before proceeding.");
+            showNotification("Please select a Pet and Session before proceeding.", 'error');
         }
     };
 
@@ -513,12 +532,9 @@
 
     const petPopup = document.getElementById("petPopup");
     const closeBtn = document.querySelector(".close-btn");
-    // Function to open the popup
-    function openPopup() {
-        petPopup.style.display = "block";
-    }
+    
     </script>
-    <script src="<?= ROOT ?>/assets/js/vetDoctor/medicalhistory.js"></script>
+    
 </body>
 
 </html>
