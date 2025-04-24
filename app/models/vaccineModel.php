@@ -14,6 +14,14 @@ class VaccineModel
         $this->order_type = 'ASC';
         return $this->where(['petID' => $petID]); // what this return is an array of pet
     }
+    
+    public function getVaccineBypetIDDECS($petID)
+    {
+        $this->limit = 1000;
+        $this->order_column = 'vaccinationID';
+        $this->order_type = 'DESC';
+        return $this->where(['petID' => $petID]); // what this return is an array of pet
+    }
 
     public function insertData($data) {
         $this->insert($data);
