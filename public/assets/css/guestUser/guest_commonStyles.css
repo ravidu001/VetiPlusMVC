@@ -1,0 +1,52 @@
+/* font: */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+    font-family: 'Poppins', sans-serif;  
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a { text-decoration: none; }
+a:hover { cursor: pointer; }
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+section {
+    margin: 20px, 10%;
+    padding: 5vw;
+
+    display: flex;
+    justify-content: center;
+}
+:root {
+    font-size: clamp(0.8rem, 1vw, 1.2rem);
+}
+
+
+/* for the hero section: */
+.hero-section {
+    height: 90vh;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+.hero-section header {
+    font-size: 3.5em;
+    font-weight: bold;
+}
+.hero-section p {
+    font-size: 2em;
+    padding: 1em;
+}
+.hero-section .heroImg {
+    height: auto;
+    width: 40%;
+}
