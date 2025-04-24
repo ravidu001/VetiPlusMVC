@@ -1,197 +1,219 @@
-/* Base styles */
+:root {
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #6a0dad;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
+    --text-color: #707070;
+    --background-light: #c8a2c8;
+    --background-primary: #6a0dad;
+    --background-white: #fff;
+    --text-clr: black;
+    --text-primary: #6a0dad;
+    --text-white: #fff;
+    --shadow-color: slategray;
+    --list-item: #ffecff;
+}
+
+/* General styles */
 body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #f0f7ff 0%, #fdf2ff 100%);
-    font-family: 'Inter', sans-serif;
-    color: #2d1160;
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--body-color);
+  margin: 0;
+  padding: 0;
 }
 
-.content {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem;
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(106, 13, 173, 0.1),
-                0 10px 20px rgba(106, 13, 173, 0.05);
-    width: 90%;
-    max-width: 600px;
-    position: relative;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 25px;
+  background-color: var(--background-white);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-/* Close button styling */
+/* Header styles */
+h1 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 500;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+/* Close button */
 .pageclose {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    font-size: 1.75rem;
-    color: #6a0dad;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .pageclose:hover {
-    color: #ff4d4d;
-    transform: rotate(90deg);
+  transform: scale(1.1);
 }
 
-/* Heading styles */
-.topic {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
-    color: #2d1160;
-    font-weight: 800;
-    position: relative;
+/* Form section styles */
+.slots, .options, .startDate {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: var(--primary-color-light);
+  border-radius: 6px;
+  border-left: 4px solid var(--primary-color);
 }
 
-.topic::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: linear-gradient(90deg, #6a0dad, #9b4dff);
-    border-radius: 2px;
+/* Label styles */
+label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: var(--text-clr);
 }
 
-/* Schedule grid layout */
-.schedule-grid {
-    display: grid;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
+.options label, .startDate label {
+  display: inline-block;
+  margin-right: 15px;
 }
 
-.day-schedule {
-    background: #f8f9ff;
-    padding: 1.5rem;
-    border-radius: 16px;
-    transition: all 0.3s ease;
+.slots label {
+  margin-bottom: 15px;
 }
 
-.day-schedule:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(106, 13, 173, 0.1);
+/* Input styles */
+select, input[type="number"], input[type="date"] {
+  padding: 8px;
+  border: 1px solid var(--toggle-color);
+  border-radius: 4px;
+  width: 200px;
+  font-size: 14px;
+  margin-left: 10px;
 }
 
-/* Heading styles for each schedule section */
-.day-schedule h4 {
-    margin: 0 0 1rem 0;
-    color: #2d1160;
-    font-size: 1.1rem;
-    font-weight: 600;
+input[type="radio"] {
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
-/* Select dropdown styling */
-select {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid #e0e7ff;
-    border-radius: 12px;
-    font-size: 1rem;
-    color: #2d1160;
-    background: white;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236a0dad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.25rem;
-    transition: all 0.3s ease;
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+  accent-color: var(--primary-color);
 }
 
-select:focus {
-    outline: none;
-    border-color: #9b4dff;
-    box-shadow: 0 0 0 4px rgba(155, 77, 255, 0.1);
+/* Paragraph styles */
+p {
+  color: var(--text-clr);
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
-select:hover {
-    border-color: #9b4dff;
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Save button styling */
-button {
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(135deg, #6a0dad, #9b4dff);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(106, 13, 173, 0.2);
+th, td {
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--toggle-color);
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(106, 13, 173, 0.3);
-    background: linear-gradient(135deg, #5a1699, #8b31cf);
+th {
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  font-weight: 500;
 }
 
-/* Responsive design */
+tr:nth-child(even) {
+  background-color: var(--list-item);
+}
+
+tr:hover {
+  background-color: var(--background-light);
+  color: var(--text-clr);
+}
+
+/* Time select dropdowns */
+.time-select {
+  width: 100px;
+}
+
+/* Closed checkbox alignment */
+td:last-child {
+  text-align: center;
+}
+
+/* Submit button */
+.submit-btn {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button[type="submit"] {
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  border: none;
+  padding: 10px 25px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+button[type="submit"]:hover {
+  background-color: var(--background-light);
+  color: var(--text-clr);
+  transform: translateY(-2px);
+}
+
+/* Make the form more compact */
+.slots, .options, .startDate {
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-    .content {
-        width: 85%;
-        padding: 2rem;
-        margin: 1rem;
-    }
-
-    .topic {
-        font-size: 1.75rem;
-    }
-
-    .schedule-grid {
-        gap: 1.5rem;
-    }
-
-    .day-schedule {
-        padding: 1.25rem;
-    }
+  .container {
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  select, input[type="number"], input[type="date"] {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+  
+  .slots label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-@media (max-width: 480px) {
-    .content {
-        width: 90%;
-        padding: 1.5rem;
-    }
-
-    .topic {
-        font-size: 1.5rem;
-    }
-
-    .day-schedule h4 {
-        font-size: 1rem;
-    }
-
-    select, button {
-        padding: 0.875rem;
-    }
-}
-
-/* Animation for content load */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.content {
-    animation: fadeIn 0.6s ease-out;
+/* PHP error alert styling */
+.alert {
+  background-color: var(--background-light);
+  color: var(--text-clr);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border-left: 4px solid var(--primary-color);
 }

@@ -15,11 +15,9 @@
             <?php
                 include __DIR__ . '/../navbar/salonnav.php';
              ?>
-            <!-- <php code for navbar here> -->
         </div>
        
         <h1>Salon Time Slot Schedules</h1>
-        
         <div class="buttons">
             <button style="background-color:darkorchid">
                 <a href="<?=ROOT?>/SalonTimeSlot">
@@ -51,25 +49,29 @@
                 ?>
             </div>
             <div class="SelectDateAndSlot">
-               
                 <div class="DateAndScedule">
                     <div class="timeSlotsContainer">
+                        <div class="shedule">
+                            <h4>Schedule</h4>
+                            <p class="start">Start: </p><p id="start"></p>
+                            <p class="close">End: </p><p id="end"></p>
+                        </div>
                         <table>
                             <thead>
                                 <tr>
                                     <th>Salon Time Slot</th>
-                                    <th>Number Of Booking</th>
-                                    <th>Number of available Bookings</th>
+                                    <th>Bookings</th>
+                                    <th>Available Bookings</th>
                                 </tr>
                             </thead>
-                            <tbody id="slotTableBody">
+                            <tbody class="tablebody" id="slotTableBody">
                             </tbody>
                         </table>
                     </div>
                 </div>    
             </div>
+
         </div>
-        
     </div>
     
     <style>
