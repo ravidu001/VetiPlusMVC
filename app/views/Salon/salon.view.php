@@ -45,20 +45,7 @@
                     <div class="dashboard-icon" id="icon">
                         <a href="<?=ROOT?>/SalonNotifications">
                             <i class="fa-regular fa-bell icon"></i>
-                            <span class="notification-count">
-                                <?php
-                                    if(!empty($data['upcoming']))
-                                    {
-                                        ?>
-                                        <?=$data['upcoming'] ?>
-                                        <?php
-                                    }
-                                    else
-                                    {
-                                        ?>0<?php
-                                    }
-                                ?>
-                            </span>
+                            <span class="notification-count">0</span>
                         </a>
                     </div>
                 </div>
@@ -302,7 +289,10 @@
         </div> 
     </div> 
 </body>
+<script>
+    const BASE_URL = "<?= ROOT ?>";
+</script>
     <script src="<?= ROOT?>/assets/js/salon/salonpopup.js"></script>
     <script src="<?= ROOT?>/assets/js/navbar/salonnav.js"></script>
-
+    <script src="<?= ROOT?>/assets/js/salon/salon.js"></script>
 </html>
