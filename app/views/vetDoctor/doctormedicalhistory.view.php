@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
+        
         <?php
     // Initialize $petID to avoid undefined variable warning
     $petID = null;
@@ -62,6 +62,8 @@
         }
     }
     ?>
+        <?php if($selectedPetID != null && $selectedSessionID != null): ?>
+            <button type="button" class="btn btn-primary" onclick="openPopup()">Select Pet</button>
         <div class="medical-history-container">
             <div class="profile-header">
                 <?php 
@@ -355,12 +357,17 @@
                 </div>
             <?php endif; ?>
         </div>
+        <?php endif; ?>
     </div>
-    </div>
-    <script src="<?= ROOT ?>/assets/js/vetDoctor/medicalhistory.js"></script>
+
+
     <script>
     const petsBySession = <?= json_encode($petsBySession) ?>; // Pass pets data to JavaScript
     document.addEventListener('DOMContentLoaded', function() {
+        // Popup functionality
+        const petPopup = document.getElementById("petPopup");
+        const closeBtn = document.querySelector(".close-btn");
+
         // Check if the popup should be shown
         const shouldShowPopup =
             <?= isset($_SESSION['popupShown']) ? json_encode($_SESSION['popupShown']) : 'false' ?>;
@@ -370,7 +377,90 @@
         if (shouldShowPopup) {
             openPopup(); // Automatically open the popup on page load
         }
+
+        // Function to open the popup
+        function openPopup() {
+            petPopup.style.display = "block";
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            petPopup.style.display = "none";
+        }
+
+        // Close the popup when clicking the close button
+        closeBtn.onclick = closePopup;
+
+        // Close the popup when clicking outside of the popup content
+        window.onclick = function(event) {
+            if (event.target === petPopup) {
+                closePopup();
+            }
+        };
+
     });
+    // Popup functionality for selecting pet name by petID
+    document.getElementById("sessionID").addEventListener("change", function() {
+        const sessionID = this.value;
+        const petSelect = document.getElementById("petID");
+        petSelect.innerHTML = '<option value="">Select Pet</option>'; // Reset pet options
+
+        if (sessionID && petsBySession[sessionID]) {
+            petsBySession[sessionID].forEach((pet) => {
+                const option = document.createElement("option");
+                option.value = pet.petID;
+                option.textContent = `#${pet.petID} - ${pet.name}`; // Display pet ID and the name
+                option.dataset.name = pet.name;
+                petSelect.appendChild(option);
+            });
+            petSelect.disabled = false; // Enable pet select
+        } else {
+            petSelect.disabled = true; // Disable if no session selected
+        }
+    });
+
+    const petIDSelect = document.getElementById("petID");
+    const petNameInput = document.getElementById("petName");
+    // Close the popup when the OK button is clicked
+    document.getElementById("okButton").onclick = function() {
+        const petID = petIDSelect.value;
+        const sessionID = document.getElementById("sessionID").value;
+        const appointmentID = document.getElementById("appointmentID").value;
+
+        if (petID && sessionID && appointmentID) {
+            const data = {
+                petID: petID,
+                sessionID: sessionID,
+                appointmentID: appointmentID,
+            };
+
+            fetch("/VetiPlusMVC/public/doctormedicalhistory/getpetdetails", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then((response) => response.json())
+                .then((result) => {
+                    if (result.status === "success") {
+                        // Redirect to the index method to show the updated UI without showing the popup
+                        window.location.href =
+                            "/VetiPlusMVC/public/doctormedicalhistory/getpetMedicalhistory?petID=" +
+                            petID +
+                            "&sessionID=" +
+                            sessionID;
+                    } else {
+                        alert(result.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        } else {
+            alert("Please select a Pet and Session before proceeding.");
+        }
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
         const medicalSections = document.querySelectorAll('.medical-section');
@@ -420,7 +510,15 @@
             });
         });
     });
+
+    const petPopup = document.getElementById("petPopup");
+    const closeBtn = document.querySelector(".close-btn");
+    // Function to open the popup
+    function openPopup() {
+        petPopup.style.display = "block";
+    }
     </script>
+    <script src="<?= ROOT ?>/assets/js/vetDoctor/medicalhistory.js"></script>
 </body>
 
 </html>
