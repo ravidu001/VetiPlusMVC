@@ -98,7 +98,9 @@
                 {text: 'Pet Health Tips from Petlearnia', extLink: 'https://petlearnia.com/pet-product-buying-advice'},
                 {text: 'General Pet Education from ARF.org', extLink: 'https://www.arf-il.org/pet-owner-resources/pet-education'},
                 {text: 'Doggy Tips by Embark Passion Sri Lanka', extLink: 'https://embarkpassion.com/publications/doggy-tips'},
-                // {text: '', link: ''},
+                {text: '10 Responsible Pet Care Tips by Christine O\'Brien', extLink: 'https://www.hillspet.com/pet-care/routine-care/10-responsible-pet-care-tips?lightboxfired=true#'},
+                {text: 'Pet Grooming Education Resources', extLink: 'https://ryanspet.com/education'},
+                // {text: '', extLink: ''},
             ]
             const linksList = document.querySelector('.extLinks');
             linksList.innerHTML = linksObjects
