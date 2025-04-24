@@ -3,14 +3,16 @@
 class AdminAppointment extends Controller
 {
     public function index()
-    {   
+    {
         $appointment = new AppointmentModel();
-        $appointmentdata = $appointment->getalldata(); 
+        $appointmentdata = $appointment->getalldata();
         $appointmentcount = $this->appointmentcount();
+        $dailyappointment = $this->dailyappointment();
 
-        $this->view('admin/appointment',[
+        $this->view('admin/appointment', [
             'appointmentdata' => $appointmentdata,
             'appointmentcount' => $appointmentcount,
+            'dailyappointmentcount' => $dailyappointment,
 
         ]);
     }
@@ -35,7 +37,6 @@ class AdminAppointment extends Controller
                 if (!empty($petownerresult)) {
                     // Pass the admin details to the admin profile view
                     $this->view('admin/appointmentlist', ['admin' => $petownerresult]);
-                
                 } else {
                     // If admin not found, redirect to a 'not found' page or display a message
                     $this->view(['error' => 'No admin found with this email.']);
@@ -47,11 +48,17 @@ class AdminAppointment extends Controller
         }
     }
 
-    public  function appointmentcount(){
+    public  function appointmentcount()
+    {
         $appointment  = new AppointmentModel();
         $count = $appointment->appointmentcount();
         return $count;
     }
 
-   
+    public function dailyappointment()
+    {
+        $dailyappointment = new AppointmentModel();
+        $count = $dailyappointment->dailyappointment();
+        return $count;
+    }
 }
