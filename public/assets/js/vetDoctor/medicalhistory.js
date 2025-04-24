@@ -96,7 +96,7 @@ document .getElementById('okButton').onclick = function() {
         .then(result => {
             if (result.status === 'success') {
                 // Redirect to the index method to show the updated UI without showing the popup
-                window.location.href = '/VetiPlusMVC/public/doctormedicalhistory/index?petID=' + petID;
+                window.location.href = '/VetiPlusMVC/public/doctormedicalhistory/getpetMedicalhistory?petID=' + petID + '&sessionID=' + sessionID;
             } else {
                 alert(result.message);
             }
