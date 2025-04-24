@@ -6,7 +6,13 @@ class AdminAppointment extends Controller
     {   
         $appointment = new AppointmentModel();
         $appointmentdata = $appointment->getalldata(); 
-        $this->view('admin/appointment',['appointmentdata' => $appointmentdata,]);
+        $appointmentcount = $this->appointmentcount();
+
+        $this->view('admin/appointment',[
+            'appointmentdata' => $appointmentdata,
+            'appointmentcount' => $appointmentcount,
+
+        ]);
     }
     public function appointmentlist()
     {
@@ -40,4 +46,12 @@ class AdminAppointment extends Controller
             }
         }
     }
+
+    public  function appointmentcount(){
+        $appointment  = new AppointmentModel();
+        $count = $appointment->appointmentcount();
+        return $count;
+    }
+
+   
 }

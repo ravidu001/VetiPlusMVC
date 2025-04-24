@@ -17,7 +17,7 @@
 
     <section class="home">
         <div class="main-container">
-            <!-- <div class="appointment-stats">
+            <div class="appointment-stats">
                 <div class="stat-card">
                     <h3>Daily Appointments</h3>
                     <div class="stat-number">345</div>
@@ -28,9 +28,9 @@
                 </div>
                 <div class="stat-card">
                     <h3>Total Appointments</h3>
-                    <div class="stat-number">2,356</div>
+                    <div class="stat-number"><?php echo htmlspecialchars($appointmentcount, ENT_QUOTES, 'UTF-8'); ?></div>
                 </div>
-            </div> -->
+            </div>
 
             <!-- <div class="appointment-search">
                 <form class="search-form" action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="GET">

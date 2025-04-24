@@ -73,7 +73,7 @@ class OwnerAddAdmin extends Controller
                     'activeStatus' => 'active'
                 ];
 
-                $resulr = $user->create($userData);
+                $result = $user->create($userData);
 
                 $notification = new Notification();
                 if($result) {
