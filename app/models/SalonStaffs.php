@@ -19,12 +19,14 @@ class SalonStaffs
 
     public function deletestaff($staffID)
     {
-        return $this->delete($staffID, 'staffID');
+         $this->delete($staffID, 'staffID');
+         return true;
     }
 
     public function updatestaff($staffID, $data)
     {
-        return  $this->update($staffID, $data, 'staffID');
+         $this->update($staffID, $data, 'staffID');
+         return true;
     }
 
     public function findAllstaff()

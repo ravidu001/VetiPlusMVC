@@ -119,7 +119,7 @@
             <div class="bottomcontent">
                 <ul>
                     <li>
-                        <a href="<?= ROOT?>/Login">
+                        <a href="<?= ROOT?>/LogOut">
                             <i class='bx bx-log-out icon'></i>
                             <span>Log Out</span>
                         </a>

@@ -1,15 +1,11 @@
 <?php
 
-$notifications = new Notification();
-
 class SalonService extends Controller 
 {
-
     public function index() 
     {
         $data = [];
         $servicedata = new SalonServices;
-
         $salonID = $_SESSION['SALON_USER'];
 
         //check the user login
@@ -17,7 +13,7 @@ class SalonService extends Controller
         {
             redirect('Login');
         }
-       
+
         $data = $servicedata->findAllServiceId($salonID);
         
         $this->view('Salon/salonservice', $data);
@@ -25,21 +21,45 @@ class SalonService extends Controller
 
     //__________________________________________________________________________________________________________________________
     //delete service function
-    public function delete($serviceID)
+    public function deleteService()
     {
-        $servicetable = new SalonServices;
-        $notifications = new Notification();
-
-        $result = $servicetable->servicedelete($serviceID);
+        $serviceID = [];
+        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $serviceID['serviceID'] = $data;
         
+        $service = $serviceID['serviceID'] ?? null;
+
+        if($service === null)
+        {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No salon ID provided'
+            ]);
+        }
+        
+        $servicetable = new SalonServices;
+        // $notifications = new Notification();
+
+        $result = $servicetable->servicedelete($service);
         if($result)
         {
-            $notifications->show("Service delete successfully.",'success');
+            // $notifications->show("Service delete successfully.",'success');
+            echo json_encode([
+                'success' => true,
+                'message' => 'Offer deleted successfully.'
+            ]);
         }
         else
         {
-            $notifications->show("Service delete unsuccessfully.",'error');
+            // $notifications->show("Service delete unsuccessfully.",'error');
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to delete the offer.'
+            ]);
         }
+
+        exit;
     }
     //________________________________________________________________________________________________________________________________
     //update service details function
@@ -154,8 +174,7 @@ class SalonService extends Controller
                     try {
                         // Call the insert method
                         $result=$servicetable->serviceupdate($serviceID, $validateresult);
-
-                        // show($result);
+                        show($result);
                         if($result)
                         {
                             $notifications->show("Succssfully Upload the image",'success');
@@ -166,6 +185,7 @@ class SalonService extends Controller
                         // Handle the exception if something goes wrong
                         // $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
                         $notifications->show("Data update unsuccessful!",'error');
+                        redirect('SalonService');
                     }
                 } 
                 else 
@@ -347,7 +367,6 @@ class SalonService extends Controller
         {
             unset($arr['errors']); // Remove errors key if no errors exist
         }
-
         return $arr;
     }  
 }

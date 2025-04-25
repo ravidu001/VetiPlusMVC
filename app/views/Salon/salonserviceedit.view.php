@@ -1,5 +1,5 @@
 <?php
-// include __DIR__ . '/../../../server/config/phpConfig.php';
+    $notification = new Notification;
 ?>
 
 
@@ -11,9 +11,11 @@
     <title>Pet Salon Service Form</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonserviceedit.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/imageupload.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <?= $notification->display(); ?>
     <?php
         if(isset($data))
         {
@@ -25,7 +27,7 @@
 
                 <div class="container">
                         <div class="form-wrapper">
-                            <a href="./ServiceDetails.php"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
+                            <a href="<?=ROOT?>/SalonService"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
                                 <h1 class="form-title">Edit Pet Salon Service</h1>
                             
                             <form id="serviceForum" class="service-form"  action=""  method="POST" enctype="multipart/form-data">

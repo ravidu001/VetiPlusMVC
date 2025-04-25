@@ -19,20 +19,15 @@ class SalonServices
     }
 
     public function servicedelete($serviceID)
-    {
-        try {
-            $result = $this->delete($serviceID, 'serviceID');
-            return true; // Successful deletion
-    
-        } catch (Exception $e) {
-            // Log the error if needed
-            return false; // Deletion failed
-        }
+    {   
+        $this->delete($serviceID, 'serviceID');
+        return true; 
     }
 
     public function serviceupdate($serviceID, $data)
     {
-       return $this->update($serviceID,$data, 'serviceID');
+        $this->update($serviceID,$data, 'serviceID');
+        return true;
     }
 
     public function findAllServiceId($salonID)

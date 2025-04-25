@@ -14,12 +14,43 @@ class SalonStaff extends Controller
 
     //_____________________________________________________________________________________________________________________________
     //delete staff member 
-    public function delete($staffID)
+    public function deleteStaff()
     {
+        $staffID = [];
+        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $staffID['staffID'] = $data;
+        
+        $salonstaffID =  $staffID['staffID'] ?? null;
+
+        if($salonstaffID === null)
+        {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No offer ID provided.'
+            ]);
+        }
+
         $stafftable = new SalonStaffs;
-        $notifications = new Notification();
-        $data = $stafftable->deletestaff($staffID);
-        redirect('SalonStaff',$data);
+        
+        $data = $stafftable->deletestaff($salonstaffID);
+        
+        if ($data) 
+        {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Offer deleted successfully.'
+            ]);
+        } 
+        else 
+        {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to delete the offer.'
+            ]);
+        }
+
+        exit;
     }
 
     //________________________________________________________________________________________________________________________________
@@ -110,32 +141,28 @@ class SalonStaff extends Controller
                     $stafftable = new SalonStaffs;
                     $notifications = new Notification();
 
-                    try {
-                        // Call the insert methodupdatestaff()
                         $result=$stafftable->updatestaff($staffID,$validateresult);
-                        
-                        show($result);
-                        // If no exceptions occur, assume success
-                        redirect('SalonStaff');
-                    } 
-                    catch (Exception $e) 
-                    {
-                        // show($data['errors']);
-                        // Handle the exception if something goes wrong
-                        $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
-                        // show( $data['errors']);
 
-                    }
+                        if($result)
+                        {
+                            $notifications->show("update Staff Details Successfully!",'success');
+                            redirect('SalonStaff');
+                        }
+                        else
+                        {
+                            $notifications->show("update Staff details unsuccessfully.!",'error');
+                        }
                 } 
                 else 
                 {
-                    
-                    $data['errors'] = $validateresult['errors'];
+                    // $data['errors'] = $validateresult['errors'];
+                    $notifications->show("update Staff Profile picture cannot upload.!",'error');
                 }
             }
             else 
             {
-                $data['errors'] = $validateresult['errors'];
+                // $data['errors'] = $validateresult['errors'];
+                $notifications->show("updated some details incorrect update unsuccessfully.!",'error');
             }
         }
 
@@ -149,6 +176,8 @@ class SalonStaff extends Controller
     {
         // Create the array to pass the form data
         $data = [];
+
+        $notifications = new Notification;
 
         // Check if the submit button is clicked
         if (isset($_POST['submit'])) 
@@ -216,11 +245,12 @@ class SalonStaff extends Controller
                     }
 
                     $stafftable = new SalonStaffs;
-                    show($stafftable);
+
+                    // show($stafftable);
                     try {
                         // Call the insert method
                         $stafftable->staffadd($validateresult);
-
+                        $notifications->show("Insert Staff details successfully.!",'success');
                         // show($result);
                         // show('hi');
                 
@@ -229,18 +259,22 @@ class SalonStaff extends Controller
                     } catch (Exception $e) {
                         // show('ddf');
                         // Handle the exception if something goes wrong
-                        $data['errors'] = 'Data insert unsuccessful: ' . $e->getMessage();
+                        // $data['errors'] = 'Data insert unsuccessful: ' . $e->getMessage();
                         // show( $data['errors']);
+                        $notifications->show("update Staff details unsuccessfully.!",'error');
                     }
                 } 
                 else 
                 {
-                    $data['errors'] = $validateresult['errors'];
+                    // $data['errors'] = $validateresult['errors';
+                    $notifications->show("Insert profile image unsuccessfully.!",'error');
+
                 }
             }
             else 
             {
-                $data['errors'] = $validateresult['errors'];
+                // $data['errors'] = $validateresult['errors'];
+                $notifications->show("Insert Staff details unsuccessfully.!",'error');
             }
         }
 
