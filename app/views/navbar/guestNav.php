@@ -1,17 +1,11 @@
 <?php $current_pg = basename(trim($_SERVER['REQUEST_URI'], '/')); ?>
 
-<!-- This style part is for if there's any FOUC -->
-<!-- <style>
-    .navbar { visibility: hidden; }
-</style> -->
-
 <!-- Link the css file dynamically: -->
 <script>
-    let link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = "<?= ROOT ?>/assets/css/guestUser/navBar.css";
-    // link.onload = () => document.getElementById('navbar').style.visibility = 'visible';
-    document.head.appendChild(link);
+    let navBarLink = document.createElement('link');
+    navBarLink.rel = 'stylesheet';
+    navBarLink.href = "<?= ROOT ?>/assets/css/guestUser/navBar.css";
+    document.head.appendChild(navBarLink);
 </script>
 
 <nav class="navBar">

@@ -32,28 +32,9 @@
 
             </div>
 
-            <section id="myPets" class="dashArea">
-
-                <h2 class="dashHeader">My Pets</h2>
-
-                <div class="tallCard-container pets-container"></div>
-                <template class="petCard-template">
-                    <a href="" title="Go to Pet Profile Page." class="card tallCard petCard">
-                        <img src="" class='petCardPic profilePicture' alt='Pet Image'>
-                        <h3 class="name"></h3>
-                    </a>
-                </template>
-                <template class="registerPet-template">
-                    <a href="po_petRegister" title="Go to Pet Profile Page." class="card tallCard petCard">
-                        <p><i class="bx bxs-plus-circle bx-lg"></i></p>
-                        <p>Register pet</p>
-                    </a>
-                </template>
-
-            </section>
-        
             <section class="dashArea">
                 <h2>Upcoming Appointments</h2>
+
                 <div class="longCard-container apptUpcomingCard-container"></div>
                 <template class="apptUpcomingCard-template">
                     <div class="card longCard apptUpcomingCard" type apptID providerID petOwnerID>
@@ -69,12 +50,30 @@
                             <span class="petName"></span>
                             <h4 class="apptDateTime"></h4>
                         </div>
-                        <div class="cardBtn-container">
+                        <!-- <div class="cardBtn-container">
                             <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button>
                             <button class="cardBtn rescheduleBtn"><i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
                             <button class="cardBtn cancelBtn"><i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
-                        </div>
+                        </div> -->
                     </div>
+                </template>
+            </section>
+
+            <section class="dashArea">
+                <h2 class="dashHeader">My Pets</h2>
+
+                <div class="tallCard-container pets-container"></div>
+                <template class="petCard-template">
+                    <a href="" title="Go to Pet Profile Page." class="card tallCard petCard">
+                        <img src="" class='petCardPic profilePicture' alt='Pet Image'>
+                        <h3 class="name"></h3>
+                    </a>
+                </template>
+                <template class="registerPet-template">
+                    <a href="po_petRegister" title="Go to Pet Profile Page." class="card tallCard petCard">
+                        <p><i class="bx bxs-plus-circle bx-lg"></i></p>
+                        <p>Register pet</p>
+                    </a>
                 </template>
             </section>
 

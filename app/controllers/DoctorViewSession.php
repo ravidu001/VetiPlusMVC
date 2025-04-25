@@ -22,6 +22,22 @@ class DoctorViewSession extends Controller {
             if($sessionItem->completeStatus == 1) {
                 continue;
             }
+
+            $appointment = new AppointmentModel();
+            $appointmentData = $appointment->getAppointmentBySession($sessionItem->sessionID);
+            $eachappointmentCount = 0; 
+            if (is_array($appointmentData)) {
+                foreach ($appointmentData as $appointmentItem) {
+                    // Check if the appointment status is 'available'
+                    if ($appointmentItem->status == 'available') {
+                        $eachappointmentCount++;
+                    }
+                }
+            } else {
+                // Log or handle the case where $appointmentData is not an array
+                error_log("getAppointmentBySession did not return an array for sessionID: " . $sessionItem->sessionID);
+            }
+            
             $assisSession = new AssistantSessionModel;
             $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
     
@@ -39,11 +55,11 @@ class DoctorViewSession extends Controller {
                     }
                 }
             }
-    
             // Consolidate session data
             $consolidatedSessions[] = [
                 'session' => $sessionItem,
-                'assistants' => $sessionAssistants
+                'assistants' => $sessionAssistants,
+                'appointmentCount' => $eachappointmentCount
             ];
         }
     
