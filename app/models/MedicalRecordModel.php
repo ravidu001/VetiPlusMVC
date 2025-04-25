@@ -21,5 +21,7 @@ class MedicalRecordModel
 
     // for pet:
     public function getRecords_byPet ($petID) {}
-    public function getPrescriptions
+    public function getPrescriptions_byPet ($petID) {}
+    public function getVaccines_byPet ($petID) {}
+    public function getSurgeries_byPet ($petID) {}
 }

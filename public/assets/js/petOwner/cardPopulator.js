@@ -78,7 +78,7 @@ function displayStarRating(rating, container) {
  */
 function createCard(template, data) {
     const card = template.content.cloneNode(true).children[0];
-    const picTypes = ['petPic', 'providerPic', 'profilePicture'];
+    const picTypes = ['petPic', 'providerPic', 'profilePicture', 'adoptionImage'];
     card.querySelectorAll('.cardPic').forEach(pic => {
         pic.style.display = 'none';
     });
@@ -101,12 +101,17 @@ function createCard(template, data) {
                         else if (data['type'] == 'salon') imgSrc = `${ROOT}/${value}`;
                     } else if (key == 'petPic') {
                         imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
+                    } else if (key == 'adoptionImage') {
+                        imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/adoption/${value}`
                     }
                     element.src = imgSrc;
                     element.style.display = 'block';
                 } else {
                     element.style.display = 'none';
                 }
+            }
+            else if(key == "type") {
+                
             }
             // for rating data
             else if (key == 'rating') {
@@ -129,7 +134,7 @@ function createCard(template, data) {
             }
             else if (isDateTimeeString(value)) {
                 const dateStr = new Date(value);
-                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
                 element.textContent =  dateStr.toLocaleTimeString('en-GB', options);
             }
             else if (element.tagName == 'A') {

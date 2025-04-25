@@ -54,14 +54,6 @@
     transition: transform 0.2s ease-in;
 }
 
-.longCard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
-
-    height: fit-content;
-}
 .tallCard {
     display: flex;
     flex-direction: column;
@@ -69,6 +61,21 @@
     align-items: center;
 
     aspect-ratio: 3/4;
+}
+.midLongCard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+
+    height: fit-content;
+
+}
+.longCard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+
+    height: fit-content;
 }
 .sessionCard {
     display: grid;
@@ -91,8 +98,8 @@
     border-radius: 50%;
     border: 1px solid var(--shadow-color);
 
-    height: clamp(4em, 5vw, 5em);
-    width: auto;
+    width: clamp(4em, 6vw, 8em);
+    height: auto;
     aspect-ratio: 1/1;
 }
 /* the pet link-cards in po_home */
@@ -115,8 +122,6 @@
 .cardDetails > span {
     display: block;
     text-align: center;
-    font-size: 0.8em;
-    ;
     max-width: 100%;
 }
 .cardDetails > a {
@@ -213,4 +218,18 @@
     font-size: 1.1em;
     border-radius: 5px;
     width: 100%;
+}
+
+button.addNewListing {
+    padding: 5px;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+    font-size: 0.7rem;
+    height: fit-content;
+    max-width: clamp(70px, 6vw, 100px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

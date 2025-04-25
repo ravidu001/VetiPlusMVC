@@ -4,19 +4,19 @@ class PO_apptDashboard_Salon extends Controller {
 
     public $petOwnerID;
 
-    public $petAppts;
+    public $petApptsObj;
 
-    public $availableSessions;
+    public $salonsObj;
     public $activeSalonList;
 
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
         $this->petOwnerID = $_SESSION['petOwnerID'];
 
-        $this->petAppts = new PO_PetAppts;
+        $this->petApptsObj = new PO_PetAppts;
 
-        $this->availableSessions = new PO_AvailableSessions;
-        $this->activeSalonList = $this->availableSessions->getActiveList_salon();
+        $this->salonsObj = new Salons;
+        $this->activeSalonList = $this->salonsObj->getActiveList_salon();
     }
 
     public function index() {
@@ -29,7 +29,7 @@ class PO_apptDashboard_Salon extends Controller {
             'petID' => null,
             'type' => 'salon'
         ];
-            $result = $this->petAppts->getPetApptUpcoming($options) ?: ['fetchedCount' => 0];
+            $result = $this->petApptsObj->getPetApptUpcoming($options) ?: ['fetchedCount' => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -42,25 +42,25 @@ class PO_apptDashboard_Salon extends Controller {
             'petID' => null,
             'type' => 'salon'
         ];
-        $result = $this->petAppts->getPetApptHistory($options) ?: ['fetchedCount' => 0];
+        $result = $this->petApptsObj->getPetApptHistory($options) ?: ['fetchedCount' => 0];
         
         header('Content-Type: application/json');
         echo json_encode($result);
         exit();
     }
 
-    public function getSalons() {
+    public function getAvailableSalons () {
         $params = [
             'salonName' => $_GET['salonName'] ?? '',
-            'openHour' => $_GET['openHour'] ?? date('H:i')
+            'openHour' => $_GET['openHour'] ?? ''
         ];
-        $result = $this->availableSessions->getSalons($params) ?: ['fetchedCount' => 0];
-        
+
+        $result = $this->salonsObj->getSalons($params) ?: ["fetchedCount" => 0];
+
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit();
+        exit;
     }
-
 
     public function redirectToBookAppt () {
         if (!isset($_GET['salonID']))  redirect('PO_apptDashBoard_Salon');

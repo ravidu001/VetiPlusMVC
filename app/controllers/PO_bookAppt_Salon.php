@@ -7,13 +7,13 @@ class PO_bookAppt_Salon extends Controller {
 
     public $petOwnerID;
 
-    public $petAppts;
+    public $petApptsObj;
 
-    public $availableSessions;
+    public $salonsObj;
+    public $salonSessionObj;
     public $activeSalonList;
 
     public $salonID;
-
 
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
@@ -30,10 +30,12 @@ class PO_bookAppt_Salon extends Controller {
         $this->petObj->setPetOwnerID();
         $this->petList = $this->petObj->getAllPetsUnderUser();
 
-        $this->petAppts = new PO_PetAppts;
+        $this->petApptsObj = new PO_PetAppts;
 
-        $this->availableSessions = new PO_AvailableSessions;
-        $this->activeSalonList = $this->availableSessions->getActiveList_salon();
+        $this->salonsObj = new Salons;
+        $this->salonSessionObj = new SalonSession;
+
+        $this->activeSalonList = $this->salonsObj->getActiveList_salon();
     }
 
     public function index() {
@@ -46,16 +48,17 @@ class PO_bookAppt_Salon extends Controller {
             'openHour' => $_GET['openHour'] ?? ''
         ];
 
-        $result = $this->availableSessions->getSalons($params) ?: ["fetchedCount" => 0];
+        $result = $this->salonsObj->getSalons($params) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
     }
-    public function checkBookedSlots_salon () {
+
+    public function getSlots_byDate() {
         $date = $_GET['date'];
 
-        $result = $this->availableSessions->getBookedSlots_salon($date, $this->salonID) ?: ["fetchedCount" => 0];
+        $result = $this->salonSessionObj->getSlots_byDate($this->salonID, $date) ?: ["fetchedCount" => 0];
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
@@ -74,7 +77,7 @@ class PO_bookAppt_Salon extends Controller {
         $data = $_POST; // im not checking each since its only data from select boxes
         $data['petOwnerID'] = $this->petOwnerID;
 
-        $bookingSuccess = $this->petAppts->makeBooking('salon', $data);
+        $bookingSuccess = $this->petApptsObj->makeBooking('salon', $data);
 
         header('Content-Type: application/json');
         if ($bookingSuccess) {

@@ -9,7 +9,7 @@ class PO_bookAppt_Vet extends Controller {
 
     public $petAppts;
 
-    public $availableSessions;
+    public $vetSessionsObj;
     public $activeDocList;
 
     public $doctorID;
@@ -33,8 +33,8 @@ class PO_bookAppt_Vet extends Controller {
 
         $this->petAppts = new PO_PetAppts;
 
-        $this->availableSessions = new PO_AvailableSessions;
-        $this->activeDocList = $this->availableSessions->getActiveList_vet();
+        $this->vetSessionsObj = new PO_VetSession;
+        $this->activeDocList = $this->vetSessionsObj->getActiveList_vet();
 
     }
 
@@ -50,14 +50,14 @@ class PO_bookAppt_Vet extends Controller {
             'startTime' => $_GET['startTime'] ?? ''
         ];
 
-        $result = $this->availableSessions->getSessions_vet($params) ?: ["fetchedCount" => 0];
+        $result = $this->vetSessionsObj->getSessions_vet($params) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
     }
     public function getSpecificSession () {
-        $result = $this->availableSessions->getSpecificSession_vet($this->doctorID, $this->sessionID);
+        $result = $this->vetSessionsObj->getSpecificSession_vet($this->doctorID, $this->sessionID);
 
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -65,7 +65,7 @@ class PO_bookAppt_Vet extends Controller {
     }
 
     public function getAvailableSessions_specific () {
-        $result = $this->availableSessions->getSessions_specificVet($this->doctorID) ?: ["fetchedCount" => 0];
+        $result = $this->vetSessionsObj->getSessions_specificVet($this->doctorID) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -73,7 +73,7 @@ class PO_bookAppt_Vet extends Controller {
     }
 
     public function getBookedSessionSlots () {
-        $result = $this->availableSessions->checkBookedApptSlots_vet($this->sessionID) ?: ["fetchedCount" => 0];
+        $result = $this->vetSessionsObj->checkBookedApptSlots_vet($this->sessionID) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -81,7 +81,7 @@ class PO_bookAppt_Vet extends Controller {
     }
 
     public function bookAppt () {
-        $data = $_POST; // im not checking each since its only data from select boxes
+        $data = $_POST;             // im not checking each since its only data from select boxes
         $data['petOwnerID'] = $this->petOwnerID;
 
         $bookingSuccess = $this->petAppts->makeBooking('vet', $data);
@@ -104,6 +104,4 @@ class PO_bookAppt_Vet extends Controller {
             exit();
         }
     }
-
-
 }

@@ -6,7 +6,7 @@ class PO_apptDashboard_Vet extends Controller {
 
     public $petAppts;
 
-    public $availableSessions;
+    public $vetSessionsObj;
     public $activeDocList;
 
     public function __construct() {
@@ -15,8 +15,8 @@ class PO_apptDashboard_Vet extends Controller {
 
         $this->petAppts = new PO_PetAppts;
 
-        $this->availableSessions = new PO_AvailableSessions;
-        $this->activeDocList = $this->availableSessions->getActiveList_vet();
+        $this->vetSessionsObj = new PO_VetSession;
+        $this->activeDocList = $this->vetSessionsObj->getActiveList_vet();
     }
 
     public function index() {
@@ -57,7 +57,7 @@ class PO_apptDashboard_Vet extends Controller {
             'startTime' => $_GET['startTime'] ?? ''
         ];
 
-        $result = $this->availableSessions->getSessions_vet($params) ?: ["fetchedCount" => 0];
+        $result = $this->vetSessionsObj->getSessions_vet($params) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
