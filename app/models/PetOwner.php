@@ -38,6 +38,23 @@ class PetOwner {
         return $userDetails;
     }
 
+    public function getDetails_forOtherListings ($petOwnerID) {
+        $query = "SELECT contactNumber, district from petOwner WHERE petOwnerID = :poID";
+        
+        $result = $this->query($query, ['poID' => $petOwnerID]);
+        return $result;
+    }
+
+    public function getReschedulesAvailableCount ($petOwnerID) {
+        $query = "SELECT monthlyReschedulesAvailable as rescheduleCount from petOwner WHERE petOwnerID = :poID";
+        
+        $result = $this->query($query, ['poID' => $petOwnerID]);
+        return $result[0];
+    }
+
+    public function canReschedule ($petOwnerID) {
+        return ($this->getReschedulesAvailableCount($petOwnerID) > 0);
+    }
     /**
      * jm -  Register and insert the user details into database
      * @param array $data The petOwner's details to be inserted
@@ -56,6 +73,11 @@ class PetOwner {
     public function uploadProfilePicture ($data) {
         $uploadSuccess = $this->update($this->petOwnerID, $data, 'petOwnerID');
         return empty($uploadSuccess) ? true : false;
+    }
+
+    public function editProfileDetails ($petOwnerID, $data) {
+        $updateSuccess = $this->update($petOwnerID, $data, 'petOwnerID');
+        return empty($updateSuccess) ? true : false;
     }
 
     public function logout() {

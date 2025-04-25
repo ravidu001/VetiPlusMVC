@@ -54,6 +54,8 @@
                         <input type="text" id="streetName" name="streetName" placeholder="eg: Hena Road" required>
                     <label for="city">City</label>
                         <input type="text" id="city" name="city" placeholder="eg: Mount-Lavinia" required>
+                    <label for="district">District</label>
+                        <input type="text" id="district" name="district" placeholder="eg: Colombo" required>
                 </fieldset>
                 
                 <div class="errorMsg"></div>

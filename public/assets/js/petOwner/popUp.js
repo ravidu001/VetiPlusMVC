@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 let popUpTypes = {
         popup_confirm: ``, popup_info:``, popup_formResult:``, popup_feedback:``, 
-        popup_apptCancel:``, popup_apptReschedule:``, popup_payment:``,
+        popup_apptEdit: ``, popup_apptCancel:``, popup_apptReschedule:``, popup_payment:``,
         popup_newAdoptionListing: ``, popup_editAdoptionListing: ``,
         popup_newBreedingListing: ``, popup_editBreedingListing: ``
     };
@@ -25,14 +25,13 @@ popUpTypes.popup_confirm = `
         <img src="${ROOT}/assets/images/petOwner/popUpIcons/confirm.png" alt="popUpIcon" class="popUpIcon">
         <p class="popUpMsg">Are you sure?</p>
         <form action="" method="post" class="popupForm">
-
             <input type="text" class="someID formTextInput" name="someID" hidden>
-
             <div class="popup-buttons">
                 <button class="submitBtn popupBtn" type="submit">Confirm</button>
-                <button class="closeBtn popupBtn">Cancel</button>
+                <button class="closeBtn popupBtn" type="button">Cancel</button>
             </div>
         </form>
+    </div>
 `;
 
 // to tell whether form submission was successful or not:
@@ -44,7 +43,7 @@ popUpTypes.popup_formResult = `
 
         <div class="popup-buttons">
             <button class="okBtn popupBtn">OK</button>
-            <button class="closeBtn popupBtn">Close</button>
+            <button class="closeBtn popupBtn" type="button">Close</button>
         </div>
     </div>
 `;
@@ -83,7 +82,7 @@ popUpTypes.popup_feedback = `
 
         </form>
         <div class="popup-buttons">
-            <button class="closeBtn popupBtn">Close</button>
+            <button class="closeBtn popupBtn" type="button">Close</button>
         </div>
 
     </div>
@@ -152,7 +151,7 @@ popUpTypes.popup_newAdoptionListing = `
                 <button class="submitBtn popupBtn" type="submit">Submit</button>
                 <button class="clearBtn popupBtn" type="reset">Clear</button>
 
-                <button class="closeBtn popupBtn">Close</button>
+                <button class="closeBtn popupBtn" type="button">Close</button>
             </div>
 
         </form>
@@ -222,7 +221,7 @@ popUpTypes.popup_newBreedingListing = `
                 <button class="submitBtn popupBtn" type="submit">Submit</button>
                 <button class="clearBtn popupBtn" type="reset">Clear</button>
                 <div class="popup-buttons"></div>
-                <button class="closeBtn popupBtn">Close</button>
+                <button class="closeBtn popupBtn" type="button">Close</button>
             </div>
 
         </form>
@@ -298,13 +297,14 @@ popUpTypes.popup_editAdoptionListing = `
                 <button class="submitBtn popupBtn" type="submit">Submit</button>
                 <button class="clearBtn popupBtn" type="reset">Clear</button>
                 <div class="popup-buttons"></div>
-                <button class="closeBtn popupBtn">Close</button>
+                <button class="closeBtn popupBtn" type="button">Close</button>
             </div>
 
         </form>
     </div>
 `;
 
+popUpTypes.popup_apptEdit = ``;
 popUpTypes.popup_apptCancel = ``;
 popUpTypes.popup_apptReschedule = ``;
 popUpTypes.popup_payment = ``;
@@ -441,6 +441,7 @@ function displayPopUp (type, detailsObject) {
         (popupForm.getAttribute('action').trim() === '') && popupForm.setAttribute('action', detailsObject.action);
         popupForm.addEventListener('submit', submitForm);
     }
+    // popupForm.querySelector('.submitBtn').addEventListener('click', submitForm);
     (type == 'popup_feedback') && interactiveStarRating('starContainer');
 
     // Close popup_success and popup_fail type popups automatically and refresh or go to nextPage:
@@ -475,7 +476,6 @@ function displayPopUp (type, detailsObject) {
     // Close button to close the popup or cancel submission
     popup.querySelector('.closeBtn') &&
     popup.querySelector('.closeBtn').addEventListener('click', function() {
-        console.log("Close btn clicked");
         popup.style.transform = 'translate(-50%, -100px)';
         popup.style.opacity = '0';
 

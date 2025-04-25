@@ -5,8 +5,8 @@ class Pet {
 
     protected $table = 'pet';
     protected $allowedColumns = [
-        'petID', 'petOwnerID', 'name', 'DOB', 'gender', 'weight', 
-        'species', 'breed', 'breedAvailable', 'breedDescription', 'profilePicture'
+        'petID', 'petOwnerID', 'name', 'DOB', 'gender', 'profilePicture',
+        'species', 'breed', 'activeStatus'
     ];
   
    public function __construct() {
@@ -29,12 +29,20 @@ class Pet {
      * jm -  Based on the petOwner ID return ALL the pets' details
     */
     public function getAllPetsUnderUser () {
-        $petDetailsArray = $this->where(['petOwnerID' => $this->petOwnerID]);
+        $params = [
+            'petOwnerID' => $this->petOwnerID,
+            'activeStatus' => 'active'
+        ];
+        $petDetailsArray = $this->where($params);
         return $petDetailsArray;
     }
     public function getOnePet ($petID) {
-        $petDetails = $this->first(['petOwnerID' => $this->petOwnerID,
-                                    'petID' => $petID]);
+        $params = [
+            'petID' => $petID,
+            'petOwnerID' => $this->petOwnerID,
+            'activeStatus' => 'active'
+        ];
+        $petDetails = $this->first($params);
         return $petDetails;
     }
     
@@ -65,6 +73,13 @@ class Pet {
     public function editProfileDetails ($petID, $data) {
         $updateSuccess = $this->update($petID, $data, 'petID');
         return empty($updateSuccess) ? true : false;
+    }
+
+    public function getDetails_forOtherListings ($petID) {
+        $query = "SELECT name, DOB, gender, species, breed from pet WHERE petID = :petID";
+        
+        $result = $this->query($query, ['petID' => $petID]);
+        return $result;
     }
 
     /**

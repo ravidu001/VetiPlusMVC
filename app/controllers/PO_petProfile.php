@@ -9,13 +9,13 @@ function sanitizeInput($input) {
  */
 class PO_petProfile extends Controller {
 
-    private $petOwnerID;
-    private $petID;
+    public $petOwnerID;
+    public $petID;
 
     public $pet;
     public $pet_details;
 
-    public $petAppts;
+    public $petApptsObj;
 
     public function __construct() {
 
@@ -36,7 +36,7 @@ class PO_petProfile extends Controller {
 
         $this->pet_details = $this->pet->getOnePet($this->petID);
 
-        $this->petAppts = new PO_PetAppts;
+        $this->petApptsObj = new PO_PetAppts;
     }
 
     public function index() {
@@ -167,7 +167,7 @@ class PO_petProfile extends Controller {
                     'petID' => $this->petID,
                     'type' => 'all'
                 ];
-        $result = $this->petAppts->getPetApptHistory($options) ?: ['fetchedCount' => 0];
+        $result = $this->petApptsObj->getPetApptHistory($options) ?: ['fetchedCount' => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -179,7 +179,7 @@ class PO_petProfile extends Controller {
                     'petID' => $this->petID,
                     'type' => 'all'
                 ];
-        $result = $this->petAppts->getPetApptUpcoming($options) ?: ['fetchedCount' => 0];
+        $result = $this->petApptsObj->getPetApptUpcoming($options) ?: ['fetchedCount' => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);

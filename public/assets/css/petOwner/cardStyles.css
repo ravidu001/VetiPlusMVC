@@ -2,7 +2,19 @@
 .tallCard-container {
     display: grid;
     gap: 1em;
-    padding: 5px;
+    padding: 10px;
+    overflow-y: scroll;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.tallCard-container:not(.pets-container) {
+    max-height: 50vh;
+}
+
+.longCard-container::-webkit-scrollbar,
+.tallCard-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
 }
 
 .longCard-container {
@@ -10,7 +22,7 @@
 }
 
 .tallCard-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 .noResults {
@@ -98,7 +110,7 @@
     border-radius: 50%;
     border: 1px solid var(--shadow-color);
 
-    width: clamp(4em, 6vw, 8em);
+    width: clamp(4em, 10vw, 8em);
     height: auto;
     aspect-ratio: 1/1;
 }
