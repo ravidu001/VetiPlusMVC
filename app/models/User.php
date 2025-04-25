@@ -39,6 +39,18 @@ class User
     public function updatePassword($email, $password) {
         $this->update($email, ['password' => $password], 'email');
     }
+
+    public function po_changePassword ($petOwnerID, $oldPass, $newPass) {
+        $petOwner = $this->first(['email' => $petOwnerID]);
+        if ( password_hash($oldPass, PASSWORD_DEFAULT) == $petOwner->password ) {
+            $newPassHash = password_hash($newPass, PASSWORD_DEFAULT);
+
+            $changeSuccess = $this->update($petOwnerID, ['password' => $newPassHash], 'email');
+            return empty($changeSuccess) ? true : false;
+        } else {
+            return false;
+        }
+    }
     
     public function deactivateUser($email, $status) {
         $this->update($email, ['activeStatus' => $status], 'email');
@@ -65,9 +77,23 @@ class User
         return $count;  // Return the count value
 
     }
+    public function admincountUser() {
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE type = 'System Admin'";
+        $result = $this->query($query);
+        return $result[0]->total;
+    }  
+    public function deactiveusercount(){
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE type = 'System Admin' AND activeStatus = 'deactive'";
+        $result = $this->query($query);
+        return $result[0]->total;
+    }  
 
     public function updateActiveStatus($id, $status)
     {
         return $this->update($id, ['activeStatus' => $status], 'email');
+    }
+
+    public function changestatus($email){
+         return $this->update($email, ['activeStatus' => 'deactive'], 'email');
     }
 }

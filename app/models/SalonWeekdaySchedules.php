@@ -48,4 +48,11 @@ class SalonWeekdaySchedules
         return $this->first(['config_id' => $configID, 'date' => $day]);
 
     }
+
+    //find the details by date
+    public function findByDate($date)
+    {
+        $this->order_column = 'schedule_id';
+        return $this->where(['date' => $date]);
+    }
 }    

@@ -4,111 +4,81 @@ class SalonNotifications extends Controller
 {
     public function index()
     {
-        $data = [];
+        // $data = [];
         // $response = [];
 
         $salonID = $_SESSION['SALON_USER'];
+        $type = $_SESSION['type'];
 
         //check the user is login or not
-        if(empty($salonID))
+        if(!isset($salonID) || !isset($type))
         {
             redirect('Login/login');
         }
-
-        //get the upcoming data
-        // $data['upcoming'] = $this->FindUpcoming($salonID);
-        // $data['upcoming'] = $this->FindUpcoming();
-
-        // if(!empty($data['upcoming']))
-        // {
-        //     redirect('Salon/salon',$data);
-        // }
-        
-        // $response = $data['upcoming'];
 
         $this->view('Salon/salonnotifications');
     }
-
-    //function to get the upcoming data
-    public function FindUpcoming()
-
+   
+    public function findUpComing()
     {
-        $array = [];
-
         $salonID = $_SESSION['SALON_USER'];
-
-        //check the user is login or not
-        if(empty($salonID))
-        {
+        $type = $_SESSION['type'];
+    
+        if (!isset($salonID) || !isset($type)) {
             redirect('Login/login');
         }
-
-
+    
         $appointmentTable = new SalonBooked();
-        $SessionTable = new SalonTimeSlots();
-        $petOwner = new PetOwner();
-
+        $sessionTable = new SalonTimeSlots();
+        $petOwner = new PetOwners();
+    
         $status = 0;
         $count = 0;
-        $date = date('Y-m-d');
-
+        $upcomingData = [];
+    
+        // Get all bookings with status = 0
         $bookingdetails = $appointmentTable->getDetailsByStatus($status);
+    
+        if (!empty($bookingdetails)) {
+            foreach ($bookingdetails as $booking) {
 
-        if($bookingdetails)
-        {
-            foreach($bookingdetails as $bookingdetail)
-            {
-                //give the slot booking slot details ID
-                $salsessionID = $bookingdetail->salSessionID;
+                $bookingdate = new  DateTime($booking->dateTime);
 
-                //upcoming, this salon, today
-                $slotDetails = $SessionTable->fetchSessionByDate($salonID,$salsessionID, $date);
+                $currentDate = new DateTime(); // This gives 2025-04-18 14:53:10.123456
 
-                //has today (the day) upcoming this salon
-                if($slotDetails)
+                
+                //skip the past and future dates
+                if($bookingdate->format('Y-m-d') !== $currentDate->format('Y-m-d'))
                 {
-                    foreach ($slotDetails as $slotDetail) 
-                    {
-                        $sessionID = $slotDetail->salSessionID;
-                        $day = $slotDetail->openday;
-                        $slot = $slotDetail->time_slot;
+                    continue;
+                }
+    
+                // Get session details (we need salonID from here)
+                $session = $sessionTable->getSlotDetails($booking->salSessionID);
+    
+                if ($session && $session->salonID == $salonID) {
+                    $owner = $petOwner->getPetOnwerDetailsByID($booking->petOwnerID);
 
-                        $period = $day - $date;
+                    $today = strtotime(date('Y-m-d'));
 
-                        //Now get details using salonID,salsessionID
-                        $groomingDetails = $appointmentTable->getSlotDetailsByID($sessionID);
-
-                        $service = $groomingDetails[0]->service;
-                        $petID = $groomingDetails[0] ->petOwnerID;
-                        $appoinmentDate = $groomingDetails[0]->dateTime;
-                    
-                        $petOwnerDetail = $petOwner->getUserDetailsByID($petID);
-
-                        $petOwnerName = $petOwnerDetail->fullName;
-
-                        if($period > 0)
-                        {   
-                            $array[] = [
-                                'slotday' => $day,
-                                'slot' => $slot,
-                                'service' => $service,
-                                'ownername' => $petOwnerName,
-                                'BookingDate' => $appoinmentDate,
-                                'period' => $period
-                            ];
-                           $count ++;
-                        }
-                    }
+                    $openday = strtotime($session->openday);
+                    $period =  ($openday - $today) / (60 * 60 * 24);
+    
+                    $upcomingData[] = [
+                        'BookingDateTime' => $booking->dateTime,
+                        'ownername' => $owner ? $owner->fullName : 'Unknown',
+                        'service' => $booking->service,
+                        'slot' => $session->time_slot,
+                        'period' => $period,
+                        'count' => $count + 1,
+                        'today' => $today,
+                    ];
                 }
             }
         }
-        
-        
-        //  return $count;
         header('Content-Type: application/json');
-        echo json_encode($array);
+        echo json_encode($upcomingData);
         exit;
-
     }
-
+    
 }

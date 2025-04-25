@@ -1,5 +1,7 @@
 <?php
 
+$notifications = new Notification();
+
 class SalonService extends Controller 
 {
 

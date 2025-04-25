@@ -10,15 +10,14 @@
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/petOwner/poppinsFont.css" rel="stylesheet">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/petOwner/profilePages.css" rel="stylesheet">
 
     </head>
     <body>
         
-        <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
+        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea">
             
@@ -26,28 +25,27 @@
                 <h1>My Profile</h1>
     
                 <div class="profilePicContainer">
-                    <?php if (isset($this->po_details->profilePicture)) : ?>
-                        <img src="<?= ROOT.'/assets/images/profilePics/petOwner/'.$this->po_details->profilePicture ?>"
-                            alt="Profile Picture">
-                    <?php else: ?>
-                        <span>No profile picture added.</span>
-                    <?php endif; ?>
+                    <img alt="Profile Picture" class="profilePic"
+                        src="<?= ROOT.'/assets/images/petOwner/profilePictures/po_user/'.$this->po_details->profilePicture?>">
     
-                    <form id="editPetOwnerProfilePic" method="post" enctype="multipart/form-data" class="profilePicEditForm"
-                        action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <form method="post" enctype="multipart/form-data" class="profilePicEditForm"
+                        action="./PO_userProfile/changeProfilePicture">
     
                         <input type="hidden" name="formName" value="profilePicEdit">
     
-                        <label for="photo">Change Profile Picture:</label>    
-                        <input type="file" id="photo" accept="image/*" name="photo" required>
+                        <label for="profilePicture">Change Profile Picture:</label>
+                            <input type="file" id="profilePicture" accept="image/*" name="profilePicture" required>
+
     
+                        <button type="reset">Clear</button>
                         <button type="submit">Save</button>
                     </form>
-    
+
+                    <img src="" class="previewImage profilePic" alt="Preview Image" style="display: none;">
                 </div>
     
                 <form id="editPetOwnerDetails" method="post" class="profileDetailsEditForm"
-                    action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    action="./PO_userProfile/editUserDetails">
     
                     <input type="hidden" name="formName" value="profileDetailsEdit">
     
@@ -89,37 +87,40 @@
                     <button type="submit" style="display: none;" id="save-button">Save</button>
                 </form>
     
-                <!-- <form action="po_userProfile/logout" method="post">
-                    <button type="submit">Logout</button>
-                </form> -->
-    
-                <button id="logoutButton">Logout</button>
+                <a href="<?= ROOT ?>/PO_userProfile/logout">
+                    <button id="logoutButton">Logout</button>
+                </a>
     
             </div>
     
             <!-- footer at page's bottom: -->
-            <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
+            <?php include_once '../app/views/navbar/po_Footer.php'; ?>
         </div>
 
         <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
         <script>
             // to preview the uploaded image:
-            // document.getElementById("profilePicture").addEventListener("change", function(event) {
-            //     let file = event.target.files[0];
-            //     let img = document.querySelector(".previewImage");
+            document.getElementById("profilePicture").addEventListener("change", function(event) {
+                let file = event.target.files[0];
+                let img = document.querySelector(".previewImage");
 
-            //     if (file) {
-            //         let reader = new FileReader();
-            //         reader.onload = (e) => {
-            //             img.src = e.target.result;
-            //             img.style.display = "block";
-            //         };
-            //         reader.readAsDataURL(file);
-            //     } else {
-            //         img.style.display = "none"; // Hide the image if no file is selected
-            //         img.src = "";
-            //     }
-            // });
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = (e) => {
+                        img.src = e.target.result;
+                        img.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    img.style.display = "none"; // Hide the image if no file is selected
+                    img.src = "";
+                }
+            });
+            document.querySelector('.profilePicEditForm').addEventListener('reset', function() {
+                const img = document.querySelector(".previewImage");
+                img.style.display = "none"; // Hide the image if no file is selected
+                img.src = "";
+            });
 
             function toggleEdit() {
                 const displayFields = document.querySelectorAll('.display-field');
@@ -151,7 +152,7 @@
                 askConfirm: true,
                 confirmPath: 'po_userProfile/logout'
             };
-            document.getElementById('logoutButton').addEventListener('click', () => displayPopUp(logoutPopObj) );
+            // document.getElementById('logoutButton').addEventListener('click', () => displayPopUp(logoutPopObj) );
 
         </script>
     </body>

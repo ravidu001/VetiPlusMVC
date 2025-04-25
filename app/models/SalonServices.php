@@ -35,11 +35,6 @@ class SalonServices
        return $this->update($serviceID,$data, 'serviceID');
     }
 
-    // public function serviceview()
-    // {
-
-    // }
-
     public function findAllServiceId($salonID)
     {
         $this->order_column = 'serviceID';

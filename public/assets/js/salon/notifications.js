@@ -7,11 +7,11 @@ function fetchNotifications()
         return;
     }
 
-    fetch(`${BASE_URL}/SalonNotifications/FindUpcoming`)
+    fetch(`${BASE_URL}/SalonNotifications/findUpComing`)
         .then(response => response.json())
         .then(data => {
             container.innerHTML = ""; // Clear old notifications
-
+            // console.log(data);
             if (data.length === 0) {
                 const today = new Date().toISOString().split('T')[0];
                 container.innerHTML = `
@@ -33,7 +33,7 @@ function fetchNotifications()
                 const bookingDateTime = new Date(notify.BookingDateTime);
                 const now = new Date();
                 const minutesLeft = Math.floor((bookingDateTime - now) / (1000 * 60));
-
+                console.log(notify.today);
                 const html = `
                     <div class="upcoming filled-notification">
                         <p class="Date"><i class="fas fa-calendar-alt"></i> ${bookingDateTime.toLocaleString()}</p>
@@ -54,5 +54,5 @@ function fetchNotifications()
         });
 }
 
-setInterval(fetchNotifications, 10000);
+setInterval(fetchNotifications, 20000);//overload every 10s
 window.onload = fetchNotifications;
