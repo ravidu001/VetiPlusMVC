@@ -117,6 +117,11 @@ class Login extends Controller
                                     $salon = new Salons();
                                     $salonData = $salon->FindUser($registered->email);
 
+                                    if (empty($salonData)) {
+                                        header('Location: ../SalonRegister');
+                                        exit();
+                                    }
+
                                     switch ($salonData->approvedStatus){
                                         case 'pending':
                                             header('Location: ../Pending');
