@@ -138,3 +138,44 @@ canvas {
     width: 100% !important;
     max-height: 400px;
 }
+.payments-list {
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 25px var(--shadow);
+}
+
+.payments-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.payments-table th {
+    text-align: left;
+    padding: 15px;
+    background-color: #f4f4f4;
+    color: var(--primary-color);
+}
+
+.payments-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.payments-table tr:hover {
+    background-color: #f9f5ff;
+}
+.btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-view {
+    background-color: var(--primary-color);
+    color: var(--white);
+}

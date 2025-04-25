@@ -1,385 +1,232 @@
-    /* Base Styles */
 :root {
-    --primary-color: #6A0DAD;
-    --primary-light: #ab5fe1;
-    --primary-dark: #5c0b94;
-    --primary-lighter: #f8f3fb;
-    --white: #ffffff;
-    --black: #212121;
-    --gray-100: #f9f9f9;
-    --gray-200: #f0f0f0;
-    --gray-300: #e0e0e0; 
-    --gray-400: #bdbdbd;
-    --gray-500: #9e9e9e;
-    --gray-600: #757575;
-    --gray-700: #4a5568;
-    --gray-800: #333333;
-    --danger: #9c27b0;
-    --danger-dark: #7b1fa2;
-    --box-shadow: 0 4px 12px rgba(106, 13, 173, 0.15);
-    --border-radius: 8px;
-    --transition: all 0.3s ease;
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #6a0dad;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
+    --text-color: #707070;
+    --background-light: #c8a2c8;
+    --background-primary: #6a0dad;
+    --background-white: #fff;
+    --text-clr: black;
+    --text-primary: #6a0dad;
+    --text-white: #fff;
+    --shadow-color: slategray;
+    --list-item: #ffecff;
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--body-color);
     margin: 0;
-    background: linear-gradient(135deg, #fff6ff 0%, #ffecff 100%);
-    color: var(--gray-800);
-    min-height: 100vh;
+    padding: 0;
 }
 
-/* Time Slot Layout */
 .timeslotdetails {
-    display: grid;
-    gap: 10px;
-    max-width: 1100px;
-    margin: 2rem auto;
-    padding: 0 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: var(--background-white);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Top create button styling */
-.timeslotdetails > button {
-    justify-self: flex-start;
-    margin-bottom: 5px;
+/* Header styles */
+.timeslotdetails h1 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    text-align: center;
 }
+
+.timeslotdetails h2 {
+    color: var(--primary-color);
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+.timeslotdetails h4 {
+    color: var(--text-clr);
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+/* Button styles */
+.timeslotdetails .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.timeslotdetails button {
+    background-color: var(--background-light);
+    border: none;
+    border-radius: 4px;
+    padding: 0;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeslotdetails button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.timeslotdetails button a {
+    color: var(--text-white);
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    font-weight: 500;
+}
+
+.timeslotdetails 
+button:first-child {
+    background-color: var(--primary-color);
+}
+
+.timeslotdetails > button {
+    margin: 20px 0;
+    background-color: var(--primary-color);
+}
+
 
 .timeslotdetails > button a::before {
-    content: "\f067"; /* Font Awesome plus icon */
+    content: "+";
+    font-size: 12px;
+    font-weight: bold;
+    gap: 5px;
+    margin-right: 5px;
+    color: var(--text-white);
 }
 
-.selecttime, .days, .holidays, .daysdetails {
-    border: 1px solid var(--gray-300);
-    border-radius: var(--border-radius);
-    padding: 10px;
-    background-color: var(--white);
-    box-shadow: var(--box-shadow);
-    transition: var(--transition);
-}
-
-.selecttime:hover, .timeslots:hover, .days:hover, .holidays:hover {
-    box-shadow: 0 6px 16px rgba(106, 13, 173, 0.2);
-}
-
-/* Time slots flex layout */
-.timeslots {
-    display: flex;
-    /* justify-content: space-between; */
-    /* flex-wrap: wrap; */
-    gap: 10px;
-    
-}
-
-.timeslots .duration, 
-.timeslots .appointment {
-    flex: 1;
-    min-width: 200px;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-}
-
-.timeslots p {
-    flex-basis: 100%;
+/* Details section styles */
+.selecttime {
+    background-color: var(--primary-color-light);
+    padding: 5px;
+    border-radius: 6px;
     margin-top: 5px;
-    padding-top: 5px;
-    border-top: 1px solid var(--gray-200);
 }
 
-/* Days and Holidays layout */
-.daysdetails {
+.slotdetails {
     display: flex;
-    gap: 24px;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    background: transparent;
+    flex-wrap: wrap;
+    gap: 30px;
+    /* margin-top: 5px; */
+    margin-bottom: 10px;
 }
 
-.days, .holidays {
-    flex: 1;
-    min-width: 300px;
-}
-
-/* Typography */
-h2 {
-    margin-top: 0;
-    color: var(--primary-color);
-    font-weight: 600;
-    border-bottom: 2px solid var(--gray-200);
-    padding-bottom: 10px;
-    margin-bottom: 16px;
-}
-
-h4 {
-    margin: 12px 0 6px;
-    color: var(--gray-700);
-    font-weight: 500;
-}
-
-p {
-    margin: 6px 0 12px;
-    font-size: 16px;
-    color: var(--gray-700);
-}
-
-.selecttime .highlight,
- .highlight {
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-/* Button Styles */
-button {
-    display: inline-flex;
+.duration, .appointment {
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
+}
+
+.duration h4, .appointment h4 {
     margin: 0;
-    padding: 10px 18px;
-    min-width: 70px;
-    font-size: 15px;
-    font-weight: 500;
-    background-color: var(--primary-color);
-    color: var(--white);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 2px 4px rgba(106, 13, 173, 0.2);
 }
 
-button:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(106, 13, 173, 0.3);
+.highlight {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-left: 10px;
 }
 
-button:active {
-    transform: translateY(0);
+/* Table styles */
+.days {
+    margin-top: 10px;
 }
 
-button a {
-    text-decoration: none;
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
-
-button.remove-btn {
-    background-color: var(--danger);
-    color: var(--white);
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    min-width: 80px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button.remove-btn:hover {
-    background-color: var(--danger-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-/* Add icons using Font Awesome */
-button a::before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 8px;
-}
-
-.holidays button a::before {
-    content: "\f067"; /* Font Awesome plus icon */
-}
-
-button.remove-btn::before {
-    content: "\f1f8"; /* Font Awesome trash icon */
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    margin-right: 8px;
-}
-
-/* Table Styles */
 table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 12px;
-    margin-bottom: 24px;
-    font-size: 15px;
+    border-collapse: collapse;
+    margin-top: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+    padding: 12px 15px;
     text-align: left;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--toggle-color);
 }
 
 th {
-    background-color: var(--primary-lighter);
-    color: var(--black);
-    padding: 14px 16px;
-    font-weight: 600;
-    text-align: left;
-    border-bottom: 2px solid var(--primary-color);
-    position: sticky;
-    top: 0;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
 }
 
-th:first-child {
-    border-top-left-radius: var(--border-radius);
+tr:nth-child(even) {
+    background-color: var(--list-item);
 }
 
-th:last-child {
-    border-top-right-radius: var(--border-radius);
-    text-align: center;
+tr:hover {
+    background-color: var(--background-light);
+    color: var(--text-clr);
 }
 
-td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--gray-300);
-    font-size: 15px;
-    color: var(--gray-700);
-    vertical-align: middle;
-}
-
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-tbody tr:hover {
-    background-color: var(--gray-100);
-}
-
-/* Status indicators and specific cells */
-td:last-child {
-    text-align: center;
-}
-
-/* Add a bit of extra styling for the duration and appointment divs */
-.duration h4, .appointment h4 {
-    margin-top: 0;
-}
-
-.holidays h2 {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.holidays button {
-    margin-bottom: 16px;
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--gray-200);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary-light);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.timeslotdetails {
-    animation: fadeIn 0.5s ease;
-}
-
-/* Empty state styling */
-table tbody tr td[colspan] {
-    text-align: center;
-    padding: 40px 0;
-    color: var(--gray-500);
-}
-
-/* Responsive Design */
-@media screen and (max-width: 1200px) {
+/* Responsive styles */
+@media (max-width: 768px) {
     .timeslotdetails {
-        width: 95%;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    table {
-        font-size: 14px;
+        padding: 15px;
+        margin: 10px;
     }
     
-    th, td {
-        padding: 10px 12px;
-    }
-    
-    .timeslots {
+    .slotdetails {
         flex-direction: column;
+        gap: 15px;
     }
     
-    .timeslots .duration,
-    .timeslots .appointment,
-    .timeslots p {
-        margin-bottom: 16px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .timeslotdetails {
-        padding: 0 10px;
-    }
-    
-    .timeslots, .days, .selecttime, .holidays {
-        padding: 16px;
-    }
-    
-    .daysdetails {
-        flex-direction: column;
-    }
-    
-    .days, .holidays {
-        width: 100%;
-    }
-    
-    button {
-        padding: 8px 12px;
-    }
-}
-
-@media screen and (max-width: 576px) {
     table {
         display: block;
         overflow-x: auto;
-        white-space: nowrap;
     }
     
-    h2 {
-        font-size: 20px;
+    .buttons {
+        flex-direction: column;
+        align-items: center;
     }
     
     button {
         width: 100%;
-        margin-bottom: 10px;
+        max-width: 250px;
     }
-    
-    td:last-child {
-        min-width: 100px;
-    }
+}
+
+/* Extra styling for better readability */
+.timeslots {
+    background-color: var(--primary-color-light);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.timeslots h4 {
+    margin-bottom: 5px;
+}
+
+.timeslots p {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-left: 15px;
+}
+
+/* Fix for the inline styles in HTML */
+.slotdetails {
+    display: flex !important;
+}
+
+.duration, .appointment {
+    display: flex !important;
+    gap: 10px !important;
 }

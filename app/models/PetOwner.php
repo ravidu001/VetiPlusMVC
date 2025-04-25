@@ -83,4 +83,11 @@ class PetOwner {
         // } 
     }
 
+    public function petownercount()
+    {
+        $count = $this->getCount();
+        return $count;  // Return the count value
+
+    }
+
 }

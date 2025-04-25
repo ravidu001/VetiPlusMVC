@@ -22,21 +22,21 @@
                     <i class='bx bx-trending-up icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Daily Income</h3>
-                        <p>Rs. 15,000</p>
+                        <p>Rs. <?= htmlspecialchars($todayRevenue) ?></p>
                     </div>
                 </div>
                 <div class="dashboard-card">
                     <i class='bx bx-line-chart icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Total Income</h3>
-                        <p>Rs. 1,000,000</p>
+                        <p>Rs.  <?= htmlspecialchars($total) ?></p>
                     </div>
                 </div>
                 <div class="dashboard-card">
                     <i class='bx bx-trending-down icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Monthly Expenses</h3>
-                        <p>Rs. 9,000</p>
+                        <p>Rs.  <?= htmlspecialchars($total) ?></p>
                     </div>
                 </div>
                 <div class="dashboard-card">
@@ -51,21 +51,48 @@
             <!-- Search Section -->
             <div class="payment-search">
                 <form class="search-form"  action="<?= ROOT ?>/OwnerPayment/paymentlist" method="post">
-                    <div class="search-inputs">
-                        <input type="text" placeholder="Enter User ID">
-                        <input type="text" placeholder="Enter Pet ID">
-                        <input type="date">
+                <div class="search-inputs">
+                        <input type="text" name="petownerID" placeholder="Enter User ID">
+                        <!-- <input type="text" placeholder="Enter Pet ID">
+                        <input type="date"> -->
                     </div>
                     <div class="search-button-row">
-                        <button type="submit">Search</button>
+                    <button type="submit" class="search-btn">Search Transactions</button>
                     </div>
                 </form>
             </div>
 
-            <!-- Chart Section -->
-            <div class="payment-chart">
-                <h2>Monthly Income and Expenses</h2>
-                <canvas id="paymentChart"></canvas>
+            <div class="payments-list">
+                <table class="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>User Name</th>
+                            <th>Pet Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($data['paymentdata'])) : ?>
+                            <?php foreach ($data['paymentdata'] as $payment) : ?>
+                                <tr>
+                                    <td><?= $payment->paymentID ?></td>
+                                    <td><?= $payment->petownerID ?></td>
+                                    <td><?= $payment->appointmentID ?></td>
+                                    <td>Rs. <?= $payment->amount ?></td>
+                                    <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
+                                    <td><a href="<?= ROOT ?>/OwnerPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="6">No payment data available.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

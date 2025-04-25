@@ -18,10 +18,10 @@
             <div class="payment-header">
                 <img src="https://via.placeholder.com/120" alt="Profile" class="profile-image">
                 <div class="profile-details">
-                    <h2><i class='bx bx-user'></i> Holder's Name: Ramesh Peshala</h2>
-                    <h2><i class='bx bx-credit-card'></i> Account Number: 061200140007057</h2>
-                    <h2><i class='bx bx-calendar'></i> Expiry Date: 25/28</h2>
-                    <h2><i class='bx bx-lock'></i> CVV: 199</h2>
+                    <h2><i class='bx bx-user'></i> Holder's Name: <?= htmlspecialchars($petownerName) ?></h2>
+                    <h2><i class='bx bx-credit-card'></i> Account Number: <?= htmlspecialchars($paymentinfoData[0]->cardNumber) ?></h2>
+                    <h2><i class='bx bx-calendar'></i> Expiry Date: <?= htmlspecialchars($paymentinfoData[0]->expiredmonth) ?>/<?= htmlspecialchars($paymentinfoData[0]->expiredyear) ?></h2>
+                    <h2><i class='bx bx-lock'></i> CVV: <?= htmlspecialchars($paymentinfoData[0]->CVV) ?></h2>
                 </div>
             </div>
 
@@ -32,33 +32,26 @@
                             <th>Payment ID</th>
                             <th>Appointment ID</th>
                             <th>Date</th>
-                            <th>Doctor Name</th>
+                            <!-- <th>Doctor Name</th> -->
                             <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>220022</td>
-                            <td>22001557</td>
-                            <td>2024/04/07</td>
-                            <td>Ravindu Piris</td>
-                            <td>$150.00</td>
-                        </tr>
-                        <tr>
-                            <td>220023</td>
-                            <td>22001558</td>
-                            <td>2024/04/08</td>
-                            <td>Saman Kumar</td>
-                            <td>$200.00</td>
-                        </tr>
-                        <tr>
-                            <td>220024</td>
-                            <td>22001559</td>
-                            <td>2024/04/09</td>
-                            <td>Nimal Silva</td>
-                            <td>$180.00</td>
-                        </tr>
-                    </tbody>
+                        <?php if (isset($data['paymentdata'])) : ?>
+                            <?php foreach ($data['paymentdata'] as $payment) : ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($payment->paymentID) ?></td>
+                                    <td><?= htmlspecialchars($payment->appointmentID) ?></td>
+                                    <td><?= htmlspecialchars($payment->dateTime) ?></td>
+                                    <!-- <td></td> -->
+                                    <td>Rs. <?= htmlspecialchars($payment->amount) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="5">No payment data available.</td>
+                            </tr>
+                        <?php endif; ?>
                 </table>
             </div>
         </div>

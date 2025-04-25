@@ -103,6 +103,13 @@ class Pet {
         // } 
     }
 
+    public function petcount()
+    {
+        $count = $this->getCount();
+        return $count;  // Return the count value
+
+    }
+
 }
 
 

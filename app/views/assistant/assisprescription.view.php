@@ -16,7 +16,7 @@ $notification = new Notification();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<?php //require_once '../app/views/navbar/assistantnav.php'; ?>
+<?php require_once '../app/views/navbar/assistantnav.php'; ?>
 <div class="home">
     <?php echo $notification->display(); ?>
     <div id="petPopup" class="popup">

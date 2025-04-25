@@ -29,6 +29,13 @@ class DoctorModel {
         $this->order_column = "doctorID";
         return $this->findAll();
     }
+    
+    public function doctorcount()
+    {
+        $count = $this->getCount();
+        return $count;  // Return the count value
+
+    }
 
     public function find($doctorID) {
         // $this->order_column = 'doctorID';

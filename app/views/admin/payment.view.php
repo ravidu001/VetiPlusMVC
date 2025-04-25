@@ -63,7 +63,7 @@
                                     <td><?= $payment->appointmentID ?></td>
                                     <td>Rs. <?= $payment->amount ?></td>
                                     <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
-                                    <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="view-btn">View</a></td>
+                                    <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>

@@ -23,10 +23,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div class="menu-bar">
         <div class="menu">
 
-            <li class="search-box">
+            <!-- <li class="search-box">
                 <i class='bx bx-search-alt-2 icon'></i>
                 <input type="text" placeholder="Search...">
-            </li>
+            </li> -->
 
             <ul class="menu-links">
                 <li class="nav-link <?= $current_page == '<?= ROOT ?>/Doctor/index' ? 'active' : '' ?>">

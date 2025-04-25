@@ -55,14 +55,29 @@ function getTimeSlotsFromBackend(selectedDate)
     .then(data => 
     {
         console.log(data.success);
-
         const tableBody = document.getElementById('slotTableBody');
         tableBody.innerHTML = '';
+
+        // set schedule data
+        const startElement = document.getElementById('start');
+        const endElement = document.getElementById('end');
+
+        if(data.schedule)
+        {
+            startElement.textContent = data.schedule.start_time || '___________';
+            endElement.textContent = data.schedule.end_time || '___________';
+        }
+        else
+        {
+            startElement.textContent = '___________';
+            endElement.textContent = '___________';
+        }
 
         // console.log('uuuuuuuu');
         //__________________________________________________
         if (data.success && data.result.length > 0) 
         {
+            
             data.result.forEach(slot => {
                 const row = document.createElement('tr');
 
@@ -85,6 +100,8 @@ function getTimeSlotsFromBackend(selectedDate)
     {
         console.error('Error fetching slots:', error);
         document.getElementById('slotTableBody').innerHTML = `<tr><td colspan="3">Error loading appointment slots.</td></tr>`;
+        document.getElementById('start').textContent = 'N/A';
+        document.getElementById('end').textContent = 'N/A';
     });
 }
 

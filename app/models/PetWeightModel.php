@@ -11,4 +11,11 @@ class PetWeightModel
     public function insertData($data) {
         $this->insert($data);
     }
+
+    public function getPetWeightData($petID) {
+        $this->limit = 1000;
+        $this->order_column = 'measuredDate';
+        $this->order_type = 'DESC';
+        return $this->where(['petID' => $petID]); // what this return is an array of pet
+    }
 }

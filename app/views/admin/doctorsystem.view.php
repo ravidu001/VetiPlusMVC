@@ -53,7 +53,7 @@
                                     </td>
                                 </tr>
                             <?php else: ?>
-                                <p> No registration requests </p>
+                                <!-- <p> No registration requests </p> -->
                             <?php endif; ?>
 
                         <?php endforeach; ?>
@@ -63,46 +63,42 @@
                 </table>
             </div>
             <div id="actionModal" class="modal">
-    <div class="modal-content">
-        <i class='bx bx-question-mark modal-icon'></i>
-        <h2 id="modalTitle">Confirm Action</h2>
-        <p id="modalDescription">Are you sure you want to proceed?</p>
+                <div class="modal-content">
+                    <i class='bx bx-question-mark modal-icon'></i>
+                    <h2 id="modalTitle">Confirm Action</h2>
+                    <p id="modalDescription">Are you sure you want to proceed?</p>
 
-        <!-- Reason Input (initially hidden) -->
-        <div id="rejectReasonWrapper" style="display: none; margin-top: 10px;">
-            <label for="rejectReason">Reason for rejection:</label>
-            <input type="text" id="rejectReason" placeholder="Enter reason..." class="reject-input">
-        </div>
+                    <!-- Reason Input (initially hidden) -->
+                    <div id="rejectReasonWrapper" style="display: none; margin-top: 10px;">
+                        <label for="rejectReason">Reason for rejection:</label>
+                        <input type="text" id="rejectReason" placeholder="Enter reason..." class="reject-input">
+                    </div>
 
-        <div class="modal-buttons">
-            <button class="btn btn-accept" id="confirmButton">Confirm</button>
-            <button class="btn btn-decline" onclick="closeModal()">Cancel</button>
-        </div>
-    </div>
-</div>
+                    <div class="modal-buttons">
+                        <button class="btn btn-accept" id="confirmButton">Confirm</button>
+                        <button class="btn btn-decline" onclick="closeModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </section>
     <script>
-        
-
-
         document.getElementById('confirmButton').addEventListener('click', () => {
-    if (selectedDoctorID && selectedActionType) {
-        if (selectedActionType === 'decline') {
-            const reason = document.getElementById('rejectReason').value.trim();
-            if (!reason) {
-                alert("Please provide a reason for rejection.");
-                return;
+            if (selectedDoctorID && selectedActionType) {
+                if (selectedActionType === 'decline') {
+                    const reason = document.getElementById('rejectReason').value.trim();
+                    if (!reason) {
+                        alert("Please provide a reason for rejection.");
+                        return;
+                    }
+                    // Pass reason via query string (or POST if needed)
+                    window.location.href = `<?= ROOT ?>/AdminDoctorSystem/decline/${selectedDoctorID}?reason=${encodeURIComponent(reason)}`;
+                } else {
+                    window.location.href = `<?= ROOT ?>/AdminDoctorSystem/accept/${selectedDoctorID}`;
+                }
             }
-            // Pass reason via query string (or POST if needed)
-            window.location.href = `<?= ROOT ?>/AdminDoctorSystem/decline/${selectedDoctorID}?reason=${encodeURIComponent(reason)}`;
-        } else {
-            window.location.href = `<?= ROOT ?>/AdminDoctorSystem/accept/${selectedDoctorID}`;
-        }
-    }
-});
-
+        });
     </script>
     <script src="<?= ROOT ?>/assets/js/admin/adminsystemaccpet.js"></script>
 

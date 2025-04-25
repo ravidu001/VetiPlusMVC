@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="search-section">
+            <!-- <div class="search-section">
                 <div class="search-card">
                     <i class="fas fa-users search-card-icon"></i>
                     <form class="search-form" action ="<?= ROOT ?>/OwnerAccount/petuser" method="post">
@@ -91,7 +91,7 @@
                         <button type="submit">Search Pets</button>
                     </form>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </body>

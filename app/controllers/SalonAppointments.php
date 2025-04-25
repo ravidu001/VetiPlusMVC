@@ -1,5 +1,4 @@
 <?php
-
 class SalonAppointments extends Controller{
 
     public function index() 
@@ -11,7 +10,6 @@ class SalonAppointments extends Controller{
    {
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            
             $data = json_decode(file_get_contents("php://input"), true);
 
             $groomingid = $data['id'] ?? null;

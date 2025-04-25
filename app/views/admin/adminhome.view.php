@@ -55,7 +55,7 @@
                         <i class='bx bxs-dollar-circle icon'></i>
                         <div class="content">
                             <h3>Total Transactions</h3>
-                            <h2>$234,567</h2>
+                            <h2>Rs.<?= htmlspecialchars($total) ?></h2>
                         </div>
                     </div>
                     <div class="stats-card">
@@ -75,19 +75,19 @@
                           <div>
                             <div class="stats-cards card">
                                 <h3>Pet Account</h3>
-                                <h4>23</h4>
+                                <h4><?php echo htmlspecialchars($petcount, ENT_QUOTES, 'UTF-8'); ?></h4>
                             </div>
                              <div class="stats-cards card">
-                                <h3>User Account</h3>
-                                <h4>11</h4>
+                                <h3>Pet Owner Account</h3>
+                                <h4><?php echo htmlspecialchars($petownercount, ENT_QUOTES, 'UTF-8'); ?></h4>
                              </div>
                              <div class="stats-cards card">
                                 <h3>Doctor Account</h3>
-                                <h4>10</h4>
+                                <h4><?php echo htmlspecialchars($doctorcount, ENT_QUOTES, 'UTF-8'); ?></h4>
                              </div>
                              <div class="stats-cards card">
                                 <h3>Salon Account</h3>
-                                <h4>22</h4>
+                                <h4><?php echo htmlspecialchars($salonCount, ENT_QUOTES, 'UTF-8'); ?></h4>
                              </div>
                           </div>
                     </div>
