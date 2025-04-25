@@ -18,14 +18,14 @@ class DoctorReview extends Controller {
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByDoctorId($doctorId);
         // Check if the reviews were fetched successfully
-        if ($reviews === false) {
-            // Handle the error (e.g., show an error message)
-            die('Error fetching reviews.');
-        }
+        // if ($reviews === false) {
+        //     // Handle the error (e.g., show an error message)
+        //     die('Error fetching reviews.');
+        // }
 
         // Check if there are any reviews
         if (empty($reviews)) {
-            echo 'No reviews found for this doctor.';
+            echo "<script>console.log('No reviews found for this doctor.');</script>";
         } else {
             // Proceed to access the reviews
             // print_r($reviews[0]->feedbackID); // This will work if there are reviews
@@ -56,30 +56,34 @@ class DoctorReview extends Controller {
             // Initialize an array to hold consolidated session data
             $consolidatedReviews = [];
         
-            // Iterate over each review to get petowner data
-            foreach ($reviews as $reviewsItem) {
-                $petOwner = new PetOwner();
-                $petOwnerData = $petOwner->getUserDetailsByID($reviewsItem->petOwnerID);
-                // print_r($petOwnerData->fullName);
-
-                if ($petOwnerData) {
-                    // Consolidate session data
-                    $consolidatedReviews[] = [
-                        'reviewData' => $reviewsItem,
-                        'petOwner' => $petOwnerData
-                    ];
+            if (is_array($reviews)){
+                // Iterate over each review to get petowner data
+                foreach ($reviews as $reviewsItem) {
+                    $petOwner = new PetOwner();
+                    $petOwnerData = $petOwner->getUserDetailsByID($reviewsItem->petOwnerID);
+                    // print_r($petOwnerData->fullName);
+    
+                    if ($petOwnerData) {
+                        // Consolidate session data
+                        $consolidatedReviews[] = [
+                            'reviewData' => $reviewsItem,
+                            'petOwner' => $petOwnerData
+                        ];
+                    }
+                    
                 }
-                
+
             }
         }
 
         // show($consolidatedReviews);
 
         $this->view('vetDoctor/doctorreview', 
-            ['reviews' => $consolidatedReviews, 
-            'averageRating' => $averageRating, 
-            'unreadCount' => $unreadCount, 
-            'doctorName' => $doctorName]);
+            ['reviews' => $consolidatedReviews ?? null, 
+            'averageRating' => $averageRating ?? null, 
+            'unreadCount' => $unreadCount ?? null, 
+            'doctorName' => $doctorName ?? null,
+        ]);
     }
 
     public function sendReply() {
