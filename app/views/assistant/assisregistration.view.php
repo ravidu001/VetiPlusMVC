@@ -107,21 +107,21 @@ $notification = new Notification();
             <div class="form-section active" id="personalInfo">
                 <h3>Personal Information</h3>
                 <div class="form-group">
-                    <label for="fullName">Full Name</label>
+                    <label for="fullName">Full Name <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" id="fullName" class="form-input" name="fullName" required 
                         placeholder="Enter Full Name">
                 </div>
                 <div class="form-group">
-                    <label for="DOB">Date of Birth</label>
+                    <label for="DOB">Date of Birth <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="date" id="DOB" class="form-input" name="DOB" required>
                 </div>
                 <div class="form-group">
-                    <label id="mobile">Mobile Number</label>
+                    <label id="mobile">Mobile Number <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="number" id="mobile" class="form-input" name="mobile" required
                             placeholder="Enter Mobile Number">
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender</label>
+                    <label for="gender">Gender <div style="color:red; padding-left:5px;">*</div></label>
                     <select class="form-input" id="gender" name="gender" required>
                         <option value="">Select Gender</option>
                         <option>Male</option>
@@ -130,12 +130,12 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group full-width">
-                    <label for="address">Address</label>
+                    <label for="address">Address <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" class="form-input" id="address" name="address" required
                         placeholder="Street Address">
                 </div>
                 <div class="form-group">
-                    <label for="district">District</label>
+                    <label for="district">District <div style="color:red; padding-left:5px;">*</div></label>
                     <select name="district" class="form-input" required>
                         <option value="" disabled selected>Select a district</option>
                         <option value="Ampara">Ampara</option>
@@ -179,12 +179,12 @@ $notification = new Notification();
             <div class="form-section" id="professionalInfo">
                 <h3>Professional Details</h3>
                 <div class="form-group">
-                    <label for="certificateNumber">Certification Number</label>
+                    <label for="certificateNumber">Certification Number <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" class="form-input" id="certificateNumber" name="certificateNumber" required 
                         placeholder="Professional Certification">
                 </div>
                 <div class="form-group">
-                    <label>Area of Expertise</label>
+                    <label>Area of Expertise <div style="color:red; padding-left:5px;">*</div></label>
                     <select class="form-input" name="expertise" required>
                         <option value="">Select Area of Expertise</option>
                         <option>Small Animal Care</option>
@@ -194,23 +194,23 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="experience">Years of Experience</label>
+                    <label for="experience">Years of Experience <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="number" class="form-input" id="experience"
                         min="0" max="50" name="experience" required 
                         placeholder="Enter Experience">
                 </div>
                 <div class="form-group">
-                    <label for="bio">Bio</label>
+                    <label for="bio">Bio <div style="color:red; padding-left:5px;">*</div></label>
                     <textarea id="bio" class="form-input" name="bio" required placeholder="Enter a short biography"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="chargePerHour">Charge per Hour</label>
+                    <label for="chargePerHour">Charge per Hour <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="number" class="form-input" id="chargePerHour"
                         min="0" step="0.01" name="chargePerHour" required 
                         placeholder="Enter Hourly Rate">
                 </div>
                 <div class="form-group">
-                    <label>Languages</label>
+                    <label>Languages <div style="color:red; padding-left:5px;">*</div></label>
                     <div class="language-checkboxes">
                         <label for="languageEnglish" class="checkbox-container">
                             <input type="checkbox" id="languageEnglish" name="languageSpoken[]" value="English"> English
@@ -236,7 +236,7 @@ $notification = new Notification();
             <div class="form-section" id="uploadInfo">
                 <h3>Upload Certification</h3>
                 <div class="form-group file-upload">
-                    <label for="certificate">Upload Professional Certificate</label>
+                    <label for="certificate">Upload Professional Certificate <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="file" id="certificate" name="certificate" accept=".pdf,.jpg,.png" required>
                 </div>
 
