@@ -11,7 +11,7 @@ class Doctor extends Controller {
         // Check if the user is a doctor
         if ($_SESSION['type'] !== 'Vet Doctor') {
             // Redirect to the home page if not a doctor
-            header('Location: ' . ROOT . '/home');
+            header('Location: ' . ROOT . '/login');
             exit();
         }
 
@@ -70,8 +70,9 @@ class Doctor extends Controller {
 
         $feedback = new VetFeedbackModel();
         $feedbackData = $feedback->getReviewsByDoctorId($doctorID);
-        $feedbackCount = count($feedbackData); // Get the count of feedbacks
+        // $feedbackCount = count($feedbackData); // Get the count of feedbacks
         // show($feedbackCount);
+        $feedbackCount = 0; // Get the count of feedbacks
 
         $session = new DoctorSessionModel;
 
@@ -136,7 +137,7 @@ class Doctor extends Controller {
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByDoctorId($doctorID);
         // Check if the reviews were fetched successfully
-        if ($reviews === false) {
+        if ($reviews === true) {
             // Handle the error (e.g., show an error message)
             die('Error fetching reviews.');
         }

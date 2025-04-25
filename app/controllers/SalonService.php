@@ -28,27 +28,18 @@ class SalonService extends Controller
     public function delete($serviceID)
     {
         $servicetable = new SalonServices;
-        $servicetable->servicedelete($serviceID);
-        
-        // header('Content-Type: application/json');
-        
-        // if($result !== false)
-        // {
-        //     echo json_encode([
-        //         'success' => true,
-        //         'message' => 'Service deleted successfully.'
-        //     ]);
-        // }
-        // else
-        // {
-        //     echo json_encode([
-        //         'success' => false,
-        //         'message' => 'Failed to delete the service.'
-        //     ]);
-        // }
-        
-        // exit;
+        $notifications = new Notification();
 
+        $result = $servicetable->servicedelete($serviceID);
+        
+        if($result)
+        {
+            $notifications->show("Service delete successfully.",'success');
+        }
+        else
+        {
+            $notifications->show("Service delete unsuccessfully.",'error');
+        }
     }
     //________________________________________________________________________________________________________________________________
     //update service details function
@@ -59,6 +50,7 @@ class SalonService extends Controller
         //fetch the all data in the database and push it in to the edit form for values
         $data = [];
         $serviceModel = new SalonServices;
+        $notifications = new Notification();
 
         $serviceData = $serviceModel->whereservice($serviceID);
         $data['olddata'] = $serviceData;
@@ -130,7 +122,8 @@ class SalonService extends Controller
                 
                     if (!move_uploaded_file($validateresult['tempphoto1'], $validateresult['photo1'])) 
                     {
-                        $validateresult['errors'] = "Failed to upload photo1.";
+                        // $validateresult['errors'] = "Failed to upload photo1.";
+                        $notifications->show("Failed to Upload Photo one",'error');
                     }
                 }
 
@@ -141,7 +134,8 @@ class SalonService extends Controller
                 
                     if (!move_uploaded_file($validateresult['tempphoto2'], $validateresult['photo2'])) 
                     {
-                        $validateresult['errors'] = "Failed to upload photo2.";
+                        // $validateresult['errors'] = "Failed to upload photo2.";
+                        $notifications->show("Failed to Upload Photo two",'error');
                     }
                 }
 
@@ -161,23 +155,29 @@ class SalonService extends Controller
                         // Call the insert method
                         $result=$servicetable->serviceupdate($serviceID, $validateresult);
 
-                        show($result);
-                
-                        // If no exceptions occur, assume success
-                        redirect('SalonService');
+                        // show($result);
+                        if($result)
+                        {
+                            $notifications->show("Succssfully Upload the image",'success');
+                            // If no exceptions occur, assume success
+                            redirect('SalonService');
+                        }
                     } catch (Exception $e) {
                         // Handle the exception if something goes wrong
-                        $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
+                        // $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
+                        $notifications->show("Data update unsuccessful!",'error');
                     }
                 } 
                 else 
                 {
-                    $data['errors'] = $validateresult['errors'];
+                    // $data['errors'] = $validateresult['errors'];
+                    $notifications->show("Uploaded image is too large!",'error');
                 }
             }
             else 
             {
-                $data['errors'] = $validateresult['errors'];
+                // $data['errors'] = $validateresult['errors'];
+                $notifications->show("Service data incorrectly uploaded.!",'error');
             }
         }
 
@@ -191,6 +191,8 @@ class SalonService extends Controller
     {
         // Create the array to pass the form data
         $data = [];
+
+        $notifications = new Notification();
 
         // Check if the submit button is clicked
         if (isset($_POST['submit'])) 
@@ -257,7 +259,8 @@ class SalonService extends Controller
                 
                     if (!move_uploaded_file($validateresult['tempphoto1'], $validateresult['photo1'])) 
                     {
-                        $validateresult['errors'] = "Failed to upload photo1.";
+                        // $validateresult['errors'] = "Failed to upload photo1.";
+                        $notifications->show("Failed to upload images.!",'error'); 
                     }
                 }
 
@@ -268,7 +271,8 @@ class SalonService extends Controller
                 
                     if (!move_uploaded_file($validateresult['tempphoto2'], $validateresult['photo2'])) 
                     {
-                        $validateresult['errors'] = "Failed to upload photo2.";
+                        // $validateresult['errors'] = "Failed to upload photo2.";
+                        $notifications->show("Failed to upload images.!",'error'); 
                     }
                 }
 
@@ -287,22 +291,25 @@ class SalonService extends Controller
                     try {
                         // Call the insert method
                         $servicetable->serviceadd($validateresult);
-                
+                        $notifications->show("Service Add successfully.!",'success'); 
                         // If no exceptions occur, assume success
                         redirect('SalonService');
                     } catch (Exception $e) {
                         // Handle the exception if something goes wrong
-                        $data['errors'] = 'Data insert unsuccessful: ' . $e->getMessage();
+                        // $data['errors'] = 'Data insert unsuccessful: ' . $e->getMessage();
+                        $notifications->show("Service cannot successfully added.!",'error');
                     }
                 } 
                 else 
                 {
-                    $data['errors'] = $validateresult['errors'];
+                    // $data['errors'] = $validateresult['errors'];
+                    $notifications->show("Image is too large cannot upload.!",'error'); 
                 }
             }
             else 
             {
-                $data['errors'] = $validateresult['errors'];
+                // $data['errors'] = $validateresult['errors'];
+                $notifications->show("Service details are incoorect.Please check.!",'error'); 
             }
         }
 
@@ -342,8 +349,6 @@ class SalonService extends Controller
         }
 
         return $arr;
-    }
-
-   
+    }  
 }
 ?>
