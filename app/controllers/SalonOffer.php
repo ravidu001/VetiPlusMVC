@@ -146,7 +146,7 @@ class SalonOffer extends Controller
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
         $offerID['offerID'] = $data;
-
+        
         $specialOfferID =  $offerID['offerID'] ?? null;
 
         if($specialOfferID === null)
