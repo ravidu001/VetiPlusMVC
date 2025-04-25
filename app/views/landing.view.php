@@ -8,22 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
-
-        <!-- <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet"> -->
-        <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/hero.css" rel="stylesheet">
-
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+        <link href="<?= ROOT ?>/assets/css/guestUser/guest_commonStyles.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/guestHome.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/happyCx.css" rel="stylesheet">
+        
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
     </head>
 
     <body>
-        <!-- <?php // require_once '../app/views/navbar/guestNav.php' ?> -->
-
         <!-- navbar on top: -->
         <?php include 'navbar/guestNav.php' ?>
 
@@ -37,7 +29,7 @@
 
         <section class="sectionWithHeader">
             <h1>Our Services</h1>
-            <span class="serviceCards"></span>
+            <div class="serviceCards"></div>
         </section>
         
 
@@ -46,7 +38,7 @@
             <div class="homeDivText">
                 <h2>Pets do speak, but only to those who know how to listen.</h2>
                 <p>Join the VetiPlus family today and connect with professionals who take pet care to another level.</p>    
-                <a href="pages/login.html" class="regBtn">
+                <a href="<?=ROOT.'/signup'?>" class="regBtn">
                     <button>Register</button>
                 </a>
             </div>
@@ -61,7 +53,7 @@
                     VetiPlus provides the tools to makeyour experience seamless and rewarding.
                     Become part of our family today
                 </p>    
-                <a href="pages/login.html" class="regBtn">
+                <a href="<?=ROOT.'/signup'?>" class="regBtn">
                     <button>Register</button>
                 </a>
             </div>
@@ -118,23 +110,9 @@
                 </div>
             </div>
         </section>
-
-        <!-- <h1>Our Happy Customers</h1>
-        <div class="happyCx">
-            <div class="cxCard">
-                <img src="" alt="">
-                <p class="cxTitle"></p>
-                <p class="cxReview">
-
-                </p>
-                <div class="stars"></div>
-            </div>
-        </div> -->
-
         
         <!-- footer at page's bottom: -->
         <?php include_once '../app/views/navbar/guestFooter.php'; ?>
-
 
         <script>
             const imgFolder = "./assets/images/guestUser/serviceIcons/"
@@ -164,7 +142,7 @@
                 .map(ser => `<div class='serviceCard'>
                                 <h4>${ser.serviceName}</h4>
                                 <img src='${ser.imgLoc}'/>
-                            </div>`)
+                            </div>`).join('');
         </script>
     </body>
 </html>

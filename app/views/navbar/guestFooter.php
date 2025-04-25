@@ -1,13 +1,20 @@
+<script>
+    let footerLink = document.createElement('link');
+    footerLink.rel = 'stylesheet';
+    footerLink.href = "<?= ROOT ?>/assets/css/guestUser/myFooter.css";
+    document.head.appendChild(footerLink);
+</script>
+
 <footer class="myFooter">
     <div class="footerLinks">
         <div>
             <h3>Quick Links:</h3>
             <ul class="quickLinks">
-                <li><a href="<?= ROOT . '/guestUser' ?>">Home</a></li>
-                <li><a href="<?= ROOT . '/guestServices' ?>">Our Services</a></li>
-                <li><a href="<?= ROOT . '/guestAboutUs' ?>">About Us</a></li>
-                <li><a href="<?= ROOT . '/guestContactUs' ?>">Contact Us</a></li>
-                <li><a href="<?= ROOT . '/login' ?>">Login</a></li>
+                <li><a href="<?=ROOT.'/guestUser' ?>">Home</a></li>
+                <li><a href="<?=ROOT.'/guestServices' ?>">Our Services</a></li>
+                <li><a href="<?=ROOT.'/guestAboutUs' ?>">About Us</a></li>
+                <li><a href="<?=ROOT.'/guestContactUs' ?>">Contact Us</a></li>
+                <li><a href="<?=ROOT.'/login' ?>">Login</a></li>
             </ul>
         </div>
         <div>

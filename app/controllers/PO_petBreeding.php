@@ -19,4 +19,9 @@ class PO_petBreeding extends Controller {
     public function index() {
         $this->view('petowner/petBreeding');
     }
+
+    public function forBreeding_getList () {}
+    public function forBreeding_getMyList () {}
+    public function forBreeding_addNew() {}
+
 }
