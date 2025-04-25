@@ -18,8 +18,8 @@
         <div class="profile-container">
             <div class="profile-header">
                 <img src="https://placekitten.com/300/300" alt="Pet Profile" class="profile-image">
-                <h2>Rocky</h2>
-                <p>Persian Cat</p>
+                <h2><?= htmlspecialchars($admin->name ?? 'N/A') ?></h2>
+                <p><?= htmlspecialchars($admin->species ?? 'N/A') ?></p>
             </div>
 
             <div>
@@ -35,33 +35,33 @@
                         <i class='bx bx-male-sign'></i>
                         <div class="info">
                             <h4>Gender</h4>
-                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
+                            <p><?= htmlspecialchars($admin->gender ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bx-calendar'></i>
                         <div class="info">
-                            <h4>Age</h4>
-                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
+                            <h4>DOB</h4>
+                            <p><?= htmlspecialchars($admin->DOB ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bxs-dog'></i>
                         <div class="info">
                             <h4>Breed</h4>
-                            <p><?= htmlspecialchars($admin->petID ?? 'N/A') ?></p>
+                            <p><?= htmlspecialchars($admin->breed ?? 'N/A') ?></p>
                         </div>
                     </div>
                     <div class="detail-card">
                         <i class='bx bxs-user-circle'></i>
                         <div class="info">
                             <h4>Pet Owner</h4>
-                            <p>Ramesh Peshala</p>
+                            <p><?= htmlspecialchars($admin->petOwnerID ?? 'N/A') ?></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="stats-section">
+                <!-- <div class="stats-section">
                     <div class="stat-card">
                         <h3>12</h3>
                         <p>Veterinary Visits</p>
@@ -74,7 +74,7 @@
                         <h3>3</h3>
                         <p>Treatments</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>

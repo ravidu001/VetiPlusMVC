@@ -1,0 +1,32 @@
+.filter-group {
+    position: relative;
+    margin-bottom: 15px;
+    width: 250px;
+}
+.searchBar {
+    width: 100%;
+    padding: 8px;
+}
+
+.dropdownList {
+    position: absolute;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    color: black;
+    background-color: #f6f4fe;
+}  
+.dropdownList li {
+    padding: 8px;
+    cursor: pointer;
+}  
+.dropdownList li:hover {
+    background: #f0f0f0;
+}

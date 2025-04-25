@@ -10,20 +10,19 @@
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/petOwner/poppinsFont.css" rel="stylesheet">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/petOwner/aboutPage.css" rel="stylesheet">
 
     </head>
     <body>
         <!-- navbar on top: -->
-        <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
+        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea"> 
 
         <section class="aboutSections">
-            <img src="<?= ROOT ?>/assets\images\guestUser\aboutUs/ourStory.png" alt="Our Story">
+            <img src="<?= ROOT ?>/assets/images/guestUser/aboutUs/ourStory.png" alt="Our Story">
             <div class="text">
                 <header class="mainH">Our Story</header>
                 <p>
@@ -41,7 +40,7 @@
             </div>
         </section>
         <section class="aboutSections">
-            <img src="<?= ROOT ?>/assets\images\guestUser\aboutUs/joinUs.png" alt="Join the VetiPlus family">
+            <img src="<?= ROOT ?>/assets/images/guestUser/aboutUs/joinUs.png" alt="Join the VetiPlus family">
             <div class="text">
                 <header>Join the<br/>VetiPlus family</header>
                 <p>
@@ -62,11 +61,11 @@
                     Together, we are committed to elevating the standard of pet care and fostering a thriving community of animal lovers.
                 </p>
             </div>
-            <img src="<?= ROOT ?>/assets\images\guestUser\aboutUs/theTeam.png" alt="">
+            <img src="<?= ROOT ?>/assets/images/guestUser/aboutUs/theTeam.png" alt="">
         </section>
 
             <!-- footer at page's bottom: -->
-            <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
+            <?php include_once '../app/views/navbar/po_Footer.php'; ?>
         </div>
 
     </body>

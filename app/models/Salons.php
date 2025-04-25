@@ -31,5 +31,20 @@ class Salons
     {
         return $this->insert($arr);
     }
+
+    public function salonCount(){
+        $count = $this->getCount();
+        return $count;
+    }
+
+    public function getalldata() {
+        $this->order_type = "desc";
+        $this->order_column = "salonID";
+        return $this->findAll();
+    }
+
+    public function updateStatus($salonID, $data) {
+        $this->update($salonID, ['approvedStatus'=>$data['approvedStatus'],'rejectReason'=>$data['rejectReason']], 'salonID');
+    }
 }
 

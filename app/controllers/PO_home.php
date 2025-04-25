@@ -2,18 +2,20 @@
 
 class PO_home extends Controller {
 
-    // private $petOwnerID;
-
+    public $petOwnerID;
     public $petOwner;
     public $po_details; // eg usage: $this->po_details->fullName
 
     public $pets;
     public $petCount;
     public $pet_details; // will be mapped with js
+    
+    public $petAppts;
 
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
-
+        $this->petOwnerID = $_SESSION['petOwnerID'];
+        
         $this->petOwner = new PetOwner;
         $this->petOwner->setPetOwnerID();
 
@@ -25,8 +27,10 @@ class PO_home extends Controller {
 
         $this->pets = new Pet;
         $this->pets->setPetOwnerID();
+        
+        $this->petAppts = new PO_PetAppts;
 
-        $this->pet_details = $this->pets->getPetsDetails();
+        $this->pet_details = $this->pets->getAllPetsUnderUser();
         $this->petCount = $this->pet_details ? count($this->pet_details) : 0;
 
     }
@@ -36,10 +40,24 @@ class PO_home extends Controller {
     }
 
     public function getPets() {
-        $result = $this->pet_details ?: ["petCount" => 0];
+        $result = $this->pet_details ?: ["fetchedCount" => 0];
         
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
     }
+
+    public function getAppts_upcoming () {
+        $options = [
+            'petID' => null,
+            'petOwnerID' => $this->petOwnerID,
+            'type' => 'vet'
+        ];
+        $result = $this->petAppts->getPetApptUpcoming($options) ?: ["fetchedCount" => 0];
+        
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
+
 }

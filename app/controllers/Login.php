@@ -60,7 +60,7 @@ class Login extends Controller
                                 break;
                             case 'Vet Assistant':
                                 $_SESSION['user_id'] = $registered->email;
-                                header('Location: ../Assistant');
+                                header('Location: ../AssisRegistration');
                                 break;
                             case 'System Admin':
                                 $_SESSION['adminID'] = $registered->email;
@@ -87,6 +87,10 @@ class Login extends Controller
                                     $doctor = new DoctorModel();
                                     $doctorData = $doctor->find($registered->email);
 
+                                    if (empty($doctorData)) {
+                                        header('Location: ../DoctorRegistration');
+                                        exit();
+                                    }
                                     switch ($doctorData->approvedStatus){
                                         case 'pending':
                                             header('Location: ../Pending');

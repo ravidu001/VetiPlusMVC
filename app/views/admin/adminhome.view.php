@@ -23,17 +23,16 @@
                     <div class="user-profile">
                         <img src="https://via.placeholder.com/60" alt="Admin Profile">
                         <div>
-                            <h4 class="mb-0">Ramesh Peshala</h4>
                             <small class="text-muted">System Administrator</small>
                         </div>
                     </div>
-                    <div class="search-container">
+                    <!-- <div class="search-container">
                         <i class='bx bx-search'></i>
                         <input type="text" placeholder="Search dashboard...">
                         <div class="notifications-badge">
                             <i class='bx bx-bell'></i>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Stats Grid -->
@@ -56,14 +55,14 @@
                         <i class='bx bxs-dollar-circle icon'></i>
                         <div class="content">
                             <h3>Total Transactions</h3>
-                            <h2>$234,567</h2>
+                            <h2>Rs.<?= htmlspecialchars($total) ?></h2>
                         </div>
                     </div>
                     <div class="stats-card">
                         <i class='bx bxs-store icon'></i>
                         <div class="content">
                             <h3>Total Salons</h3>
-                            <h2>102</h2>
+                            <h2><?php echo htmlspecialchars($salonCount, ENT_QUOTES, 'UTF-8'); ?></h2>
                         </div>
                     </div>
                 </div>
@@ -71,11 +70,30 @@
                 <!-- Dashboard Main Content -->
                 <div class="dashboard-main">
                     <div class="chart-container">
-                        <canvas id="appointmentChart"></canvas>
+                        <!-- <canvas id="appointmentChart"></canvas> -->
+                         <h2>Account Type</h2>
+                          <div>
+                            <div class="stats-cards card">
+                                <h3>Pet Account</h3>
+                                <h4><?php echo htmlspecialchars($petcount, ENT_QUOTES, 'UTF-8'); ?></h4>
+                            </div>
+                             <div class="stats-cards card">
+                                <h3>Pet Owner Account</h3>
+                                <h4><?php echo htmlspecialchars($petownercount, ENT_QUOTES, 'UTF-8'); ?></h4>
+                             </div>
+                             <div class="stats-cards card">
+                                <h3>Doctor Account</h3>
+                                <h4><?php echo htmlspecialchars($doctorcount, ENT_QUOTES, 'UTF-8'); ?></h4>
+                             </div>
+                             <div class="stats-cards card">
+                                <h3>Salon Account</h3>
+                                <h4><?php echo htmlspecialchars($salonCount, ENT_QUOTES, 'UTF-8'); ?></h4>
+                             </div>
+                          </div>
                     </div>
                     <div class="complaints-container">
                         <h2>Recent Complaints</h2>
-                        <table class="table complaints-table">
+                         <table class="table complaints-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -84,23 +102,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php foreach ($complain as $complaint): ?>
                                 <tr>
-                                    <td>John Doe</td>
-                                    <td>Service delay issue</td>
-                                    <td><button class="view-button">View</button></td>
+                                    <td><?= htmlspecialchars($complaint->email) ?></td>
+                                    <td><?= htmlspecialchars($complaint->issue) ?></td>
+                                    <td><a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>" class="view-button">View Details</a></td>
                                 </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>Billing concern</td>
-                                    <td><button class="view-button">View</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Mike Johnson</td>
-                                    <td>Appointment not found</td>
-                                    <td><button class="view-button">View</button></td>
-                                </tr>
+                                <?php endforeach; ?>
                             </tbody>
-                        </table>
+                        </table> 
                     </div>
                 </div>
                 <div class="analytics-container">

@@ -20,8 +20,22 @@ class DoctorModel {
         'timeSlot',
         'specialization',
         'approvedStatus',
-        'rejectReason'
+        'rejectReason',
+        'registeredDate'
     ];
+
+    public function getalldata() {
+        $this->order_type = "desc";
+        $this->order_column = "doctorID";
+        return $this->findAll();
+    }
+    
+    public function doctorcount()
+    {
+        $count = $this->getCount();
+        return $count;  // Return the count value
+
+    }
 
     public function find($doctorID) {
         // $this->order_column = 'doctorID';
@@ -54,6 +68,10 @@ class DoctorModel {
         // } else {
         //     return false;
         // } 
+    }
+
+    public function updateStatus($doctorID, $data) {
+        $this->update($doctorID, ['approvedStatus'=>$data['approvedStatus'],'rejectReason'=>$data['rejectReason']], 'doctorID');
     }
 
 }

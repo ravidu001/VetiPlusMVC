@@ -37,8 +37,8 @@ body {
 
     width: 100%;
 }
-.bodyArea > *:not(footer) {
-    margin: 2rem 8rem;
+.bodyArea > *:not(footer, .dashArea-container) {
+    margin: 2rem 6rem;
 }
 .bodyHeader, .dashHeader {
     font-size: 2em;
@@ -55,113 +55,37 @@ body {
     gap: 1em;
 
     overflow-y: auto;
+    transition: all 0.3s ease-in;
 }
+.dashArea-container {
+    margin: 2rem 4rem;
 
-.longCard-container,
-.tallCard-container {
     display: grid;
-    gap: 1em;
-    padding: 5px;
-}
-
-.longCard-container {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-}
-
-.tallCard-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-}
-.card {
-    background-color: var(--secondary-bg-color);
-    padding: 0.5rem;
-    border-radius: 15px;
-    box-shadow: 2px 2px 7px var(--shadow-color);
-
-    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
     gap: 1em;
 }
-.card img {
-    border-radius: 50%;
-    max-height: 10em;
-}
 
-.longCard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
-
-    height: fit-content;
-}
-.tallCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    aspect-ratio: 3/4;
-}
-@media (max-width: 800px) {
-    .longCard {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .longCard-container {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    }
-}
-.card:hover {
-    transform: scale(1.01);
-    box-shadow: 2px 2px 10px var(--shadow-color);
-    transition: transform 0.2s ease-in;
-}
-
-.apptIcon {
-    height: 8em;
+.profilePic {
+    height: 10em;
     width: auto;
     max-height: 100%;
     max-width: 100%;
-}
-.cardBtn {
+    border-radius: 50%;
+    background-color: var(--shadow-color);
     padding: 5px;
-    border-radius: 10px;
-    height: 100%;
-    min-width: 6em;
+}
 
+:root {
+    font-size: clamp(0.8rem, 1vw, 1.2rem);
+}
+
+/* the search filters in appointment and other service pages: */
+.searchFilter-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-
+    justify-content: space-evenly;
+    gap: 5px;
 }
-.apptRating,
-.apptOptions {
-    height: 5em;
-    max-width: 100%;
-
-    display: flex;
-    gap: 10px;
-}
-
-@media (width <= 1200px) {
-    :root {
-        font-size: 0.9rem;
-    }
-}
-@media (width <= 900px) {
-    :root {
-        font-size: 0.8rem;
-    }
-}
-@media (width <= 750px) {
-    :root {
-        font-size: 0.7rem;
-    }
-}
-@media (width <= 500px) {
-    :root {
-        font-size: 0.6rem;
-    }
+.searchFilter {
+    border: 1px solid var(--primary-color)
 }

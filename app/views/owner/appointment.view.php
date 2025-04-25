@@ -22,46 +22,78 @@
                     <i class='bx bx-calendar-check icon'></i>
                     <div class="appointment-card-content">
                         <h3>Daily Appointments</h3>
-                        <p>45</p>
+                        <p><?php echo htmlspecialchars($dailyappointmentcount, ENT_QUOTES, 'UTF-8'); ?></p>
                     </div>
                 </div>
                 <div class="appointment-card">
                     <i class='bx bx-calendar icon'></i>
                     <div class="appointment-card-content">
-                        <h3>Monthly Appointments</h3>
-                        <p>230</p>
+                        <h3>completed Appointments</h3>
+                        <p><?php echo htmlspecialchars($completeappointment, ENT_QUOTES, 'UTF-8'); ?></p>
                     </div>
                 </div>
                 <div class="appointment-card">
                     <i class='bx bx-calendar-x icon'></i>
                     <div class="appointment-card-content">
                         <h3>Canceled Appointments</h3>
-                        <p>15</p>
+                        <p><?php echo htmlspecialchars($cancelappointment, ENT_QUOTES, 'UTF-8'); ?></p> 
                     </div>
                 </div>
                 <div class="appointment-card">
                     <i class='bx bx-time icon'></i>
                     <div class="appointment-card-content">
-                        <h3>Pending Appointments</h3>
-                        <p>22</p>
+                        <h3>Pending Appointments</h3> 
+                        <p><?php echo htmlspecialchars($pendingappointment, ENT_QUOTES, 'UTF-8'); ?></p>
                     </div>
                 </div>
             </div>
 
             <div class="search-section">
-                <form class="search-form" action="<?= ROOT ?>/OwnerAppointment/appointmentlist" method="post">
+                <form class="search-form" action="<?= ROOT ?>/OwnerAppointment/appointmentlist" method="GET">
                     <div class="search-inputs">
-                        <input type="text" placeholder="Search by User ID">
-                        <input type="text" placeholder="Search by Pet ID">
-                        <input type="date">
+                        <input type="text" name="petownerid" placeholder="Enter User ID">
+                        <!-- <input type="text" placeholder="Search by Pet ID"> -->
+                        <!-- <input type="date"> -->
                     </div>
-                    <button type="submit">Search</button>
+                    <button type="submit" name="submit" value="1" class="search-btn">Search Appointments</button>
                 </form>
             </div>
 
-            <div class="chart-section">
-                <h2>Appointment Trends</h2>
-                <canvas id="appointmentChart"></canvas>
+            <!-- <div class="chart-section">
+                 <h2>Appointment Trends</h2>
+                <canvas id="appointmentChart"></canvas> 
+            </div> -->
+            <div class="appointments-list">
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Pet Name</th>
+                            <th>Date and Time</th>
+                            <th>Session ID</th>
+                            <th>Visit Time</th>
+                            <th>Status
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($data['appointmentdata'])) : ?>
+                            <?php foreach ($data['appointmentdata'] as $appointment) : ?>
+                                <tr>
+                                    <td><?= $appointment->appointmentID ?></td>
+                                    <td><?= $appointment->petID ?></td>
+                                    <td><?= $appointment->bookedDateTime ?></td>
+                                    <td><?= $appointment->sessionID ?></td>
+                                    <td><?= $appointment->visitTime ?></td>
+                                    <td><?= $appointment->status ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="6">No appointment data available.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

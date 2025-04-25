@@ -45,4 +45,19 @@ trait Database
         }
         return false;
     }
+
+    // function needed for Transactions dealing with multiple queries at the same time:
+    public function beginTransaction() {
+        $con = $this->connect();
+        $con->beginTransaction();
+    }
+    public function commit() {
+        $con = $this->connect();
+        $con->commit();
+    }
+    public function rollBack() {
+        $con = $this->connect();
+        $con->rollBack();
+    }
+
 }

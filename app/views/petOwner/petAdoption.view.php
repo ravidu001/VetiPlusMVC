@@ -12,11 +12,11 @@
         
         <link href="<?= ROOT ?>/assets/css/petOwner/otherServicePages.css" rel="stylesheet">
         
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
 
-        <?php include_once '../app/views/navbar/petOwnerSidebar.php'; ?>
+        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea">
 
@@ -72,7 +72,7 @@
             </section>
 
             <!-- footer at page's bottom: -->
-            <?php include_once '../app/views/navbar/petOwnerFooter.php'; ?>
+            <?php include_once '../app/views/navbar/po_Footer.php'; ?>
             
         </div>
 

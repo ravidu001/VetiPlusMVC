@@ -20,43 +20,55 @@
                 <div class="user-profile">
                     <img src="https://via.placeholder.com/80" alt="User Profile">
                     <div class="user-profile-info">
-                        <h3>Welcome Back, Ramesh Peshala</h3>
+                        <h3>Welcome Back</h3>
                         <p>Owner Dashboard</p>
                     </div>
                 </div>
             </div>
-
+            <h1>Account Type</h1>
             <div class="stats-grid">
                 <div class="stat-card">
                     <i class='bx bxs-user-circle'></i>
                     <h3>Total Doctors</h3>
-                    <p>1,200</p>
+                    <p><?php echo htmlspecialchars($doctorcount, ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
                 <div class="stat-card">
                     <i class='bx bxs-store'></i>
                     <h3>Total Salons</h3>
-                    <p>120</p>
+                    <p><?php echo htmlspecialchars($saloncount, ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
                 <div class="stat-card">
                     <i class='bx bxs-group'></i>
                     <h3> Total Clients</h3>
-                    <p>5,000</p>
+                    <p><?php echo htmlspecialchars($petownercount, ENT_QUOTES, 'UTF-8'); ?></p>
+                </div>
+                <div class="stat-card">
+                    <i class='bx bxs-user-account icon'></i>
+                    <h3>Total Pets</h3>
+                    <p><?php echo htmlspecialchars($petcount, ENT_QUOTES, 'UTF-8'); ?></p>
+                </div>
+            </div>
+            <h1>Payment and Appointment details</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class='bx bx-line-chart icon'></i>
+                    <h3>Total Revenue</h3>
+                    <p>Rs. <?= htmlspecialchars($total) ?></p>
+                </div>
+                <div class="stat-card">
+                    <i class='bx bx-trending-up icon'></i>
+                    <h3>Daily Revenue</h3>
+                    <p>Rs. <?= htmlspecialchars($todayRevenue) ?></p>
+                </div>
+                <div class="stat-card">
+                    <i class='bx bx-calendar-x icon'></i>
+                    <h3> Daily Appointment</h3>
+                    <p><?php echo htmlspecialchars($petownercount, ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
                 <div class="stat-card">
                     <i class='bx bxs-calendar'></i>
-                    <h3>Appointments Today</h3>
-                    <p>300</p>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-card">
-                    <h2>Monthly Revenue</h2>
-                    <canvas id="revenueChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h2>Client Growth</h2>
-                    <canvas id="growthChart"></canvas>
+                    <h3>Total Appointments</h3>
+                    <p><?php echo htmlspecialchars($appointmentcount, ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
             </div>
         </div>

@@ -8,22 +8,22 @@ class AssisRegistration extends Controller {
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Validate and process the uploaded file
-             echo $_POST['fullName'];
+            // echo $_POST['fullName'];
             if (isset($_FILES['certificate']) && $_FILES['certificate']['error'] === UPLOAD_ERR_OK) {
                 $assistantCertificate = $_FILES['certificate']['name'];
                 $assistantCertificate_tmp_name = $_FILES['certificate']['tmp_name'];
                 $upload_dir = 'assets/images/vetAssistant/';
                 if (!is_dir($upload_dir)) {
-                    echo "<script>window.alert('Upload directory does not exist.');</script>";
+                    echo "<script>console.log('Upload directory does not exist.');</script>";
                     return;   
                 }
 
                 if (!move_uploaded_file($assistantCertificate_tmp_name, $upload_dir . $assistantCertificate)) {
-                    echo "<script>window.alert('Error uploading file. Please try again.');</script>";    
+                    echo "<script>console.log('Error uploading file. Please try again.');</script>";    
                     return;
                 }
             } else {
-                echo "<script>window.alert('Please upload your assistant certificate!');</script>";
+                echo "<script>console.log('Please upload your assistant certificate!');</script>";
                 return; // Exit the method if validation fails
             }
 
@@ -44,21 +44,37 @@ class AssisRegistration extends Controller {
                 'DOB' => $_POST['DOB'],
                 'gender' => $_POST['gender'],
                 'district' => $_POST['district'],
+                'bio' => $_POST['bio'],
                 'certificateNumber' => $_POST['certificateNumber'],
                 'expertise' => $_POST['expertise'],
                 'experience' => $_POST['experience'],
-                'exeperience' => $_POST['experience'],
                 'chargePerHour' => $_POST['chargePerHour'],
                 'languageSpoken' => $languageSpoken,
                 'certificate' => $assistantCertificate,
-                'status' => 'Pending'
+                'status' => 1
             ];
 
             // echo $data['assistantID'];
-            $assistant = new AssisRegistrationModel();
-            $assistant->create($data);
+            $assistant = new AssisModel();
+            $result = $assistant->create($data);
             
-            $this->view('assistant/home');
+            $notification = new Notification();
+    
+            if(!$result) {
+                // echo "<script>console.log('Registration successful!');</script>";
+                // header('Location: /vetiplusMVC/public/DoctorRegistration/home');
+                $notification->show("Your registration is successful. Thank you for join with us!", 'success');
+                redirect('login/index'); // this is not working because page is refreshed by the notification model.
+            } else {
+                // echo "<script>console.log('Registration failed. Please try again.');</script>";
+                // header('Location: /vetiplusMVC/public/DoctorRegistration/errorUpdate');
+                $notification->show("Registration failed. Please try again.", 'error');
+                redirect('AssisRegistration/index');
+            }
+
+            if(!$result) {
+                $this->view('login/index');
+            }
         }
     }
 }

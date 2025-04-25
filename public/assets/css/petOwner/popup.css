@@ -11,7 +11,9 @@ body.popup-active > *:not(.popup) {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -100px); /* Initial position (floated up) */
-    height: 50vh;
+    width: clamp(300px, 50vw, 600px);
+    height: fit-content;
+    max-height: 80vh;
 
     background-color: white;
     color: rgb(59, 58, 58);
@@ -31,13 +33,13 @@ body.popup-active > *:not(.popup) {
     align-items: center;
     text-align: center;
 }
-.popup img {
+.popup .popUpIcon {
     width: 150px;
     height: 150px;
     object-fit: contain;
     animation: rotate 3s ease-in-out infinite;
 }
-.popup img:hover {
+.popup .popUpIcon:hover {
     animation-play-state: paused;
 }
 @keyframes rotate {
@@ -45,8 +47,30 @@ body.popup-active > *:not(.popup) {
     to { transform: rotateY(360deg); }
 }
 
-.popup-button {
+.popup textarea {
+    width: clamp(10em, 30%, 20em);
+    min-height: 2em;
+    max-height: 10em;
+    field-sizing: content;
+    resize: none;
+
+    padding: 5px;
+}
+
+.popupBtn {
     border-radius: 10px;
     padding: 10px;
     font-size: 1.2em;
+}
+
+#starContainer .bx {
+    font-size: 24px;
+    color: #ffc107;
+    margin-right: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#starContainer .bx:hover {
+    transform: scale(1.2);
 }

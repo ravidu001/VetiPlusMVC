@@ -6,25 +6,31 @@ class AdminAccountDashboard extends Controller
     {
         $this->view('admin/accountdashboard');
     }
-    public function doctor()
+
+
+    public function petuserselect()
     {
-        $this->view('admin/doctoraccount');
-    }
-   
-        public function petuserselect()
-        {
-            if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
-                // Retrieve the email from the GET request
-                $email = $_GET['email'];
-    
-                // Validate the email
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
+            // Retrieve the email from the GET request
+            $email = $_GET['email'];
+            $admin_password = $_GET['admin_password'];
+            $adminID = $_SESSION['adminID'];
+
+            $admin = new User();
+            $adminData = $admin->checkLoginUser($adminID);
+            $admindatabasePassword = $adminData->password;
+
+            // Verify the password
+            if (password_verify($admin_password, $admindatabasePassword)) {
+                // echo "Password verified successfully!";
+
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     // Instantiate the model
-                    $adminModel = new PetOwner();
-    
+                    $petOwner = new PetOwner();
+
                     // Fetch admin details using the email
-                    $result = $adminModel->checkUser($email);
-    
+                    $result = $petOwner->checkUser($email);
+
                     // Check if an admin exists with the provided email
                     if (!empty($result)) {
                         // Pass the admin details to the admin profile view
@@ -37,24 +43,82 @@ class AdminAccountDashboard extends Controller
                     // Handle invalid email input
                     $this->view(['error' => 'Invalid email format. Please try again.']);
                 }
+                // Proceed with the rest of your logic
+            } else {
+                // Password is incorrect
+                echo "Invalid password. Please try again.";
+                // Handle the error (e.g., redirect or show an error message)
             }
         }
-        public function doctorselect()
-        {
-            if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
-                // Retrieve the email from the GET request
-                $email = $_GET['email'];
-                 
+    }
+
+    public function accept()
+    {
+        // Create an instance of the Notification controller
+        $notification = new Notification();
+
+        if (isset($_GET['petOwnerID'])) {
+            $petOwnerID = $_GET['petOwnerID'];
+
+            $User = new User();
+            $userData = $User->checkLoginUser($petOwnerID);
+
+            if ($userData && $userData->email == $petOwnerID) {
+                $newPassword = 'Ucsc@123';
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                $User->updatePassword($petOwnerID, $hashedPassword);
+                $notification->show("Password reset successfully!", 'success');
+            }
+        } else {
+            $notification->show("Invalid request.", 'error');
+        }
+    }
+
+    public function delete()
+    {
+        // Create an instance of the Notification controller
+        $notification = new Notification();
+
+        if (isset($_GET['petOwnerID'])) {
+            $petOwnerID = $_GET['petOwnerID'];
+
+            $User = new User();
+            $userData = $User->checkLoginUser($petOwnerID);
+
+            if ($userData && $userData->email == $petOwnerID) {
+                $activeStatus = 'deactive';
+
+                $User->deactivateUser($petOwnerID, $activeStatus);
+                $notification->show("User deactivate successfully!", 'success');
+            }
+        } else {
+            $notification->show("Invalid request.", 'error');
+        }
+    }
+
+    public function doctorselect()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
+            // Retrieve the email from the GET request
+            $email = $_GET['email'];
+            $admin_password = $_GET['admin_password'];
+            $adminID = $_SESSION['adminID'];
+
+            $admin = new User();
+            $adminData = $admin->checkLoginUser($adminID);
+            $admindatabasePassword = $adminData->password;
+
+            if (password_verify($admin_password, $admindatabasePassword)) {
+
                 // Validate the email
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     // Instantiate the model
                     $adminModel = new DoctorModel();
-    
+
                     // Fetch admin details using the email
                     $result = $adminModel->checkUser($email);
 
-                    show($result);
-    
                     // Check if an admin exists with the provided email
                     if (!empty($result)) {
                         // Pass the admin details to the admin profile view
@@ -67,26 +131,82 @@ class AdminAccountDashboard extends Controller
                     // Handle invalid email input
                     $this->view(['error' => 'Invalid email format. Please try again.']);
                 }
+            } else {
+                // Password is incorrect
+                echo "Invalid password. Please try again.";
+                // Handle the error (e.g., redirect or show an error message)
             }
         }
-        public function petselect()
-        {
-            if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
-                // Retrieve the email from the GET request
-                $email = $_GET['email'];
-    
+    }
+
+    public function doctoraccept()
+    {
+        // Create an instance of the Notification controller
+        $notification = new Notification();
+
+        if (isset($_GET['doctorID'])) {
+            $doctorID = $_GET['doctorID'];
+
+            $User = new User();
+            $userData = $User->checkLoginUser($doctorID);
+
+            if ($userData && $userData->email == $doctorID) {
+                $newPassword = 'Ucsc@123';
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                $User->updatePassword($doctorID, $hashedPassword);
+                $notification->show("Password reset successfully!", 'success');
+            }
+        } else {
+            $notification->show("Invalid request.", 'error');
+        }
+    }
+    public function doctordelete()
+    {
+        // Create an instance of the Notification controller
+        $notification = new Notification();
+
+        if (isset($_GET['doctorID'])) {
+            $doctorID = $_GET['doctorID'];
+
+            $User = new User();
+            $userData = $User->checkLoginUser($doctorID);
+
+            if ($userData && $userData->email == $doctorID) {
+                $activeStatus = 'deactive';
+
+                $User->deactivateUser($doctorID, $activeStatus);
+                $notification->show("User deactivate successfully!", 'success');
+            }
+        } else {
+            $notification->show("Invalid request.", 'error');
+        }
+    }
+    public function petselect()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
+            // Retrieve the email from the GET request
+            $email = $_GET['email'];
+            $admin_password = $_GET['admin_password'];
+            $adminID = $_SESSION['adminID'];
+
+            $admin = new User();
+            $adminData = $admin->checkLoginUser($adminID);
+            $admindatabasePassword = $adminData->password;
+
+            if (password_verify($admin_password, $admindatabasePassword)) {
                 // Validate the email
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     // Instantiate the model
                     $adminModel = new Pet();
-    
+
                     // Fetch admin details using the email
                     $result = $adminModel->checkUser($email);
-    
+
                     // Check if an admin exists with the provided email
                     if (!empty($result)) {
                         // Pass the admin details to the admin profile view
-                        $this->view('admin/petuseraccount', ['admin' => $result[0]]);
+                        $this->view('admin/petaccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
                         $this->view(['error' => 'No admin found with this email.']);
@@ -95,13 +215,11 @@ class AdminAccountDashboard extends Controller
                     // Handle invalid email input
                     $this->view(['error' => 'Invalid email format. Please try again.']);
                 }
+            } else {
+                // Password is incorrect
+                echo "Invalid password. Please try again.";
+                // Handle the error (e.g., redirect or show an error message)
             }
         }
-       
-    
-    public function pet()
-    {
-        $this->view('admin/petaccount');
     }
-
 }

@@ -19,7 +19,7 @@
             <div class="payment-stats">
                 <div class="stat-card">
                     <h3>Daily Transactions</h3>
-                    <div class="stat-number">Rs. 25,000</div>
+                    <div class="stat-number">Rs. <?= htmlspecialchars($todayRevenue) ?></div>
                 </div>
                 <div class="stat-card">
                     <h3>Total Users</h3>
@@ -27,18 +27,18 @@
                 </div>
                 <div class="stat-card">
                     <h3>Total Revenue</h3>
-                    <div class="stat-number">Rs. 500,000</div>
+                    <div class="stat-number">Rs.  <?= htmlspecialchars($total) ?></div>
                 </div>
             </div>
 
             <div class="payment-search">
                 <form class="search-form" action="<?= ROOT ?>/AdminPayment/paymentlist" method="post">
                     <div class="search-inputs">
-                        <input type="text" placeholder="Enter User ID">
-                        <input type="text" placeholder="Enter Pet ID">
-                        <input type="date">
+                        <input type="text" name="petownerID" placeholder="Enter User ID">
+                        <!-- <input type="text" placeholder="Enter Pet ID">
+                        <input type="date"> -->
+                        <button type="submit" class="search-btn">Search Transactions</button>
                     </div>
-                    <button type="submit" class="search-btn">Search Transactions</button>
                 </form>
             </div>
 
@@ -55,56 +55,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>TXN001</td>
-                            <td>John Doe</td>
-                            <td>Buddy</td>
-                            <td>Rs. 1,500</td>
-                            <td>2023-10-01</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-view">View</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TXN002</td>
-                            <td>Jane Smith</td>
-                            <td>Max</td>
-                            <td>Rs. 2,000</td>
-                            <td>2023-10-01</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-view">View</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TXN003</td>
-                            <td>Emily Johnson</td>
-                            <td>Charlie</td>
-                            <td>Rs. 1,200</td>
-                            <td>2023-10-01</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-view">View</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TXN004</td>
-                            <td>Michael Brown</td>
-                            <td>Lucy</td>
-                            <td>Rs. 1,800</td>
-                            <td>2023-10-02</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-view">View</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>TXN005</td>
-                            <td>Sarah Wilson</td>
-                            <td>Rocky</td>
-                            <td>Rs. 2,500</td>
-                            <td>2023-10-02</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-view">View</button>
-                            </td>
-                        </tr>
+                        <?php if (isset($data['paymentdata'])) : ?>
+                            <?php foreach ($data['paymentdata'] as $payment) : ?>
+                                <tr>
+                                    <td><?= $payment->paymentID ?></td>
+                                    <td><?= $payment->petownerID ?></td>
+                                    <td><?= $payment->appointmentID ?></td>
+                                    <td>Rs. <?= $payment->amount ?></td>
+                                    <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
+                                    <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="6">No payment data available.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

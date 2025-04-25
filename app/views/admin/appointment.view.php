@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,101 +9,83 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/adminnav.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/appointment.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
- 
+
 </head>
+
 <body>
-<?php require_once '../app/views/navbar/adminnav.php'; ?>
+    <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
         <div class="main-container">
-        <div class="appointment-stats">
-            <div class="stat-card">
-                <h3>Daily Appointments</h3>
-                <div class="stat-number">345</div>
-            </div>
-            <div class="stat-card">
-                <h3>Canceled Appointments</h3>
-                <div class="stat-number">23</div>
-            </div>
-            <div class="stat-card">
-                <h3>Total Appointments</h3>
-                <div class="stat-number">2,356</div>
-            </div>
-        </div>
-
-        <div class="appointment-search">
-            <form class="search-form"  action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="post" >
-                <div class="search-inputs">
-                    <input type="text" placeholder="Enter User ID">
-                    <input type="text" placeholder="Enter Pet ID">
-                    <input type="date">
+            <div class="appointment-stats">
+                <div class="stat-card">
+                    <h3>Daily Appointments</h3>
+                    <div class="stat-number"><?php echo htmlspecialchars($dailyappointmentcount, ENT_QUOTES, 'UTF-8'); ?></div>
                 </div>
-                <button type="submit" class="search-btn">Search Appointments</button>
-            </form>
-        </div>
+                <div class="stat-card">
+                    <h3>Canceled Appointments</h3>
+                    <div class="stat-number">23</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Appointments</h3>
+                    <div class="stat-number"><?php echo htmlspecialchars($appointmentcount, ENT_QUOTES, 'UTF-8'); ?></div>
+                </div>
+            </div>
 
-        <div class="appointments-list">
-            <table class="appointments-table">
-                <thead>
-                    <tr>
-                        <th>Appointment ID</th>
-                        <th>Pet Name</th>
-                        <th>Owner</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                         <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>001</td>
-                        <td>Buddy</td>
-                        <td>John Doe</td>
-                        <td>2023-10-01</td>
-                        <td>10:00 AM</td>
-                        <td><span class="status-badge status-confirmed">Confirmed</span></td>
-                      
-                    </tr>
-                    <tr>
-                        <td>002</td>
-                        <td>Max</td>
-                        <td>Jane Smith</td>
-                        <td>2023-10-01</td>
-                        <td>11:00 AM</td>
-                        <td><span class="status-badge status-pending">Pending</span></td>
-                      
-                    </tr>
-                    <tr>
-                        <td>003</td>
-                        <td>Charlie</td>
-                        <td>Emily Johnson</td>
-                        <td>2023-10-01</td>
-                        <td>01:00 PM</td>
-                        <td><span class="status-badge status-cancelled">Cancelled</span></td>
-                        
-                    </tr>
-                    <tr>
-                        <td>004</td>
-                        <td>Lucy</td>
-                        <td>Michael Brown</td>
-                        <td>2023-10-02</td>
-                        <td>09:00 AM</td>
-                        <td><span class="status-badge status-confirmed">Confirmed</span></td>
-                       
-                    </tr>
-                    <tr>
-                        <td>005</td>
-                        <td>Rocky</td>
-                        <td>Sarah Wilson</td>
-                        <td>2023-10-02</td>
-                        <td>02:00 PM</td>
-                        <td><span class="status-badge status-pending">Pending</span></td>
-                       
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <!-- <div class="appointment-search">
+                <form class="search-form" action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="GET">
+                    <div class="search-inputs">
+                        <input type="text" name="user_id" placeholder="Enter User ID">
+                        <input type="text" name="pet_id" placeholder="Enter Pet ID">
+                        <input type="date" name="appointment_date">
+                    </div>
+                    <button type="submit" class="search-btn">Search Appointments</button>
+                </form>
+
+            </div> -->
+            <div class="appointment-search">
+                <form class="search-form" action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="GET">
+                    <div class="search-inputs">
+                        <input type="text" name="petownerid" placeholder="Enter User ID">
+                        <!-- <input type="text" name="petid" placeholder="Enter Pet ID">  -->
+                        <button type="submit" name="submit" value="1" class="search-btn">Search Appointments</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="appointments-list">
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Pet Name</th>
+                            <th>Date and Time</th>
+                            <th>Session ID</th>
+                            <th>Visit Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($data['appointmentdata'])) : ?>
+                            <?php foreach ($data['appointmentdata'] as $appointment) : ?>
+                                <tr>
+                                    <td><?= $appointment->appointmentID ?></td>
+                                    <td><?= $appointment->petID ?></td>
+                                    <td><?= $appointment->bookedDateTime ?></td>
+                                    <td><?= $appointment->sessionID ?></td>
+                                    <td><?= $appointment->visitTime ?></td>
+                                    <!-- <td><a class="view-btn">View</a></td> -->
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="6">No appointment data available.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 </body>
+
 </html>
