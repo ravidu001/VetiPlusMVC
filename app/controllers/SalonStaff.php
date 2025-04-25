@@ -17,6 +17,7 @@ class SalonStaff extends Controller
     public function delete($staffID)
     {
         $stafftable = new SalonStaffs;
+        $notifications = new Notification();
         $data = $stafftable->deletestaff($staffID);
         redirect('SalonStaff',$data);
     }
@@ -30,6 +31,7 @@ class SalonStaff extends Controller
         $data = [];
 
         $staffModel = new SalonStaffs;
+        $notifications = new Notification();
 
         $serviceData = $staffModel->wherestaff($staffID);
         $data['olddata'] = $serviceData;
@@ -106,7 +108,8 @@ class SalonStaff extends Controller
                     }
 
                     $stafftable = new SalonStaffs;
-                    
+                    $notifications = new Notification();
+
                     try {
                         // Call the insert methodupdatestaff()
                         $result=$stafftable->updatestaff($staffID,$validateresult);
