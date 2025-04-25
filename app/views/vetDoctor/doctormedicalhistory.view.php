@@ -39,8 +39,6 @@
                     <option value="">Select Pet</option>
                 </select>
 
-                <input type="hidden" id="appointmentID" value="<?= $item['appointment']->appointmentID; ?>">
-
                 <div class="button-container">
                     <button id="okButton" class="btn btn-primary">OK</button>
                 </div>
