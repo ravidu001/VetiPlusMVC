@@ -26,15 +26,15 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert(data.message);
-                    location.reload(); // Refresh the page after deletion
+                    showNotification(data.message, 'success');
+                    setTimeout(() => location.reload(), 1500);
                 } else {
-                    alert('Error: ' + data.message);
+                    showNotification(data.message, 'error');
                 }
                 closeModal();
             })
             .catch(error => {
-                alert('An error occurred: ' + error);
+                showNotification(error, 'error');
                 closeModal();
             });
         }
@@ -47,3 +47,25 @@
             closeModal();
         }
     }
+
+
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.style.display = 'block';
+    
+        // Trigger fade-in
+        setTimeout(() => {
+            notification.style.opacity = 1;
+        }, 10);
+    
+        // Auto hide after 3 seconds
+        setTimeout(() => {
+            notification.style.opacity = 0;
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+    
