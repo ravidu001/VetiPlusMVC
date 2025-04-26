@@ -79,5 +79,10 @@ class Salons
         ];
         return $this->query($query, $params);
     }
+    public function pendingsaloncount(){
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE approvedStatus = 'pending'";
+        $result = $this->query($query);
+        return $result[0]->total;
+    }
 }
 

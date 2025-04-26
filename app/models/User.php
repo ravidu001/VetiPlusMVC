@@ -36,13 +36,15 @@ class User
         $this->update($id, ['loginCount' => $loginCount], 'email');
     }
 
-    public function updatePassword($email, $password) {
+    public function updatePassword($email, $password)
+    {
         $this->update($email, ['password' => $password], 'email');
     }
 
-    public function po_changePassword ($petOwnerID, $oldPass, $newPass) {
+    public function po_changePassword($petOwnerID, $oldPass, $newPass)
+    {
         $petOwner = $this->first(['email' => $petOwnerID]);
-        if ( password_hash($oldPass, PASSWORD_DEFAULT) == $petOwner->password ) {
+        if (password_hash($oldPass, PASSWORD_DEFAULT) == $petOwner->password) {
             $newPassHash = password_hash($newPass, PASSWORD_DEFAULT);
 
             $changeSuccess = $this->update($petOwnerID, ['password' => $newPassHash], 'email');
@@ -51,8 +53,9 @@ class User
             return false;
         }
     }
-    
-    public function deactivateUser($email, $status) {
+
+    public function deactivateUser($email, $status)
+    {
         $this->update($email, ['activeStatus' => $status], 'email');
     }
 
@@ -137,23 +140,35 @@ class User
         return $count;  // Return the count value
 
     }
-    public function admincountUser() {
+    public function admincountUser()
+    {
         $query = "SELECT COUNT(*) as total FROM $this->table WHERE type = 'System Admin'";
         $result = $this->query($query);
         return $result[0]->total;
-    }  
-    public function deactiveusercount(){
+    }
+    public function deactiveusercount()
+    {
         $query = "SELECT COUNT(*) as total FROM $this->table WHERE type = 'System Admin' AND activeStatus = 'deactive'";
         $result = $this->query($query);
         return $result[0]->total;
-    }  
+    }
 
     public function updateActiveStatus($id, $status)
     {
         return $this->update($id, ['activeStatus' => $status], 'email');
     }
 
-    public function changestatus($email){
-         return $this->update($email, ['activeStatus' => 'deactive'], 'email');
+    public function changestatus($email)
+    {
+        return $this->update($email, ['activeStatus' => 'deactive'], 'email');
+    }
+    public function updateUser($email, $data)
+    {
+        return $this->update($email, $data, 'email');
+    }
+    public function getUserByEmail($email)
+    {  
+        $this->order_column = 'email';
+        return $this->where(['email' => $email]);
     }
 }

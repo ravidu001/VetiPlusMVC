@@ -8,12 +8,13 @@ class AdminPayment extends Controller
         $paymentdata = $appointmentPay->getalldata(); 
         $total = $appointmentPay->CalRevenue();
         $todayRevenue = $appointmentPay->CalTodayRevenue();
-        
+        $petownercount = $this->petownercount();
         // show($total);  
         $this->view('admin/payment', [
             'paymentdata' => $paymentdata,
             'total' => $total,
             'todayRevenue' => $todayRevenue,
+            'petownercount' => $petownercount,
         ]);
     }
     public function paymentlist()
@@ -25,6 +26,8 @@ class AdminPayment extends Controller
             $appointmentPay = new AppointmentPayModel();
             $paymentdata = $appointmentPay->getdatabypetowner($petownerID);
             // show($paymentdata);
+
+            $notification = new Notification();
 
             if ($paymentdata) {
                 $petowner = new PetOwner();
@@ -45,7 +48,8 @@ class AdminPayment extends Controller
                 ]);
             } else {
                 // Handle the case where no data is found
-                $this->view('admin/payment', ['error' => 'No payment data found for the given Pet Owner ID.']);
+                $notification->show("No payment data found for the given Pet Owner ID", 'error'); 
+                redirect('AdminPayment');
             }
 
         }
@@ -79,5 +83,15 @@ class AdminPayment extends Controller
                 $this->view('admin/payment', ['error' => 'No payment data found for the given Pet Owner ID.']);
             }
 
+    }
+    public function petownercount(){
+        $petownerdata = new PetOwner();
+        $count = $petownerdata->petownercount();
+        return $count;
+    }
+    public function CalTodayRevenue(){
+        $caltoday = new AppointmentPayModel();
+        $count = $caltoday->CalTodayRevenue();
+        return $count;
     }
 }
