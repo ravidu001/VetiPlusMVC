@@ -18,6 +18,7 @@
 
 <body>
     <?= $notification->display(); ?>
+    <div id="notification" class="notification" style="display: none;"></div>
     <div class="pagecontent">
         <div class="sidebarandsevice">
             <div>

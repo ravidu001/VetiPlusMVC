@@ -33,7 +33,7 @@
             <ul>
                 <div class="logocontent">
                     <img class="logo" src="<?= ROOT ?>/assets/images/common/logo.png" alt="logo">
-                    <span class="logoname">VetiPlus<br></span>
+                    <span class="logoname">VetiPlus<br>Salon</span><br>
                 </div>
                 <button onclick="toggleSidebar()" id="toggle-btn">
                     <i class="fa-solid fa-circle-chevron-left icon"></i>

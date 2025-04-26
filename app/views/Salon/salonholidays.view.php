@@ -1,3 +1,7 @@
+<?php
+    $notification = new Notification;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,7 @@
     <title>Holidays</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonholiday.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salontimeslot.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -21,6 +26,7 @@
 ?>
 
 <body>
+<?= $notification->display(); ?>
         <div>
             <?php
                 include __DIR__ . '/../navbar/salonnav.php';
