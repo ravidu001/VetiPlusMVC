@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +12,7 @@
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <title>VetiPlus</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/adminnav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/accountdashboard.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -17,6 +23,7 @@
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
+    <?php echo $notification->display(); ?>
         <div class="dashboard-container">
             <div class="dashboard-header">
                 <h1>Admin Account Management Dashboard</h1>
@@ -40,22 +47,22 @@
             <div class="search-section">
                 <div class="search-card">
                     <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/petuserselect"method="GET">
-                        <input type="email" id="email" name="email" placeholder="Search User ID">
-                        <input type="password" name="admin_password" placeholder="Admin Password">
+                        <input type="email" id="email" name="email" placeholder="Search User ID" required>
+                        <input type="password" name="admin_password" placeholder="Admin Password" required>
                         <button name="submit" type="submit">Search Users</button>
                     </form>
                 </div>
                 <div class="search-card">
                     <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/doctorselect" method="GET">
-                        <input type="email" id="email" name="email" placeholder="Search Doctor ID">
-                        <input type="password" name="admin_password" placeholder="Admin Password">
+                        <input type="email" id="email" name="email" placeholder="Search Doctor ID" required>
+                        <input type="password" name="admin_password" placeholder="Admin Password" required>
                         <button  name="submit"  type="submit">Search Doctors</button>
                     </form>
                 </div>
                 <div class="search-card">
                     <form class="search-form" action="<?= ROOT ?>/AdminAccountDashboard/petselect" method="GET">
-                        <input type="email" id="email" name="email" placeholder="Search Pet ID">
-                        <input type="password" name="admin_password" placeholder="Admin Password">
+                        <input type="email" id="email" name="email" placeholder="Search Pet ID" required>
+                        <input type="password" name="admin_password" placeholder="Admin Password" required>
                         <button  name="submit"  type="submit">Search Pets</button>
                     </form>
                 </div>
