@@ -33,6 +33,7 @@ class DoctorSessionModel {
     public function getsessionBySession($sessionID) {
         $this->order_column = 'selectedDate';
         $this->order_type = 'asc';
+        $this->limit = 1000;
         $result = $this->where(['sessionID' => $sessionID]);
 
         return $result;
