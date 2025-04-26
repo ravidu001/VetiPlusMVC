@@ -131,13 +131,12 @@ document.getElementById('sessionID').addEventListener('change', function() {
 document .getElementById('okButton').onclick = function() {
     const petID = petIDSelect.value;
     const sessionID = document.getElementById('sessionID').value;
-    const appointmentID = document.getElementById('appointmentID').value;
+    //const appointmentID = document.getElementById('appointmentID').value;
 
-    if (petID && sessionID && appointmentID) {
+    if (petID && sessionID) {
         const data = {
             petID: petID,
             sessionID: sessionID,
-            appointmentID: appointmentID
         };
 
         fetch('/VetiPlusMVC/public/doctorprescription/getpetdetails', {

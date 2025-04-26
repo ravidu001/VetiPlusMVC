@@ -31,12 +31,16 @@ class Doctor extends Controller {
         $session = new DoctorSessionModel();
         $sessionData = $session->getsession($doctorID);
         $appointmentData = []; // Initialize the array
-        foreach ($sessionData as $sessionItem) {
-            $appointment = new AppointmentModel();
-            $appointments = $appointment->getAppointmentBySession($sessionItem->sessionID);
-            if (!empty($appointments)) {
-                $appointmentData = array_merge($appointmentData, $appointments); // Merge appointments into the array
+        if (is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                $appointment = new AppointmentModel();
+                $appointments = $appointment->getAppointmentBySession($sessionItem->sessionID);
+                if (!empty($appointments)) {
+                    $appointmentData = array_merge($appointmentData, $appointments);
+                }
             }
+        } else {
+            error_log("getsession did not return an array for doctorID: " . $doctorID);
         }
         $appointmentCount = count($appointmentData); // Get the count of appointments
         // show($appointmentCount);
@@ -47,32 +51,48 @@ class Doctor extends Controller {
         
         $monthlyappointmentData = []; // Initialize the array
         $monthlyappointmentCount = 0;
-        foreach ($sessionData as $sessionItem) {
-            // Extract the month and year from the selectedDate
-            $selectedMonth = date('m', strtotime($sessionItem->selectedDate));
-            $selectedYear = date('Y', strtotime($sessionItem->selectedDate));
-            if ($selectedYear == $currentYear && $selectedMonth == $currentMonth) {
-                $appointment = new AppointmentModel();
-                $monthlyappointments = $appointment->getAppointmentBySession($sessionItem->sessionID);
-                if (!empty($monthlyappointments)) {
-                    foreach ($monthlyappointments as $monthlyappointment) {
-                        // Check if the appointment status is 'completed'
-                        if($monthlyappointment->status == 'completed'){
-                            $monthlyappointmentCount++;
-                            // $monthlyappointmentData = array_merge($monthlyappointmentData, $monthlyappointment); // Merge appointments into the array
+
+        if (is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                // Extract the month and year from the selectedDate
+                $selectedMonth = date('m', strtotime($sessionItem->selectedDate));
+                $selectedYear = date('Y', strtotime($sessionItem->selectedDate));
+                if ($selectedYear == $currentYear && $selectedMonth == $currentMonth) {
+                    $appointment = new AppointmentModel();
+                    $monthlyappointments = $appointment->getAppointmentBySession($sessionItem->sessionID);
+                    if (!empty($monthlyappointments)) {
+                        foreach ($monthlyappointments as $monthlyappointment) {
+                            // Check if the appointment status is 'completed'
+                            if($monthlyappointment->status == 'completed'){
+                                $monthlyappointmentCount++;
+                                // $monthlyappointmentData = array_merge($monthlyappointmentData, $monthlyappointment); // Merge appointments into the array
+                            }
                         }
                     }
                 }
             }
+        } else {
+            error_log("getsession did not return an array for sessionID: ");
         }
         //$monthlyappointmentCount = count($monthlyappointmentData); // Get the count of appointments
         // show($monthlyappointmentCount);
 
         $feedback = new VetFeedbackModel();
         $feedbackData = $feedback->getReviewsByDoctorId($doctorID);
-        // $feedbackCount = count($feedbackData); // Get the count of feedbacks
-        // show($feedbackCount);
-        $feedbackCount = 0; // Get the count of feedbacks
+
+        $feedbackCount = 0;
+        if (is_array($feedbackData)) {
+            foreach ($feedbackData as $feedbackItem) {
+                // Check if the feedback status is 'completed'
+                if($feedbackItem->status == 'completed'){
+                    $feedbackCount++;
+                }
+            }
+        } else {
+            // Log or handle the case where $feedbackData is not an array
+            error_log("getReviewsByDoctorId did not return an array for doctorID: " . $doctorID);
+        }
+
 
         $session = new DoctorSessionModel;
 
@@ -84,51 +104,54 @@ class Doctor extends Controller {
         // Initialize an array to hold consolidated session data
         $consolidatedSessions = [];
     
-        // Iterate over each session to get assistant session data
-        foreach ($sessionData as $sessionItem) {
-            if($sessionItem->completeStatus == 1) {
-                continue;
-            }
-
-            $appointment = new AppointmentModel();
-            $appointmentData = $appointment->getAppointmentBySession($sessionItem->sessionID);
-            $eachappointmentCount = 0; 
-            if (is_array($appointmentData)) {
-                foreach ($appointmentData as $appointmentItem) {
-                    // Check if the appointment status is 'available'
-                    if ($appointmentItem->status == 'available') {
-                        $eachappointmentCount++;
+        if (is_array($sessionData)) {
+            // Iterate over each session to get assistant session data
+            foreach ($sessionData as $sessionItem) {
+                if($sessionItem->completeStatus == 1) {
+                    continue;
+                }
+    
+                $appointment = new AppointmentModel();
+                $appointmentData = $appointment->getAppointmentBySession($sessionItem->sessionID);
+                $eachappointmentCount = 0; 
+                if (is_array($appointmentData)) {
+                    foreach ($appointmentData as $appointmentItem) {
+                        // Check if the appointment status is 'available'
+                        if ($appointmentItem->status == 'available') {
+                            $eachappointmentCount++;
+                        }
+                    }
+                } else {
+                    // Log or handle the case where $appointmentData is not an array
+                    error_log("getAppointmentBySession did not return an array for sessionID: " . $sessionItem->sessionID);
+                }
+    
+                $assisSession = new AssistantSessionModel;
+                $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
+        
+                // Prepare assistant data for this session
+                $sessionAssistants = [];
+        
+                // Check if assistant session data is found
+                if ($assisSessionData) {
+                    foreach ($assisSessionData as $assisSessionItem) {
+                        $assistant = new AssisModel;
+                        $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
+        
+                        if ($assistantData) {
+                            $sessionAssistants[] = $assistantData;
+                        }
                     }
                 }
-            } else {
-                // Log or handle the case where $appointmentData is not an array
-                error_log("getAppointmentBySession did not return an array for sessionID: " . $sessionItem->sessionID);
+        
+                // Consolidate session data
+                $consolidatedSessions[] = [
+                    'session' => $sessionItem,
+                    'assistants' => $sessionAssistants,
+                    'appointmentCount' => $eachappointmentCount
+                ];
             }
-
-            $assisSession = new AssistantSessionModel;
-            $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
-    
-            // Prepare assistant data for this session
-            $sessionAssistants = [];
-    
-            // Check if assistant session data is found
-            if ($assisSessionData) {
-                foreach ($assisSessionData as $assisSessionItem) {
-                    $assistant = new AssisModel;
-                    $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
-    
-                    if ($assistantData) {
-                        $sessionAssistants[] = $assistantData;
-                    }
-                }
-            }
-    
-            // Consolidate session data
-            $consolidatedSessions[] = [
-                'session' => $sessionItem,
-                'assistants' => $sessionAssistants,
-                'appointmentCount' => $eachappointmentCount
-            ];
+            
         }
 
         // create vetfeedback model
@@ -137,23 +160,24 @@ class Doctor extends Controller {
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByDoctorId($doctorID);
         // Check if the reviews were fetched successfully
-        if ($reviews === true) {
-            // Handle the error (e.g., show an error message)
-            die('Error fetching reviews.');
-        }
 
+        // if ($reviews === false) {
+        //     // Handle the error (e.g., show an error message)
+        //     die('Error fetching reviews.');
+        // }
+
+
+        // Initialize an array to hold consolidated session data
+        $consolidatedReviews = [];
         // Check if there are any reviews
         if (empty($reviews)) {
-            echo 'No reviews found for this doctor.';
+            echo "<script>console.log('No reviews found for this doctor.');</script>";
         } else {
             // Fetch doctor's name 
             $doctor = new DoctorModel(); 
             $doctorData = $doctor->find($doctorID); // Fetch doctor data
             $doctorName = $doctorData->fullName; 
 
-            // Initialize an array to hold consolidated session data
-            $consolidatedReviews = [];
-        
             // Iterate over each review to get petowner data
             foreach ($reviews as $reviewsItem) {
                 $petOwner = new PetOwner();
@@ -180,7 +204,7 @@ class Doctor extends Controller {
             'monthlyappointmentCount' => $monthlyappointmentCount,
             'feedbackCount' => $feedbackCount,
             'reviews' => $consolidatedReviews,
-            'doctorName' => $doctorName
+            'doctorName' => isset($doctorName) ? $doctorName : null
         ]);
     }
 

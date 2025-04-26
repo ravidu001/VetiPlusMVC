@@ -22,27 +22,29 @@ class DoctorPrescription extends Controller {
         $appointmentsWithPets = [];
         $petsBySession = []; // New array to hold pets by session
     
-        foreach ($sessionData as $sessionItem) {
-            if ($sessionItem->completeStatus == 0) {
-                $appointmentModel = new AppointmentModel();
-                $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
-    
-                foreach ($appointmentData as $appointmentItem) {
-                    $petModel = new Pet();
-                    $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
-    
-                    // Store the appointment and pet data in the array
-                    $appointmentsWithPets[] = [
-                        'session' => $sessionItem,
-                        'appointment' => $appointmentItem,
-                        'pet' => $petData
-                    ];
-    
-                    // Group pets by session
-                    if (!isset($petsBySession[$sessionItem->sessionID])) {
-                        $petsBySession[$sessionItem->sessionID] = [];
+        if (is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                if ($sessionItem->completeStatus == 0) {
+                    $appointmentModel = new AppointmentModel();
+                    $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
+        
+                    foreach ($appointmentData as $appointmentItem) {
+                        $petModel = new Pet();
+                        $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
+        
+                        // Store the appointment and pet data in the array
+                        $appointmentsWithPets[] = [
+                            'session' => $sessionItem,
+                            'appointment' => $appointmentItem,
+                            'pet' => $petData
+                        ];
+        
+                        // Group pets by session
+                        if (!isset($petsBySession[$sessionItem->sessionID])) {
+                            $petsBySession[$sessionItem->sessionID] = [];
+                        }
+                        $petsBySession[$sessionItem->sessionID][] = $petData;
                     }
-                    $petsBySession[$sessionItem->sessionID][] = $petData;
                 }
             }
         }
@@ -104,9 +106,11 @@ class DoctorPrescription extends Controller {
         $appointment = new AppointmentModel();
         $appointmentData = $appointment->getAppointmentBySessionwithEmpty($sessionID);
 
-        foreach($appointmentData as $appointmentItem) {
-            if($appointmentItem->petID == $petID && $appointmentItem->sessionID == $sessionID){
-                $appointmentID = $appointmentItem->appointmentID;
+        if (is_array($appointmentData)) {
+            foreach($appointmentData as $appointmentItem) {
+                if($appointmentItem->petID == $petID && $appointmentItem->sessionID == $sessionID){
+                    $appointmentID = $appointmentItem->appointmentID;
+                }
             }
         }
         // echo "<script>console.log('hello ' + " . json_encode($appointmentID) . ");</script>";

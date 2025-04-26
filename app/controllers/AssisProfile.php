@@ -245,5 +245,92 @@ class AssisProfile extends Controller {
         }
     }
 
+    public function deleteAccount() {
+        // Initialize the response array
+        $response = [];
+        
+        // Check if the user is authenticated and has provided the correct password
+        if (isset($_POST['password'])) {
+            $password = $_POST['password'];
+            
+            // method to verify the password
+            if ($this->verifyPassword($password)) {
+                
+                $deletionSuccessful = $this->deleteUserAccount(); // This should return true or false
+                
+                if ($deletionSuccessful) {
+                    $response['success'] = true;
+                    $response['message'] = 'Account deleted successfully.';
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'Error deleting account. Please try again.';
+                }
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Incorrect password. Please try again.';
+            }
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Password is required.';
+        }
+    
+        // Set the content type to application/json
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit; // Ensure no further output is sent
+    }
+    
+    // Example method to verify the password
+    private function verifyPassword($password) {
+        $assisID = $_SESSION['user_id'];
+        $userModel = new User();
+        $assisData = $userModel->checkUser($assisID);
+
+        if($assisData){
+            $currentPasswordHash = $assisData[0]->password;
+            if(password_verify($password, $currentPasswordHash)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    private function deleteUserAccount() {
+        $assisID = $_SESSION['user_id'];
+        $sessionModel = new DoctorSessionModel();
+        $assissessionData = $sessionModel->getsessionBySession($assisID);
+    
+        if (is_array($assissessionData)) {
+            foreach ($assissessionData as $assissessionItem) {
+                if ($assissessionItem->action == 'pending' || $assissessionItem->action == 'accept') {
+                    // Check if session is incomplete
+                    $sessionData = $sessionModel->getsessionBySession($assissessionItem->sessionID);
+                    if (is_array($sessionData)) {
+                        foreach ($sessionData as $sessionItem) {
+                            if ($sessionItem->completeStatus == 0) {
+                                // Cannot delete if there's an incomplete session
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+        // If no blocking sessions found, deactivate user
+        $userModel = new User();
+        $assisData = $userModel->checkUser($assisID);
+    
+        if ($assisData) {
+            $status = 'deactive';
+            $result = $userModel->updateActiveStatus($assisID, $status);
+            return empty($result) ? true : false;
+        }
+    
+        return false;
+    }
+    
+
     
 }

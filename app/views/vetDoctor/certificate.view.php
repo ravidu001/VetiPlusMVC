@@ -1,10 +1,17 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Medical Certificate</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css"><link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #6a0dad;
@@ -151,6 +158,15 @@
     </style>
 </head>
 <body>
+<?php echo $notification->display(); ?>
+<?php require_once '../app/views/navbar/doctornav.php'; ?>
+    <?php if ($_SESSION['petOwnerID'] == 'Pet Owner') : ?>
+        <div style="margin: 20px; display: flex; justify-content: center;">
+            <a href="<?= ROOT ?>/" class="btn btn-primary" style="margin: 20px; font-size: 2rem; align-items: center; display: flex; justify-content: center;">
+                <i class="ri-arrow-left-circle-line"></i>
+            </a>
+        </div>
+    <?php endif; ?>
     <div class="certificate">
         <div class="certificate-overlay">
             <!-- <div class="veterinary-details">
@@ -170,23 +186,23 @@
                     <h2>Pet Information</h2>
                     <div class="section-item">
                         <span>Name:</span>
-                        <strong>Buddy</strong>
+                        <strong><?= !empty($petData->name) ? htmlspecialchars($petData->name, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                     <div class="section-item">
                         <span>Species:</span>
-                        <strong>Dog</strong>
+                        <strong><?= !empty($petData->species) ? htmlspecialchars($petData->species, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                     <div class="section-item">
                         <span>Breed:</span>
-                        <strong>Golden Retriever</strong>
+                        <strong><?= !empty($petData->breed) ? htmlspecialchars($petData->breed, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                     <div class="section-item">
                         <span>Age:</span>
-                        <strong>3 Years</strong>
+                        <strong><?= !empty($age) ? htmlspecialchars($age, ENT_QUOTES, 'UTF-8') : "No data available"; ?> Years</strong>
                     </div>
                     <div class="section-item">
                         <span>Gender:</span>
-                        <strong>Male</strong>
+                        <strong><?= !empty($petData->gender) ? htmlspecialchars($petData->gender, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                 </div>
 
@@ -194,23 +210,23 @@
                     <h2>Medical Assessment</h2>
                     <div class="section-item">
                         <span>Overall Health:</span>
-                        <strong>Excellent</strong>
-                    </div>
-                    <div class="section-item">
-                        <span>Weight:</span>
-                        <strong>25 kg</strong>
+                        <strong><?= !empty($certificateData[0]->healthRate) ? htmlspecialchars($certificateData[0]->healthRate, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                     <div class="section-item">
                         <span>Vaccination Status:</span>
-                        <strong>Up to Date</strong>
+                        <strong><?= !empty($certificateData[0]->vaccinationStatus) ? htmlspecialchars($certificateData[0]->vaccinationStatus, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                     <div class="section-item">
-                        <span>Last Examination:</span>
-                        <strong id="examDate"></strong>
+                        <span>Follow-up Appointments:</span>
+                        <strong><?= !empty($certificateData[0]->followUpAppointment) ? htmlspecialchars($certificateData[0]->followUpAppointment, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                     <div class="section-item">
-                        <span>Next Check-up:</span>
-                        <strong id="nextCheckup"></strong>
+                        <span>Recommendations</span>
+                        <strong><?= !empty($certificateData[0]->recommendation) ? htmlspecialchars($certificateData[0]->recommendation, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
+                    </div>
+                    <div class="section-item">
+                        <span>Certificate Expired:</span>
+                        <strong><?= !empty($certificateData[0]->expiryDate) ? htmlspecialchars($certificateData[0]->expiryDate, ENT_QUOTES, 'UTF-8') : "No data available"; ?></strong>
                     </div>
                 </div>
             </div>
@@ -221,23 +237,23 @@
                 </div>
                 <div class="signature">
                     <p style="border-top: 2px solid var(--primary-color); display: inline-block; padding-top: 10px;">
-                        Dr. Emily Johnson
+                        Dr. <?= !empty($certificateData[0]->fullName) ? htmlspecialchars($certificateData[0]->fullName, ENT_QUOTES, 'UTF-8') : "No data available"; ?>
                     </p><br>
-                    <small>Veterinary Surgeon License #12345</small>
+                    <small>Veterinary Surgeon License #<?= !empty($certificateData[0]->lnumber) ? htmlspecialchars($certificateData[0]->lnumber, ENT_QUOTES, 'UTF-8') : "No data available"; ?></small>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            const nextCheckup = new Date(today);
-            nextCheckup.setMonth(today.getMonth() + 6);
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const today = new Date();
+        //     const nextCheckup = new Date(today);
+        //     nextCheckup.setMonth(today.getMonth() + 6);
 
-            document.getElementById('examDate').textContent = today.toLocaleDateString();
-            document.getElementById('nextCheckup').textContent = nextCheckup.toLocaleDateString();
-        });
+        //     document.getElementById('examDate').textContent = today.toLocaleDateString();
+        //     document.getElementById('nextCheckup').textContent = nextCheckup.toLocaleDateString();
+        // });
     </script>
 </body>
 </html>

@@ -21,29 +21,32 @@ class DoctorMedicalHistory extends Controller {
         $appointmentsWithPets = [];
         $petsBySession = []; // New array to hold pets by session
     
-        foreach ($sessionData as $sessionItem) {
-            if ($sessionItem->completeStatus == 0) {
-                $appointmentModel = new AppointmentModel();
-                $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
-    
-                foreach ($appointmentData as $appointmentItem) {
-                    $petModel = new Pet();
-                    $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
-    
-                    // Store the appointment and pet data in the array
-                    $appointmentsWithPets[] = [
-                        'session' => $sessionItem,
-                        'appointment' => $appointmentItem,
-                        'pet' => $petData
-                    ];
-    
-                    // Group pets by session
-                    if (!isset($petsBySession[$sessionItem->sessionID])) {
-                        $petsBySession[$sessionItem->sessionID] = [];
+        if (is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                if ($sessionItem->completeStatus == 0) {
+                    $appointmentModel = new AppointmentModel();
+                    $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
+        
+                    foreach ($appointmentData as $appointmentItem) {
+                        $petModel = new Pet();
+                        $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
+        
+                        // Store the appointment and pet data in the array
+                        $appointmentsWithPets[] = [
+                            'session' => $sessionItem,
+                            'appointment' => $appointmentItem,
+                            'pet' => $petData
+                        ];
+        
+                        // Group pets by session
+                        if (!isset($petsBySession[$sessionItem->sessionID])) {
+                            $petsBySession[$sessionItem->sessionID] = [];
+                        }
+                        $petsBySession[$sessionItem->sessionID][] = $petData;
                     }
-                    $petsBySession[$sessionItem->sessionID][] = $petData;
                 }
             }
+
         }
 
         // if ($_GET['petID'] ?? null && $_GET['sessionID'] ?? null) {
@@ -111,29 +114,32 @@ class DoctorMedicalHistory extends Controller {
         $appointmentsWithPets = [];
         $petsBySession = []; // New array to hold pets by session
     
-        foreach ($sessionData as $sessionItem) {
-            if ($sessionItem->completeStatus == 0) {
-                $appointmentModel = new AppointmentModel();
-                $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
-    
-                foreach ($appointmentData as $appointmentItem) {
-                    $petModel = new Pet();
-                    $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
-    
-                    // Store the appointment and pet data in the array
-                    $appointmentsWithPets[] = [
-                        'session' => $sessionItem,
-                        'appointment' => $appointmentItem,
-                        'pet' => $petData
-                    ];
-    
-                    // Group pets by session
-                    if (!isset($petsBySession[$sessionItem->sessionID])) {
-                        $petsBySession[$sessionItem->sessionID] = [];
+        if (is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                if ($sessionItem->completeStatus == 0) {
+                    $appointmentModel = new AppointmentModel();
+                    $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
+        
+                    foreach ($appointmentData as $appointmentItem) {
+                        $petModel = new Pet();
+                        $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
+        
+                        // Store the appointment and pet data in the array
+                        $appointmentsWithPets[] = [
+                            'session' => $sessionItem,
+                            'appointment' => $appointmentItem,
+                            'pet' => $petData
+                        ];
+        
+                        // Group pets by session
+                        if (!isset($petsBySession[$sessionItem->sessionID])) {
+                            $petsBySession[$sessionItem->sessionID] = [];
+                        }
+                        $petsBySession[$sessionItem->sessionID][] = $petData;
                     }
-                    $petsBySession[$sessionItem->sessionID][] = $petData;
                 }
             }
+
         }
 
         if ($_GET['petID'] ?? null && $_GET['sessionID'] ?? null) {
@@ -161,14 +167,17 @@ class DoctorMedicalHistory extends Controller {
 
             $consolidateData = [];
 
-            foreach ($vaccineData as $vaccineItem) {
-                $vaccineInfo = new VaccineDataModel();
-                $vaccineInfoData = $vaccineInfo->getVaccineByID($vaccineItem->vaccineID);
-                $vaccineInfoData = $vaccineInfoData[0];
-                $consolidateData[] = [
-                    'vaccinationData' => $vaccineItem,
-                    'vaccineInfo' => $vaccineInfoData
-                ];
+            if (is_array($vaccineData)) {
+                foreach ($vaccineData as $vaccineItem) {
+                    $vaccineInfo = new VaccineDataModel();
+                    $vaccineInfoData = $vaccineInfo->getVaccineByID($vaccineItem->vaccineID);
+                    $vaccineInfoData = $vaccineInfoData[0];
+                    $consolidateData[] = [
+                        'vaccinationData' => $vaccineItem,
+                        'vaccineInfo' => $vaccineInfoData
+                    ];
+                }
+
             }
             // show($consolidateData);
 

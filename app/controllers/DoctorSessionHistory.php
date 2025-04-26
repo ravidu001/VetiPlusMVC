@@ -13,33 +13,36 @@ class DoctorSessionHistory extends Controller {
         // Initialize an array to hold consolidated session data
         $consolidatedSessions = [];
     
-        // Iterate over each session to get assistant session data
-        foreach ($sessionData as $sessionItem) {
-            if($sessionItem->completeStatus == 1) {
-                $assisSession = new AssistantSessionModel;
-                $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
-        
-                // Prepare assistant data for this session
-                $sessionAssistants = [];
-        
-                // Check if assistant session data is found
-                if ($assisSessionData) {
-                    foreach ($assisSessionData as $assisSessionItem) {
-                        $assistant = new AssisModel;
-                        $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
-        
-                        if ($assistantData) {
-                            $sessionAssistants[] = $assistantData;
+        if (is_array($sessionData)) {
+            // Iterate over each session to get assistant session data
+            foreach ($sessionData as $sessionItem) {
+                if($sessionItem->completeStatus == 1) {
+                    $assisSession = new AssistantSessionModel;
+                    $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
+            
+                    // Prepare assistant data for this session
+                    $sessionAssistants = [];
+            
+                    // Check if assistant session data is found
+                    if ($assisSessionData) {
+                        foreach ($assisSessionData as $assisSessionItem) {
+                            $assistant = new AssisModel;
+                            $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
+            
+                            if ($assistantData) {
+                                $sessionAssistants[] = $assistantData;
+                            }
                         }
                     }
+            
+                    // Consolidate session data
+                    $consolidatedSessions[] = [
+                        'session' => $sessionItem,
+                        'assistants' => $sessionAssistants
+                    ];
                 }
-        
-                // Consolidate session data
-                $consolidatedSessions[] = [
-                    'session' => $sessionItem,
-                    'assistants' => $sessionAssistants
-                ];
             }
+
         }
     
         // Pass the consolidated session data to the view
@@ -100,17 +103,20 @@ class DoctorSessionHistory extends Controller {
         // Fetch old sessions 
         $alldata = $session->getsession($doctorID);
        
-        // Insert old sessions into session history
-        foreach ($alldata as $oldSession) {
-            if ($oldSession->selectedDate <= $yesterday) {
-                $data = [
-                    'completeStatus' => 1,
-                ];
-                $updateresult = $session->updatecompleteStatus($oldSession->sessionID, $data);
-            }
+        if (is_array($alldata)) {
+            // Insert old sessions into session history
+            foreach ($alldata as $oldSession) {
+                if ($oldSession->selectedDate <= $yesterday) {
+                    $data = [
+                        'completeStatus' => 1,
+                    ];
+                    $updateresult = $session->updatecompleteStatus($oldSession->sessionID, $data);
+                }
+    
+                
+            }   
 
-            
-        }   
+        }
     }
 
     public function session() {
