@@ -31,4 +31,11 @@ class Species_Breeds {
         $breedsList = $this->where(['species' => $species]);
         return $breedsList;
     }
+    public function getalldata() {
+        $this->limit=1000;
+        $this->order_column = 'id';
+        $this->order_type = 'ASC';
+        return $this->findAll();
+    }
+    
 }
