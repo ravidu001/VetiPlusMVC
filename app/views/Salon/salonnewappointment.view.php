@@ -17,20 +17,13 @@
                 <div class="appointmentcontent">
                 <div class="calendarpart">
                     
-
-                    <!-- <div class="calendar">
-                        <?php
-                            // require __DIR__ .'/saloncalander.view.php';
-                        ?>
-                    </div> -->
-
                     <div class="calendar" data-backend-url="<?= ROOT ?>/SalonNewAppointment/findDataTab1">
                         <?php require __DIR__ . '/saloncalander.view.php'; ?>
                     </div>
                 </div>
                 <div class="appointmentdetailpart">
                     <div class="upcomingappointmentdetails">
-                        <h3>Upcoming Appointments</h3>
+                        <h3>Appointments List</h3>
                         <div class="userdetail">
                             <table>
                                 <thead>

@@ -13,4 +13,10 @@ class VaccineDataModel
         $this->order_type = "asc";
         return $this->findAll();
     }
+
+    public function getVaccineByID($vaccineID) {
+        $this->order_column = "vaccineID";
+        $this->order_type = "asc";
+        return $this->where(['vaccineID' => $vaccineID]);
+    }
 }

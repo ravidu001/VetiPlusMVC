@@ -36,7 +36,14 @@ class Salons
         $count = $this->getCount();
         return $count;
     }
-
+    public function getalldata() {
+        $this->order_type = "desc";
+        $this->order_column = "salonID";
+        return $this->findAll();
+    }
+    public function updateStatus($salonID, $data) {
+        $this->update($salonID, ['approvedStatus'=>$data['approvedStatus'],'rejectReason'=>$data['rejectReason']], 'salonID');
+    }
 
     public function getActiveList_salon () {
         $query = "SELECT s.name as salonName
@@ -67,12 +74,10 @@ class Salons
                 ";
         
         $params = [
-            'salonName' => isset($options['salonName']) ? '%'.$options['salonName'].'%' : '%',
-            'openHour' => isset($options['openHour']) ? $options['openHour'] : date('H:i')
+            'salonName' => isset($options['salonName']) ? '%'.$options['salonName'].'%' : '%'
             
         ];
         return $this->query($query, $params);
     }
-
 }
 

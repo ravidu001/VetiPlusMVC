@@ -87,7 +87,7 @@
                             <?= $startTime->format('H:i') ?> - <?= $endTime->format('H:i') ?>
                         </td>
                         <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
-                        <td>10</td>
+                        <td><?= htmlspecialchars($data['appointmentCount']) ?></td>
                         <!-- withiout encode the url -->
                         <!-- <td>
                             <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= htmlspecialchars($data['session']->sessionID) ?>&assistantIDs=<?= implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID'))) ?>" class="view-btn">

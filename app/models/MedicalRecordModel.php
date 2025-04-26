@@ -17,11 +17,17 @@ class MedicalRecordModel
         $this->order_type = 'DESC';
         return $this->where(['appointmentID' => $conditions['appointmentID'], 'petID' => $conditions['petID']]);
     }
-
-
+    public function getMedicalbypetID($petID) {
+        $this->limit = 1000;
+        $this->order_column = 'recordID';
+        $this->order_type = 'DESC';
+        return $this->where(['petID' => $petID]);
+    }
+  
     // for pet:
     public function getRecords_byPet ($petID) {}
     public function getPrescriptions_byPet ($petID) {}
     public function getVaccines_byPet ($petID) {}
     public function getSurgeries_byPet ($petID) {}
+  
 }

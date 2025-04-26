@@ -8,12 +8,13 @@ class SalonTimeSlot extends Controller
         //get the salon ID from the salon table 
         $salonID = $_SESSION['SALON_USER'];
 
+        $data = [];
+
         if(empty($salonID))
         {
             redirect('Login/login');
         }
-
-        $this->view('Salon/salontimeslot');
+        $this->view('Salon/salontimeslot',$data);
     }
 
     public function RetriveTimeSlotsDataByDate()
@@ -28,15 +29,41 @@ class SalonTimeSlot extends Controller
             if($date && $salonID)
             {
                 $salsession = new SalonTimeSlots();//slot details 
+                $weekDayModel = new SalonWeekdaySchedules();//day details start end
+                $configModel = new SalonTImeSLotConfig();//salonID check details
 
                 $results = $salsession -> slotsByDateAndSalon($salonID, $date);
+                $weekDayDetails = $weekDayModel ->findByDate($date);
 
+                $sheduleInfo = [];
+
+                if($weekDayDetails)
+                {
+                    foreach($weekDayDetails as $weekDayDetail)
+                    {
+                        $configID = $weekDayDetail->config_id;
+                        $configDetails = $configModel->findById($configID, $salonID);
+
+                        if($configDetails)
+                        {
+                            $sheduleInfo = [
+                                'start_time' => $weekDayDetail->start_time,
+                                'end_time' => $weekDayDetail->end_time
+                            ];
+                            break; 
+                        }
+
+                    }
+                }
+                
                 if(!empty($results))
                 {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'success' => true,
-                        'result' => $results
+                        'result' => $results ?? [],
+                        'schedule' => $sheduleInfo,
+                        'message' => empty($results) ? 'No slots created for this day.' : null
                     ]);
                     exit;
                 }
@@ -150,6 +177,7 @@ class SalonTimeSlot extends Controller
             exit;
         }
     }
+    
 }    
 
 

@@ -33,6 +33,7 @@
             <th>Date and Time</th>
             <th>Session ID</th>
             <th>Visit Time</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
               <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
               <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
               <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
+              <td><?= htmlspecialchars($data->status ?? 'N/A') ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
