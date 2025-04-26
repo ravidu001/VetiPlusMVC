@@ -3,7 +3,7 @@
 class AssisMedicalHistory extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             header('Location: ' . ROOT . '/login');
             exit();
         }
@@ -13,7 +13,7 @@ class AssisMedicalHistory extends Controller {
         else{
             $_SESSION['popupShown'] = false;
         }
-        $assisID = $_SESSION['user_id'];
+        $assisID = $_SESSION['assis_id'];
         echo "<script>console.log('ID " . json_encode($assisID) . "');</script>";
         $assissessionModel = new AssistantSessionModel();
         $assissessionData = $assissessionModel->getSessionByAssistant($assisID);
@@ -155,7 +155,7 @@ class AssisMedicalHistory extends Controller {
     }
 
     public function getpetMedicalhistory(){
-        $assisID = $_SESSION['user_id'];
+        $assisID = $_SESSION['assis_id'];
         echo "<script>console.log('ID " . json_encode($assisID) . "');</script>";
         $assissessionModel = new AssistantSessionModel();
         $assissessionData = $assissessionModel->getSessionByAssistant($assisID);

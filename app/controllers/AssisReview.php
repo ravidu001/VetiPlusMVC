@@ -3,7 +3,7 @@
 class AssisReview extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             // Redirect to the login page if not logged in
             header('Location: ' . ROOT . '/login');
             exit();
@@ -13,7 +13,7 @@ class AssisReview extends Controller {
         $feedback = new AssistantSessionModel();
         
         // Get the logged-in user's ID
-        $assisId = $_SESSION['user_id'];
+        $assisId = $_SESSION['assis_id'];
 
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByAssisId($assisId);

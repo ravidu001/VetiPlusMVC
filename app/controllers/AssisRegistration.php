@@ -76,7 +76,7 @@ class AssisRegistration extends Controller {
             $languageSpoken = isset($_POST['languageSpoken']) ? serialize($_POST['languageSpoken']) : '';
     
             $data = [
-                'assistantID' => $_SESSION['user_id'],
+                'assistantID' => $_SESSION['assis_id'],
                 'fullName' => $_POST['fullName'],
                 'profilePicture' => 'defaultProfile.png',
                 'contactNumber' => $_POST['mobile'],

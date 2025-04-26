@@ -3,7 +3,7 @@
 class Assistant extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             // Redirect to the login page if not logged in
             header('Location: /login');
             exit();
@@ -16,7 +16,7 @@ class Assistant extends Controller {
             exit();
         }
 
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
 
         // Load the model
         $assistant = new AssisModel();

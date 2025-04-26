@@ -3,7 +3,7 @@
 class AssisRequest extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             header('Location: ' . ROOT . '/login');
             exit;
         }
@@ -12,7 +12,7 @@ class AssisRequest extends Controller {
         $this->autoExpiredRequest();
 
         // Get user_id
-        $assis_id = $_SESSION['user_id'];
+        $assis_id = $_SESSION['assis_id'];
         // print_r($assis_id);
 
         // Get all the assistants' sessions
@@ -108,7 +108,7 @@ class AssisRequest extends Controller {
 
     public function autoExpiredRequest() {
         // Get user_id
-        $assis_id = $_SESSION['user_id'];
+        $assis_id = $_SESSION['assis_id'];
         // print_r($assis_id);
 
         // Get all the assistants' sessions
