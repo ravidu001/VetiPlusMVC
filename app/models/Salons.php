@@ -79,6 +79,5 @@ class Salons
         ];
         return $this->query($query, $params);
     }
-
 }
 

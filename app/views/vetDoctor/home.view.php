@@ -88,78 +88,84 @@ $notification = new Notification();
                 </tr>
             </thead>
             <tbody>
-            <?php foreach($sessions as $data): ?>
-                <?php $currentDate = date('Y-m-d'); ?>
-                <?php if($currentDate <= $data['session']->selectedDate): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($data['session']->sessionID) ?></td>
-                        <td>
-                            <?php if (!empty($data['assistants'])): ?>
-                            <?php if (count($data['assistants']) === 1): ?>
-                            <!-- Single assistant display -->
-                            <div class="vet-info">
-                                <div class="vet-avatar">
-                                    <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($data['assistants'][0]->profilePicture) ?>"
-                                        alt="assistant">
-                                </div>
-                                <div class="vet-details">
-                                    <span
-                                        class="vet-name"><?= htmlspecialchars($data['assistants'][0]->fullName) ?></span>
-                                    <span
-                                        class="vet-specialization"><?= htmlspecialchars($data['assistants'][0]->expertise) ?></span>
-                                </div>
-                            </div>
-                            <?php else: ?>
-                            <!-- Multiple assistants display -->
-                            <div class="multiple-assistants">
-                                <?php foreach($data['assistants'] as $assistant): ?>
-                                <div class="assistant-avatar"
-                                    title="<?= htmlspecialchars($assistant->fullName) ?> - <?= htmlspecialchars($assistant->expertise) ?>">
-                                    <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
-                                        alt="assistant">
-                                    <div class="assistant-info">
-                                        <div class="assistant-avatar-large">
-                                            <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
-                                                alt="assistant">
-                                        </div>
+            <?php if (empty($sessions)): ?>
+                <tr>
+                    <td colspan="6" class="no-data">No upcoming sessions available.</td>
+                </tr>
+            <?php else: ?>
+                <?php foreach($sessions as $data): ?>
+                    <?php $currentDate = date('Y-m-d'); ?>
+                    <?php if($currentDate <= $data['session']->selectedDate): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($data['session']->sessionID) ?></td>
+                            <td>
+                                <?php if (!empty($data['assistants'])): ?>
+                                <?php if (count($data['assistants']) === 1): ?>
+                                <!-- Single assistant display -->
+                                <div class="vet-info">
+                                    <div class="vet-avatar">
+                                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($data['assistants'][0]->profilePicture) ?>"
+                                            alt="assistant">
+                                    </div>
+                                    <div class="vet-details">
                                         <span
-                                            class="assistant-header"><?= htmlspecialchars($assistant->fullName) ?></span>
+                                            class="vet-name"><?= htmlspecialchars($data['assistants'][0]->fullName) ?></span>
                                         <span
-                                            class="assistant-expertise"><?= htmlspecialchars($assistant->expertise) ?></span>
+                                            class="vet-specialization"><?= htmlspecialchars($data['assistants'][0]->expertise) ?></span>
                                     </div>
                                 </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-                            <?php else: ?>
-                            <span>No Assistant Assigned</span>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?= htmlspecialchars($data['session']->selectedDate) ?><br>
-                            <?php
-                                $startTime = new DateTime($data['session']->startTime);
-                                $endTime = new DateTime($data['session']->endTime);
-                            ?>
-                            <?= $startTime->format('H:i') ?> - <?= $endTime->format('H:i') ?>
-                        </td>
-                        <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
-                        <td><?= htmlspecialchars($data['appointmentCount']) ?></td>
-                        <!-- withiout encode the url -->
-                        <!-- <td>
-                            <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= htmlspecialchars($data['session']->sessionID) ?>&assistantIDs=<?= implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID'))) ?>" class="view-btn">
-                                <i class='bx bx-right-arrow-circle'></i>
-                            </a>
-                        </td> -->
-                        <td>
-                            <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= urlencode($data['session']->sessionID) ?>&assistantIDs=<?= urlencode(implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID')))) ?>" class="view-btn">
-                                <i class='bx bx-right-arrow-circle'></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <?php break; ?>
-                <?php endif; ?>
-                    <?php endforeach; ?>
+                                <?php else: ?>
+                                <!-- Multiple assistants display -->
+                                <div class="multiple-assistants">
+                                    <?php foreach($data['assistants'] as $assistant): ?>
+                                    <div class="assistant-avatar"
+                                        title="<?= htmlspecialchars($assistant->fullName) ?> - <?= htmlspecialchars($assistant->expertise) ?>">
+                                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
+                                            alt="assistant">
+                                        <div class="assistant-info">
+                                            <div class="assistant-avatar-large">
+                                                <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
+                                                    alt="assistant">
+                                            </div>
+                                            <span
+                                                class="assistant-header"><?= htmlspecialchars($assistant->fullName) ?></span>
+                                            <span
+                                                class="assistant-expertise"><?= htmlspecialchars($assistant->expertise) ?></span>
+                                        </div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php endif; ?>
+                                <?php else: ?>
+                                <span>No Assistant Assigned</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($data['session']->selectedDate) ?><br>
+                                <?php
+                                    $startTime = new DateTime($data['session']->startTime);
+                                    $endTime = new DateTime($data['session']->endTime);
+                                ?>
+                                <?= $startTime->format('H:i') ?> - <?= $endTime->format('H:i') ?>
+                            </td>
+                            <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
+                            <td><?= htmlspecialchars($data['appointmentCount']) ?></td>
+                            <!-- withiout encode the url -->
+                            <!-- <td>
+                                <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= htmlspecialchars($data['session']->sessionID) ?>&assistantIDs=<?= implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID'))) ?>" class="view-btn">
+                                    <i class='bx bx-right-arrow-circle'></i>
+                                </a>
+                            </td> -->
+                            <td>
+                                <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= urlencode($data['session']->sessionID) ?>&assistantIDs=<?= urlencode(implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID')))) ?>" class="view-btn">
+                                    <i class='bx bx-right-arrow-circle'></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php break; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             </tbody>
             </table>
         </div>
@@ -169,64 +175,70 @@ $notification = new Notification();
             <h2>Latest Reviews</h2>
             <div class="reviews-grid">
                 <?php $count = 0; ?>
-                <?php foreach ($reviews as $review): ?>
-                    <?php if ($count >= 3) break; ?>
-                    <div class="review-card" style="margin-bottom: 15px;">
-                        <div class="review-details">
-                            <div class="review-header">
-                                <span class="review-author"><?= $review['petOwner']->fullName ?></span>
-                                <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
-                                <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
-                                <span class="review-date"><?= $formattedDate ?></span>
-                            </div>
-                            <div class="review-rating">
-                                <?php 
-                                    $rating = $review['reviewData']->rating; // Assuming rating is out of 5
-                                    for ($i = 1; $i <= 5; $i++) {
-                                        if ($i <= $rating) {
-                                            echo '<span class="star filled">★</span>'; // Filled star
-                                        } else {
-                                            echo '<span class="star empty">☆</span>'; // Empty star
+                <?php if (empty($reviews)): ?>
+                    <div class="no-reviews">
+                        <p style="padding-left:10px;">No reviews available.</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($reviews as $review): ?>
+                        <?php if ($count >= 3) break; ?>
+                        <div class="review-card" style="margin-bottom: 15px;">
+                            <div class="review-details">
+                                <div class="review-header">
+                                    <span class="review-author"><?= $review['petOwner']->fullName ?></span>
+                                    <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
+                                    <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
+                                    <span class="review-date"><?= $formattedDate ?></span>
+                                </div>
+                                <div class="review-rating">
+                                    <?php 
+                                        $rating = $review['reviewData']->rating; // Assuming rating is out of 5
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $rating) {
+                                                echo '<span class="star filled">★</span>'; // Filled star
+                                            } else {
+                                                echo '<span class="star empty">☆</span>'; // Empty star
+                                            }
                                         }
-                                    }
-                                ?>
-                                <span>(<?= $rating ?>/5)</span>
+                                    ?>
+                                    <span>(<?= $rating ?>/5)</span>
+                                </div>
+                                <p class="review-content"><?= $review['reviewData']->comment ?></p>
+                                <small>Appointment #<?= $review['reviewData']->appointmentID ?></small>
                             </div>
-                            <p class="review-content"><?= $review['reviewData']->comment ?></p>
-                            <small>Appointment #<?= $review['reviewData']->appointmentID ?></small>
-                        </div>
-                        <div class="review-actions">
-                            <?php if ($review['reviewData']->status): ?>
-                                <!-- <span class="review-responded">Replied</span> -->
+                            <div class="review-actions">
+                                <?php if ($review['reviewData']->status): ?>
+                                    <!-- <span class="review-responded">Replied</span> -->
+                                    <button class="btn btn-details" 
+                                            onclick="openDetailsModal(
+                                            '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
+                                            '<?= htmlspecialchars($formattedDate) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->respond) ?>'
+                                        )">
+                                        View Details
+                                    </button>
+                                <?php else: ?>
+                                <button class="btn btn-reply" onclick="openReplyModal('<?= htmlspecialchars($review['reviewData']->feedbackID) ?>')">Reply</button>
                                 <button class="btn btn-details" 
                                         onclick="openDetailsModal(
-                                        '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
-                                        '<?= htmlspecialchars($formattedDate) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->respond) ?>'
-                                    )">
+                                            '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
+                                            '<?= htmlspecialchars($formattedDate) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->respond) ?>'
+                                        )">
                                     View Details
                                 </button>
-                            <?php else: ?>
-                            <button class="btn btn-reply" onclick="openReplyModal('<?= htmlspecialchars($review['reviewData']->feedbackID) ?>')">Reply</button>
-                            <button class="btn btn-details" 
-                                    onclick="openDetailsModal(
-                                        '<?= htmlspecialchars($review['petOwner']->fullName) ?>', 
-                                        '<?= htmlspecialchars($formattedDate) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->appointmentID) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->respond) ?>'
-                                    )">
-                                View Details
-                            </button>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
-                    <?php $count++; ?>
-                <?php endforeach; ?>
+                        <?php $count++; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
         </div>

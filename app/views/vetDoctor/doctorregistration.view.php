@@ -33,23 +33,23 @@ $notification = new Notification();
             <div class="form-section active" id="personalInfo">
                 <h3>Personal Information</h3>
                 <div class="form-group">
-                    <label for="name">Full Name</label>
+                    <label for="name">Full Name <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" id="name" class="form-input" name="name" required placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
-                    <label for="address">Permanent Address</label>
+                    <label for="address">Permanent Address <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" id="address" class="form-input" name="address" required placeholder="Enter your permanent address">
                 </div>
                 <div class="form-group">
-                    <label for="DOB">Date of Birth</label>
+                    <label for="DOB">Date of Birth <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="date" id="DOB" class="form-input" name="DOB" required>
                 </div>
                 <div class="form-group">
-                    <label for="mobile">Mobile Number</label>
+                    <label for="mobile">Mobile Number <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" id="mobile" class="form-input" name="mobile" required placeholder="Enter your 10-digit mobile number">
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender</label>
+                    <label for="gender">Gender <div style="color:red; padding-left:5px;">*</div></label>
                     <select id="gender" class="form-input" name="gender" required>
                         <option value="">Select Gender</option>
                         <option value="Male">Male</option>
@@ -58,7 +58,7 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="bio">Bio</label>
+                    <label for="bio">Bio <div style="color:red; padding-left:5px;">*</div></label>
                     <textarea id="bio" class="form-input" name="bio" required placeholder="Enter a short biography"></textarea>
                 </div>
                 <div class="navigation-buttons">
@@ -71,11 +71,11 @@ $notification = new Notification();
             <div class="form-section" id="professionalInfo">
                 <h3>Professional Details</h3>
                 <div class="form-group">
-                    <label for="lnumber">License Number</label>
+                    <label for="lnumber">License Number <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" id="lnumber" class="form-input" name="lnumber" required placeholder="Enter your license number">
                 </div>
                 <div class="form-group">
-                    <label for="special">Specialization</label>
+                    <label for="special">Specialization <div style="color:red; padding-left:5px;">*</div></label>
                     <select id="special" class="form-input" name="special" required>
                         <option value="">Select Specialization</option>
                         <option value="Small Animal Care">Small Animal Care</option>
@@ -85,11 +85,11 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="experience">Years of Experience</label>
+                    <label for="experience">Years of Experience <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="number" id="experience" class="form-input" name="experience" min="0" max="50" required placeholder="Enter your years of experience">
                 </div>
                 <div class="form-group">
-                    <label for="timeSlot">Time Taken for a Treatment (minutes)</label>
+                    <label for="timeSlot">Time Taken for a Treatment (minutes) <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="number" id="timeSlot" class="form-input" name="timeSlot" min="1" required placeholder="Enter time in minutes">
                 </div>
                 <div class="navigation-buttons">
@@ -102,7 +102,7 @@ $notification = new Notification();
             <div class="form-section" id="uploadInfo">
                 <h3>Upload Certification</h3>
                 <div class="form-group file-upload">
-                    <label for="doctorCertificate">Upload Professional Certificate</label>
+                    <label for="doctorCertificate">Upload Professional Certificate <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="file" id="doctorCertificate" name="doctorCertificate" accept=".pdf,.jpg,.png" required>
                 </div>
                 <div class="navigation-buttons">
