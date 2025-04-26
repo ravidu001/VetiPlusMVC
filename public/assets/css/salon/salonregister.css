@@ -45,15 +45,43 @@ body {
     color: rgb(130, 129, 129);
     font-size: 14px;
     text-align: justify;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .rendarpart1 h3 {
     font-size: 24px;
     color: #333;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
+/* Container for the salon image */
+.salon-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  /* Styling for the salon image */
+  .salonimage {
+    display: block;
+    width: 100%;
+    max-width: 250px; /* Adjust based on your needs */
+    height: auto;
+    margin: 0 auto;
+    transform: translateY(0); /* Use positive or negative values to move up/down */
+    transition: transform 0.3s ease; /* Smooth transition when changing position */
+  }
+  
+  /* Example classes for different vertical positions */
+  .position-up {
+    transform: translateY(-30px); /* Moves the image up */
+  }
+  
+  .position-down {
+    transform: translateY(30px); /* Moves the image down */
+  }
+  
 /* Form Styles */
 .salon-form {
     margin-top: 10px;

@@ -99,6 +99,59 @@ padding: 15px;
 border-radius: 10px;
 }
 
+/* Login Redirect Styling */
+.loginredirect {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--primary-color-light);
+    border-radius: 10px;
+    position: relative;
+    transition: var(--tran-03);
+}
+
+.loginredirect p {
+    color: var(--text-color);
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.login {
+    background-color: var(--background-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: var(--tran-02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(106, 13, 173, 0.2);
+    background-color: #5c0b9a; /* Slightly darker than primary */
+}
+
+.login a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 0 15px;
+    font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .loginredirect {
+        padding: 15px;
+    }
+    
+    .login {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
 @keyframes fadeIn {
 from { opacity: 0; transform: translateY(20px); }
 to { opacity: 1; transform: translateY(0); }

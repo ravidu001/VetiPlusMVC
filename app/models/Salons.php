@@ -46,5 +46,6 @@ class Salons
     public function updateStatus($salonID, $data) {
         $this->update($salonID, ['approvedStatus'=>$data['approvedStatus'],'rejectReason'=>$data['rejectReason']], 'salonID');
     }
+
 }
 

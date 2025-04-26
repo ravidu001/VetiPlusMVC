@@ -11,7 +11,7 @@ class Doctor extends Controller {
         // Check if the user is a doctor
         if ($_SESSION['type'] !== 'Vet Doctor') {
             // Redirect to the home page if not a doctor
-            header('Location: ' . ROOT . '/home');
+            header('Location: ' . ROOT . '/login');
             exit();
         }
 
@@ -79,6 +79,7 @@ class Doctor extends Controller {
 
         $feedback = new VetFeedbackModel();
         $feedbackData = $feedback->getReviewsByDoctorId($doctorID);
+
         $feedbackCount = 0;
         if (is_array($feedbackData)) {
             foreach ($feedbackData as $feedbackItem) {
@@ -91,6 +92,7 @@ class Doctor extends Controller {
             // Log or handle the case where $feedbackData is not an array
             error_log("getReviewsByDoctorId did not return an array for doctorID: " . $doctorID);
         }
+
 
         $session = new DoctorSessionModel;
 
@@ -158,10 +160,12 @@ class Doctor extends Controller {
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByDoctorId($doctorID);
         // Check if the reviews were fetched successfully
+
         // if ($reviews === false) {
         //     // Handle the error (e.g., show an error message)
         //     die('Error fetching reviews.');
         // }
+
 
         // Initialize an array to hold consolidated session data
         $consolidatedReviews = [];

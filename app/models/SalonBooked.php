@@ -84,5 +84,9 @@ class SalonBooked
         return $this->query($query, ['salSessionID' => $salSessionID])[0]->total ?? 0;
     }
     
+    public function bookAppointment ($data) {
+        $bookingSuccess = $this->insert($data);
+        return empty($bookingSuccess) ? true : false;
+    }
 
 }

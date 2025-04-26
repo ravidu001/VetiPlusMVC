@@ -1,28 +1,22 @@
 <?php
 
 class PO_apptDashboard_Vet extends Controller {
-    // since custom queries need to be executed using query():
-    use Database;
 
-    // public $petOwner;
     public $petOwnerID;
 
     public $petAppts;
 
-    public $availableSessions;
+    public $vetSessionsObj;
     public $activeDocList;
 
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
         $this->petOwnerID = $_SESSION['petOwnerID'];
 
-        // $this->petOwner = new PetOwner;
-        // $this->petOwner->setPetOwnerID();
-
         $this->petAppts = new PO_PetAppts;
 
-        $this->availableSessions = new PO_AvailableSessions;
-        $this->activeDocList = $this->availableSessions->getActiveList_vet();
+        $this->vetSessionsObj = new PO_VetSession;
+        $this->activeDocList = $this->vetSessionsObj->getActiveList_vet();
     }
 
     public function index() {
@@ -63,24 +57,53 @@ class PO_apptDashboard_Vet extends Controller {
             'startTime' => $_GET['startTime'] ?? ''
         ];
 
-        $result = $this->availableSessions->getSessions_vet($params) ?: ["fetchedCount" => 0];
+        $result = $this->vetSessionsObj->getSessions_vet($params) ?: ["fetchedCount" => 0];
 
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
     }
-    public function checkBookedApptSlots_vet () {
-        $sessionID = $_GET['sessionID'];
 
-        $result = $this->availableSessions->checkBookedApptSlots_vet($sessionID) ?: ["fetchedCount" => 0];
+    public function rescheduleAppt () {}
+    public function cancelAppt () {}
+
+    public function postFeedback () {
+        $inputDetails = $_POST;
+        $params = [
+            'rating' => $inputDetails['rating'],
+            'comment' => $inputDetails['comment'],
+            'appointmentID' => $inputDetails['apptID'],
+            'petOwnerID' => $inputDetails['petOwnerID'],
+            'doctorID' => $inputDetails['providerID']
+        ];
+        $feedbackObj = new PO_Feedback;
+        $postSuccess = $feedbackObj->postFeedback('vet', $params);
+
         header('Content-Type: application/json');
-        echo json_encode($result);
-        exit;
+        if ($postSuccess) {
+            echo json_encode(["status" => "success",
+                            "popUpTitle" => "Success! 😺",
+                            "popUpMsg" => "Thank you for your valuable feedback!",
+                            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+                            "nextPage" => "PO_apptDashboard_Vet"
+                        ]);
+            exit();
+        } else {
+            echo json_encode(["status" => "failure",
+                            "popUpTitle" => "Failure! 🙀",
+                            "popUpMsg" => "Something went wrong! Please try again later.",
+                            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
+                        ]);
+            exit();
+        }
     }
 
     public function redirectToBookAppt () {
+        if (!isset($_GET['sessionID']) || !isset($_GET['doctorID']))
+            redirect('PO_apptDashBoard_Vet');
+
         $_SESSION['sessionID'] = $_GET['sessionID'];
         $_SESSION['doctorID'] = $_GET['doctorID'];
-
+        redirect('PO_bookAppt_Vet');
     }
 }
