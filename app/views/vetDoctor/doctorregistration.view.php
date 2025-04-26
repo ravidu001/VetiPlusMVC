@@ -12,6 +12,41 @@ $notification = new Notification();
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/registration.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
+    <style>
+    /* Error Alert Container */
+    .alert {
+        padding: 15px 20px;
+        background-color: #f44336; /* Red background for errors */
+        color: white;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* List inside the alert */
+    .alert ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    /* List items inside the alert */
+    .alert ul li {
+        list-style-type: disc;
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    /* Success Alert (optional if you want to show success too) */
+    .alert-success {
+        background-color: #4CAF50; /* Green background */
+    }
+
+    /* Error Alert specifically */
+    .alert-danger {
+        background-color: #f44336; /* Red background */
+    }
+    </style>
+
 </head>
 <body>
     <?php echo $notification->display(); ?>
@@ -28,6 +63,17 @@ $notification = new Notification();
                 <div class="step">2</div>
                 <div class="step">3</div>
             </div>
+            <?php if (isset($_SESSION['errors'])): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach ($_SESSION['errors'] as $error): ?>
+                            <li><?php echo htmlspecialchars($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php unset($_SESSION['errors']); ?>
+            <?php endif; ?>
+
 
             <!-- Personal Information -->
             <div class="form-section active" id="personalInfo">
@@ -72,7 +118,7 @@ $notification = new Notification();
                 <h3>Professional Details</h3>
                 <div class="form-group">
                     <label for="lnumber">License Number <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="text" id="lnumber" class="form-input" name="lnumber" required placeholder="Enter your license number">
+                    <input type="text" id="lnumber" class="form-input" name="lnumber" required placeholder="Eg. VC/xxxx or TVC/xxxx">
                 </div>
                 <div class="form-group">
                     <label for="special">Specialization <div style="color:red; padding-left:5px;">*</div></label>
@@ -82,7 +128,22 @@ $notification = new Notification();
                         <option value="Large Animal Medicine">Large Animal Medicine</option>
                         <option value="Exotic Pet Care">Exotic Pet Care</option>
                         <option value="Wildlife Conservation">Wildlife Conservation</option>
+                        <option value="Veterinary Surgery">Veterinary Surgery</option>
+                        <option value="Veterinary Dermatology">Veterinary Dermatology</option>
+                        <option value="Veterinary Dentistry">Veterinary Dentistry</option>
+                        <option value="Veterinary Oncology">Veterinary Oncology (Cancer Treatment)</option>
+                        <option value="Animal Reproduction and Fertility">Animal Reproduction and Fertility</option>
+                        <option value="Veterinary Cardiology">Veterinary Cardiology (Heart Care)</option>
+                        <option value="Veterinary Neurology">Veterinary Neurology (Brain & Nerve Care)</option>
+                        <option value="Animal Behavior and Training">Animal Behavior and Training</option>
+                        <option value="Veterinary Ophthalmology">Veterinary Ophthalmology (Eye Care)</option>
+                        <option value="Equine Medicine">Equine Medicine (Horse Care)</option>
+                        <option value="Poultry Medicine">Poultry Medicine</option>
+                        <option value="Food Animal Medicine">Food Animal Medicine (Cattle, Sheep, Goats)</option>
+                        <option value="Veterinary Public Health">Veterinary Public Health (Zoonotic Disease Control)</option>
+                        <option value="Aquatic Animal Health">Aquatic Animal Health (Fish and Marine Animals)</option>
                     </select>
+
                 </div>
                 <div class="form-group">
                     <label for="experience">Years of Experience <div style="color:red; padding-left:5px;">*</div></label>
@@ -112,7 +173,21 @@ $notification = new Notification();
             </div>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dobInput = document.getElementById('DOB'); // or whatever ID you gave to the DOB input
 
+            if (dobInput) {
+                const today = new Date();
+                const year = today.getFullYear() - 18;
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+
+                const maxDate = `${year}-${month}-${day}`;
+                dobInput.setAttribute('max', maxDate);
+            }
+        });
+    </script>
     <script src="<?= ROOT ?>/assets/js/vetDoctor/registration.js"></script>
 </body>
 </html>
