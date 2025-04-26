@@ -34,16 +34,18 @@ class Assistant extends Controller {
         $acceptedCount = 0;
         $pendingCount = 0;
         $reviewCount = 0;
-        foreach ($sessionData as $sessionItem) {
-            if ($sessionItem->action == 'accept') {
-                $acceptedCount++;
-            }
-            if ($sessionItem->action == 'pending') {
-                $pendingCount++;
-            }
-            if ($sessionItem->status == '1') {
-                $reviewCount++;
-            }
+        if(is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                if ($sessionItem->action == 'accept') {
+                    $acceptedCount++;
+                }
+                if ($sessionItem->action == 'pending') {
+                    $pendingCount++;
+                }
+                if ($sessionItem->status == '1') {
+                    $reviewCount++;
+                }
+            }   
         }
         // show($sessionData);
         // show($acceptedCount);
@@ -56,18 +58,27 @@ class Assistant extends Controller {
         // show($assisSessionData);
 
         $consolidatedData = [];
-
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action == 'accept') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-
-                foreach ($sessionData as $sessionItem) {
-                    // check session is a future session
-                    $endTime = new DateTime($sessionItem->endTime); // Create a DateTime object for the session start time
-                    $currentTime = new DateTime(); // Get the current time
-                    if ($sessionItem->selectedDate == date('Y-m-d')) {
-                        if ($endTime >= $currentTime) {
+        if (is_array($assisSessionData)) {
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action == 'accept') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+    
+                    foreach ($sessionData as $sessionItem) {
+                        // check session is a future session
+                        $endTime = new DateTime($sessionItem->endTime); // Create a DateTime object for the session start time
+                        $currentTime = new DateTime(); // Get the current time
+                        if ($sessionItem->selectedDate == date('Y-m-d')) {
+                            if ($endTime >= $currentTime) {
+                                $doctor = new DoctorModel();
+                                $doctorData = $doctor->find($sessionItem->doctorID);
+                                $consolidatedData[] = [
+                                    'doctor' => $doctorData,
+                                    'session' => $sessionItem,
+                                    'assisSession' => $assisSessionItem
+                                ];
+                            }   
+                        } elseif ($sessionItem->selectedDate > date('Y-m-d') ){
                             $doctor = new DoctorModel();
                             $doctorData = $doctor->find($sessionItem->doctorID);
                             $consolidatedData[] = [
@@ -75,18 +86,11 @@ class Assistant extends Controller {
                                 'session' => $sessionItem,
                                 'assisSession' => $assisSessionItem
                             ];
-                        }   
-                    } elseif ($sessionItem->selectedDate > date('Y-m-d') ){
-                        $doctor = new DoctorModel();
-                        $doctorData = $doctor->find($sessionItem->doctorID);
-                        $consolidatedData[] = [
-                            'doctor' => $doctorData,
-                            'session' => $sessionItem,
-                            'assisSession' => $assisSessionItem
-                        ];
+                        }
                     }
                 }
             }
+            
         }
 
 
@@ -96,23 +100,21 @@ class Assistant extends Controller {
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByAssisId($assistantID);
         // Check if the reviews were fetched successfully
-        if ($reviews === false) {
-            // Handle the error (show an error message)
-            die('Error fetching reviews.');
-        }
+        // if ($reviews === false) {
+        //     // Handle the error (show an error message)
+        //     die('Error fetching reviews.');
+        // }
 
+        // Initialize an array to hold consolidated session data
+        $consolidatedReviews = [];
+        // Fetch assistant's name 
+        $assis = new AssisModel(); 
+        $assisData = $assis->find($assistantID); 
+        $assisName = $assisData->fullName; 
         // Check if there are any reviews
         if (empty($reviews)) {
-            echo 'No reviews found for this doctor.';
+            echo "<script>console.log('No reviews found for this assistant.');</script>";
         } else {
-            // Fetch assistant's name 
-            $assis = new AssisModel(); 
-            $assisData = $assis->find($assistantID); 
-            $assisName = $assisData->fullName; 
-
-            // Initialize an array to hold consolidated session data
-            $consolidatedReviews = [];
-        
             // Iterate over each review to get petowner data
             foreach ($reviews as $reviewsItem) {
                 $session = new DoctorSessionModel();
