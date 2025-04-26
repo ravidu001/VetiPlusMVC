@@ -73,6 +73,12 @@ class DoctorModel {
     public function updateStatus($doctorID, $data) {
         $this->update($doctorID, ['approvedStatus'=>$data['approvedStatus'],'rejectReason'=>$data['rejectReason']], 'doctorID');
     }
+    public function pendingvetdoctorcount()
+    {
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE approvedStatus = 'pending'";
+        $result = $this->query($query);
+        return $result[0]->total;
+    }
 
 }
 
