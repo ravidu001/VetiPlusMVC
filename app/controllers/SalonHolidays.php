@@ -2,7 +2,6 @@
 
 class SalonHolidays extends Controller 
 {
-
     public function index() 
     {
         $data = [];
@@ -19,22 +18,21 @@ class SalonHolidays extends Controller
             $TimeslotTable = new SalonTImeSLotConfig();
             $SalonWeekdays = new SalonWeekdaySchedules();
             $salonSessions = new SalonTimeSlots();
+            $notifications = new Notification();
+
             $holidays = $_POST['holidays'] ?? [];
             $errors = [];
             $status = 'booked';
-
-            // $hasBookingError = false;
 
             //check if the select holiday has bookings
             foreach ($holidays as $holiDate) 
             {
                 $result = $salonSessions->FindBooking($salonuser, $holiDate, $status);
 
-                if(isset($result))
+                if(!empty($result))
                 {
                     $errors[] = "The date $holiDate cannot be marked as a holiday because it has bookings.";
-                    // $hasBookingError = true;
-                    // break; // Stop checking further if one conflict is found
+                    // $notifications->show("The date $holiDate cannot be marked as a holiday because it has bookings.",'error');
                 }
             }
 
@@ -61,7 +59,8 @@ class SalonHolidays extends Controller
             {
                 if(!in_array($holidayDate, $alldays))
                 {
-                    $data['error'] = "Date $holidayDate is not a valid working day.";
+                    $errors[] = "Date $holidayDate is not a valid working day.";
+                    // $notifications->show("Date $holidayDate is not a valid working day",'error');
                 }
             }
 
@@ -74,6 +73,7 @@ class SalonHolidays extends Controller
                 if (strtotime($date) <= strtotime('+3 days', strtotime(date('Y-m-d')))) 
                 {
                     $errors[] = "The date $date must be selected at least 3 days in advance.";
+                    // $notifications->show("The date $date must be selected at least 3 days in advance.",'error');
                     continue;
                 }
 
@@ -82,6 +82,7 @@ class SalonHolidays extends Controller
                 if (!empty($result)) 
                 {
                     $errors[] = "The date $date has already been selected as a holiday.";
+                    // $notifications->show("The date $date has already been selected as a holiday.",'error');
                     continue;
                 }
 
@@ -103,13 +104,19 @@ class SalonHolidays extends Controller
                     $salonSessions->updateStatus($salonuser, $date, $status);
                 }
 
+                $notifications->show("Create holidays successfully!",'success');
                 // Redirect after successful insert
                 redirect('SalonHolidayView');
                 exit();
             } 
             else 
             {
-                $data['errors'] = $errors;
+                foreach($errors as $error)
+                {
+                    $notifications->show($error,'error');
+                }
+                redirect('SalonHolidayView');
+                exit();
             }
         }
 

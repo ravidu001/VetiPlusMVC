@@ -26,6 +26,7 @@ class Logout extends Controller
                     unset($_SESSION['adminID']);
             }
             
+            unset($_SESSION['type']);
         }
         
         header("Location: " . ROOT . "/Login");

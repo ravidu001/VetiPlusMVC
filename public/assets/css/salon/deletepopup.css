@@ -1,0 +1,87 @@
+/* Modal Background */
+.modal 
+{
+display: none;
+position: fixed;
+z-index: 999;
+overflow-y: auto;
+left: 0;
+top: 0;
+width: 100%;
+height: 150%;
+overflow: auto;
+background-color: rgba(0,0,0,0.5);
+}
+
+/* Modal Content Box */
+.modal-content 
+{
+background-color: #fff;
+margin: 10% auto;
+padding: 20px 30px;
+border: 1px solid #888;
+width: 400px;
+border-radius: 10px;
+box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+text-align: center;
+}
+
+/* Close Button (X) */
+.closebtn 
+{
+color: #aaa;
+float: right;
+font-size: 24px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.ask 
+{
+margin: 10px;
+padding: 10px 5px;
+}
+
+/* Buttons */
+.modal-content button 
+{
+padding: 10px 16px;
+margin: 10px 5px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.modal-content #confirmDeleteBtn 
+{
+background-color: #6a0dad;
+color: white;
+}
+
+.modal-content button:hover 
+{
+opacity: 0.9;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 6px;
+    color: black;
+    background-color: white;
+    font-size: 16px;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification.success {
+    border-left-color: #4CAF50;
+}
+
+.notification.error {
+    border-left-color: #f44336;
+}

@@ -13,22 +13,39 @@ class Signup extends Controller {
             $data = [
                 'email' => $_POST['email'],
                 'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), 
+                'repassword' => password_hash($_POST['repassword'], PASSWORD_DEFAULT), 
                 'type' => $_POST['userType']
             ];
+
             $user = new User();
             $alreadyHave = $user->checkUser($data['email']);
 
-            if($alreadyHave) {
+            if($alreadyHave) 
+            {
                 $this->view('logindetail/signup', ['errors' => 'User already exists']);
-            } else {
-                if($user->validate($data)) {
+            } 
+            else 
+            {
+                if($user->validate($data)) 
+                {
+                    $arr = [];
+                    $arr = [
+                        'email' => $data['email'],
+                        'password' => $data['password'],
+                        'type' => $data['userType']
+                    ];
+                    
                     $user->create($data);
                     header('Location: /vetiplusMVC/public/login');
-                } else {
+                } 
+                else
+                {
                     $this->view('logindetail/signup', ['errors' => $user->errors]);
                 }
             }
-        } else {
+        } 
+        else 
+        {
             $this->view('logindetail/signup'); // remover user because it is out of the if statement
         }
 

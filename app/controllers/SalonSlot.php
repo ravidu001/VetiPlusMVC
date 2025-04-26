@@ -9,6 +9,7 @@ class SalonSlot extends Controller
         // $holidays = new SalonHoliday();
         $salontimeslotconfig = new SalonTImeSLotConfig();
         $SalonweekdaySchedules = new SalonWeekdaySchedules();
+        $notifications = new Notification();
 
         $salonID = $_SESSION['SALON_USER'];
 
@@ -59,7 +60,8 @@ class SalonSlot extends Controller
 
                 if(empty($TimseSlotConfigDatas))
                 {
-                    $data['message'] = "No data create for slots yet";
+                    // $data['message'] = "No data create for slots yet";
+                    $notifications->show("No data create for slots yet!.",'error');
                 }
                 else
                 {
@@ -70,7 +72,9 @@ class SalonSlot extends Controller
 
                    if(empty($WeekDaysDetails))
                    {
-                    $data['message'] = "Cannot be happen but cannot find the Weekdays details for this config file";
+                    // $data['message'] = "Cannot be happen but cannot find the Weekdays details for this config file";
+                    $notifications->show("Cannot be happen but cannot find the Weekdays details for this config file!.",'error');
+
                    }
                    else
                    {
@@ -80,7 +84,9 @@ class SalonSlot extends Controller
             }
             else
             {
-                $data['message'] = "Not yet Upload the details";
+                // $data['message'] = "Not yet Upload the details"
+                $notifications->show("Not yet Upload the details",'error');
+
             }
         }
     

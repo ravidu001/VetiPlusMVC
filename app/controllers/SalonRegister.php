@@ -89,37 +89,29 @@ class SalonRegister extends Controller
 
         // $table = new SalonRegisters;
         $salonTable = new Salons();
+        // $notifications = new Notification();
 
         $result =  $salonTable->updateSalonTimeSlots($email,$arr);
 
         if($result)
         {
             $data['success'] = true;
+            // $notifications->show("data insert successfully!.",'success');
         }
         else
         {
             $data['error'] = "data insert unsuccessfully";
+            // $notifications->show("data insert unsuccessfully",'error');
         }
 
-        // if($table->update($email, $arr, 'email'))
-        // {
-        //     // show($email);
-        //     show($arr);
-        //     $data['success'] = true;
-        // }
-        // else
-        // {
-        //     show($email);
-        //     show('ishan');
-        //     show($email);
-        //     $data['error'] = "data insert unsuccessfully";
-        // }
         return $data;
     }
 
     //if this is new email create the new 
     private function insertregisterdata($arr, $registration_table)
     {
+        // $notifications = new Notification();
+
         $data = ['success' => false, 'error' => null];
 
         //if cannot catch the email error or can redirect the login page
@@ -131,10 +123,12 @@ class SalonRegister extends Controller
         if($registration_table->insertData($arr))
         {
             $data['success'] = true;
+            // $notifications->show("data insert successfully!.",'success');
         }
         else
         {
             $data['error'] = "data insert unsuccessfully";
+            // $notifications->show("data insert unsuccessfully",'error');
         }
 
         return $data;
@@ -152,6 +146,7 @@ class SalonRegister extends Controller
 
         // Use the salon registration model 
         $registration_table = new Salons;
+        $notifications = new Notification();
 
         // Check if same login email exists
         $existingRecord = $registration_table->FindUser($_SESSION['SALON_USER']);
@@ -204,12 +199,15 @@ class SalonRegister extends Controller
                  {
                     $result = $this->insertregisterdata($data, $registration_table);
                 
-                    if ($result['success']) {
+                    if ($result['success']) 
+                    {
+                        $notifications->show("Registration Successfully!.",'success');
                         redirect('Pending');
                     }
                     else 
                     {
-                        $data['errors'][] = $result['error'];
+                        $notifications->show("Registration Unsuccessfully!.",'error');
+                        // $data['errors'][] = $result['error'];
                     }
                 }
             }
@@ -245,12 +243,6 @@ class SalonRegister extends Controller
         if (empty(trim($businessregnumber))) {
             $errors['businessregnumber'] = "Invalid business registration number is empty.";
         }
-
-        // Validate image size (if provided)
-        // if (!is_null($image_size) && $image_size < 100000) 
-        // { // 1MB limit
-        //     $errors['image_size'] = "File size too large. Please upload an image less than 1MB.";
-        // }
 
         return $errors;
     }

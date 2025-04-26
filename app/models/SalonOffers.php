@@ -14,7 +14,6 @@ class SalonOffers
         return $this->insert($data);
     }
 
-
      //__________________________________________________________________________________________
     //edit offers 
 
@@ -58,11 +57,11 @@ class SalonOffers
     //findall offers 
     public function findAllOfferId()
     {
+        $this->limit = 1000;
+        $this->order_type = 'DESC';
         $this->order_column = 'specialOfferID';
         return $this->findAll('specialOfferID');
     }
-
-
 
      //__________________________________________________________________________________________
     //findall services to show the special offer add colunm
@@ -72,9 +71,6 @@ class SalonOffers
         $this->order_column = 'specialOfferID';
         return $this->where(['serviceID' => $serviceID]);
     }
-
-
-
     
 }
 

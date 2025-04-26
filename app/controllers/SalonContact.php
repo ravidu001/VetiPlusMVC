@@ -9,6 +9,7 @@ class SalonContact extends Controller
         $systemfeedbackTable = new systemfeedbackModel();
         $systemComplainTable = new systemcomplainModel();
         $adminTable = new AdminRegistrationModel();
+        $notifications = new Notification();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contactSubmit'])) {
             $name = htmlspecialchars($_POST['name']);
@@ -30,7 +31,8 @@ class SalonContact extends Controller
 
             if (!$adminMail) 
             {
-                $data['error'] = "Admin email not found. Cannot submit complaint.";
+                // $data['error'] = "Admin email not found. Cannot submit complaint.";
+                $notifications->show("Admin email not found. Cannot submit complaint.!",'error');
                 $this->view('Salon/saloncontact', $data);
                 return;
             }
@@ -66,11 +68,13 @@ class SalonContact extends Controller
                     if (!$result) 
                     {
                         redirect('SalonContact');
-                        $data['success'] = "Successfully inserted";
+                        // $data['success'] = "Successfully inserted";
+                         $notifications->show("Successfully inserted!",'success');
                     }
                     else 
                     {
-                        $data['error'] = "Data cannot be inserted successfully";
+                        // $data['error'] = "Data cannot be inserted successfully"
+                        $notifications->show("Data cannot be inserted successfully!",'error');
                     }
                 }
             } 
@@ -115,28 +119,31 @@ class SalonContact extends Controller
 
                             if(!$result)
                             {
-                                $data['success'] = "Successfully inserted";
+                                // $data['success'] = "Successfully inserted"
+                                $notifications->show("Successfully inserted!",'success');
                             }
                             else 
                             {
-                                $data['error'] = "Data cannot be inserted successfully";
+                                // $data['error'] = "Data cannot be inserted successfully";
+                                $notifications->show("Data cannot be inserted successfully!",'error');
                             }
 
                         } 
                         else 
                         {
-                            $data['error'] = "Failed to upload the image.";
+                            // $data['error'] = "Failed to upload the image.";
+                            $notifications->show("Failed to upload the image.!",'error');
                         }
                     } 
                     else 
                     {
-                        $data['error'] = $imageValidation['errors'];
+                        // $data['error'] = $imageValidation['errors'];
+                        $notifications->show("Uploaded image is too large!",'error');
                     }
                 }
 
                 else
                 {
-                    show('hhhhhhhhhhhhhhhhhhhhhh');
                     $array = [
                         'name' => $name,
                         'email' => $email,
@@ -161,11 +168,13 @@ class SalonContact extends Controller
                         
                         if (!$result) 
                         {
-                            $data['success'] = "Successfully inserted";
+                            // $data['success'] = "Successfully inserted";
+                            $notifications->show("Successfully inserted!",'success');
                         }
                         else 
                         {
-                            $data['error'] = "Data cannot be inserted successfully";
+                            // $data['error'] = "Data cannot be inserted successfully";
+                            $notifications->show("Data cannot be inserted successfully!",'error');
                         }
                     }
                 }
