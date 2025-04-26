@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +12,7 @@
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <title>VetiPlus - Appointments Dashboard</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/adminnav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/appointment.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -16,15 +22,16 @@
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
+    <?php echo $notification->display(); ?>
         <div class="main-container">
             <div class="appointment-stats">
                 <div class="stat-card">
-                    <h3>Daily Appointments</h3>
-                    <div class="stat-number"><?php echo htmlspecialchars($dailyappointmentcount, ENT_QUOTES, 'UTF-8'); ?></div>
+                    <h3>Pending Appointments</h3>
+                    <div class="stat-number"><?php echo htmlspecialchars($pendingappointment, ENT_QUOTES, 'UTF-8'); ?></div>
                 </div>
                 <div class="stat-card">
                     <h3>Canceled Appointments</h3>
-                    <div class="stat-number">23</div>
+                    <div class="stat-number"><?php echo htmlspecialchars($cancelappointment, ENT_QUOTES, 'UTF-8'); ?></div> 
                 </div>
                 <div class="stat-card">
                     <h3>Total Appointments</h3>
