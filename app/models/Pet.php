@@ -33,7 +33,7 @@ class Pet {
             'petOwnerID' => $this->petOwnerID,
             'activeStatus' => 'active'
         ];
-        $petDetailsArray = $this->where($params);
+        $petDetailsArray = $this->where($params) ?? [];
         return $petDetailsArray;
     }
     public function getOnePet ($petID) {

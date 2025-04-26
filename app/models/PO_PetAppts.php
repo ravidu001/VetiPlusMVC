@@ -185,4 +185,12 @@ class PO_PetAppts {
             return false;
         }
     }
+
+    public function rescheduleAppt (string $type, $params) {
+        if ($type === 'vet') {
+            return $this->makeBooking_vet($params);
+        } elseif ($type === 'salon') {
+            return $this->makeBooking_salon($params);
+        }
+    }
 }

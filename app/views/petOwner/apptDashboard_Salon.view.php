@@ -112,19 +112,10 @@
                 <h2>Search Available Vet Sessions</h2>
 
                 <div class="searchFilter-container">
-                    <div class="filter-group" id="docNameFilter">
-                        Search by a salon's name:
-                        <input type="text" name="salonName" class="searchBar" placeholder="Search by a salon's Name.">
-                        <ul class="dropdownList"></ul>
+                    <div class="filter-group">
+                        Search by salon's name:
+                        <select name="salonName" id="salonSelect" class="searchBar" placeholder="Search by a salon's Name."></select>
                     </div>
-                    
-                    <div class="filter-group" id="districtFilter">
-                        Search by district:
-                        <input type="text" name="district" class="searchBar" placeholder="Search by district.">
-                        <ul class="dropdownList"></ul>
-                    </div>
-
-                    <button class="cardBtn clearBtn"><i class="bx bxs-clear bx-sm"></i>Clear</button>
                 </div>
 
                 <div class="longCard-container availSessCard-container"></div>
@@ -170,15 +161,12 @@
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
 
-        <script src="<?=ROOT?>/assets/js/petOwner/searchableDropdown.js"></script>
-        <!-- <script>
-            const docNameList = (<?= json_encode($this->activeSalonList) ?>).map(x => { return x.docName });
-        </script>
-        <script src="./assets/js/petOwner/searchFilters_vet.js"></script> -->
-
+        <!-- <script src="<?=ROOT?>/assets/js/petOwner/searchableDropdown.js"></script> -->
         <script defer>
+            console.log((<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName));
 
-            console.log("ActiveList: ", (<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName));
+            const salonNameList = (<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName);
+            document.getElementById('salonSelect').innerHTML = salonNameList.map(x => `<option value="${x}">${x}</option>`).join('');
 
             fetch('PO_apptDashboard_Salon/getSalons')
             .then(response => response.json())
@@ -197,7 +185,7 @@
             )
             
             fetchAndAppendCards(
-                'PO_apptDashboard_Salon/getSalons',
+                'PO_apptDashboard_Salon/getAvailableSalons',
                 '.availSessCard-template',
                 '.availSessCard-container'
             )

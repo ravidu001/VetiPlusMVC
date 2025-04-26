@@ -15,9 +15,7 @@
 
     </head>
     <body>
-        <script>
-            const ROOT = `<?= ROOT ?>`;
-        </script>
+        <script> const ROOT = `<?= ROOT ?>`; </script>
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea">

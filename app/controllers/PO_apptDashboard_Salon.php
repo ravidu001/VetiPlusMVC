@@ -51,8 +51,8 @@ class PO_apptDashboard_Salon extends Controller {
 
     public function getAvailableSalons () {
         $params = [
-            'salonName' => $_GET['salonName'] ?? '',
-            'openHour' => $_GET['openHour'] ?? ''
+            'salonName' => $_GET['salonName'] ?? ''
+            // 'openHour' => $_GET['openHour'] ?? ''
         ];
 
         $result = $this->salonsObj->getSalons($params) ?: ["fetchedCount" => 0];

@@ -17,6 +17,7 @@
     </head>
     <body>
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
+        <script> const ROOT = `<?= ROOT ?>`; </script>
 
         <div class="bodyArea">
 
@@ -144,10 +145,6 @@
             <?php include_once '../app/views/navbar/po_Footer.php'; ?>
 
         </div>
-        
-        <script>
-            const ROOT = <?php echo json_encode(ROOT); ?>;
-        </script>
 
         <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
