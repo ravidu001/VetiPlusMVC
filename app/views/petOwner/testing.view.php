@@ -233,6 +233,15 @@
 
         <input type="text class="editableDiv" value="HELLO THERE" placeholder="eg: HELLO THERE">
 
+        <select name="" id="">
+            <option value="ahello">ahello</option>
+            <option value="bhello">bhello</option>
+            <option value="chello">chello</option>
+            <option value="dhello">dhello</option>
+            <option value="ehello">ehello</option>
+            <option value="fhello">fhello</option>
+        </select>
+
         <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <!-- <script defer>
             // Step 1: Fetch and display cards

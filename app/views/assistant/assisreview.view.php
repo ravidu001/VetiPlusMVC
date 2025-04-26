@@ -81,7 +81,7 @@
             <?php endif; ?>
             <div class="review-fullcard">
                 <?php foreach ($reviews as $review): ?>
-                    <?= print_r($review); ?>
+                    
                     <div class="review-card" style="margin-bottom: 15px;">
                         <div class="review-details">
                             <div class="review-header">

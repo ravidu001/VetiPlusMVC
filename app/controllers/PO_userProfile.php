@@ -39,8 +39,6 @@ class PO_userProfile extends Controller {
         $uploadDone = move_uploaded_file($tempPath, $destination);
 
         if ($uploadDone) {
-            // $petOwner = new PetOwner;
-            // $petOwner->setPetOwnerID();
 
             $updateDone = $this->petOwner->uploadProfilePicture(['profilePicture' => $newFileName]);
             if ($updateDone) {

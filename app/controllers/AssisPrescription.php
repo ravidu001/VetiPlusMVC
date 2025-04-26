@@ -57,7 +57,8 @@ class AssisPrescription extends Controller {
         // show($sessionData);
         foreach ($sessionData as $sessionItem) {
             if ($sessionItem['completeStatus'] == 0) {
-                $appointmentModel = new AppointmentModel();echo "<script>console.log('IDAPP " . json_encode($sessionItem['sessionID']) . "');</script>";
+                $appointmentModel = new AppointmentModel();
+                echo "<script>console.log('IDAPP " . json_encode($sessionItem['sessionID']) . "');</script>";
                 $appointmentData = $appointmentModel->getAppointmentBySession($sessionItem['sessionID']);
                 // show($appointmentData);
                 if ($appointmentData && is_array($appointmentData)) {

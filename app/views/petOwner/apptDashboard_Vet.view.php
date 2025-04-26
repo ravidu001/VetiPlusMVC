@@ -28,10 +28,10 @@
                     formAction = 'PO_apptDashboard_Vet/editAppt';
                 else if (btn.classList.contains('rescheduleBtn'))
                     formAction = 'PO_apptDashboard_Vet/bookAppt';
-                else if (btn.classList.contains('cancelBtn'))
-                    formAction = 'PO_apptDashboard_Vet/rateAppt';
+                // else if (btn.classList.contains('cancelBtn'))
+                //     formAction = 'PO_apptDashboard_Vet/rateAppt';
                 else if (btn.classList.contains('ratingBtn'))
-                    formAction = 'PO_apptDashboard_Vet/rateAppt';
+                    formAction = 'PO_apptDashboard_Vet/postFeedback';
                 
                 const card = btn.closest('.card');
                 const cardDetails = {
@@ -72,7 +72,7 @@
                         </div>
                         <div class="cardBtn-container">
                             <!-- <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button> -->
-                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
+                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time." disabled>
                                 <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
                             <button class="cardBtn cancelBtn" title="Cancel the appointment.">
                                 <i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
@@ -139,13 +139,13 @@
 
                 <div class="longCard-container availSessCard-container"></div>
                 <template class="availSessCard-template">
-                    <div class="card sessionCard availSessCard" sessionID doctorID sessDate availableAppts slotDuration>
+                    <div class="card sessionCard availSessCard" sessionID doctorID>
                         <div class="cardPic-container">
                             <img src="" alt="providerPic" class="cardPic providerPic">
                         </div>
                         <div class="cardDetails">
                             <p>
-                                <span class="providerName" style="font-weight: 800;"></span>
+                                <span class="providerName" style="font-weight: 800; font-size: 1.3em;"></span>
                                 Specializing in <span class="doctorSpecialization"></span>
                             </p>
                             <p class="details"></p>
@@ -224,20 +224,20 @@
             function getCardDetails_session  (btn) {
                 const card = btn.closest('.card');
                 const cardDetails = {
-                    type: 'vet',
                     sessionID: card.getAttribute('sessionID'),
                     doctorID: card.getAttribute('doctorID'),
                 };
 
                 return cardDetails;
             }
+
+            // redirect to bookApt page after saving session details in SESSION[]
             document.querySelector('.availSessCard-container').addEventListener('click', function(e) {
                 const button = e.target.closest('button');
                 if (button) {
                     const cardDetailsObj = getCardDetails_session(button);
                     const params = new URLSearchParams(cardDetailsObj).toString();
-                    const url = `PO_bookAppt_Vet?${params}`;
-
+                    const url = `PO_apptDashboard_vet/redirectToBookAppt?${params}`;
                     window.location.href = url;
                 }
             })

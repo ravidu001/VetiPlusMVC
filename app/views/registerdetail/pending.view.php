@@ -23,6 +23,13 @@
             <div class="dot"></div>
         </div>
 
+        <div class="loginredirect">
+            <p>Please try again after the oneday. Admin checking your details.</p>
+            <button class="login">
+                <a href="<?=ROOT?>/Login">Login</a>
+            </button>
+        </div>
+
         <div class="contact-info">
             <p>If you have any questions, please contact support at support@vetiplus.com</p>
         </div>

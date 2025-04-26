@@ -8,15 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="<?= ROOT ?>/assets/css/guestUser/colourPalette.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/styles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/guestUser/guest_commonStyles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/guestUser/navBar.css" rel="stylesheet">
-        <link href="<?= ROOT ?>/assets/css/guestUser/myFooter.css" rel="stylesheet">
-
-        <link href="<?= ROOT ?>/assets/css/guestUser/hero.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/guestUser/aboutPage.css" rel="stylesheet">
 
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
         
         
     </head>

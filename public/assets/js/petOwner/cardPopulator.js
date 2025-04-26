@@ -78,12 +78,12 @@ function displayStarRating(rating, container) {
  */
 function createCard(template, data) {
     const card = template.content.cloneNode(true).children[0];
-    const picTypes = ['petPic', 'providerPic'];
+    const picTypes = ['petPic', 'providerPic', 'profilePicture', 'adoptionImage'];
     card.querySelectorAll('.cardPic').forEach(pic => {
         pic.style.display = 'none';
     });
 
-    function isDatTimeeString (str) {
+    function isDateTimeeString (str) {
         if (typeof str !== 'string') return false;
         return !isNaN(Date.parse(str));
     }
@@ -98,15 +98,20 @@ function createCard(template, data) {
                     let imgSrc;
                     if (key == 'providerPic') {
                         if (data['type'] == 'vet') imgSrc = `${ROOT}/assets/images/vetDoctor/${value}`;
-                        else if (data['type'] == 'salon') imgSrc = `${ROOT}/assets/images/${value}`;
+                        else if (data['type'] == 'salon') imgSrc = `${ROOT}/${value}`;
                     } else if (key == 'petPic') {
                         imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
+                    } else if (key == 'adoptionImage') {
+                        imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/adoption/${value}`
                     }
                     element.src = imgSrc;
                     element.style.display = 'block';
                 } else {
                     element.style.display = 'none';
                 }
+            }
+            else if(key == "type") {
+                
             }
             // for rating data
             else if (key == 'rating') {
@@ -127,9 +132,9 @@ function createCard(template, data) {
                     displayStarRating(value, element);
                 }
             }
-            else if (isDatTimeeString(value)) {
+            else if (isDateTimeeString(value)) {
                 const dateStr = new Date(value);
-                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
                 element.textContent =  dateStr.toLocaleTimeString('en-GB', options);
             }
             else if (element.tagName == 'A') {
@@ -196,15 +201,8 @@ async function fetchAndAppendCards (url, templateSelector, containerSelector) {
 
     } 
     catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data/ Invalid url given');
     }
-}
-
-async function fetchData (url) {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    return data;
 }
 
 

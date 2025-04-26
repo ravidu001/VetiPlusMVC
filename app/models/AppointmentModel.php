@@ -16,9 +16,8 @@ class AppointmentModel
     }
 
     // get appointment by sessionID
-    public function getAppointmentBySession($sessionID)
-    {
-        $this->limit = 100;
+    public function getAppointmentBySession($sessionID) {
+        $this->limit = 1000;
         $this->order_column = 'visitTime';
         $this->order_type = 'ASC';
 
@@ -26,9 +25,9 @@ class AppointmentModel
         return $result;
     }
 
-    public function getAppointmentBySessionwithEmpty($sessionID)
-    {
-        $this->limit = 100;
+
+    public function getAppointmentBySessionwithEmpty($sessionID) {
+        $this->limit = 1000;
         $this->order_column = 'visitTime';
         $this->order_type = 'ASC';
 

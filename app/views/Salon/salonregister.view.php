@@ -29,6 +29,9 @@
             <div class="rendarpart1">
                 <h2>Pet Salon Registration</h2>
                 <p>"Enhance your business effortlessly with our platform your ultimate partner for growth and success. "</p>
+                <div class="image-container">
+                    <img src="<?=ROOT?>/assets/images/salon/register/salon55.png" alt="image" class="salonimage">
+                </div>
                     <h3>What is your Salon Name ?</h3>
 
                     <!-- <form id="salonForum" class="salon-form" action="<?=ROOT?>/SalonRegister" method="post" enctype="multipart/form-data"> -->
@@ -125,59 +128,32 @@
                             endif; 
                         ?>     
                 </div>
-
-                <!-- Owner Name-->
-                <div class="form-group">
-                    <label for="socialmedia">
-                        <i class="fa-solid fa-globe"></i> Web Site Link (If you have)
-                    </label>
-                    <input type="text" 
-                           id="socialmedia" 
-                           name="socialmedia" 
-                           placeholder="e.g - http//vetiplus.com"
-                           value="<?php 
-                                    if (!empty($data['oldemaildata'])) 
-                                    {
-                                      echo $data['oldemaildata'][0]->socialmedia;
-                                    }
-                            ?>"
-                           >
-                           <?php if (!empty($errors['socialmedia'])): ?>
-                                <div class="error-message">
-                                    <?= htmlspecialchars($errors['socialmedia']) ?>
-                                </div>
-                            <?php endif; ?>     
-                </div>
-
-                <!-- Business Registration Number -->
-                <div class="form-group">
-                    <label for="businessregnumber">
-                        <i class="fa-solid fa-registered"></i> Business Registration Number <span class="required">*</span>
-                    </label>
-                    <input type="text" 
-                        id="businessregnumber" 
-                        name="businessregnumber" 
-                        placeholder="e.g., ABC123" 
-                        
-                        title="Please enter a valid registration number (e.g., ABC123)" 
-                        value="<?php 
-                                    if (!empty($data['oldemaildata'])) 
-                                    {
-                                      echo $data['oldemaildata'][0]->businessregnumber;
-                                    }
-                            ?>"
-                        required>
-                        <?php if (!empty($errors['businessregnumber'])): ?>
-                            <div class="error-message">
-                                <?= htmlspecialchars($errors['businessregnumber']) ?>
-                            </div>
-                        <?php endif; ?>     
-                </div>
-                <!-- <?php
-                // if(!$data){print_r($data);}
-                ?> -->
             </div>
             <div class="rendarpart2">
+                    <!-- Business Registration Number -->
+                        <div class="form-group">
+                            <label for="businessregnumber">
+                                <i class="fa-solid fa-registered"></i> Business Registration Number <span class="required">*</span>
+                            </label>
+                            <input type="text" 
+                                id="businessregnumber" 
+                                name="businessregnumber" 
+                                placeholder="e.g., ABC123" 
+                                
+                                title="Please enter a valid registration number (e.g., ABC123)" 
+                                value="<?php 
+                                            if (!empty($data['oldemaildata'])) 
+                                            {
+                                            echo $data['oldemaildata'][0]->businessregnumber;
+                                            }
+                                    ?>"
+                                required>
+                                <?php if (!empty($errors['businessregnumber'])): ?>
+                                    <div class="error-message">
+                                        <?= htmlspecialchars($errors['businessregnumber']) ?>
+                                    </div>
+                                <?php endif; ?>     
+                        </div>
                     <h3>BR Certificate(If you have)</h3>
                     <!-- <form id="salonForum" class="salon-form"> -->
                         

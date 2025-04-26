@@ -1,3 +1,8 @@
+<?php
+    //Create an instance of the Notification controller
+    $notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +16,7 @@
 </head>
 <body>
     <div class="homecontent">
+        <?= $notification->display(); ?>
         <div class="sideanddashbord">
             <div>
                 <?php
@@ -22,25 +28,24 @@
                     <div class="profile">
                         <img class="profile" src="<?=ROOT?>/assets/images/salon/service/wallpaper.jpg" alt="profile.php">
                         <p class="owner">Owner :</p>
-                        <p class="name">Pabodya Nethsarani</p>
+                        <p class="name">
+                            <?php 
+                                if(isset($data['salonDetails']))
+                                {
+                                    $OwnerName =  $data['salonDetails'];
+                                }
+                                else
+                                {
+                                    $OwnerName = NULL;
+                                }
+                            ?>
+                            <?=$OwnerName?>
+                        </p>
                     </div>
                     <div class="dashboard-icon" id="icon">
                         <a href="<?=ROOT?>/SalonNotifications">
                             <i class="fa-regular fa-bell icon"></i>
-                            <span class="notification-count">
-                                <?php
-                                    if(!empty($data['upcoming']))
-                                    {
-                                        ?>
-                                        <?=$data['upcoming'] ?>
-                                        <?php
-                                    }
-                                    else
-                                    {
-                                        ?>0<?php
-                                    }
-                                ?>
-                            </span>
+                            <span class="notification-count">0</span>
                         </a>
                     </div>
                 </div>
@@ -284,7 +289,10 @@
         </div> 
     </div> 
 </body>
+<script>
+    const BASE_URL = "<?= ROOT ?>";
+</script>
     <script src="<?= ROOT?>/assets/js/salon/salonpopup.js"></script>
     <script src="<?= ROOT?>/assets/js/navbar/salonnav.js"></script>
-
+    <script src="<?= ROOT?>/assets/js/salon/salon.js"></script>
 </html>
