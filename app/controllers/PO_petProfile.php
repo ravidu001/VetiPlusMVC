@@ -117,7 +117,7 @@ class PO_petProfile extends Controller {
             ]);
             exit();
         }
-        $newFileName = "petOwner_" . $this->petOwnerID . "." . $fileExt;
+        $newFileName = "pet_" . $this->petOwnerID . "." . $fileExt;
 
         // Move uploaded file to the target directory
         $destination = $targetDir . $newFileName;
