@@ -265,5 +265,87 @@ class DoctorProfile extends Controller {
             }
         }
     }
+
+    public function deleteAccount() {
+        // Initialize the response array
+        $response = [];
+        
+        // Check if the user is authenticated and has provided the correct password
+        if (isset($_POST['password'])) {
+            $password = $_POST['password'];
+            
+            // method to verify the password
+            if ($this->verifyPassword($password)) {
+                
+                $deletionSuccessful = $this->deleteUserAccount(); // This should return true or false
+                
+                if ($deletionSuccessful) {
+                    $response['success'] = true;
+                    $response['message'] = 'Account deleted successfully.';
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'Error deleting account. Please try again.';
+                }
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Incorrect password. Please try again.';
+            }
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Password is required.';
+        }
+    
+        // Set the content type to application/json
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit; // Ensure no further output is sent
+    }
+    
+    // Example method to verify the password
+    private function verifyPassword($password) {
+        $doctorID = $_SESSION['user_id'];
+        $userModel = new User();
+        $doctorData = $userModel->checkUser($doctorID);
+
+        if($doctorData){
+            $currentPasswordHash = $doctorData[0]->password;
+            if(password_verify($password, $currentPasswordHash)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    // method to delete the user account
+    private function deleteUserAccount() {
+        $doctorID = $_SESSION['user_id'];
+        $session = new DoctorSessionModel();
+        $sessionData = $session->getsession($doctorID);
+
+        if(is_array($sessionData)) {
+            foreach ($sessionData as $sessionItem) {
+                if ($sessionItem->completeStatus == 0) {
+                    return false;
+                } else {
+                    $userModel = new User();
+                    $doctorData = $userModel->checkUser($doctorID);
+
+                    if ($doctorData) {
+                        $status = 'deactive';
+
+                        $result = $userModel->updateActiveStatus($doctorID, $status);
+
+                        if(empty($result)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+    }
     
 }

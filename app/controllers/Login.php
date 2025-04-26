@@ -149,7 +149,9 @@ class Login extends Controller
                             }
 
                         } else {
-                            echo "Your account is not active.";
+                            $notification = new Notification();
+                            $notification->show("Your account is not active. Please contact the administrator.", 'error');
+                             "Your account is not active.";
                         }
                     }
                     exit();
