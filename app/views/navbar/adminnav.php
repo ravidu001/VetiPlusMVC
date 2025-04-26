@@ -63,6 +63,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="text nav-text">Complain</span>
                     </a>
                 </li>
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminAddData/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminAddData/index">
+                        <i class='bx bx-plus-medical icon'></i>
+                        <span class="text nav-text">Add Species</span>
+                    </a>
+                </li>
+                <li class="nav-link <?= $current_page == '<?= ROOT ?>/AdminVaccineData/index' ? 'active' : '' ?>">
+                    <a href="<?= ROOT ?>/AdminVaccineData/index">
+                        <i class='bx bx-plus-medical icon'></i>
+                        <span class="text nav-text">Add Vaccine</span>
+                    </a>
+                </li>
                 <li class="nav-link" style="display:block">
                     <a href="#" class="appointment-link">
                         <i class='bx bx-cog icon'></i>
