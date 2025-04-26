@@ -14,9 +14,7 @@
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
-        <script>
-            const ROOT = <?= json_encode(ROOT) ?>;
-        </script>
+        <script> const ROOT = `<?= ROOT ?>`; </script>
 
         <div class="formContainer">
 

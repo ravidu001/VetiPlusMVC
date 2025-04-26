@@ -6,507 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vet Assistant Profile</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetAssistant/profile.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    :root {
-        --body-color: #E4E9F7;
-        --primary-color: #6A0DAD;
-        --secondary-color: #8E44AD;
-        --white-color: #FFFFFF;
-        --text-color: #333;
-        --light-text: #666;
-        --border-color: #E0E0E0;
-        --transition: all 0.3s ease;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: var(--body-color);
-        line-height: 1.6;
-    }
-
-    .home {
-        position: relative;
-        left: 250px;
-        height: 100vh;
-        width: calc(100% - 250px);
-        background: var(--body-color);
-        transition: var(--transition);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .profile-container {
-        display: flex;
-        background-color: var(--white-color);
-        max-width: 1200px;
-        margin: 30px auto;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        width: 100%;
-        max-height: 90vh;
-    }
-
-    .section-navigation {
-        width: 250px;
-        background-color: var(--primary-color-light);
-        padding: 20px;
-        border-right: 1px solid var(--border-color);
-    }
-
-    .nav-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .nav-button {
-        background: transparent;
-        border: none;
-        color: var(--text-color);
-        padding: 12px 15px;
-        text-align: left;
-        border-radius: 8px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: var(--transition);
-    }
-
-    .nav-button:hover,
-    .nav-button.active {
-        background-color: var(--primary-color);
-        color: var(--white-color);
-    }
-
-    .profile-content {
-        flex-grow: 1;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        max-height: 70vh;
-        /* Consistent maximum height */
-        overflow: hidden;
-        /* Prevent overall container overflow */
-    }
-
-    .section {
-        display: none;
-        flex: 1;
-        /* Equal height for all sections */
-        overflow-y: auto;
-        /* Enable scrolling for individual sections */
-        padding-right: 15px;
-        /* Space for scrollbar */
-    }
-
-    .section.active {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Minimum content styling to ensure consistent layout */
-    .section .section-header {
-        flex-shrink: 0;
-        /* Prevent header from shrinking */
-    }
-
-    .section .form-grid {
-        flex-grow: 1;
-        /* Allow content to fill available space */
-    }
-
-    /* For shorter sections like Password and Account Settings */
-    #password .form-grid,
-    #settings .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        align-content: start;
-        min-height: 500px;
-        /* Minimum height to match other sections */
-    }
-
-    /* Additional styling for account actions */
-    #settings .form-group:last-child {
-        margin-top: auto;
-        padding-top: 20px;
-        border-top: 1px solid var(--border-color);
-    }
-
-    /* Custom scrollbar for better aesthetics */
-    .section::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .section::-webkit-scrollbar-track {
-        background: var(--body-color);
-        border-radius: 10px;
-    }
-
-    .section::-webkit-scrollbar-thumb {
-        background: var(--primary-color);
-        border-radius: 10px;
-    }
-
-    .section::-webkit-scrollbar-thumb:hover {
-        background: var(--secondary-color);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .profile-content {
-            max-height: none;
-            height: auto;
-        }
-
-        #password .form-grid,
-        #settings .form-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .profile-picture-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 25px;
-    }
-
-    .profile-picture-wrapper {
-        position: relative;
-        width: 200px;
-        height: 200px;
-    }
-
-    .profile-picture {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid var(--primary-color);
-    }
-
-    .profile-picture-overlay {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        display: flex;
-        gap: 10px;
-    }
-
-    .upload-btn,
-    .remove-btn {
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-group label {
-        margin-bottom: 8px;
-        color: var(--light-text);
-    }
-
-    .form-input {
-        padding: 10px;
-        border: 1px solid var(--border-color);
-        border-radius: 5px;
-        transition: var(--transition);
-    }
-
-    .form-input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(106, 13, 173, 0.2);
-    }
-
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--primary-color);
-        border-bottom: 2px solid var(--primary-color);
-        padding-bottom: 15px;
-        margin-bottom: 25px;
-    }
-
-    .edit-btn {
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        border: none;
-        padding: 8px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: var(--transition);
-    }
-
-    .edit-actions {
-        display: none;
-        justify-content: flex-end;
-        gap: 15px;
-        margin-top: 25px;
-    }
-
-    .btn {
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: var(--transition);
-    }
-
-    .btn-primary {
-        background-color: var(--primary-color);
-        color: var(--white-color);
-    }
-
-    .btn-secondary {
-        background-color: var(--border-color);
-        color: var(--text-color);
-    }
-
-    .file-input {
-        display: none;
-    }
-
-    .btn-danger {
-        background-color: red;
-        color: white;
-        margin-top: 10px;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: var(--transition);
-    }
-
-    /* Styles for full-width form groups */
-    .form-grid .full-width {
-        grid-column: 1 / -1;
-    }
-
-    /* Bio input styling */
-    .bio-input {
-        min-height: 100px;
-        resize: vertical;
-    }
-
-    /* Language Checkbox Styling */
-    .language-checkboxes {
-        display: flex;
-        gap: 20px;
-    }
-
-    .checkbox-container {
-        display: block;
-        position: relative;
-        padding-left: 35px;
-        margin-bottom: 12px;
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .checkbox-container input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
-
-    .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 25px;
-        width: 25px;
-        background-color: #eee;
-        border-radius: 4px;
-    }
-
-    .checkbox-container:hover input~.checkmark {
-        background-color: #ccc;
-    }
-
-    .checkbox-container input:checked~.checkmark {
-        background-color: var(--primary-color);
-    }
-
-    .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-    }
-
-    .checkbox-container input: checked~.checkmark:after {
-        display: block;
-    }
-
-    .checkbox-container .checkmark:after {
-        left: 9px;
-        top: 5px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        transform: rotate(45deg);
-    }
-
-    .add-certificate-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        cursor: pointer;
-        transition: var(--transition);
-        gap: 10px;
-        margin-top: 10px;
-        font-size: 14px;
-    }
-
-    .add-certificate-btn:hover {
-        background-color: var(--secondary-color);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .add-certificate-btn i {
-        font-size: 16px;
-    }
-
-    .certificate-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        align-items: center;
-    }
-
-    .certificate-wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .certificate-image {
-        width: 150px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 5px;
-        border: 2px solid var(--border-color);
-    }
-
-    .remove-certificate-btn {
-        background-color: #DC3545;
-        color: var(--white-color);
-        border: none;
-        border-radius: 5px;
-        padding: 5px 10px;
-        margin-top: 10px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition);
-    }
-
-    .remove-certificate-btn:hover {
-        background-color: #C82333;
-    }
-
-    .remove-certificate-btn i {
-        font-size: 14px;
-    }
-
-    .passwordRest {
-        margin-top: -250px;
-    }
-
-    .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #4CAF50;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: all 0.5s ease;
-    }
-
-    .notification-error {
-        background-color: #f44336;
-    }
-
-    .notification-warning {
-        background-color: #ff9800;
-    }
-
-    .notification-exit {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-
-    .notification-content {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .notification-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        margin-left: 15px;
-    }
+    
     </style>
 </head>
 
@@ -529,6 +33,9 @@
                     </button>
                     <button class="nav-button" data-section="settings">
                         <i class="fas fa-cog"></i> Account Settings
+                    </button>
+                    <button class="nav-button" data-section="dangerArea">
+                        <i class="fas fa-exclamation-triangle"></i> Danger Zone
                     </button>
                 </div>
             </div>
@@ -761,9 +268,12 @@
                 <div id="settings" class="section">
                     <h2 class="section-header">
                         Account Settings
+                        <!-- <button class="edit-btn" id="settingsEditBtn">
+                            <i class="fas fa-edit"></i> Edit
+                        </button> -->
                     </h2>
 
-                    <div class="form-grid" id="accountSettingsForm">
+                    <form class="form-grid" id="accountSettingsForm">
                         <div class="form-group">
                             <label>User ID</label>
                             <input type="text" class="form-input" value="<?= htmlspecialchars($assis->ID ?? 'N/A') ?>"
@@ -774,25 +284,114 @@
                             <input type="email" class="form-input"
                                 value="<?= htmlspecialchars($assis->assistantID ?? 'N/A') ?>" readonly>
                         </div>
+
+                        <div class="edit-actions" id="settingsEditActions" style="display: none;">
+                            <button class="btn btn-secondary" id="settingsResetBtn">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="settingsSaveBtn">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                    <form action="<?= ROOT?>/Logout/index" method="POST">
                         <div class="form-group">
                             <label>Account Actions</label>
                             <div>
-                                <button class="edit-btn">
-                                    <i class='bx bx-log-out'></i> Logout
-                                </button>
-                                <button class="btn-danger">
-                                    <i class='fas fa-trash'></i> Delete Account
+                                <button type="submit" name="send" class="edit-btn">
+                                    <i class='bx bx-log-out'></i>Logout
                                 </button>
                             </div>
                         </div>
-                    </div>
-
-
+                    </form>
                 </div>
+                        <!-- Danger Zone Section -->
+                        <div id="dangerArea" class="section">
+                            <h2 class="section-header">
+                                Danger Zone
+                            </h2>
+                            <div class="alert-warning">
+                                <strong>Warning:</strong>
+                                <ul style="margin-left: 20px;">
+                                    <li>Deleting your account will permanently remove all your data, including sessions
+                                        and preferences. This action cannot be undone.</li>
+                                    <li>You cannot delete your account if you have existing sessions.</li>
+                                    <li>You cannot delete your account if you have created Appointments.</li>
+                                    <li>You can delete your account only after the created sessions are completed.</li>
+                                </ul>
+                            </div>
+                            <form class="form-grid" id="dangerSettingsForm">
+                                <div class="delete-account-section">
+                                        <p>Do you want to Delete this Account ?</p><br>
+                                    <button class="btn btn-danger" id="deleteAccount">
+                                        <i class="fas fa-trash-alt"></i><p>Delete Account</p>
+                                    </button>
+                                </div>    
+
+                                <!-- Confirmation Modal -->
+                                <div id="confirmationModal" class="modal" style="display: none;">
+                                    <div class="modal-content">
+                                        <h3>Confirm Account Deletion</h3>
+                                        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                                        <input type="password" class="password" id="confirmPasswordInput" placeholder="Enter your password to confirm" required><br>
+                                        
+                                        <!-- Button Container -->
+                                        <div class="button-container">
+                                            <button id="confirmDeleteButton">Confirm</button>
+                                            <button id="cancelDeleteButton">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('deleteAccount').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        document.getElementById('confirmationModal').style.display = 'block'; // Show modal
+    });
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default button action
+        const password = document.getElementById('confirmPasswordInput').value;
+
+        // Create a form data object
+        const formData = new FormData();
+        formData.append('password', password);
+
+        // Send the data to the controller
+        fetch('/VetiPlusMVC/public/assisProfile/deleteAccount', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // alert('Account deleted successfully.');
+                showNotification('Account deleted successfully.', 'success');
+                // Wait for 5 seconds before redirecting
+                setTimeout(function() {
+                    window.location.href = '<?= ROOT ?>/login'; // Redirect to login or home page
+                }, 5000); // 5000 milliseconds = 5 seconds
+            } else {
+                showNotification(data.message || 'Failed to delete the account', 'error');
+                // alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    document.getElementById('cancelDeleteButton').addEventListener('click', function() {
+    document.getElementById('confirmationModal').style.display = 'none'; // Hide modal
+    });
+    </script>
     <script src="<?= ROOT ?>/assets/js/vetAssistant/profile.js"></script>
+    <script src="<?= ROOT ?>/assets/js/vetDoctor/jsnotification.js"></script>
 </body>
 
 </html>

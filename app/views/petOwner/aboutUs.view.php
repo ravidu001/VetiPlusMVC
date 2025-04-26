@@ -10,14 +10,14 @@
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
-
         <link href="<?= ROOT ?>/assets/css/petOwner/aboutPage.css" rel="stylesheet">
-
+        
+        <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
         <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
+        <script> const ROOT = `<?= ROOT ?>`; </script>
 
         <div class="bodyArea"> 
 

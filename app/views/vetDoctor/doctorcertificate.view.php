@@ -1,46 +1,57 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Veterinary Certificate Generator</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/certificateform.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css"><link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 </head>
 <body>
 <?php require_once '../app/views/navbar/doctornav.php'; ?>
 <div class="home">
+<?php echo $notification->display(); ?>
     <div class="certificate-container">
         <div class="certificate-header">
             <h1>Veterinary Certificate Generator</h1>
         </div>
 
-        <form class="certificate-form" action="<?= ROOT ?>/doctorcertificate/certificate" method="post">
+        <form action="<?= ROOT ?>/doctorcertificate/getPetData" class="certificate-form" id="certificateForm" method="GET">
             <div class="form-section">
                 <div class="form-section-title">Pet Information</div>
                 <div class="form-group">
                     <label>Pet ID</label>
-                    <input type="text" placeholder="Enter Pet ID" required>
+                    <input type="text" name="petId" id="petId" placeholder="Enter Pet ID" required>
                 </div>
+                <button type= "submit" class="btn btn-primary">Fetch Pet Details</button>
+            </div>
+        </form>
+        <div class="certificate-form" id="certificateForm">
+            <div class="form-section">
                 <div class="form-group">
                     <label>Pet Name</label>
-                    <input type="text" placeholder="Pet Name">
+                    <input type="text" id="petName" placeholder="Auto Fill" value="<?= htmlspecialchars($petData->name ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Breed</label>
-                    <input type="text" placeholder="Pet Breed">
+                    <input type="text" id="petBreed" placeholder="Auto Fill" value="<?= htmlspecialchars($petData->breed ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Species</label>
-                    <input type="text" placeholder="Pet Species">
+                    <input type="text" id="petSpecies" placeholder="Auto Fills" value="<?= htmlspecialchars($petData->species ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Gender</label>
-                    <input type="text" placeholder="Pet Gender">
+                    <input type="text" id="petGender" placeholder="Auto Fill" value="<?= htmlspecialchars($petData->gender ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Age</label>
-                    <input type="number" placeholder="Pet Age">
+                    <input type="number" id="petAge" placeholder="Auto Fill" value="<?= htmlspecialchars($age ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
             </div>
 
@@ -48,54 +59,60 @@
                 <div class="form-section-title">Owner Details</div>
                 <div class="form-group">
                     <label>Owner Name</label>
-                    <input type="text" placeholder="Owner's Full Name">
+                    <input type="text" id="ownerName" placeholder="Owner's Full Name" value="<?= htmlspecialchars($petOwnerData->fullName ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" placeholder="Address">
+                    <input type="text" id="ownerAddress" placeholder="Address" 
+                        value="<?= htmlspecialchars($petOwnerData->houseNo ?? '', ENT_QUOTES, 'UTF-8'); ?>,
+                        <?= trim(htmlspecialchars($petOwnerData->streetName ?? '', ENT_QUOTES, 'UTF-8')); ?>,
+                        <?= trim(htmlspecialchars($petOwnerData->city ?? '', ENT_QUOTES, 'UTF-8')); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Contact Number</label>
-                    <input type="tel" placeholder="Phone Number">
+                    <input type="tel" id="ownerContact" placeholder="Phone Number" value="<?= htmlspecialchars($petOwnerData->contactNumber ?? '', ENT_QUOTES, 'UTF-8'); ?>" readonly>
                 </div>
             </div>
+        </div>
 
+        <form action="<?= ROOT ?>/doctorcertificate/insertData" class="certificate-form" id="certificateForm" method="POST">
             <div class="form-section">
                 <div class="form-section-title">Medical Assessment</div>
-                <div class="form-group">
-                    <label>Examination Date</label>
-                    <input type="date" required>
-                </div>
+                <input type="hidden" name="petID" id="petID" value="<?= htmlspecialchars($petData->petID ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="form-group">
                     <label>Health Status</label>
-                    <select>
-                        <option>Excellent</option>
-                        <option>Good</option>
-                        <option>Average</option>
-                        <option>Poor</option>
+                    <select name="healthStatus" id="healthStatus">
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Average">Average</option>
+                        <option value="Poor">Poor</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Vacination Status</label>
-                    <select>
-                        <option>Excellent</option>
-                        <option>Good</option>
-                        <option>Average</option>
-                        <option>Poor</option>
+                    <label>Vaccination Status</label>
+                    <select name="vaccinationStatus" id="vaccinationStatus">
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Average">Average</option>
+                        <option value="Poor">Poor</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Follow-up Appointments</label>
-                    <select>
-                        <option>Excellent</option>
-                        <option>Good</option>
-                        <option>Average</option>
-                        <option>Poor</option>
+                    <select name="followUpAppointments" id="followUpAppointments">
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Average">Average</option>
+                        <option value="Poor">Poor</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Recommendations</label>
-                    <textarea rows="4" placeholder="Veterinarian's Notes"></textarea>
+                    <textarea name="recommendations" id="recommendations" rows="4" placeholder="Veterinarian's Notes"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Date of Expiry Certificate</label>
+                    <input type="date" name="expiryDate" id="expiryDate" required>
                 </div>
             </div>
 

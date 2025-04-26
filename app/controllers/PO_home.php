@@ -30,7 +30,7 @@ class PO_home extends Controller {
         
         $this->petAppts = new PO_PetAppts;
 
-        $this->pet_details = $this->pets->getAllPetsUnderUser();
+        $this->pet_details = $this->pets->getAllPetsUnderUser() ?: ["fetchedCount" => 0];
         $this->petCount = $this->pet_details ? count($this->pet_details) : 0;
 
     }

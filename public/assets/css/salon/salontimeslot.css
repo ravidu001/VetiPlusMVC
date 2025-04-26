@@ -144,8 +144,7 @@ h1 {
 
 .SelectDateAndSlot {
     flex: 2;
-    min-width: 300px;
-    max-width: 700px;
+    width: 800px;
 }
 
 .DateAndScedule {
@@ -162,13 +161,45 @@ h1 {
 
 /* Time slots styling */
 .timeSlotsContainer {
-    width: 100%;
-    overflow-x: auto;
+    width: 600px;
+    height: 560px;
+    /* border-collapse:separate; */
+    overflow-y: auto;
 }
 
-table {
+.shedule {
+    display: flex;
+    align-items: center;
+    gap: 12px 20px; 
+    padding: 16px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.shedule h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+    width: 50%;
+}
+
+.shedule p {
+    margin: 0;
+    font-weight: 500;
+    color: #555;
+}
+
+#start, #end {
+    color: #212121;
+    font-weight: bold;
+}
+
+.timeSlotsContainer table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse:separate;
     border-spacing: 0;
     margin: 10px 0;
 }
@@ -177,7 +208,7 @@ thead {
     background-color: var(--primary-lighter);
 }
 
-th {
+.timeSlotsContainer th {
     padding: 15px;
     text-align: left;
     font-weight: 600;
@@ -240,7 +271,7 @@ tbody tr:hover {
 }
 
 /* Scrollbar styling */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
@@ -257,7 +288,7 @@ tbody tr:hover {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
-}
+} */
 
 /* Animations */
 @keyframes fadeIn {
@@ -275,7 +306,7 @@ tbody tr:hover {
         flex-direction: column;
     }
     
-    .calendar, .SelectDateAndSlot {
+    .calendar {
         width: 100%;
         max-width: none;
     }

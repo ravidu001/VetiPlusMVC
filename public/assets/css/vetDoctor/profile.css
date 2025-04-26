@@ -339,6 +339,7 @@ body {
     transition: var(--transition);
     background-color: red;
     margin-top: 10px;
+    width: 40%;
 }
 
 .btn-danger:hover {
@@ -431,4 +432,115 @@ body {
         transform: translateX(100%);
         opacity: 0;
     }
+}
+
+hr {
+    border: none;
+    height: 3px;
+    background-color: var(--border-color);
+    margin: 20px 0;
+}
+
+.delete-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primary-color);
+    /* border-bottom: 2px solid var(--primary-color); */
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: flex;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content Styles */
+.modal-content {
+    background-color: var(--white-color); /* White background for the modal */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    padding: 20px; /* Padding inside the modal */
+    max-width: 500px; /* Maximum width of the modal */
+    margin: auto; /* Center the modal horizontally */
+    position: relative; /* Position relative for centering */
+    top: 50%; /* Move down 50% from the top */
+    transform: translateY(-50%); /* Adjust to center vertically */
+}
+
+/* Modal Header (h3) */
+.modal-content h3 {
+    color: var(--text-color); /* Dark gray color for the header */
+    font-size: 24px; /* Larger font size for emphasis */
+    margin-bottom: 15px; /* Space below the header */
+    text-align: center; /* Center the header text */
+}
+
+/* Modal Paragraph (p) */
+.modal-content p {
+    color: var(--light-text); /* Medium gray color for the paragraph */
+    font-size: 16px; /* Standard font size */
+    line-height: 1.5; /* Improved line height for readability */
+    margin-bottom: 20px; /* Space below the paragraph */
+    text-align: center; /* Center the paragraph text */
+}
+
+/* Password Input Field */
+.password {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid var(--border-color); /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Standard font size */
+    margin-bottom: 20px; /* Space below the input */
+    transition: border-color var(--transition); /* Smooth transition for border color */
+}
+
+/* Password Input Focus State */
+.password:focus {
+    border-color: var(--primary-color); /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(106, 13, 173, 0.5); /* Add shadow on focus */
+}
+
+/* Modal Button Container */
+.modal-content .button-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the buttons horizontally */
+    margin-top: 20px; /* Space above the button container */
+}
+
+/* Modal Button Styles */
+#confirmDeleteButton, #cancelDeleteButton {
+    background-color: var(--primary-color); /* Primary color */
+    color: var(--white-color); /* White text */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px; /* Space between buttons */
+    font-size: 16px; /* Standard font size */
+}
+
+#confirmDeleteButton:hover, #cancelDeleteButton:hover {
+    background-color: var(--secondary-color); /* Darker secondary color on hover */
 }

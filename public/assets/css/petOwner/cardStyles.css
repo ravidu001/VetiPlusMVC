@@ -2,7 +2,19 @@
 .tallCard-container {
     display: grid;
     gap: 1em;
-    padding: 5px;
+    padding: 10px;
+    overflow-y: scroll;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.tallCard-container:not(.pets-container) {
+    max-height: 50vh;
+}
+
+.longCard-container::-webkit-scrollbar,
+.tallCard-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
 }
 
 .longCard-container {
@@ -10,7 +22,7 @@
 }
 
 .tallCard-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 .noResults {
@@ -54,14 +66,6 @@
     transition: transform 0.2s ease-in;
 }
 
-.longCard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
-
-    height: fit-content;
-}
 .tallCard {
     display: flex;
     flex-direction: column;
@@ -69,6 +73,21 @@
     align-items: center;
 
     aspect-ratio: 3/4;
+}
+.midLongCard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+
+    height: fit-content;
+
+}
+.longCard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+
+    height: fit-content;
 }
 .sessionCard {
     display: grid;
@@ -91,9 +110,8 @@
     border-radius: 50%;
     border: 1px solid var(--shadow-color);
 
-    height: clamp(4em, 5vw, 5em);
-    /* max-width: 50%; */
-    width: auto;
+    width: clamp(4em, 10vw, 8em);
+    height: auto;
     aspect-ratio: 1/1;
 }
 /* the pet link-cards in po_home */
@@ -116,8 +134,6 @@
 .cardDetails > span {
     display: block;
     text-align: center;
-    font-size: 0.8em;
-    ;
     max-width: 100%;
 }
 .cardDetails > a {
@@ -135,7 +151,7 @@
     grid-auto-flow: column;
     justify-items: center;
     align-content: center;
-    gap: 1px;
+    gap: 5px;
 
     margin: auto;
     height: 80%;
@@ -153,6 +169,11 @@
     justify-content: center;
     align-items: center;
 }
+.cardBtn:disabled {
+    filter: grayscale(0.8);
+    pointer-events: none;
+}
+
 .cardBtn:hover {
     transform: scale(1.02);
     box-shadow: 0 0 3px var(--shadow-color);
@@ -177,4 +198,50 @@
 
     display: flex;
     gap: 10px;
+}
+
+.bookingCard {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.apptDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.apptBookingForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 20px;
+    max-width: 600px;
+}
+.formGroup {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    justify-items: center;
+}
+.formSelect {
+    padding: 10px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button.addNewListing {
+    padding: 5px;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+    font-size: 0.7rem;
+    height: fit-content;
+    max-width: clamp(70px, 6vw, 100px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

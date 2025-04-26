@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Salon Service Form</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonserviceadd.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/imageupload.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -49,19 +50,6 @@
                     </div>
                 </div>
 
-                <!-- Service Time -->
-                <!-- <div class="form-group">
-                    <label for="serviceTime">
-                        <i class="fas fa-clock"></i> Service Time (minutes) <span class="required">*</span>
-                    </label>
-                    <input type="number"
-                           id="serviceTime"
-                           name="serviceTime"
-                           placeholder="30"
-                           min="0"
-                           required>
-                </div> -->
-
                 <!-- Description -->
                 <div class="form-group">
                     <label for="serviceDescription">
@@ -78,9 +66,8 @@
                     <label>
                         <i class="fas fa-images"></i> Service Images (Max 2)
                     </label>
-                    <div class="image-upload-container">
-                        First Image Upload
-                         <div class="image-upload-box">
+                    <div class="image-upload-container" style="display: flex;">
+                        <div class="image-upload-box">
                             <div class="image-preview">
                                 <img src="/api/placeholder/150/150" alt="Preview 1" id="preview1">
                             </div>
@@ -96,7 +83,7 @@
                         </div>
 
                         <!-- Second Image Upload -->
-                         <div class="image-upload-box">
+                        <div class="image-upload-box">
                             <div class="image-preview">
                                 <img src="/api/placeholder/150/150" alt="Preview 2" id="preview2">
                             </div>

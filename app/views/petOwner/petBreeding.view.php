@@ -15,7 +15,7 @@
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
-
+        <script> const ROOT = `<?= ROOT ?>`; </script>
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
         <div class="bodyArea">

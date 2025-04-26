@@ -155,34 +155,42 @@ class PO_PetAppts {
             return $this->makeBooking_salon($params);
         }
     }
+
     private function makeBooking_vet ($params) {
+        $apptModel = new AppointmentModel;
+        $bookingSuccess = $apptModel->bookAppointment($params);
+
+        return $bookingSuccess;
+    }
+
+    private function makeBooking_salon ($params) {
+        
         $this->beginTransaction();
-
-
         try {
-            // Insert appointment
-            $apptModel = new AppointmentModel;
+            $apptModel = new SalonBooked;
             $insertSuccess = $apptModel->bookAppointment($params);
+
+            $sessModel = new SalonSession;
+            $updateSuccess = $sessModel->updateBookingsCount($params['salSessionID']);
         
-            // // Update session
-            
-        
-            // if ($insertSuccess !== false && $updateSuccess !== false) {
-            //     $this->commit();
-            //     return true;
-            // }
-            
+            if ($insertSuccess !== false && $updateSuccess !== false) {
+                $this->commit();
+                return true;
+            }
             $this->rollBack();
             return false;
-        
-        } catch (PDOException $e) {
+        } 
+        catch (PDOException $e) {
             $this->rollBack();
-            // Handle exception (log it, show error page, etc.)
-            error_log($e->getMessage());
             return false;
         }
     }
-    private function makeBooking_salon ($params) {
-        
+
+    public function rescheduleAppt (string $type, $params) {
+        if ($type === 'vet') {
+            return $this->makeBooking_vet($params);
+        } elseif ($type === 'salon') {
+            return $this->makeBooking_salon($params);
+        }
     }
 }

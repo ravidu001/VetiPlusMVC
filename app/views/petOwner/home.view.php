@@ -18,22 +18,56 @@
     <body>
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
+        <script> const ROOT = `<?= ROOT ?>`; </script>
         <!-- actual content: -->
         <div class="bodyArea">
             <h1 class="bodyHeader">Welcome!</h1>
 
-            <div class="card longCard">
-                <img class="profilePic" alt="Profile picture"
-                    src="<?= ROOT.'/assets/images/petOwner/profilePictures/po_user/'.$this->po_details->profilePicture?>">
-                <span>
-                    <h3>Welcome back!</h3>
-                    <p><?= $this->po_details->fullName ?></p>
-                </span>
+            <section class="dashArea-container">
+                <div class="card midLongCard">
+                    <img class="profilePic" alt="Profile picture"
+                        src="<?= ROOT.'/assets/images/petOwner/profilePictures/po_user/'.$this->po_details->profilePicture?>">
+                    <span> <h3>Welcome back!</h3>
+                           <p> <?= $this->po_details->fullName ?> </p>
+                    </span>
+                </div>
 
-            </div>
+                <div class="adSpace">
+                    <h4 class="dashHeader">Ad Space</h4>
+                </div>
+            </section>
 
-            <section id="myPets" class="dashArea">
+            <section class="dashArea">
+                <h2>Upcoming Appointments</h2>
 
+                <div class="longCard-container apptUpcomingCard-container"></div>
+                <template class="apptUpcomingCard-template">
+                    <div class="card midLongCard apptUpcomingCard" apptID providerID petOwnerID>
+                        <div class="cardPic-container">
+                            <img src="" alt="providerPic" class="cardPic providerPic">
+                            <img src="" alt="petPic" class="cardPic petPic">
+
+                        </div>
+                        <div class="cardDetails">
+                            <h4 class="petName"></h4>
+                            <p>
+                                <strong class="providerTitle"></strong>
+                                <span class="providerName"></span>
+                            </p>
+                            <span class="reason"></span>
+                            <span class="petName"></span>
+                            <h4 class="apptDateTime"></h4>
+                        </div>
+                        <!-- <div class="cardBtn-container">
+                            <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button>
+                            <button class="cardBtn rescheduleBtn"><i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
+                            <button class="cardBtn cancelBtn"><i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
+                        </div> -->
+                    </div>
+                </template>
+            </section>
+
+            <section class="dashArea">
                 <h2 class="dashHeader">My Pets</h2>
 
                 <div class="tallCard-container pets-container"></div>
@@ -49,33 +83,6 @@
                         <p>Register pet</p>
                     </a>
                 </template>
-
-            </section>
-        
-            <section class="dashArea">
-                <h2>Upcoming Appointments</h2>
-                <div class="longCard-container apptUpcomingCard-container"></div>
-                <template class="apptUpcomingCard-template">
-                    <div class="card longCard apptUpcomingCard" type apptID providerID petOwnerID>
-                        <div class="cardPic-container">
-                            <img src="" alt="providerPic" class="cardPic providerPic">
-                            <img src="" alt="petPic" class="cardPic petPic">
-
-                        </div>
-                        <div class="cardDetails">
-                            <h4 class="petName"></h4>
-                            <span class="providerName"></span>
-                            <span class="reason"></span>
-                            <span class="petName"></span>
-                            <h4 class="apptDateTime"></h4>
-                        </div>
-                        <div class="cardBtn-container">
-                            <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button>
-                            <button class="cardBtn rescheduleBtn"><i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
-                            <button class="cardBtn cancelBtn"><i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
-                        </div>
-                    </div>
-                </template>
             </section>
 
             <!-- footer at page's bottom: -->
@@ -88,8 +95,6 @@
         <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
 
         <script defer>
-            const ROOT = `<?= ROOT ?>`;
-
             // to populate the pets-container with pet cards:
             const cardTemplate = document.querySelector('.petCard-template');
             const petsContainer = document.querySelector('.pets-container');

@@ -33,74 +33,82 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($sessions as $data): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($data['session']->sessionID) ?></td>
-                        <td>
-                            <?php if (!empty($data['assistants'])): ?>
-                            <?php if (count($data['assistants']) === 1): ?>
-                            <!-- Single assistant display -->
-                            <div class="vet-info">
-                                <div class="vet-avatar">
-                                    <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($data['assistants'][0]->profilePicture) ?>"
-                                        alt="assistant">
-                                </div>
-                                <div class="vet-details">
-                                    <span
-                                        class="vet-name"><?= htmlspecialchars($data['assistants'][0]->fullName) ?></span>
-                                    <span
-                                        class="vet-specialization"><?= htmlspecialchars($data['assistants'][0]->expertise) ?></span>
-                                </div>
-                            </div>
-                            <?php else: ?>
-                            <!-- Multiple assistants display -->
-                            <div class="multiple-assistants">
-                                <?php foreach($data['assistants'] as $assistant): ?>
-                                <div class="assistant-avatar"
-                                    title="<?= htmlspecialchars($assistant->fullName) ?> - <?= htmlspecialchars($assistant->expertise) ?>">
-                                    <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
-                                        alt="assistant">
-                                    <div class="assistant-info">
-                                        <div class="assistant-avatar-large">
-                                            <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
-                                                alt="assistant">
-                                        </div>
+                    <?php if (is_array($sessions) && !empty($sessions)) : ?>
+                        <?php foreach($sessions as $data): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($data['session']->sessionID) ?></td>
+                            <td>
+                                <?php if (!empty($data['assistants'])): ?>
+                                <?php if (count($data['assistants']) === 1): ?>
+                                <!-- Single assistant display -->
+                                <div class="vet-info">
+                                    <div class="vet-avatar">
+                                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($data['assistants'][0]->profilePicture) ?>"
+                                            alt="assistant">
+                                    </div>
+                                    <div class="vet-details">
                                         <span
-                                            class="assistant-header"><?= htmlspecialchars($assistant->fullName) ?></span>
+                                            class="vet-name"><?= htmlspecialchars($data['assistants'][0]->fullName) ?></span>
                                         <span
-                                            class="assistant-expertise"><?= htmlspecialchars($assistant->expertise) ?></span>
+                                            class="vet-specialization"><?= htmlspecialchars($data['assistants'][0]->expertise) ?></span>
                                     </div>
                                 </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-                            <?php else: ?>
-                            <span>No Assistant Assigned</span>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?= htmlspecialchars($data['session']->selectedDate) ?><br>
-                            <?php
-                                $startTime = new DateTime($data['session']->startTime);
-                                $endTime = new DateTime($data['session']->endTime);
-                            ?>
-                            <?= $startTime->format('H:i') ?> - <?= $endTime->format('H:i') ?>
-                        </td>
-                        <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
-                        <td>10</td>
-                        <!-- withiout encode the url -->
-                        <!-- <td>
-                            <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= htmlspecialchars($data['session']->sessionID) ?>&assistantIDs=<?= implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID'))) ?>" class="view-btn">
-                                <i class='bx bx-right-arrow-circle'></i>
-                            </a>
-                        </td> -->
-                        <td>
-                            <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= urlencode($data['session']->sessionID) ?>&assistantIDs=<?= urlencode(implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID')))) ?>" class="view-btn">
-                                <i class='bx bx-right-arrow-circle'></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+                                <?php else: ?>
+                                <!-- Multiple assistants display -->
+                                <div class="multiple-assistants">
+                                    <?php foreach($data['assistants'] as $assistant): ?>
+                                    <div class="assistant-avatar"
+                                        title="<?= htmlspecialchars($assistant->fullName) ?> - <?= htmlspecialchars($assistant->expertise) ?>">
+                                        <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
+                                            alt="assistant">
+                                        <div class="assistant-info">
+                                            <div class="assistant-avatar-large">
+                                                <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= htmlspecialchars($assistant->profilePicture) ?>"
+                                                    alt="assistant">
+                                            </div>
+                                            <span
+                                                class="assistant-header"><?= htmlspecialchars($assistant->fullName) ?></span>
+                                            <span
+                                                class="assistant-expertise"><?= htmlspecialchars($assistant->expertise) ?></span>
+                                        </div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php endif; ?>
+                                <?php else: ?>
+                                <span>No Assistant Assigned</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($data['session']->selectedDate) ?><br>
+                                <?php
+                                    $startTime = new DateTime($data['session']->startTime);
+                                    $endTime = new DateTime($data['session']->endTime);
+                                ?>
+                                <?= $startTime->format('H:i') ?> - <?= $endTime->format('H:i') ?>
+                            </td>
+                            <td><?= htmlspecialchars($data['session']->clinicLocation) ?></td>
+                            <td><?= htmlspecialchars($data['appointmentCount']) ?></td>
+                            <!-- withiout encode the url -->
+                            <!-- <td>
+                                <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= htmlspecialchars($data['session']->sessionID) ?>&assistantIDs=<?= implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID'))) ?>" class="view-btn">
+                                    <i class='bx bx-right-arrow-circle'></i>
+                                </a>
+                            </td> -->
+                            <td>
+                                <a href="<?= ROOT ?>/DoctorViewSession/session?sessionID=<?= urlencode($data['session']->sessionID) ?>&assistantIDs=<?= urlencode(implode(',', array_map('htmlspecialchars', array_column($data['assistants'], 'assistantID')))) ?>" class="view-btn">
+                                    <i class='bx bx-right-arrow-circle'></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">
+                                <p> No Sessions Available</p>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

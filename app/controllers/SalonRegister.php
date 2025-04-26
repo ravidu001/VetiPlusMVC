@@ -13,12 +13,12 @@ class SalonRegister extends Controller
         {
             //if submit pass the data to the array
             $arr = [
-                'salonName' => htmlspecialchars(trim($_POST['salonName'] ?? '')),
-                'salonPhoneNumber' => htmlspecialchars(trim($_POST['salonPhoneNumber'] ?? '')),
-                'location' => htmlspecialchars(trim($_POST['location'] ?? '')),
-                'socialmedia' => htmlspecialchars(trim($_POST['socialmedia'] ?? '')),
-                'businessregnumber' => htmlspecialchars(trim($_POST['businessregnumber'] ?? '')),
-                'email' => $_SESSION['SALON_USER'] ?? ''
+                'name' => htmlspecialchars(trim($_POST['salonName'] ?? '')),
+                'phoneNumber' => htmlspecialchars(trim($_POST['salonPhoneNumber'] ?? '')),
+                'address' => htmlspecialchars(trim($_POST['location'] ?? '')),
+                'BRNumber' => htmlspecialchars(trim($_POST['businessregnumber'] ?? '')),
+                'salonID' => $_SESSION['SALON_USER'] ?? '',
+                'registeredDate' => date('Y-m-d H:i:s'),
             ];
 
             //check the file is upload success or not
@@ -36,7 +36,7 @@ class SalonRegister extends Controller
                     } 
                     else 
                     {
-                        $arr['brcertificate'] = $image_folder;
+                        $arr['BRCertificate'] = $image_folder;
                     }
                 } 
                 else 
@@ -48,24 +48,22 @@ class SalonRegister extends Controller
             //check the form submit data is valid or not
             if (empty($arr['error'])) {
 
-                $error = $registration_table->checkregisterdata(
-                    $arr['salonName'],
-                    $arr['salonPhoneNumber'],
-                    $arr['location'],
-                    $arr['socialmedia'],
-                    $arr['businessregnumber']
+                $error = $this->checkRegisterData(
+                    $arr['name'],
+                    $arr['phoneNumber'],
+                    $arr['address'],
+                    $arr['BRNumber']
                 );
 
                 //if it has the error then pass the error 
                 if ($error) {
                     $arr['error'] = $error;
                 }
-              
             }
         }
         else
         {
-            $arr['email'] = $_SESSION['SALON_USER'];
+            $arr['salonID'] = $_SESSION['SALON_USER'];
         }
 
         //return all array data
@@ -78,33 +76,44 @@ class SalonRegister extends Controller
         $data = ['success' => false, 'error' => null];
 
         //check the again email is has or not
-        if(empty($arr['email'])) 
+        if(empty($arr['salonID'])) 
         {
             $data['error'] = "Email is required.";
         }
 
-        $email = $arr['email'];
+        $email = $arr['salonID'];
         // show($arr);
         //check if this is reject now should pass the status is pending
         $arr['status'] = 'pending';
         show($arr);
 
-        $table = new SalonRegisters;
+        // $table = new SalonRegisters;
+        $salonTable = new Salons();
 
-        if($table->update($email, $arr, 'email'))
+        $result =  $salonTable->updateSalonTimeSlots($email,$arr);
+
+        if($result)
         {
-            // show($email);
-            show($arr);
             $data['success'] = true;
         }
         else
         {
-            show($email);
-            show('ishan');
-            show($email);
             $data['error'] = "data insert unsuccessfully";
         }
 
+        // if($table->update($email, $arr, 'email'))
+        // {
+        //     // show($email);
+        //     show($arr);
+        //     $data['success'] = true;
+        // }
+        // else
+        // {
+        //     show($email);
+        //     show('ishan');
+        //     show($email);
+        //     $data['error'] = "data insert unsuccessfully";
+        // }
         return $data;
     }
 
@@ -114,7 +123,7 @@ class SalonRegister extends Controller
         $data = ['success' => false, 'error' => null];
 
         //if cannot catch the email error or can redirect the login page
-        if (empty($arr['email'])) {
+        if (empty($arr['salonID'])) {
             $data['error'] = "Email is required.";
             return;
         }
@@ -142,10 +151,10 @@ class SalonRegister extends Controller
         }
 
         // Use the salon registration model 
-        $registration_table = new SalonRegisters;
+        $registration_table = new Salons;
 
         // Check if same login email exists
-        $existingRecord = $registration_table->where(['email' => $_SESSION['SALON_USER']]);
+        $existingRecord = $registration_table->FindUser($_SESSION['SALON_USER']);
 
         $data = [];
         
@@ -153,7 +162,7 @@ class SalonRegister extends Controller
         if($existingRecord) 
         {
             $data['oldemaildata'] = $existingRecord;
-            $status = $existingRecord[0]->status;
+            $status = $existingRecord->approvedStatus;
 
             if($status === 'rejected' && isset($_POST['submit']))
             {
@@ -172,7 +181,7 @@ class SalonRegister extends Controller
                         $data['errors'][] = $result['error'];
                     }
                 }
-                $data['oldemaildata'] = $existingRecord[0];
+                $data['oldemaildata'] = $existingRecord;
             }
             elseif($status === 'pending')
             {
@@ -185,23 +194,66 @@ class SalonRegister extends Controller
         }
         else 
         {
-            // New registration
-            $data = $this->getRegistrationdata($registration_table);
+            //check the form submitted
+            if(isset($_POST['submit']))
+            {
+                 // New registration
+                 $data = $this->getRegistrationdata($registration_table);
 
-            if (empty($data['errors'])) {
-                $result = $this->insertregisterdata($data, $registration_table);
+                 if (empty($data['errors'])) 
+                 {
+                    $result = $this->insertregisterdata($data, $registration_table);
                 
-                if ($result['success']) {
-                    redirect('Pending');
+                    if ($result['success']) {
+                        redirect('Pending');
+                    }
+                    else 
+                    {
+                        $data['errors'][] = $result['error'];
+                    }
                 }
-                else 
-                {
-                    $data['errors'][] = $result['error'];
-                }
+            }
+            else
+            {
+                $data['salonID'] = $_SESSION['SALON_USER'];
             }
         }
 
         $this->view('Salon/salonregister', $data);
     }
+
+    private function checkRegisterData($salonName, $salonPhoneNumber, $location, $businessregnumber)   
+    {
+        $errors = [];
+
+        // Validate salon name
+        if (empty(trim($salonName))) {
+            $errors['name'] = "Salon name is required.";
+        }
+
+        // Validate mobile number (Sri Lankan format example: 10 digits)
+        if (empty(trim($salonPhoneNumber)) || !preg_match('/^\d{10}$/', $salonPhoneNumber)) {
+            $errors['phoneNumber'] = "Invalid mobile number. Please enter a 10-digit number.";
+        }
+
+        // Validate location
+        if (empty(trim($location))) {
+            $errors['address'] = "Location is required.";
+        }
+
+        // Validate business registration number (example: alphanumeric, 8-12 characters)
+        if (empty(trim($businessregnumber))) {
+            $errors['businessregnumber'] = "Invalid business registration number is empty.";
+        }
+
+        // Validate image size (if provided)
+        // if (!is_null($image_size) && $image_size < 100000) 
+        // { // 1MB limit
+        //     $errors['image_size'] = "File size too large. Please upload an image less than 1MB.";
+        // }
+
+        return $errors;
+    }
+
 
 }

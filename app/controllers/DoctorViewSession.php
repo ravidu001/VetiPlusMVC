@@ -17,34 +17,52 @@ class DoctorViewSession extends Controller {
         // Initialize an array to hold consolidated session data
         $consolidatedSessions = [];
     
-        // Iterate over each session to get assistant session data
-        foreach ($sessionData as $sessionItem) {
-            if($sessionItem->completeStatus == 1) {
-                continue;
-            }
-            $assisSession = new AssistantSessionModel;
-            $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
+        if (is_array($sessionData)){
+            // Iterate over each session to get assistant session data
+            foreach ($sessionData as $sessionItem) {
+                if($sessionItem->completeStatus == 1) {
+                    continue;
+                }
     
-            // Prepare assistant data for this session
-            $sessionAssistants = [];
-    
-            // Check if assistant session data is found
-            if ($assisSessionData) {
-                foreach ($assisSessionData as $assisSessionItem) {
-                    $assistant = new AssisModel;
-                    $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
-    
-                    if ($assistantData) {
-                        $sessionAssistants[] = $assistantData;
+                $appointment = new AppointmentModel();
+                $appointmentData = $appointment->getAppointmentBySession($sessionItem->sessionID);
+                $eachappointmentCount = 0; 
+                if (is_array($appointmentData)) {
+                    foreach ($appointmentData as $appointmentItem) {
+                        // Check if the appointment status is 'available'
+                        if ($appointmentItem->status == 'available') {
+                            $eachappointmentCount++;
+                        }
+                    }
+                } else {
+                    // Log or handle the case where $appointmentData is not an array
+                    error_log("getAppointmentBySession did not return an array for sessionID: " . $sessionItem->sessionID);
+                }
+                
+                $assisSession = new AssistantSessionModel;
+                $assisSessionData = $assisSession->getAssistantsession($sessionItem->sessionID);
+        
+                // Prepare assistant data for this session
+                $sessionAssistants = [];
+        
+                // Check if assistant session data is found
+                if ($assisSessionData) {
+                    foreach ($assisSessionData as $assisSessionItem) {
+                        $assistant = new AssisModel;
+                        $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
+        
+                        if ($assistantData) {
+                            $sessionAssistants[] = $assistantData;
+                        }
                     }
                 }
+                // Consolidate session data
+                $consolidatedSessions[] = [
+                    'session' => $sessionItem,
+                    'assistants' => $sessionAssistants,
+                    'appointmentCount' => $eachappointmentCount
+                ];
             }
-    
-            // Consolidate session data
-            $consolidatedSessions[] = [
-                'session' => $sessionItem,
-                'assistants' => $sessionAssistants
-            ];
         }
     
         // Pass the consolidated session data to the view
@@ -66,17 +84,17 @@ class DoctorViewSession extends Controller {
         // Fetch old sessions 
         $alldata = $session->getsession($doctorID);
        
-        // Insert old sessions into session history
-        foreach ($alldata as $oldSession) {
-            if ($oldSession->selectedDate <= $yesterday) {
-                $data = [
-                    'completeStatus' => 1,
-                ];
-                $updateresult = $session->updatecompleteStatus($oldSession->sessionID, $data);
-            }
-
-            
-        }   
+        if (is_array($alldata)) {
+            // Insert old sessions into session history
+            foreach ($alldata as $oldSession) {
+                if ($oldSession->selectedDate <= $yesterday) {
+                    $data = [
+                        'completeStatus' => 1,
+                    ];
+                    $updateresult = $session->updatecompleteStatus($oldSession->sessionID, $data);
+                }   
+            }   
+        }
     }
 
     public function session() {
@@ -198,31 +216,33 @@ class DoctorViewSession extends Controller {
         // Fetch all sessions 
         $alldata = $session->getsession($doctorID);
        
-        // Insert old sessions into session history
-        foreach ($alldata as $oldSession) {
-            if ($oldSession->selectedDate <= $currentDate) {
-                $appointment = new AppointmentModel();
-                $appointmentDetails = $appointment->getAppointmentBySession($oldSession->sessionID);
-                
-                // Check if $appointmentDetails is valid
-                if (is_array($appointmentDetails) || is_object($appointmentDetails)) {
-                    foreach ($appointmentDetails as $appointmentItem) {
-                        // Add 2 hours to visitTime
-                        $newVisitTime = date('H:i:s', strtotime($appointmentItem->visitTime) + 2 * 60 * 60);
-    
-                        // Check if the session time is less than the current time
-                        if ($newVisitTime <= $currentTime) {
-                            // Update the appointment status to 'cancelled'
-                            $data = 'cancelled';
-                            $updateresult = $appointment->updateAppointmentStatus($appointmentItem->appointmentID, $data);
-                        }     
+        if (is_array($alldata)){
+            // Insert old sessions into session history
+            foreach ($alldata as $oldSession) {
+                if ($oldSession->selectedDate <= $currentDate) {
+                    $appointment = new AppointmentModel();
+                    $appointmentDetails = $appointment->getAppointmentBySession($oldSession->sessionID);
+                    
+                    // Check if $appointmentDetails is valid
+                    if (is_array($appointmentDetails) || is_object($appointmentDetails)) {
+                        foreach ($appointmentDetails as $appointmentItem) {
+                            // Add 2 hours to visitTime
+                            $newVisitTime = date('H:i:s', strtotime($appointmentItem->visitTime) + 2 * 60 * 60);
+        
+                            // Check if the session time is less than the current time
+                            if ($newVisitTime <= $currentTime) {
+                                // Update the appointment status to 'cancelled'
+                                $data = 'cancelled';
+                                $updateresult = $appointment->updateAppointmentStatus($appointmentItem->appointmentID, $data);
+                            }     
+                        }
+                    } else {
+                        // Handle the case where no appointments are found
+                        // You can log this or handle it as needed
+                        error_log("No appointments found for session ID: " . $oldSession->sessionID);
                     }
-                } else {
-                    // Handle the case where no appointments are found
-                    // You can log this or handle it as needed
-                    error_log("No appointments found for session ID: " . $oldSession->sessionID);
-                }
-            } 
-        }   
+                } 
+            }   
+        }
     }
 }

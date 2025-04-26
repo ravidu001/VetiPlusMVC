@@ -23,6 +23,7 @@ a:hover {
 }
 button:hover {
     transition: 0.3s;
+    transform :scale(1.05);
     cursor: pointer;
 }
 
@@ -42,6 +43,11 @@ body {
 }
 .bodyHeader, .dashHeader {
     font-size: 2em;
+}
+.header-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dashArea {
@@ -66,17 +72,25 @@ body {
 }
 
 .profilePic {
-    height: 10em;
-    width: auto;
+    height: auto;
+    width: 10em;
+    aspect-ratio: 1/1;
+
     max-height: 100%;
     max-width: 100%;
+
     border-radius: 50%;
-    background-color: var(--shadow-color);
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--shadow-color);
     padding: 5px;
 }
 
 :root {
     font-size: clamp(0.8rem, 1vw, 1.2rem);
+}
+
+.errorMsg {
+    justify-content: center;
 }
 
 /* the search filters in appointment and other service pages: */

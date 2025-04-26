@@ -31,6 +31,9 @@
                     <button class="nav-button" data-section="settings">
                         <i class="fas fa-cog"></i> Account Settings
                     </button>
+                    <button class="nav-button" data-section="dangerArea">
+                        <i class="fas fa-exclamation-triangle"></i> Danger Zone
+                    </button>
                 </div>
             </div>
 
@@ -47,8 +50,8 @@
 
                     <div class="profile-picture-container">
                         <div class="profile-picture-wrapper">
-                            <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= htmlspecialchars($doctor->profilePicture ?? 'N/A') ?>" alt="Profile Picture"
-                                class="profile-picture" id="profilePicture">
+                            <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= htmlspecialchars($doctor->profilePicture ?? 'N/A') ?>"
+                                alt="Profile Picture" class="profile-picture" id="profilePicture">
                             <div class="profile-picture-overlay">
                                 <input type="file" id="profilePictureUpload" accept="image/*" class="file-input">
                                 <label for="profilePictureUpload" class="upload-btn">
@@ -250,22 +253,106 @@
                             </button>
                         </div>
                     </form>
-                    <div class="form-group">
-                        <label>Account Actions</label>
-                        <div>
-                            <button class="edit-btn">
-                                <i class='bx bx-log-out'></i>Logout
-                            </button>
-                            <button class="btn-danger">
-                                <i class='bx bx-trash'></i>Delete Account
-                            </button>
+                    <form action="<?= ROOT?>/Logout/index" method="POST">
+                        <div class="form-group">
+                            <label>Account Actions</label>
+                            <div>
+                                <button type="submit" name="send" class="edit-btn">
+                                    <i class='bx bx-log-out'></i>Logout
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                        <!-- Danger Zone Section -->
+                        <div id="dangerArea" class="section">
+                            <h2 class="section-header">
+                                Danger Zone
+                            </h2>
+                            <div class="alert-warning">
+                                <strong>Warning:</strong>
+                                <ul style="margin-left: 20px;">
+                                    <li>Deleting your account will permanently remove all your data, including sessions
+                                        and preferences. This action cannot be undone.</li>
+                                    <li>You cannot delete your account if you have existing sessions.</li>
+                                    <li>You cannot delete your account if you have created Appointments.</li>
+                                    <li>You can delete your account only after the created sessions are completed.</li>
+                                </ul>
+                            </div>
+                            <form class="form-grid" id="dangerSettingsForm">
+                                <div class="delete-account-section">
+                                        <p>Do you want to Delete this Account ?</p><br>
+                                    <button class="btn btn-danger" id="deleteAccount">
+                                        <i class="fas fa-trash-alt"></i><p>Delete Account</p>
+                                    </button>
+                                </div>    
+
+                                <!-- Confirmation Modal -->
+                                <div id="confirmationModal" class="modal" style="display: none;">
+                                    <div class="modal-content">
+                                        <h3>Confirm Account Deletion</h3>
+                                        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                                        <input type="password" class="password" id="confirmPasswordInput" placeholder="Enter your password to confirm" required><br>
+                                        
+                                        <!-- Button Container -->
+                                        <div class="button-container">
+                                            <button id="confirmDeleteButton">Confirm</button>
+                                            <button id="cancelDeleteButton">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="<?= ROOT ?>/assets/js/vetDoctor/profile.js" defer></script>
+    <script>
+    document.getElementById('deleteAccount').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        document.getElementById('confirmationModal').style.display = 'block'; // Show modal
+    });
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default button action
+        const password = document.getElementById('confirmPasswordInput').value;
+
+        // Create a form data object
+        const formData = new FormData();
+        formData.append('password', password);
+
+        // Send the data to the controller
+        fetch('/VetiPlusMVC/public/DoctorProfile/deleteAccount', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // alert('Account deleted successfully.');
+                showNotification('Account deleted successfully.', 'success');
+                // Wait for 5 seconds before redirecting
+                setTimeout(function() {
+                    window.location.href = '<?= ROOT ?>/login'; // Redirect to login or home page
+                }, 5000); // 5000 milliseconds = 5 seconds
+            } else {
+                showNotification(data.message || 'Failed to delete the account', 'error');
+                // alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    document.getElementById('cancelDeleteButton').addEventListener('click', function() {
+    document.getElementById('confirmationModal').style.display = 'none'; // Hide modal
+    });
+</script>
+            <script src="<?= ROOT ?>/assets/js/vetDoctor/profile.js" defer></script>
+            <script src="<?= ROOT ?>/assets/js/vetDoctor/jsnotification.js"></script>
 </body>
 
 </html>
