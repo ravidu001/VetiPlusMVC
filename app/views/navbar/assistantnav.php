@@ -120,19 +120,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <span class="text nav-text" style="font-size:14px;">My Reviews</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisToreview/index' ? 'active' : '' ?>">
+                        <!-- <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisToreview/index' ? 'active' : '' ?>">
                             <a href="<?= ROOT ?>/AssisToreview/index">
                                 <i class='bx bx-upside-down icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">To Review</span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
 
                 </li>
 
                 <div style="display:none;" id="hiddenListItems-Review">
                     <li style="display:block"></li>
-                    <li style="display:block"></li>
+                    <!-- <li style="display:block"></li> -->
                 </div>
 
                 <li class="nav-link <?= $current_page == 'aboutus.php' ? 'active' : '' ?>">

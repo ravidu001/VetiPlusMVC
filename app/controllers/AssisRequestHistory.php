@@ -19,22 +19,25 @@ class AssisRequestHistory extends Controller {
 
         $consolidatedData = [];
 
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action != 'pending') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-    
-                foreach ($sessionData as $sessionItem) {
-                    $doctor = new DoctorModel();
-                    $doctorData = $doctor->find($sessionItem->doctorID);
-                    $consolidatedData[] = [
-                        'doctor' => $doctorData,
-                        'session' => $sessionItem,
-                        'assisSession' => $assisSessionItem
-                    ];
-                }   
-                    
+        if(is_array($assisSessionData)) {
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action != 'pending') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+        
+                    foreach ($sessionData as $sessionItem) {
+                        $doctor = new DoctorModel();
+                        $doctorData = $doctor->find($sessionItem->doctorID);
+                        $consolidatedData[] = [
+                            'doctor' => $doctorData,
+                            'session' => $sessionItem,
+                            'assisSession' => $assisSessionItem
+                        ];
+                    }   
+                        
+                }
             }
+
         }
         // show($consolidatedData);
 

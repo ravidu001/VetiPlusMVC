@@ -22,19 +22,21 @@ class AssisRequest extends Controller {
 
         $consolidatedData = [];
 
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action == 'pending') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-
-                foreach ($sessionData as $sessionItem) {
-                    $doctor = new DoctorModel();
-                    $doctorData = $doctor->find($sessionItem->doctorID);
-                    $consolidatedData[] = [
-                        'doctor' => $doctorData,
-                        'session' => $sessionItem,
-                        'assisSession' => $assisSessionItem
-                    ];
+        if(is_array($assisSessionData)){
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action == 'pending') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+    
+                    foreach ($sessionData as $sessionItem) {
+                        $doctor = new DoctorModel();
+                        $doctorData = $doctor->find($sessionItem->doctorID);
+                        $consolidatedData[] = [
+                            'doctor' => $doctorData,
+                            'session' => $sessionItem,
+                            'assisSession' => $assisSessionItem
+                        ];
+                    }
                 }
             }
         }
@@ -113,29 +115,30 @@ class AssisRequest extends Controller {
         $assisSession = new AssistantSessionModel();
         $assisSessionData = $assisSession->getSessionByAssistant($assis_id);
         // show($assisSessionData);
-
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action == 'pending') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-                
-                foreach($sessionData as $sessionItem)
-                $startTime = new DateTime($sessionItem->startTime); // Create a DateTime object for the session start time
-                $startTime->modify('-2 hours'); // Deduct 2 hours from the start time
-                $currentTime = new DateTime(); // Get the current time
-                
-                if ($sessionItem->selectedDate == date('Y-m-d')) {
-                    if ($startTime <= $currentTime) {
+        if(is_array($assisSessionData)){
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action == 'pending') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+                    
+                    foreach($sessionData as $sessionItem)
+                    $startTime = new DateTime($sessionItem->startTime); // Create a DateTime object for the session start time
+                    $startTime->modify('-2 hours'); // Deduct 2 hours from the start time
+                    $currentTime = new DateTime(); // Get the current time
+                    
+                    if ($sessionItem->selectedDate == date('Y-m-d')) {
+                        if ($startTime <= $currentTime) {
+                            $data = [
+                                'action' => 'expired'
+                            ];
+                            $assisSession->updateWithCompositeKey($assisSessionItem->sessionID, $assis_id, $data);
+                        }   
+                    } elseif ($sessionItem->selectedDate < date('Y-m-d') ){
                         $data = [
                             'action' => 'expired'
                         ];
                         $assisSession->updateWithCompositeKey($assisSessionItem->sessionID, $assis_id, $data);
-                    }   
-                } elseif ($sessionItem->selectedDate < date('Y-m-d') ){
-                    $data = [
-                        'action' => 'expired'
-                    ];
-                    $assisSession->updateWithCompositeKey($assisSessionItem->sessionID, $assis_id, $data);
+                    }
                 }
             }
         }

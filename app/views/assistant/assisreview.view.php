@@ -16,16 +16,16 @@
             <img src="<?= ROOT ?>/assets/images/vetDoctor/review.avif" alt="Veterinary Logo" class="loading-image">
         </div>
         <div class="loading-text" id="loadingMessage">
-            Hey, <?= htmlspecialchars($assisName) ?>! Fetching your reviews...🤩🤩🤩
+            Hey, <?= htmlspecialchars($assisName?? '', ENT_QUOTES, 'UTF-8') ?>! Fetching your reviews...🤩🤩🤩
         </div>
         <div id="reviewNotification">
     <div class="review-alert animated-bounce">
         <span class="emoji-icon">🐾</span>
         <div class="review-content">
             <h3>Woofderful Reviews Arrived!</h3>
-            <p><?= $unreadCount ?> Vet Doctors Left Awesome Feedback</p>
+            <p><?= $unreadCount ?? 0 ?> Vet Doctors Left Awesome Feedback</p>
             <div class="review-stats">
-                <span>⭐<?= $averageRating ?>/5 Average Rating</span>
+                <span>⭐<?= $averageRating ?? 0 ?>/5 Average Rating</span>
                 <span>
                     <?php
                         if ($averageRating >= 4) {
