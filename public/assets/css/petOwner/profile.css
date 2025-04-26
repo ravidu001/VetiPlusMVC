@@ -1,0 +1,86 @@
+.profileContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    gap: 10px;
+}
+
+.profileFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+.previewImage {
+    display: none;
+}
+.inProfilePg {
+    width: 40%;
+}
+.pics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 0.9em;
+}
+.profileForm .formGroup {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    justify-items: center;
+    padding: 5px;
+}
+.formGroup > * {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+}
+
+.formGroup {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    justify-items: center;
+    padding: 5px;
+
+    min-width: 20em;
+    width: 100%;
+}
+/* .formGroup .formSelect,
+.formGroup .formTextInput {
+    padding: 5px;
+    font-size: 0.8em;
+    border-radius: 5px;
+    width: 100%;
+} */
+.invisible {
+    opacity: 0;
+}
+.inputField {
+    display: none;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.profileFormBtn {
+    padding: 10px;
+    font-size: 1.1em;
+    border-radius: 5px;
+}
+.loneBtn {
+    font-size: 0.8em;
+    width: 150px;
+
+    margin: auto;
+    background-color: rgb(174, 11, 11);
+}

@@ -31,7 +31,6 @@ class PO_register extends Controller {
         $fullName = $sanitized['fullName']; 
         $contactNumber = $sanitized['contactNumber'];
         $DOB = $sanitized['DOB'];
-        // $NIC = $sanitized['NIC'];
         $gender = $sanitized['gender'];
     
         $houseNo = $sanitized['houseNo'];
@@ -50,10 +49,6 @@ class PO_register extends Controller {
         $contactRegex = '/07\\d\\d\\d\\d\\d\\d\\d\\d/i';
         if(empty($contactNumber)) $this->addError("No contact number provided!");
         elseif (!preg_match($contactRegex, $contactNumber)) $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
-    
-        // $nicRegex = '/(?:[4-9][0-9]{8}[vVxX])|(?:[12][0-9]{11})/';
-        // if(empty($NIC)) $this->addError("No NIC number provided!");
-        // elseif (!preg_match($nicRegex, $NIC)) $this->addError("NIC number does not follow Sri Lankan NIC number pattern.");
     
         if($gender != 'male' && $gender != 'female') $this->addError("Gender is not selected!");
     

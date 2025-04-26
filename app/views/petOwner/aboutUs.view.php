@@ -17,6 +17,7 @@
     <body>
         <!-- navbar on top: -->
         <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
+        <script> const ROOT = `<?= ROOT ?>`; </script>
 
         <div class="bodyArea"> 
 

@@ -24,9 +24,8 @@ class SalonSession {
                 ";
         
         $params = [
-            'salonName' => isset($options['salonName']) ? '%'.$options['salonName'].'%' : '%',
-            'openHour' => isset($options['openHour']) ? $options['openHour'] : date('H:i')
-            
+            'salonName' => isset($options['salonName']) ? '%'.$options['salonName'].'%' : '%'
+            // 'openHour' => isset($options['openHour']) ? $options['openHour'] : date('H:i')          
         ];
         return $this->query($query, $params);
     }

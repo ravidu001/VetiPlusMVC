@@ -111,7 +111,10 @@ function createCard(template, data) {
                 }
             }
             else if(key == "type") {
-                
+                console.log("hmm")
+                let title;
+                if(value == 'salon') title= 'salon'; else title = 'Dr.'
+                card.querySelector('providerTitle').textContent = title
             }
             // for rating data
             else if (key == 'rating') {
