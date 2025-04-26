@@ -341,7 +341,26 @@ class SalonService extends Controller
 
     private function SalonDataValidation($arr) 
     {
+        $servicetable = new SalonServices;
+        $salonID = $_SESSION['SALON_USER'];
+        
+        $results = $servicetable->findAllServiceId($salonID);
+
         $arr['errors'] = []; // Initialize errors as an array
+
+        if($results)
+        {
+            foreach($results as $result)
+            {
+                $service = $result->serviceName;
+
+                if($arr['serviceName'] == $service)
+                {
+                    $arr['errors'][] = 'Service add before';
+                }
+            }
+        }
+
 
         if (empty($arr['serviceName'])) 
         {
