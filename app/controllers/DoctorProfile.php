@@ -345,6 +345,22 @@ class DoctorProfile extends Controller {
                     return false;
                 }
             }
+        } else {
+            $userModel = new User();
+            $doctorData = $userModel->checkUser($doctorID);
+
+            if ($doctorData) {
+                $status = 'deactive';
+
+                $result = $userModel->updateActiveStatus($doctorID, $status);
+
+                if(empty($result)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
         }
     }
     
