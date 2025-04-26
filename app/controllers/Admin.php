@@ -10,6 +10,8 @@ class Admin extends Controller
         $petcount = $this->petcount();
         $petownercount = $this->petownercount();
         $doctorcount = $this->doctorcount();
+        $pendingvetdoctorcount = $this->pendingvetdoctorcount();
+        $pendingsaloncount = $this->pendingsaloncount();
 
 
         $appointmentPay = new AppointmentPayModel();
@@ -24,6 +26,8 @@ class Admin extends Controller
             'petcount' => $petcount,
             'petownercount' => $petownercount,
             'doctorcount' => $doctorcount,
+            'pendingvetdoctorcount' => $pendingvetdoctorcount,
+            'pendingsaloncount' => $pendingsaloncount,
         ];
     
         $this->view('admin/adminhome', $data);
@@ -71,5 +75,15 @@ class Admin extends Controller
         $complain =  $complainuser->getcomplain();
         return $complain;
      }
+     public function pendingsaloncount(){
+              $pendingsalon = new Salons();
+              $count = $pendingsalon->pendingsaloncount();
+              return $count;
+     }
+     public function pendingvetdoctorcount(){
+        $pendingvetdoctor = new DoctorModel();
+        $count = $pendingvetdoctor->pendingvetdoctorcount();
+        return $count;
+    }
 }
 
