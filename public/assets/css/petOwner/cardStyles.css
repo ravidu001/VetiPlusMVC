@@ -231,7 +231,6 @@
     border-radius: 5px;
     width: 100%;
 }
-
 button.addNewListing {
     padding: 5px;
     border-radius: 15px;
@@ -244,4 +243,22 @@ button.addNewListing {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+/* the search filters in appointment and other service pages: */
+.searchFilter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.searchFilter {
+    /* border: 1px solid var(--primary-color); */
+    display: flex;
+    flex-direction: column;
+}
+.searchBar {
+    padding: 5px;
+    font-size: 0.9em;
 }

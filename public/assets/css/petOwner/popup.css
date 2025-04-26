@@ -49,7 +49,7 @@ body.popup-active > *:not(.popup) {
 }
 
 .popup textarea {
-    width: clamp(10em, 30%, 20em);
+    width: 100%;
     min-height: 2em;
     max-height: 10em;
     field-sizing: content;

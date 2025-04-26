@@ -87,10 +87,12 @@
         <?php include_once '../app/views/navbar/po_Footer.php'; ?>
 
 
-        <!-- js for the other part in registration form: -->
+        <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
         <script>
             // the following parts are to handle user selecting other option for pet's species and/or breed and resetting them:
             const formItself = document.getElementById('petRegisterForm');
+            formItself.addEventListener('submit', submitForm);
 
             const species = document.getElementById('species');
             const otherSpecies = document.getElementById('otherSpecies');
@@ -144,20 +146,11 @@
             })
             breed.addEventListener('change', () => {
                 let breedType = breed.value;
+                const breedStatus = (breedType == 'other');
 
-                if (breedType == 'other') {
-
-                    otherBreed.hidden = false;
-                    otherBreed.disabled = false;
-                    otherBreed.required = true;
-
-                }
-                else {
-
-                    otherBreed.hidden = true;
-                    otherBreed.disabled = true;
-                    otherBreed.required = false;
-                }
+                otherBreed.hidden = (breedStatus ? false : true);
+                otherBreed.disabled = (breedStatus ? false : true);
+                otherBreed.required = (breedStatus ? true : false);
             })
             formItself.addEventListener('reset', (e) => {
                 breed.innerHTML = `<option hidden> Select your pet's Species First. </option>`;
@@ -172,19 +165,12 @@
 
                 formItself.querySelector('.errorMsg').innerHTML = '';
             })
-            formItself.addEventListener('submit', () => {
+            formItself.addEventListener('submit', (e) => {
                 if (species.value == 'ph' || breed.value == 'ph') {
                     e.preventDefault();
                 }
             })
 
         </script>
-        
-        <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
-        <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
-        <script>
-            document.getElementById('petRegisterForm').addEventListener('submit', submitForm);
-        </script>
-
     </body>
 </html>

@@ -75,16 +75,14 @@ popUpTypes.popup_feedback = `
             <input type="hidden" name="providerID" class="providerID" value="">
             <input type="hidden" name="petOwnerID" class="petOwnerID" value="">
             
-            <button class="submitBtn popupBtn" type="submit">Submit</button>
-            <button class="clearBtn popupBtn" type="reset">Clear</button>
-
             <div class="errorMsg" style="justify-content:center;"></div>
 
+            <div>
+                <button class="submitBtn popupBtn" type="submit">Submit</button>
+                <button class="clearBtn popupBtn" type="reset">Clear</button>
+                <button class="closeBtn popupBtn" type="button">Close</button>
+            </div>
         </form>
-        <div class="popup-buttons">
-            <button class="closeBtn popupBtn" type="button">Close</button>
-        </div>
-
     </div>
 `;
 
@@ -315,20 +313,15 @@ function interactiveStarRating(containerId, initialRating = 0) {
     if (!container) return;
     
     container.innerHTML = '';
-    
     for (let i = 1; i <= 5; i++) {
         const star = document.createElement('i');
         star.className = 'bx bx-star';
         star.dataset.value = i;
 
-        star.addEventListener('mouseover', () => {
-            highlightStars(i);
-        });
         star.addEventListener('click', () => {
             document.getElementById('rating').value = i;
             highlightStars(i);
         });
-        
         container.appendChild(star);
     }
     function highlightStars(count) {
@@ -337,9 +330,7 @@ function interactiveStarRating(containerId, initialRating = 0) {
             star.className = index < count ? 'bx bxs-star' : 'bx bx-star';
         });
     }
-    if (initialRating > 0) {
-        highlightStars(initialRating);
-    }
+    (initialRating > 0) && highlightStars(initialRating);
     return container.outerHTML;
 }
 

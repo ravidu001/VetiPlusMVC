@@ -93,7 +93,7 @@ class PO_petProfile extends Controller {
         else {
             echo json_encode([
                 "status" => "inputFail",
-                "popUpMsg" => implode(';', $this->errors)
+                "message" => implode(';', $this->errors)
             ]);
             exit();
         }
@@ -108,7 +108,16 @@ class PO_petProfile extends Controller {
 
         // Get file extension and generate new file name
         $fileExt = pathinfo($originalName, PATHINFO_EXTENSION);
-        $newFileName = "pet_" . $this->petID . "." . $fileExt;
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array(strtolower($fileExt), $allowedExtensions)) {
+            
+            echo json_encode([
+                "status" => "inputFail",
+                "message" => "Invalid profile picture type!"
+            ]);
+            exit();
+        }
+        $newFileName = "petOwner_" . $this->petOwnerID . "." . $fileExt;
 
         // Move uploaded file to the target directory
         $destination = $targetDir . $newFileName;
