@@ -28,7 +28,11 @@ class AppointmentPayModel {
     public function CalTodayRevenue() {
         $query = "SELECT SUM(amount) as total FROM $this->table WHERE DATE(dateTime) = CURDATE()";
         $result = $this->query($query);
-        return $result ? $result[0]->total : 0;
+        if($result){
+             return  $result[0]->total;
+        } else{
+          return  $result = 0 ;
+        }
     }
     
     
