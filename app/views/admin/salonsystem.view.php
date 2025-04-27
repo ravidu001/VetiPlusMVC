@@ -32,30 +32,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($salonItem as $data): ?>
-                            <?php if ($data->approvedStatus == 'pending'): ?>
-                                <tr>
-                                    <td> <?= htmlspecialchars($data->name) ?> </td>
-                                    <td> <?= htmlspecialchars($data->salonID) ?> </td>
-                                    <td> <?= htmlspecialchars($data->registeredDate) ?> </td>
-                                    <td> <?= htmlspecialchars($data->BRNumber) ?> </td>
-                                    <td>
-                                        <a href="#" class="document-link">
-                                            <img src="<?= ROOT ?>/assets/images/Salon/<?= htmlspecialchars($data->BRCertificate) ?>" alt="Download">
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="btn btn-accept" onclick="openModal('accept', '<?= $data->salonID ?>')">Accept</button>
-                                            <button class="btn btn-decline" onclick="openModal('decline','<?= $data->salonID ?>')">Decline</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php else: ?>
-                                <!-- <p> No registration requests </p> -->
-                            <?php endif; ?>
-
-                        <?php endforeach; ?>
+                       <?php
+                         if(is_array($salonItem)):
+                             foreach ($salonItem as $data): ?>
+                                <?php if ($data->approvedStatus == 'pending'): ?>
+                                    <tr>
+                                        <td> <?= htmlspecialchars($data->name) ?> </td>
+                                        <td> <?= htmlspecialchars($data->salonID) ?> </td>
+                                        <td> <?= htmlspecialchars($data->registeredDate) ?> </td>
+                                        <td> <?= htmlspecialchars($data->BRNumber) ?> </td>
+                                        <td>
+                                            <a href="#" class="document-link">
+                                                <img src="<?= ROOT ?>/assets/images/Salon/<?= htmlspecialchars($data->BRCertificate) ?>" alt="Download">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-accept" onclick="openModal('accept', '<?= $data->salonID ?>')">Accept</button>
+                                                <button class="btn btn-decline" onclick="openModal('decline','<?= $data->salonID ?>')">Decline</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php else: ?>
+                                    <!-- <p> No registration requests </p> -->
+                                <?php endif; ?>
+    
+                            <?php endforeach; ?>
+                            <?php endif?>
                     </tbody>
                 </table>
             </div>
