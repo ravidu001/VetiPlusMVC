@@ -35,12 +35,15 @@ class Signup extends Controller {
                         'type' => $data['userType']
                     ];
                     
-                    $user->create($data);
+                    $user->create($arr);
                     header('Location: /vetiplusMVC/public/login');
                 } 
                 else
                 {
-                    $this->view('logindetail/signup', ['errors' => $user->errors]);
+                    foreach($user->errors as $error)
+                    {
+                        $this->view('logindetail/signup', ['errors' => $error]);
+                    }
                 }
             }
         } 
