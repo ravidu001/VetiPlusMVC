@@ -69,6 +69,17 @@ class DoctorToreview extends Controller {
     public function submitReview() {
         // Process form submission for reviews
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $notification = new Notification();
+            if (!isset($_POST['rate']) || empty($_POST['rate'])) {
+                // Handle case where no rating is provided
+                $notification->show('Please rate the assistant.', 'error');
+                exit();
+            }
+            if (!isset($_POST['feedback']) || empty($_POST['feedback'])) {
+                // Handle case where no feedback is provided
+                $notification->show('Please provide feedback.', 'error');
+                exit();
+            }
             $sessionID = $_POST['sessionID'] ?? 0;
             $assistantID = $_POST['assistantID'] ?? 0;
             $rating = $_POST['rate'] ?? 0;
