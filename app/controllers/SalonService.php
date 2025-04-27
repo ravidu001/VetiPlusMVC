@@ -69,11 +69,14 @@ class SalonService extends Controller
         $serviceID = (int)$serviceID; // Convert to integer
         //fetch the all data in the database and push it in to the edit form for values
         $data = [];
+
         $serviceModel = new SalonServices;
         $notifications = new Notification();
 
         $serviceData = $serviceModel->whereservice($serviceID);
         $data['olddata'] = $serviceData;
+
+        show($data['olddata']);
 
         if(isset($_POST['update']))
         {
@@ -85,6 +88,8 @@ class SalonService extends Controller
                 'salonID' => $_SESSION['SALON_USER'] ?? ''
             ];
 
+            show($data);
+            
             // Check if photo1 is uploaded
             if (isset($_FILES['photo1']) && $_FILES['photo1']['error'] === UPLOAD_ERR_OK) 
             {
@@ -103,7 +108,7 @@ class SalonService extends Controller
                     'tempphoto1' =>  "",
                     'photo1size' =>  ""
                 ]);
-                show($data);
+                // show($data);
             }
 
             // Check if photo2 is uploaded
@@ -125,10 +130,11 @@ class SalonService extends Controller
                 ]);
             }
 
+            show($data);
             // Validate the data
             $validateresult = $this->SalonDataValidation($data);
 
-            show($validateresult);
+            // show($validateresult);
             if (empty($validateresult['errors'])) 
             {
                 // Prepare file upload logic
@@ -174,7 +180,7 @@ class SalonService extends Controller
                     try {
                         // Call the insert method
                         $result=$servicetable->serviceupdate($serviceID, $validateresult);
-                        show($result);
+                        // show($result);
                         if($result)
                         {
                             $notifications->show("Succssfully Upload the image",'success');
@@ -185,7 +191,7 @@ class SalonService extends Controller
                         // Handle the exception if something goes wrong
                         // $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
                         $notifications->show("Data update unsuccessful!",'error');
-                        redirect('SalonService');
+                        // redirect('SalonService');
                     }
                 } 
                 else 
