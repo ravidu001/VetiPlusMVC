@@ -25,7 +25,7 @@ $notification = new Notification();
             <div class="form-section">
                 <div class="form-section-title">Pet Information</div>
                 <div class="form-group">
-                    <label>Pet ID</label>
+                    <label>Pet ID <span style="color:red;">*</span></label>
                     <input type="text" name="petId" id="petId" placeholder="Enter Pet ID" required>
                 </div>
                 <button type= "submit" class="btn btn-primary">Fetch Pet Details</button>
@@ -80,8 +80,8 @@ $notification = new Notification();
                 <div class="form-section-title">Medical Assessment</div>
                 <input type="hidden" name="petID" id="petID" value="<?= htmlspecialchars($petData->petID ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="form-group">
-                    <label>Health Status</label>
-                    <select name="healthStatus" id="healthStatus">
+                    <label>Health Status <span style="color:red;">*</span></label>
+                    <select name="healthStatus" id="healthStatus" required>
                         <option value="Excellent">Excellent</option>
                         <option value="Good">Good</option>
                         <option value="Average">Average</option>
@@ -89,8 +89,8 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Vaccination Status</label>
-                    <select name="vaccinationStatus" id="vaccinationStatus">
+                    <label>Vaccination Status <span style="color:red;">*</span></label>
+                    <select name="vaccinationStatus" id="vaccinationStatus" required>
                         <option value="Excellent">Excellent</option>
                         <option value="Good">Good</option>
                         <option value="Average">Average</option>
@@ -98,8 +98,8 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Follow-up Appointments</label>
-                    <select name="followUpAppointments" id="followUpAppointments">
+                    <label>Follow-up Appointments <span style="color:red;">*</span></label>
+                    <select name="followUpAppointments" id="followUpAppointments" required>
                         <option value="Excellent">Excellent</option>
                         <option value="Good">Good</option>
                         <option value="Average">Average</option>
@@ -107,11 +107,11 @@ $notification = new Notification();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Recommendations</label>
-                    <textarea name="recommendations" id="recommendations" rows="4" placeholder="Veterinarian's Notes"></textarea>
+                    <label>Recommendations <span style="color:red;">*</span></label>
+                    <textarea name="recommendations" id="recommendations" rows="4" placeholder="Veterinarian's Notes" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Date of Expiry Certificate</label>
+                    <label>Date of Expiry Certificate <span style="color:red;">*</span></label>
                     <input type="date" name="expiryDate" id="expiryDate" required>
                 </div>
             </div>

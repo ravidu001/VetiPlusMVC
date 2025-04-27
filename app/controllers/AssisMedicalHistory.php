@@ -3,7 +3,7 @@
 class AssisMedicalHistory extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             header('Location: ' . ROOT . '/login');
             exit();
         }
@@ -13,7 +13,7 @@ class AssisMedicalHistory extends Controller {
         else{
             $_SESSION['popupShown'] = false;
         }
-        $assisID = $_SESSION['user_id'];
+        $assisID = $_SESSION['assis_id'];
         echo "<script>console.log('ID " . json_encode($assisID) . "');</script>";
         $assissessionModel = new AssistantSessionModel();
         $assissessionData = $assissessionModel->getSessionByAssistant($assisID);
@@ -22,33 +22,36 @@ class AssisMedicalHistory extends Controller {
         $sessionData = [];
 
         // show($assissessionData);
-        // Check if assistant accepted the session
-        foreach ($assissessionData as $assissessionItem) {
-            $sessionModel = new DoctorSessionModel();
-            if ($assissessionItem->action == 'accept') { 
-                echo "<script>console.log('ID " . json_encode($assissessionItem->sessionID) . "');</script>";
-                $session = $sessionModel->getsessionBySession($assissessionItem->sessionID);
-                // show($session);
-                if ($session) { // Check if session data is not empty
-                    // Convert stdClass object to associative array
-                    foreach ($session as $s) {
-                        $sessionData[] = [
-                            'sessionID' => $s->sessionID,
-                            'selectedDate' => $s->selectedDate,
-                            'startTime' => $s->startTime,
-                            'endTime' => $s->endTime,
-                            'noOfAppointments' => $s->noOfAppointments,
-                            'publishedTime' => $s->publishedTime,
-                            'clinicLocation' => $s->clinicLocation,
-                            'district' => $s->district,
-                            'doctorID' => $s->doctorID,
-                            'note' => $s->note,
-                            'completeStatus' => $s->completeStatus,
-                        ];
+        if(is_array($assissessionData)) {
+            // Check if assistant accepted the session
+            foreach ($assissessionData as $assissessionItem) {
+                $sessionModel = new DoctorSessionModel();
+                if ($assissessionItem->action == 'accept') { 
+                    echo "<script>console.log('ID " . json_encode($assissessionItem->sessionID) . "');</script>";
+                    $session = $sessionModel->getsessionBySession($assissessionItem->sessionID);
+                    // show($session);
+                    if ($session) { // Check if session data is not empty
+                        // Convert stdClass object to associative array
+                        foreach ($session as $s) {
+                            $sessionData[] = [
+                                'sessionID' => $s->sessionID,
+                                'selectedDate' => $s->selectedDate,
+                                'startTime' => $s->startTime,
+                                'endTime' => $s->endTime,
+                                'noOfAppointments' => $s->noOfAppointments,
+                                'publishedTime' => $s->publishedTime,
+                                'clinicLocation' => $s->clinicLocation,
+                                'district' => $s->district,
+                                'doctorID' => $s->doctorID,
+                                'note' => $s->note,
+                                'completeStatus' => $s->completeStatus,
+                            ];
+                        }
+                        
                     }
-                    
                 }
             }
+
         }
     
         // Initialize an array to hold appointment and pet data
@@ -152,7 +155,7 @@ class AssisMedicalHistory extends Controller {
     }
 
     public function getpetMedicalhistory(){
-        $assisID = $_SESSION['user_id'];
+        $assisID = $_SESSION['assis_id'];
         echo "<script>console.log('ID " . json_encode($assisID) . "');</script>";
         $assissessionModel = new AssistantSessionModel();
         $assissessionData = $assissessionModel->getSessionByAssistant($assisID);

@@ -3,13 +3,13 @@
 class AssisAccepted extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             header('Location: ' . ROOT . '/login');
             exit;
         }
 
         // Get user_id
-        $assis_id = $_SESSION['user_id'];
+        $assis_id = $_SESSION['assis_id'];
         // print_r($assis_id);
 
         // Get all the assistants' sessions
@@ -19,17 +19,27 @@ class AssisAccepted extends Controller {
 
         $consolidatedData = [];
 
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action == 'accept') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-
-                foreach ($sessionData as $sessionItem) {
-                    // check session is a future session
-                    $endTime = new DateTime($sessionItem->endTime); // Create a DateTime object for the session start time
-                    $currentTime = new DateTime(); // Get the current time
-                    if ($sessionItem->selectedDate == date('Y-m-d')) {
-                        if ($endTime >= $currentTime) {
+        if(is_array($assisSessionData)) {
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action == 'accept') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+    
+                    foreach ($sessionData as $sessionItem) {
+                        // check session is a future session
+                        $endTime = new DateTime($sessionItem->endTime); // Create a DateTime object for the session start time
+                        $currentTime = new DateTime(); // Get the current time
+                        if ($sessionItem->selectedDate == date('Y-m-d')) {
+                            if ($endTime >= $currentTime) {
+                                $doctor = new DoctorModel();
+                                $doctorData = $doctor->find($sessionItem->doctorID);
+                                $consolidatedData[] = [
+                                    'doctor' => $doctorData,
+                                    'session' => $sessionItem,
+                                    'assisSession' => $assisSessionItem
+                                ];
+                            }   
+                        } elseif ($sessionItem->selectedDate > date('Y-m-d') ){
                             $doctor = new DoctorModel();
                             $doctorData = $doctor->find($sessionItem->doctorID);
                             $consolidatedData[] = [
@@ -37,18 +47,11 @@ class AssisAccepted extends Controller {
                                 'session' => $sessionItem,
                                 'assisSession' => $assisSessionItem
                             ];
-                        }   
-                    } elseif ($sessionItem->selectedDate > date('Y-m-d') ){
-                        $doctor = new DoctorModel();
-                        $doctorData = $doctor->find($sessionItem->doctorID);
-                        $consolidatedData[] = [
-                            'doctor' => $doctorData,
-                            'session' => $sessionItem,
-                            'assisSession' => $assisSessionItem
-                        ];
+                        }
                     }
                 }
             }
+
         }
         // show($consolidatedData);
 

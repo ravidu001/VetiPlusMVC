@@ -3,7 +3,7 @@
 class AssisReview extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             // Redirect to the login page if not logged in
             header('Location: ' . ROOT . '/login');
             exit();
@@ -13,19 +13,19 @@ class AssisReview extends Controller {
         $feedback = new AssistantSessionModel();
         
         // Get the logged-in user's ID
-        $assisId = $_SESSION['user_id'];
+        $assisId = $_SESSION['assis_id'];
 
         // Fetch the reviews for the logged-in doctor
         $reviews = $feedback->getReviewsByAssisId($assisId);
         // Check if the reviews were fetched successfully
-        if ($reviews === false) {
-            // Handle the error (show an error message)
-            die('Error fetching reviews.');
-        }
+        // if ($reviews === false) {
+        //     // Handle the error (show an error message)
+        //     die('Error fetching reviews.');
+        // }
 
         // Check if there are any reviews
         if (empty($reviews)) {
-            echo 'No reviews found for this doctor.';
+            echo "<script>console.log('No reviews found for this Assistant.');</script>";
         } else {
             // Proceed to access the reviews
             // print_r($reviews[0]->feedbackID); // This will work if there are reviews
@@ -63,32 +63,36 @@ class AssisReview extends Controller {
             // Initialize an array to hold consolidated session data
             $consolidatedReviews = [];
         
-            // Iterate over each review to get petowner data
-            foreach ($reviews as $reviewsItem) {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($reviewsItem->sessionID);
-                foreach ($sessionData as $sessionItem) {
-                    $doctor = new DoctorModel();
-                    $doctorData = $doctor->find($sessionItem->doctorID);
-                    // print_r($doctorData->fullName);
-    
-                    if ($doctorData && $reviewsItem->status === 1) {
-                        // Consolidate session data
-                        $consolidatedReviews[] = [
-                            'reviewData' => $reviewsItem,
-                            'doctor' => $doctorData
-                        ];
-                    }  
-                }   
+            if (is_array($reviews)) {
+                // Iterate over each review to get petowner data
+                foreach ($reviews as $reviewsItem) {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($reviewsItem->sessionID);
+                    foreach ($sessionData as $sessionItem) {
+                        $doctor = new DoctorModel();
+                        $doctorData = $doctor->find($sessionItem->doctorID);
+                        // print_r($doctorData->fullName);
+        
+                        if ($doctorData && $reviewsItem->status === 1) {
+                            // Consolidate session data
+                            $consolidatedReviews[] = [
+                                'reviewData' => $reviewsItem,
+                                'doctor' => $doctorData
+                            ];
+                        }  
+                    }   
+                }
+
             }
         }
         // show($consolidatedReviews);
 
         $this->view('assistant/assisreview',
-        ['reviews' => $consolidatedReviews, 
-        'averageRating' => $averageRating, 
-        'unreadCount' => $unreadCount, 
-        'assisName' => $assisName]);
+        ['reviews' => $consolidatedReviews ?? null, 
+        'averageRating' => $averageRating ?? null, 
+        'unreadCount' => $unreadCount ?? null, 
+        'assisName' => $assisName ?? null,
+    ]);
     }
 
 }

@@ -6,73 +6,92 @@ class DoctorRegistration extends Controller {
     }
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Validate and process the uploaded file
-            // echo $_POST['name'];
+            $errors = [];
+    
+            // Validate uploaded certificate
             if (isset($_FILES['doctorCertificate']) && $_FILES['doctorCertificate']['error'] === UPLOAD_ERR_OK) {
                 $doctorCertificate = $_FILES['doctorCertificate']['name'];
                 $doctorCertificate_tmp_name = $_FILES['doctorCertificate']['tmp_name'];
                 $upload_dir = 'assets/images/vetDoctor/';
+                
                 if (!is_dir($upload_dir)) {
-                    echo "<script>console.log('Upload directory does not exist.');</script>";
-                    return;   
-                }
-
-                if (!move_uploaded_file($doctorCertificate_tmp_name, $upload_dir . $doctorCertificate)) {
-                    echo "<script>console.log('Error uploading file. Please try again.');</script>";    
-                    return;
+                    $errors[] = "Upload directory does not exist.";
+                } else {
+                    if (!move_uploaded_file($doctorCertificate_tmp_name, $upload_dir . $doctorCertificate)) {
+                        $errors[] = "Error uploading doctor certificate.";
+                    }
                 }
             } else {
-                echo "<script>console.log('Please upload your doctor certificate!');</script>";
-                return; // Exit the method if validation fails
+                $errors[] = "Please upload your doctor certificate!";
             }
-
+    
+            // Validate contact number
             $contactNumber = $_POST['mobile'];
-                if (!preg_match('/^\d{10,15}$/', $contactNumber)) {
-                die("Invalid contact number. Please provide a valid phone number.");
+            if (!preg_match('/^\d{10,15}$/', $contactNumber)) {
+                $errors[] = "Invalid contact number. It should be 10 to 15 digits.";
             }
-
-               
+    
+            // Validate DoctorID (should be email format)
+            $doctorID = $_SESSION['user_id'];
+            if (!filter_var($doctorID, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Invalid email format for Doctor ID.";
+            }
+    
+            // Validate veterinary license number format (VC/xxxx or TVC/xxxx)
+            $lnumber = $_POST['lnumber'];
+            if (!preg_match('/^(VC|TVC)\/\d{4,}$/', $lnumber)) {
+                $errors[] = "Invalid license number format. It should be VC/xxxx or TVC/xxxx where xxxx are digits.";
+            }
+    
+            // Validate other required fields 
+            $requiredFields = ['name', 'address', 'DOB', 'gender', 'bio', 'experience', 'timeSlot', 'special'];
+            foreach ($requiredFields as $field) {
+                if (empty($_POST[$field])) {
+                    $errors[] = ucfirst($field) . " is required.";
+                }
+            }
+    
+            // If there are any errors, send them back to frontend
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                redirect('DoctorRegistration/index');
+                exit;
+            }
+    
+            // If validation passes, prepare data
             $data = [
-                'doctorID' => $_SESSION['user_id'],
+                'doctorID' => $doctorID,
                 'fullName' => $_POST['name'],
                 'profilePicture' => 'defaultProfile.png',
-                'contactNumber' => $_POST['mobile'],
+                'contactNumber' => $contactNumber,
                 'address' => $_POST['address'],
                 'DOB' => $_POST['DOB'],
                 'gender' => $_POST['gender'],
                 'bio' => $_POST['bio'],
                 'experience' => $_POST['experience'],
-                'lnumber' => $_POST['lnumber'],
+                'lnumber' => $lnumber,
                 'doctorCertificate' => $doctorCertificate,
                 'timeSlot' => $_POST['timeSlot'],
                 'specialization' => $_POST['special'],
                 'approvedStatus' => 'Pending',
                 'registeredDate' => date('Y-m-d H:i:s')
             ];
-
-            // echo $data['doctorID'];
+    
             $doctor = new DoctorModel();
             $result = $doctor->create($data);
-
+    
             $notification = new Notification();
     
-            if(!$result) {
-                // echo "<script>console.log('Registration successful!');</script>";
-                // header('Location: /vetiplusMVC/public/DoctorRegistration/home');
+            if (!$result) {
                 $notification->show("Your registration is successful. Please wait for the approval.", 'success');
-                redirect('login/index'); // this is not working because page is refreshed by the notification model.
+                redirect('login/index');
             } else {
-                // echo "<script>console.log('Registration failed. Please try again.');</script>";
-                // header('Location: /vetiplusMVC/public/DoctorRegistration/errorUpdate');
                 $notification->show("Registration failed. Please try again.", 'error');
                 redirect('DoctorRegistration/index');
             }
-
-            if(!$result) {
-                $this->view('login/index');
-            }
         }
     }
+    
 
     public function errorUpdate() {
         if (isset($_GET['doctorID'])) {
@@ -107,77 +126,92 @@ class DoctorRegistration extends Controller {
 
     public function updatedoctordata() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Validate and process the uploaded file
-            // echo $_POST['name'];
+            $errors = [];
             $doctorID = $_SESSION['user_id'];
             $doctor = new DoctorModel();
             $doctorDetails = $doctor->find($doctorID);
-
-            if ($doctorDetails->doctorCertificate != $_FILES['doctorCertificate']['name']){
-                if (isset($_FILES['doctorCertificate']) && $_FILES['doctorCertificate']['error'] === UPLOAD_ERR_OK) {
-                    $doctorCertificate = $_FILES['doctorCertificate']['name'];
-                    $doctorCertificate_tmp_name = $_FILES['doctorCertificate']['tmp_name'];
-                    $upload_dir = 'assets/images/vetDoctor/';
-                    if (!is_dir($upload_dir)) {
-                        echo "<script>console.log('Upload directory does not exist.');</script>";
-                        return;   
-                    }
     
-                    if (!move_uploaded_file($doctorCertificate_tmp_name, $upload_dir . $doctorCertificate)) {
-                        echo "<script>console.log('Error uploading file. Please try again.');</script>";    
-                        return;
-                    }
-                } else {
-                    echo "<script>console.log('Please upload your doctor certificate!');</script>";
-                    return; // Exit the method if validation fails
+            $upload_dir = 'assets/images/vetDoctor/';
+            $doctorCertificate = $doctorDetails->doctorCertificate; // Default to existing certificate
+    
+            // 1. Validate file upload if a new one is provided
+            if (isset($_FILES['doctorCertificate']) && $_FILES['doctorCertificate']['error'] === UPLOAD_ERR_OK) {
+                $uploadedFileName = $_FILES['doctorCertificate']['name'];
+                $uploadedTempPath = $_FILES['doctorCertificate']['tmp_name'];
+    
+                // Check upload directory
+                if (!is_dir($upload_dir)) {
+                    // echo "<script>console.log('Upload directory does not exist.');</script>";
+                    $errors[] = "Upload directory does not exist.";
+                }
+    
+                // Move uploaded file
+                if (!move_uploaded_file($uploadedTempPath, $upload_dir . $uploadedFileName)) {
+                    //echo "<script>console.log('Error uploading file. Please try again.');</script>";
+                    $errors[] = "Error uploading file. Please try again.";
+                    //return;
+                }
+    
+                // Update the certificate only if new one uploaded successfully
+                $doctorCertificate = $uploadedFileName;
+            }
+    
+            // 2. Validate contact number
+            $contactNumber = $_POST['mobile'];
+            if (!preg_match('/^\d{10,15}$/', $contactNumber)) {
+                // die("Invalid contact number. Please provide a valid phone number.");
+                $errors[] = "Invalid contact number. It should be 10 to 15 digits.";
+            }
+    
+            // 3. Validate required fields (extra layer)
+            $requiredFields = ['name', 'mobile', 'address', 'DOB', 'gender', 'bio', 'experience', 'lnumber', 'timeSlot', 'special'];
+            foreach ($requiredFields as $field) {
+                if (empty($_POST[$field])) {
+                    $errors[] = ucfirst($field) . " is required.";
                 }
             }
 
-            $contactNumber = $_POST['mobile'];
-                if (!preg_match('/^\d{10,15}$/', $contactNumber)) {
-                die("Invalid contact number. Please provide a valid phone number.");
+            // If there are any errors, send them back to frontend
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                // Wait for 5 seconds before redirecting
+                // sleep(5);
+                redirect('DoctorRegistration/errorUpdate?doctorID=' . $doctorID);
+                exit;
             }
-
-               
+    
+            // 4. Prepare data
             $data = [
-                'doctorID' => $_SESSION['user_id'],
-                'fullName' => $_POST['name'],
+                'doctorID' => $doctorID,
+                'fullName' => trim($_POST['name']),
                 'profilePicture' => 'defaultProfile.png',
-                'contactNumber' => $_POST['mobile'],
-                'address' => $_POST['address'],
+                'contactNumber' => $contactNumber,
+                'address' => trim($_POST['address']),
                 'DOB' => $_POST['DOB'],
                 'gender' => $_POST['gender'],
-                'bio' => $_POST['bio'],
-                'experience' => $_POST['experience'],
-                'lnumber' => $_POST['lnumber'],
+                'bio' => trim($_POST['bio']),
+                'experience' => intval($_POST['experience']),
+                'lnumber' => strtoupper(trim($_POST['lnumber'])),
                 'doctorCertificate' => $doctorCertificate,
                 'timeSlot' => $_POST['timeSlot'],
                 'specialization' => $_POST['special'],
                 'approvedStatus' => 'Pending',
                 'registeredDate' => date('Y-m-d H:i:s')
             ];
-
-            // echo $data['doctorID'];
-            $doctor = new DoctorModel();
+    
+            // 5. Update doctor profile
             $result = $doctor->updateProfile($doctorID, $data);
-
+    
             $notification = new Notification();
     
-            if(!$result) {
-                // echo "<script>console.log('Registration successful!');</script>";
-                // header('Location: /vetiplusMVC/public/DoctorRegistration/home');
-                $notification->show("Your registration form Updated successfully. Please wait for the approval.", 'success');
-                redirect('login/index'); // this is not working because page is refreshed by the notification model.
+            if (!$result) {
+                $notification->show("Your registration form updated successfully. Please wait for approval.", 'success');
+                redirect('login/index');
             } else {
-                // echo "<script>console.log('Registration failed. Please try again.');</script>";
-                // header('Location: /vetiplusMVC/public/DoctorRegistration/errorUpdate');
-                $notification->show("Registration failed. Please try again.", 'error');
+                $notification->show("Registration update failed. Please try again.", 'error');
                 redirect('DoctorRegistration/index');
-            }
-
-            if(!$result) {
-                $this->view('login/index');
             }
         }
     }
+    
 }

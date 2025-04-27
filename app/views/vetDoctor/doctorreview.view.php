@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/jsnotification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/myreview.css">
 </head>
 <body>
@@ -155,6 +156,7 @@
                     placeholder="Write your professional and compassionate response here..."
                     maxlength="500"
                     oninput="updateCharCount(this)"
+                    required
                 ></textarea>
                 <div class="character-count" id="charCount">0 / 500</div>
             </div>
@@ -215,6 +217,7 @@
     <script>
         const reviews = <?= json_encode($reviews) ?>; // Pass PHP reviews to JavaScript
     </script>
+    <script src="<?= ROOT ?>/assets/js/vetDoctor/jsnotification.js"></script>
     <script src="<?= ROOT ?>/assets/js/vetDoctor/myreview.js"></script>
 </body>
 </html>

@@ -29,7 +29,7 @@ $notification = new Notification();
         <div class="dashboard-header">
             <div class="profile-section">
                 <div class="profile-avatar">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Profile">
+                    <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= htmlspecialchars($doctorData->profilePicture ?? 'N/A') ?>" alt="Dr. Profile">
                 </div>
                 <div>
                     <h1>Dr. <?= htmlspecialchars($doctorData->fullName); ?></h1>

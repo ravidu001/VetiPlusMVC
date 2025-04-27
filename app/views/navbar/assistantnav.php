@@ -14,7 +14,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <div class="text header-text">
                 <span class="name">VetiPlus</span>
                 <span class="profession">Pet Care</span>
-            </div>
+                
+            </div><br>
+        </div>
+        <div class="text header-text">
+            <div class="type"> Vet Assistant</div>
         </div>
 
         <i class='bx bx-chevron-right toggle'></i>
@@ -120,19 +124,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <span class="text nav-text" style="font-size:14px;">My Reviews</span>
                             </a>
                         </li>
-                        <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisToreview/index' ? 'active' : '' ?>">
+                        <!-- <li class="nav-link <?= $current_page == '<?= ROOT ?>/AssisToreview/index' ? 'active' : '' ?>">
                             <a href="<?= ROOT ?>/AssisToreview/index">
                                 <i class='bx bx-upside-down icon'></i>
                                 <span class="text nav-text" style="font-size:14px;">To Review</span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
 
                 </li>
 
                 <div style="display:none;" id="hiddenListItems-Review">
                     <li style="display:block"></li>
-                    <li style="display:block"></li>
+                    <!-- <li style="display:block"></li> -->
                 </div>
 
                 <li class="nav-link <?= $current_page == 'aboutus.php' ? 'active' : '' ?>">
@@ -170,7 +174,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         </a>
                     </li>
                     <li class="nav-link <?= $current_page == 'toReview.php' ? 'active' : '' ?>">
-                        <a href="toReview.php">
+                        <a href="<?= ROOT ?>/logout/index">
                             <i class='bx bx-log-out icon'></i>
                             <span class="text nav-text" style="font-size:14px;">Sign out</span>
                         </a>

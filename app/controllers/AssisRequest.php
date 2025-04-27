@@ -3,7 +3,7 @@
 class AssisRequest extends Controller {
     public function index() {
         // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['assis_id'])) {
             header('Location: ' . ROOT . '/login');
             exit;
         }
@@ -12,7 +12,7 @@ class AssisRequest extends Controller {
         $this->autoExpiredRequest();
 
         // Get user_id
-        $assis_id = $_SESSION['user_id'];
+        $assis_id = $_SESSION['assis_id'];
         // print_r($assis_id);
 
         // Get all the assistants' sessions
@@ -22,19 +22,21 @@ class AssisRequest extends Controller {
 
         $consolidatedData = [];
 
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action == 'pending') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-
-                foreach ($sessionData as $sessionItem) {
-                    $doctor = new DoctorModel();
-                    $doctorData = $doctor->find($sessionItem->doctorID);
-                    $consolidatedData[] = [
-                        'doctor' => $doctorData,
-                        'session' => $sessionItem,
-                        'assisSession' => $assisSessionItem
-                    ];
+        if(is_array($assisSessionData)){
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action == 'pending') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+    
+                    foreach ($sessionData as $sessionItem) {
+                        $doctor = new DoctorModel();
+                        $doctorData = $doctor->find($sessionItem->doctorID);
+                        $consolidatedData[] = [
+                            'doctor' => $doctorData,
+                            'session' => $sessionItem,
+                            'assisSession' => $assisSessionItem
+                        ];
+                    }
                 }
             }
         }
@@ -106,36 +108,37 @@ class AssisRequest extends Controller {
 
     public function autoExpiredRequest() {
         // Get user_id
-        $assis_id = $_SESSION['user_id'];
+        $assis_id = $_SESSION['assis_id'];
         // print_r($assis_id);
 
         // Get all the assistants' sessions
         $assisSession = new AssistantSessionModel();
         $assisSessionData = $assisSession->getSessionByAssistant($assis_id);
         // show($assisSessionData);
-
-        foreach ($assisSessionData as $assisSessionItem) {
-            if ($assisSessionItem->action == 'pending') {
-                $session = new DoctorSessionModel();
-                $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
-                
-                foreach($sessionData as $sessionItem)
-                $startTime = new DateTime($sessionItem->startTime); // Create a DateTime object for the session start time
-                $startTime->modify('-2 hours'); // Deduct 2 hours from the start time
-                $currentTime = new DateTime(); // Get the current time
-                
-                if ($sessionItem->selectedDate == date('Y-m-d')) {
-                    if ($startTime <= $currentTime) {
+        if(is_array($assisSessionData)){
+            foreach ($assisSessionData as $assisSessionItem) {
+                if ($assisSessionItem->action == 'pending') {
+                    $session = new DoctorSessionModel();
+                    $sessionData = $session->getsessionBySession($assisSessionItem->sessionID);
+                    
+                    foreach($sessionData as $sessionItem)
+                    $startTime = new DateTime($sessionItem->startTime); // Create a DateTime object for the session start time
+                    $startTime->modify('-2 hours'); // Deduct 2 hours from the start time
+                    $currentTime = new DateTime(); // Get the current time
+                    
+                    if ($sessionItem->selectedDate == date('Y-m-d')) {
+                        if ($startTime <= $currentTime) {
+                            $data = [
+                                'action' => 'expired'
+                            ];
+                            $assisSession->updateWithCompositeKey($assisSessionItem->sessionID, $assis_id, $data);
+                        }   
+                    } elseif ($sessionItem->selectedDate < date('Y-m-d') ){
                         $data = [
                             'action' => 'expired'
                         ];
                         $assisSession->updateWithCompositeKey($assisSessionItem->sessionID, $assis_id, $data);
-                    }   
-                } elseif ($sessionItem->selectedDate < date('Y-m-d') ){
-                    $data = [
-                        'action' => 'expired'
-                    ];
-                    $assisSession->updateWithCompositeKey($assisSessionItem->sessionID, $assis_id, $data);
+                    }
                 }
             }
         }
