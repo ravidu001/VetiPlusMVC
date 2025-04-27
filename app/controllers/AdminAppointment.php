@@ -13,7 +13,7 @@ class AdminAppointment extends Controller
         $this->view('admin/appointment', [
             'appointmentdata' => $appointmentdata,
             'appointmentcount' => $appointmentcount,
-            'pendingappointment' =>$pendingappointment,
+            'pendingappointment' => $pendingappointment,
             'cancelappointment' => $cancelappointment,
 
         ]);
@@ -59,14 +59,45 @@ class AdminAppointment extends Controller
         return $count;
     }
 
-    public function pendingappointmentcount(){
+    public function pendingappointmentcount()
+    {
         $pendingappointment = new AppointmentModel();
         $count = $pendingappointment->pendingappointmentcount();
         return $count;
     }
-    public function cancelappointmentcount(){
+    public function cancelappointmentcount()
+    {
         $cancelappointment = new AppointmentModel();
         $count = $cancelappointment->cancelappointmentcount();
         return $count;
+    }
+    public function downloadreport()
+    {
+        $appointment = new AppointmentModel();
+        $appointmentdata = $appointment->getalldata();
+
+        // Set headers to download file
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename=appointments_report.csv');
+
+        $output = fopen('php://output', 'w');
+
+        // Write the column headers
+        fputcsv($output, ['Appointment ID', 'Pet Name', 'Date and Time', 'Session ID', 'Visit Time', 'Status']);
+
+        // Write the rows
+        foreach ($appointmentdata as $data) {
+            fputcsv($output, [
+                $data->appointmentID ?? 'N/A',
+                $data->petID ?? 'N/A',
+                $data->bookedDateTime ?? 'N/A',
+                $data->sessionID ?? 'N/A',
+                $data->visitTime ?? 'N/A',
+                $data->status ?? 'N/A'
+            ]);
+        }
+
+        fclose($output);
+        exit;
     }
 }
