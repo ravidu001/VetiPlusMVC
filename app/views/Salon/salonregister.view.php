@@ -18,10 +18,25 @@
 
             if(!empty($data['errors']))
             {
-                    foreach($data['errors'] as $message){
-                        echo '<div class="message">'. $message . '</div>';
-                    }
+                foreach($data['errors'] as $message)
+                {
+                    echo '<div class="message">'. $message . '</div>';
+                }
             }
+            // show($data['SalonName']);
+
+            if(!empty($data))
+            {
+                $salonName = $data['SalonName'];
+                $location = $data['location'];
+                $phoneNumber = $data['phoneNumber'];
+                $BRcertificatePath = $data['imagepath'];
+                $BRnumber= $data['BRNumber'];
+
+            show($data);
+            }
+
+            
         ?>
                      
 <div class="RendarContent">
@@ -62,9 +77,9 @@
                            name="salonName" 
                            placeholder="e.g., VetiPlus"
                            value="<?php 
-                                    if (!empty($data['oldemaildata'])) 
+                                    if (!empty($salonName)) 
                                     {
-                                      echo $data['oldemaildata'][0]->salonName;
+                                      echo $salonName;
                                     }
                             ?>"
                            required>
@@ -90,9 +105,9 @@
                            placeholder="e.g., 077-6399941"
                            pattern="0[0-9]{2}-[0-9]{7}"
                            value="<?php 
-                                    if (!empty($data['oldemaildata'])) 
+                                    if (!empty($phoneNumber)) 
                                     {
-                                      echo $data['oldemaildata'][0]->salonPhoneNumber;
+                                      echo $phoneNumber;
                                     }
                             ?>"
                            required>
@@ -110,17 +125,17 @@
                  <!-- Address (URL) -->
                 <div class="form-group">
                     <label for="location">
-                        <i class="fa-solid fa-location-dot"></i> Location (URL) <span class="required">*</span>
+                        <i class="fa-solid fa-location-dot"></i> Location <span class="required">*</span>
                     </label>
-                    <input type="url" 
+                    <input type="text" 
                         id="location" 
                         name="location" 
                         placeholder="e.g., Rajaguruwatta,kolonna"
                         
                         value="<?php 
-                                    if (!empty($data['oldemaildata'])) 
+                                    if (!empty($location)) 
                                     {
-                                      echo $data['oldemaildata'][0]->location;
+                                      echo $location;
                                     }
                             ?>" 
                         required>
@@ -148,9 +163,9 @@
                                 
                                 title="Please enter a valid registration number (e.g., ABC123)" 
                                 value="<?php 
-                                            if (!empty($data['oldemaildata'])) 
+                                            if (!empty($BRnumber)) 
                                             {
-                                            echo $data['oldemaildata'][0]->businessregnumber;
+                                            echo $BRnumber;
                                             }
                                     ?>"
                                 required>
@@ -165,7 +180,7 @@
                         
                                 <div class="image-upload-box">
                                     <div class="image-preview">
-                                        <img src="<?=ROOT?>/<?php echo $data['oldemaildata'][0]->brcertificate ?>" alt="">
+                                        <img src="<?=ROOT?>/<?php echo $BRcertificatePath ?>" alt="">
                                     </div>
                                     <div class="upload-button">
                                         <i class="fas fa-upload"></i>

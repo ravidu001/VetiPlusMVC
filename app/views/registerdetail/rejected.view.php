@@ -46,7 +46,7 @@
             </button>
         <?php elseif (isset($salonDetails->approvedStatus) && $salonDetails->approvedStatus == 'rejected'): ?>
             <button class="action-btn" name="reapply" type="submit">
-                <a href="<?= ROOT ?>/salonregistration/errorUpdate?salonID=<?= urlencode($salonDetails->salonID) ?>" class="action-btn">Reapply</a>
+                <a href="<?=ROOT?>/SalonRegister/errorUpdate?salonID=<?= urlencode($salonDetails->salonID) ?>" class="action-btn">Reapply</a>
             </button>
         <?php endif; ?>
 

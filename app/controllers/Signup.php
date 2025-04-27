@@ -12,8 +12,10 @@ class Signup extends Controller {
             
             $data = [
                 'email' => $_POST['email'],
-                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), 
-                'repassword' => password_hash($_POST['repassword'], PASSWORD_DEFAULT), 
+                // 'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), 
+                // 'repassword' => password_hash($_POST['repassword'], PASSWORD_DEFAULT), 
+                'password' =>$_POST['password'],
+                'repassword' =>$_POST['repassword'],
                 'type' => $_POST['userType']
             ];
 
@@ -31,8 +33,8 @@ class Signup extends Controller {
                     $arr = [];
                     $arr = [
                         'email' => $data['email'],
-                        'password' => $data['password'],
-                        'type' => $data['userType']
+                        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), 
+                        'type' => $data['type']
                     ];
                     
                     $user->create($arr);
