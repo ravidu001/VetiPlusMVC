@@ -59,7 +59,7 @@
                                     </td>
                                     <td>
                                         <button class='edit'>
-                                            <a href='<?= ROOT ?>/SalonService/edit/<?= htmlspecialchars($x->serviceID) ?>'>Edit</a>
+                                            <a href='<?=ROOT?>/SalonService/edit/<?= htmlspecialchars($x->serviceID) ?>'>Edit</a>
                                         </button>
                                         <button class='delete' onclick="confirmDelete(<?= htmlspecialchars($x->serviceID) ?>)">
                                             Delete

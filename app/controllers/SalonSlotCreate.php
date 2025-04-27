@@ -105,36 +105,42 @@ class SalonSlotCreate extends Controller
                     $startTime = $_POST['startTime'][$dayName] ?? null;
                     $closeTime = $_POST['closeTime'][$dayName] ?? null;
 
-                    if($startTime == $closeTime)
-                    {
-                        $notifications->show("$startTime and $closeTime cannot be same.",'error');
-                        redirect('SalonSlot');
-                    }
+                    show($dayName);
+                    show($startTime);
+                    show($closeTime);
 
-                    if ($startTime && $closeTime) 
-                    {
-                        $validInput = true; // At least one valid day configured
-                    }
-                    else 
-                    {
-                        // $data['error'] = "Missing start/close time for $dayName";
-                        $notifications->show("Missing start/close time for $dayName",'error');
-                        redirect('SalonSlot');
+                    // if($startTime == $closeTime)
+                    // {
+                    //     $notifications->show("$startTime and $closeTime cannot be same.",'error');
+                    //     redirect('SalonSlot');
+                    // }
 
-                    }
+                    // if ($startTime && $closeTime) 
+                    // {
+                    //     $validInput = true; // At least one valid day configured
+                    // }
+                    // else 
+                    // {
+                    //     $data['error'] = "Missing start/close time for $dayName";
+                    //     // $notifications->show("Missing start/close time for $dayName",'error');
+                    //     // redirect('SalonSlot');
+
+                    // }
                 }
 
-                if (!$validInput) 
-                {
-                    // $data['error'] = "Please configure at least one day's time slot properly.";
-                    $notifications->show("Please configure at least one day's time slot properly",'error');
-                    redirect('SalonSlot');
+                // if (!$validInput) 
+                // {
+                //     $data['error'] = "Please configure at least one day's time slot properly.";
+                //     // $notifications->show("Please configure at least one day's time slot properly",'error');
+                //     // redirect('SalonSlot');
 
-                }
+                // }
 
             }
 
             $result = $this->validateTimeSlotConfigData($duration, $noappointments, $slotfor, $startDate);
+             
+            show($result);
 
             if(empty($result['errors']))
             {
