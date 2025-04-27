@@ -90,16 +90,15 @@
             </form>
         </div>
         <div class="popup popup_editBreedingListing">
-            <h2 class="popUpTitle"> Make pet available for breeding </h2>
+            <h2 class="popUpTitle"> Edit pet breeding listing </h2>
 
-            <form action="PO_petBreeding/forBreeding_addNew" method="post" class="popupForm">
+            <form action="PO_petBreeding/forBreeding_edit" method="post" class="popupForm">
 
                 <img src="" class="petPic profilePic" style="display:none;">
                 <div class="formGroup">
-                    <label for="species">Pet:</label>
-                    <select name="petID" id="petSelect">
-                        <option value="" disabled selected>Select a pet</option>
-                    </select>
+                    <div> <p>Name</p>
+                        <strong class="petName"></strong>
+                    </div>
                 </div>
 
                 <div class="formGroup">
@@ -145,10 +144,7 @@
 
                 <div class="formGroup"></div>
 
-                <div class="formGroup">
-                    <label for="lastCheckUpDate">Last check-up date:</label>
-                    <input type="date" id="lastCheckUpDate" class="formTextInput" name="lastCheckUpDate" readonly>
-                </div>
+                <input type="text" name="breedingListID" class="breedingListID" readonly hidden>
                 
                 <div class="errorMsg" style="justify-content:center;"></div>
 
@@ -179,13 +175,14 @@
                         </div>
                         <div class="cardDetails">
                             <h3 class="title"></h3>
+                            <h3 class="petName"></h3>
                             <p> <span class="species"></span> : 
                                 <span class="breed"></span>
                             </p>
                             <p> <span class="freeOrSell"></span>
                                 <span class="price"></span>
                             </p>
-                            <p> Last Checkup on: <b><span class="lastCheckUpDate"></span></b> </p>
+                            <!-- <p> Last Checkup on: <b><span class="lastCheckUpDate"></span></b> </p> -->
                         </div>
                         <div class="cardDetails">
                             <span class="district"></span>
@@ -217,7 +214,7 @@
                             <p> <span class="freeOrSell"></span>
                                 <span class="price"></span>
                             </p>
-                            <p> Last Checkup on: <b><span class="lastCheckUpDate"></span></b> </p>
+                            <!-- <p> Last Checkup on: <b><span class="lastCheckUpDate"></span></b> </p> -->
                         </div>
                         <div class="cardDetails">
                             <span class="district"></span>
@@ -339,7 +336,7 @@
 
                     title: card.querySelector('.title').textContent,
                     species: card.querySelector('.species').textContent,
-
+                    petName: card.querySelector('.petName').textContent,
                     freeOrSell: card.querySelector('.freeOrSell').textContent,
                     price: card.querySelector('.price').textContent,
 

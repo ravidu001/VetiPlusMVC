@@ -52,6 +52,13 @@ class PetOwner {
         return $result[0];
     }
 
+    public function lessenRescheduleCount ($petOwnerID) {
+        $query = "UPDATE petowner SET monthlyReschedulesAvailable = monthlyReschedulesAvailable - 1 WHERE petOwnerID = :poID";
+        
+        $result = $this->query($query, ['poID' => $petOwnerID]);
+        return empty($result) ? true : false;
+    }
+
     public function canReschedule ($petOwnerID) {
         return ($this->getReschedulesAvailableCount($petOwnerID) > 0);
     }

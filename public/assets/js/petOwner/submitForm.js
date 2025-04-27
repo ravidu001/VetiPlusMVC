@@ -52,14 +52,14 @@ async function submitForm (event) {
         displayPopUp('popup_formResult', dataObject);
 
     } catch (error) {
-        // console.error('An error occurred\n' + error);
-        // alert('An error occurred.\nPlease try again later.\n' + error);
-        const errorObj = {
-            popUpTitle: "Error", 
-            popUpMsg: "An unexpected error occured! Please try again later.",
-            popUpIcon: `${ROOT}/assets/images/petOwner/popUpIcons/fail.png`,
-            nextPage: 'PO_home'
-        }
-        displayPopUp('popup_formResult', errorObj)
+        console.error('An error occurred\n' + error);
+        alert('An error occurred.\nPlease try again later.\n' + error);
+        // const errorObj = {
+        //     popUpTitle: "Error", 
+        //     popUpMsg: "An unexpected error occured! Please try again later.",
+        //     popUpIcon: `${ROOT}/assets/images/petOwner/popUpIcons/fail.png`,
+        //     nextPage: 'PO_home'
+        // }
+        // displayPopUp('popup_formResult', errorObj)
     }
 }

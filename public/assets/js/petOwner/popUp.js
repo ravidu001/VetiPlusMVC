@@ -86,13 +86,64 @@ popUpTypes.popup_feedback = `
     </div>
 `;
 
-// to display a form to add a new forBreeding listing
-popUpTypes.popup_newBreedingListing = `
-    
+popUpTypes.popup_cancelAppt = `
+    <div class="popup popup_cancelAppt">
+        <h2 class="popUpTitle">Cancel Appointment</h2>
+        <img src="${ROOT}/assets/images/petOwner/popUpIcons/confirm.png" alt="popUpIcon" class="popUpIcon">
+        <p class="popUpMsg">Are you sure?</p>
+        <form action="" method="post" class="popupForm">
+            <input type="text" class="someID formTextInput" value="" name="someID" hidden>
+            <div class="popup-buttons">
+                <button class="submitBtn popupBtn" type="submit">Confirm</button>
+                <button class="closeBtn popupBtn" type="button">Cancel</button>
+            </div>
+        </form>
+    </div>
 `;
+popUpTypes.popup_apptReschedule = `
+    <div class="popup popup_apptReschedule">
+        <h2 class="popUpTitle"> Appointment Reschedule </h2>
 
-popUpTypes.popup_apptCancel = ``;
-popUpTypes.popup_apptReschedule = ``;
+        <div class="details apptDetails cancellingDeatails">
+            <h4 class="petName"></h4>
+            <span class="providerName"></span>
+            <span class="reason service"></span>
+            <h4 class="apptDateTime"></h4>
+        </div>
+
+        <p>You can reschedule your appointment to another session by the same Service provider.</p>
+        <p> <strong class="reschedulesAvailable"></strong> free reschedules available this month.</p>
+
+        <form action="" method="post" class="popupForm">
+            <div class="formGroup">
+                <label for="dateSelect">Session date:</label>
+                <select id="dateSelect" name="dateSelect" class="formSelect" required>
+                    <option value="" disabled selected>Select a date</option>
+                </select>
+            </div>
+            <div class="formGroup">
+                <label for="slotSelect">Time Slot:</label>
+                <select id="slotSelect" name="slotSelect" class="formSelect" required>
+                    <option value="" disabled selected>Select a time slot</option>
+                </select>
+            </div>
+
+            <input type="text" name="type" class="type" value="" hidden>
+            <input type="text" name="petID" class="petID" value="" hidden>
+            <input type="text" name="cancellingApptID" class="cancellingApptID" value="" hidden>
+            <input type="text" name="providerID" class="providerID" value="" hidden>
+            <input type="text" name="petOwnerID" class="petOwnerID" value="" hidden>
+            
+            <div class="errorMsg" style="justify-content:center;"></div>
+
+            <div>
+                <button class="submitBtn popupBtn" type="submit">Submit</button>
+                <button class="clearBtn popupBtn" type="reset">Clear</button>
+                <button class="closeBtn popupBtn" type="button">Close</button>
+            </div>
+        </form>
+    </div>
+`;
 popUpTypes.popup_payment = `
     <div class="popup popup_payment">
         <h2 class="popUpTitle"> Payment for Booking Appointment </h2>
@@ -130,11 +181,6 @@ popUpTypes.popup_payment = `
 
             <input type="text" name="appointmentID" class="appointmentID"  hidden>
             <input type="text" name="paymentInfoID" class="paymentInfoID"  hidden>
-
-            <div>
-                <label for="saveCard">Save my card Details: </label>
-                <input type="checkbox" id="saveCard" name="saveCard" value="save">
-            </div>
             
             <div class="errorMsg" style="justify-content:center;"></div>
 
@@ -205,6 +251,7 @@ function displayPopUp (type, detailsObject) {
         popup.style.opacity = '1';
     }, 10);
     
+    console.log(detailsObject);
     for (const [key, value] of Object.entries(detailsObject)) {
         const element = popup.querySelector(`.${key}`);
         if (element) {
@@ -279,7 +326,7 @@ function displayPopUp (type, detailsObject) {
     (type == 'popup_feedback') && interactiveStarRating('starContainer');
 
     // Close popup_success and popup_fail type popups automatically and refresh or go to nextPage:
-    if (type == 'popup_success' || type == 'popup_fail') {
+    if (type == 'popup_formResult') {
         setTimeout(() => {
             popup.style.transform = 'translate(-50%, -100px)';
             popup.style.opacity = '0';
@@ -293,7 +340,7 @@ function displayPopUp (type, detailsObject) {
     }
 
     // OK button to proceed to next page
-    popup.querySelectorAll('.okBtn') &&
+    // popup.querySelectorAll('.okBtn') &&
     popup.querySelectorAll('.okBtn').forEach(x => {
         x.addEventListener('click', function() {
             popup.style.transform = 'translate(-50%, -100px)';
@@ -308,7 +355,7 @@ function displayPopUp (type, detailsObject) {
     })
     
     // Close button to close the popup or cancel submission
-    popup.querySelectorAll('.closeBtn') &&
+    // popup.querySelectorAll('.closeBtn') &&
     popup.querySelectorAll('.closeBtn').forEach(x => {
         x.addEventListener('click', function() {
             popup.style.transform = 'translate(-50%, -100px)';

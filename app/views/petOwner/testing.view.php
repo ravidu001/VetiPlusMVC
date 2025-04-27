@@ -242,6 +242,14 @@
             <option value="fhello">fhello</option>
         </select>
 
+
+        <input type="month" id="cardType" class="formTextInput" name="cardType" placeholder="YYYY - MM" required>
+        <script>
+            const hmmInput = document.querySelector('#cardType');
+            hmmInput.addEventListener('change', () => {
+                console.log(hmmInput.value)
+            })
+        </script>
         <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <!-- <script defer>
             // Step 1: Fetch and display cards
@@ -325,6 +333,15 @@
         </script> -->
 
         <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
+
+        <div class="formGroup">
+            <label for="cardType"> Card type: </label>
+            <select name="cardType" class="cardType formSelect" required>
+                <option value="" disabled selected> Select a card type </option>
+                <option value="visa"> Visa </option>
+                <option value="master"> Master </option>
+            </select>
+        </div>
 
         <script>
             function createInteractiveRating(containerId, initialRating = 0) {

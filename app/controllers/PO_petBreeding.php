@@ -95,7 +95,7 @@ class PO_petBreeding extends Controller {
     }
     public function forBreeding_delist () {
         $sanitized = array_map('sanitizeInput', $_POST);
-        $itemID = $sanitized['breedingListID'];
+        $itemID = $sanitized['someID'];
 
         $delistSuccess = $this->forBreedingObj->delist($itemID);
         if ($delistSuccess) {
