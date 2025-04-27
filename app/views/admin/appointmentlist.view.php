@@ -37,25 +37,28 @@
           </tr>
         </thead>
         <tbody>
-          <?php 
-            if(is_array($admin)) :
-               foreach ($admin as $data): ?>
-                <tr>
-                  <td><?= $data->appointmentID ?? 'N/A' ?></td>
-                  <td><?= htmlspecialchars($data->petID ?? 'N/A') ?></td>
-                  <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
-                  <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
-                  <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
-                  <td><?= htmlspecialchars($data->status ?? 'N/A') ?></td>
-                </tr>
-              <?php endforeach; ?>
-              <?php endif?>
+          <?php
+          if (is_array($admin)) :
+            foreach ($admin as $data): ?>
+              <tr>
+                <td><?= $data->appointmentID ?? 'N/A' ?></td>
+                <td><?= htmlspecialchars($data->petID ?? 'N/A') ?></td>
+                <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
+                <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
+                <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
+                <td><?= htmlspecialchars($data->status ?? 'N/A') ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif ?>
         </tbody>
       </table>
 
       <div class="report-generator">
-        <button class="report-btn">Generate Report</button>
+        <form action="<?= ROOT ?>/AdminAppointment/downloadreport" method="post">
+          <button type="submit" class="report-btn">Generate Report</button>
+        </form>
       </div>
+
     </div>
   </section>
 </body>

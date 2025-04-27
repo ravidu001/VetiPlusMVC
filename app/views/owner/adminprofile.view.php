@@ -65,13 +65,13 @@ $notification = new Notification();
                             <p><?= htmlspecialchars($admin->gender ?? 'N/A') ?></p>
                         </div>
                     </div>
-                    <div class="detail-card">
+                    <!-- <div class="detail-card">
                         <i class='bx bxs-calendar'></i>
                         <div class="info">
-                            <h4>Joined</h4>
+                            <h4></h4>
                             <p>Jan 2023</p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="action-buttons">

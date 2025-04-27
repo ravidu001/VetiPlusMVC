@@ -40,7 +40,7 @@ class AdminAccountDashboard extends Controller
                         $this->view('admin/petuseraccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
-                        $notification->show("No admin found with this email.", 'error');
+                        $notification->show("No Pet Owner found with this email.", 'error');
                     }
                 } else {
                     // Handle invalid email input
@@ -132,7 +132,7 @@ class AdminAccountDashboard extends Controller
                         $this->view('admin/doctoraccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
-                        $notification->show("No admin found with this email.", 'error');
+                        $notification->show("No Vet Doctor found with this email.", 'error');
                     }
                 } else {
                     // Handle invalid email input
@@ -220,7 +220,7 @@ class AdminAccountDashboard extends Controller
                         $this->view('admin/petaccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
-                        $notification->show("No admin found with this email.", 'error');
+                        $notification->show("No Pet found with this email.", 'error');
                     }
                 } else {
                     // Handle invalid email input

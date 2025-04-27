@@ -62,22 +62,25 @@ $notification = new Notification();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($data['paymentdata'])) : ?>
-                            <?php foreach ($data['paymentdata'] as $payment) : ?>
+                      <?php
+                        if(is_array($data['paymentdata'])):
+                             if (isset($data['paymentdata'])) : ?>
+                                <?php foreach ($data['paymentdata'] as $payment) : ?>
+                                    <tr>
+                                        <td><?= $payment->paymentID ?></td>
+                                        <td><?= $payment->petownerID ?></td>
+                                        <td><?= $payment->appointmentID ?></td>
+                                        <td>Rs. <?= $payment->amount ?></td>
+                                        <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
+                                        <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
                                 <tr>
-                                    <td><?= $payment->paymentID ?></td>
-                                    <td><?= $payment->petownerID ?></td>
-                                    <td><?= $payment->appointmentID ?></td>
-                                    <td>Rs. <?= $payment->amount ?></td>
-                                    <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
-                                    <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                    <td colspan="6">No payment data available.</td>
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="6">No payment data available.</td>
-                            </tr>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                            <?php endif; ?>
                     </tbody>
                 </table>
             </div>

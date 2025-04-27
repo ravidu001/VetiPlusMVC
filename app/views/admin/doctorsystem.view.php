@@ -32,7 +32,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($doctorItem as $data): ?>
+                       <?php 
+                       if(is_array($doctorItem)):
+                         foreach ($doctorItem as $data): ?>
 
                             <?php if ($data->approvedStatus == 'pending'): ?>
                                 <tr>
@@ -57,8 +59,7 @@
                             <?php endif; ?>
 
                         <?php endforeach; ?>
-
-                        <!-- More rows can be added similarly -->
+                       <?php endif?>
                     </tbody>
                 </table>
             </div>

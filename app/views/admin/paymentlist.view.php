@@ -32,7 +32,7 @@
               <th>Payment ID</th>
               <th>Appointment ID</th>
               <th>Date</th>
-              <!-- <th>Doctor Name</th> -->
+              <th>Service Type</th>
               <th>Amount</th>
             </tr>
           </thead>
@@ -43,7 +43,7 @@
                   <td><?= htmlspecialchars($payment->paymentID) ?></td>
                   <td><?= htmlspecialchars($payment->appointmentID) ?></td>
                   <td><?= htmlspecialchars($payment->dateTime) ?></td>
-                  <!-- <td></td> -->
+                  <td><?= htmlspecialchars($payment->serviceType) ?></td>
                   <td>Rs. <?= htmlspecialchars($payment->amount) ?></td>
                 </tr>
               <?php endforeach; ?>
@@ -57,11 +57,9 @@
       </div>
 
       <div class="action-buttons">
-        <button class="btn">
-          <i class='bx bxs-report'></ ```html
-              <i class='bx bxs-report'></i>
-          Generate Report
-        </button>
+      <form action="<?= ROOT ?>/AdminPayment/downloadreport" method="post">
+          <button type="submit" class="btn">Generate Report</button>
+        </form>
       </div>
     </div>
   </section>
