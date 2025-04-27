@@ -34,7 +34,7 @@ $notification = new Notification();
                 </div>
                 <div class="stat-card">
                     <h3>Total Revenue</h3>
-                    <div class="stat-number">Rs. <?= htmlspecialchars($total) ?></div>
+                    <div class="stat-number">Rs. <?= htmlspecialchars($total  ?? '0') ?></div>
                 </div>
             </div>
 

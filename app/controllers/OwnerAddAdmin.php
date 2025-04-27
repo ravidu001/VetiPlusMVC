@@ -143,7 +143,7 @@ class OwnerAddAdmin extends Controller
 
                 $result = $user->create($userData);
                 $notification = new Notification();
-                if ($result) {
+                if (!$result) {
                     $notification->show("Admin registration successful.", "success");
                 } else {
                     $notification->show("Admin registration failed.", "error");

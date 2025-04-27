@@ -55,7 +55,7 @@
                         <i class='bx bxs-dollar-circle icon'></i>
                         <div class="content">
                             <h3>Total Transactions</h3>
-                            <h2>Rs.<?= htmlspecialchars($total) ?></h2>
+                            <h2>Rs.<?= htmlspecialchars($total ?? '0')  ?></h2>
                         </div>
                     </div>
                     <div class="stats-card">
@@ -102,13 +102,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($complain as $complaint): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($complaint->email) ?></td>
-                                    <td><?= htmlspecialchars($complaint->issue) ?></td>
-                                    <td><a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>" class="view-button">View</a></td>
-                                </tr>
-                                <?php endforeach; ?>
+                                <?php
+                                if(is_array($complain)): ?>
+
+                                    <?php foreach ($complain as $complaint): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($complaint->email) ?></td>
+                                            <td><?= htmlspecialchars($complaint->issue) ?></td>
+                                            <td><a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>" class="view-button">View</a></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                     <?php endif?>
                             </tbody>
                         </table> 
                     </div>
