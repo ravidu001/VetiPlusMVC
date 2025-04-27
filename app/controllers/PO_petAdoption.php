@@ -76,7 +76,9 @@ class PO_petAdoption extends Controller {
 
         $uploadDone = true;
 
-        if(isset($_FILES['adoptionImage'])) {
+        if ( isset($_FILES['adoptionImage'])
+        && $_FILES['adoptionImage']['error'] === UPLOAD_ERR_OK
+        && $_FILES['adoptionImage']['size'] > 0) {
             $profilePicture = $_FILES['adoptionImage'];
             $targetDir = $_SERVER['DOCUMENT_ROOT'].'/VetiPlusMVC/public/assets/images/petOwner/profilePictures/adoption/';
     
@@ -85,7 +87,17 @@ class PO_petAdoption extends Controller {
     
             // Get file extension and generate new file name
             $fileExt = pathinfo($originalName, PATHINFO_EXTENSION);
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (!in_array(strtolower($fileExt), $allowedExtensions)) {
+                
+                echo json_encode([
+                    "status" => "inputFail",
+                    "message" => "Invalid profile picture type!"
+                ]);
+                exit();
+            }
             $newFileName = "adoption_" . $sanitized['adoptionListID'] .".". $fileExt;
+            $sanitized['adoptionImage'] = $newFileName;
     
             // Move uploaded file to the target directory
             $destination = $targetDir . $newFileName;
@@ -97,14 +109,11 @@ class PO_petAdoption extends Controller {
             unset($sanitized['adoptionListID']);
     
             $sanitized['petOwnerID'] = $this->petOwnerID;
-            $sanitized['adoptionImage'] = $newFileName;
-
             $sanitized = array_filter($sanitized, function($value) {
                 return !is_null($value);
             });
     
             header('Content-Type: application/json');
-
             $updateSuccess = $this->forAdoptionObj->edit($itemID, $sanitized);
             if ($updateSuccess) {
                 echo json_encode(["status" => "success",

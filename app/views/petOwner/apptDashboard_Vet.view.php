@@ -28,8 +28,8 @@
                     formAction = 'PO_apptDashboard_Vet/editAppt';
                 else if (btn.classList.contains('rescheduleBtn'))
                     formAction = 'PO_apptDashboard_Vet/bookAppt';
-                // else if (btn.classList.contains('cancelBtn'))
-                //     formAction = 'PO_apptDashboard_Vet/rateAppt';
+                else if (btn.classList.contains('cancelBtn'))
+                    formAction = 'PO_apptDashboard_Vet/cancelAppt';
                 else if (btn.classList.contains('ratingBtn'))
                     formAction = 'PO_apptDashboard_Vet/postFeedback';
                 
@@ -72,7 +72,7 @@
                         </div>
                         <div class="cardBtn-container">
                             <!-- <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button> -->
-                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time." disabled>
+                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
                                 <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
                             <button class="cardBtn cancelBtn" title="Cancel the appointment.">
                                 <i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
@@ -112,29 +112,26 @@
                 <h2>Search Available Vet Sessions</h2>
 
                 <div class="searchFilter-container">
-                    <div class="filter-group" id="docNameFilter">
-                        Search by a doctor's name:
-                        <input type="text" name="docName" class="searchBar" placeholder="Search by a doctor's Name.">
-                        <ul class="dropdownList"></ul>
+                    <div class="searchFilter">
+                        <label for="doctorSelect">Search by doctor's name:</label>
+                        <select id="doctorSelect" class="searchBar">
+                            <option value="" disabled selected>Search by doctor's name.</option>
+                        </select>
                     </div>
-                    
-                    <div class="filter-group" id="districtFilter">
-                        Search by district:
-                        <input type="text" name="district" class="searchBar" placeholder="Search by district.">
-                        <ul class="dropdownList"></ul>
+                    <div class="searchFilter">
+                        <label for="districtSelect">Search by district:</label>
+                        <select id="districtSelect" class="searchBar">
+                            <option value="" disabled selected>Search by district.</option>
+                        </select>
                     </div>
-
-                    <div class="filter-group" id="dateFilter">
-                        Search available sessions by date:
-                        <input type="date" name="date" class="searchBar" min="<?= (new DateTime("now"))->format('Y-m-d') ?>">
+                    <div class="searchFilter">
+                        <label for="dateFilter">Search by date:</label>
+                        <input type="date" id="dateFilter" class="searchBar" min="<?= (new DateTime("now"))->format('Y-m-d') ?>">
                     </div>
-
-                    <div class="filter-group" id="timeFilter">
-                        Search available sessions by starting time:
-                        <input type="time" name="time" class="searchBar" >
+                    <div class="searchFilter">
+                        <label for="timeFilter">Search by starting time:</label>
+                        <input type="time" id="timeFilter" class="searchBar">
                     </div>
-
-                    <button class="cardBtn clearBtn"><i class="bx bxs-clear bx-sm"></i>Clear</button>
                 </div>
 
                 <div class="longCard-container availSessCard-container"></div>
@@ -157,7 +154,7 @@
                                 <li>From: <b><span class="sessStartDateTime"></span></b></li>
                                 <li>To: <b><span class="sessEndDateTime"></span></b></li>
                             </ul>
-                            <p><span class="availApptCount" style="font-weight: 600;"></span> appointments available.</p>
+                            <p><strong class="availApptCount"></strong> appointments available.</p>
                             <p>District: <b><span class="district"></span></b></p>
                             <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
                         </div>
@@ -177,14 +174,55 @@
         <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
-
-        <script src="<?=ROOT?>/assets/js/petOwner/searchableDropdown.js"></script>
-        <script>
-            const docNameList = (<?= json_encode($this->activeDocList) ?>).map(x => { return x.docName });
-        </script>
-        <script src="./assets/js/petOwner/searchFilters_vet.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/slotsDivider.js"></script>
 
         <script defer>
+            const districtList = [
+                "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", 
+                "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", 
+                "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", 
+                "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", 
+                "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"
+            ];
+            const districtSelect = document.getElementById('districtSelect');
+            districtList.map(x => {
+                let optionHTML = document.createElement('option');
+                optionHTML.value = x;
+                optionHTML.textContent = x;
+                districtSelect.appendChild(optionHTML);
+            })
+
+            const docNameList = (<?= json_encode($this->activeDocList) ?>).map(x => x.docName);
+            const doctorSelect = document.getElementById('doctorSelect');
+            docNameList.map(x => {
+                let optionHTML = document.createElement('option');
+                optionHTML.value = x;
+                optionHTML.textContent = `Dr. ${x}`;
+                doctorSelect.appendChild(optionHTML);
+
+            });
+            
+            document.querySelector('.searchFilter-container').addEventListener('change', () => {
+                const docName = document.getElementById('doctorSelect').value;
+                const district = document.getElementById('districtSelect').value;
+                const selectedDate = document.getElementById('dateFilter').value;
+                const startTime = document.getElementById('timeFilter').value;
+
+                const params = new URLSearchParams();
+                if (docName) params.append('docName', docName);
+                if (district) params.append('district', district);
+                if (selectedDate) params.append('selectedDate', selectedDate);
+                if (startTime) params.append('startTime', startTime);
+
+                const url = `PO_apptDashboard_Vet/getAvailableSessions?${params.toString()}`;
+                fetchAndAppendCards(
+                    url,
+                    '.availSessCard-template',
+                    '.availSessCard-container'
+                )
+            });
+
+
             fetchAndAppendCards(
                 'PO_apptDashboard_Vet/getAppts_upcoming',
                 '.apptUpcomingCard-template',
@@ -215,13 +253,67 @@
                 const button = e.target.closest('button');
                 if (button) {
                     const cardDetailsObj = getCardDetails_appt(button);
-                    (button.classList.contains('editBtn')) && displayPopUp('popup_editAppt', cardDetailsObj);
-                    (button.classList.contains('rescheduleBtn')) && displayPopUp('popup_rescheduleAppt', cardDetailsObj);
-                    (button.classList.contains('cancelBtn')) && displayPopUp('popup_cancelAppt', cardDetailsObj);
+
+                    if (button.classList.contains('cancelBtn')) {
+                        const cancelObj = {action: 'PO_apptDashboard_vet/cancelAppt', someID: cardDetailsObj.apptID}
+                        displayPopUp('popup_cancelAppt', cancelObj)
+                    };
+
+                    
+                    // if (button.classList.contains('rescheduleBtn')) {
+                    //     const rescheduleData = (<?= json_encode($this->rescheduleCount) ?>);
+                    //     cardDetailsObj.reschedulesAvailable = rescheduleData.rescheduleCount;
+                    //     displayPopUp('popup_apptReschedule', cardDetailsObj)
+
+                    //     const params = new URLSearchParams({ doctorID: cardDetailsObj.providerID }).toString();
+                    //     const url = `PO_apptDashboard/getDoctorDates${params}`;
+                    //     fetch(url)
+                    //     .then(response => response.json())
+                    //     .then(data => {
+                    //         const dates = data;
+                    //         const dateSelect = document.getElementById('dateSelect');
+                    //         dates.forEach(date => {
+                    //                 let optionHTML = document.createElement('option');
+                    //                 optionHTML.value = `${date.sessionID}`;
+                    //                 optionHTML.textContent = `${date.selectedDate}`;
+                    //                 dateSelect.appendChild(optionHTML);
+                    //             })
+
+                    //         let thisSession = data;
+                    //         const slots = divideTimeRangeBySlotDuration(thisSession.sessStartDateTime, thisSession.sessEndDateTime,
+                    //                                             thisSession.slotDuration, thisSession.totApptCount);
+
+                    //         fetch('PO_bookAppt_Vet/getBookedSessionSlots')
+                    //         .then(response => response.json())
+                    //         .then(data => {
+                    //             (data.fetchedCount == 0) && (data = []);
+
+                    //             let bookedSlots = Array.from(data.map(x => x.visitTime.substring(0, 5)));
+
+                    //             const timeSlotSelect = document.getElementById('timeSlotSelect');
+                    //             slots.forEach(slot => {
+                    //                 const start = new Date(slot.start);
+                    //                 const end = new Date(slot.end);
+
+                    //                 const startTime = `${pad(start.getHours())}:${pad(start.getMinutes())}`;
+                    //                 const endTime = `${pad(end.getHours())}:${pad(end.getMinutes())}`;
+
+                    //                 let optionHTML = document.createElement('option');
+                    //                 optionHTML.value = `${startTime}`;
+                    //                 optionHTML.textContent = `${startTime} - ${endTime}`;
+                    //                 bookedSlots.includes(startTime) && (optionHTML.disabled = true);
+                                    
+                    //                 timeSlotSelect.appendChild(optionHTML);
+                    //                 })
+                    //             });
+                        
+                    //     })
+                        
+                    // }
                 }
             })
 
-            function getCardDetails_session  (btn) {
+            function getCardDetails_session (btn) {
                 const card = btn.closest('.card');
                 const cardDetails = {
                     sessionID: card.getAttribute('sessionID'),

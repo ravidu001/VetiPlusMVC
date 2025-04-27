@@ -1,47 +1,6 @@
 // ***************************************************************
 // this JS file contains only functions that have to be called in the view file to use with custom parameter
 // <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
-// ----------
-// 0. createCard() is used within fetchAndAppendCards() itself
-// ----------
-// 1. fetchAndAppendCards() - the main fetch and card-container append/populator; use something like this:
-// let userData; // Store fetched data for filtering
-// fetchAndAppendCards(
-//     'testing/getAllUsers',
-//     '.userCard-template',
-//     '.userCard-container'
-// ).then(data => {
-//     userData = data; // Save fetched data for filtering
-// });
-
-// add this line to the view file's <script> part before using the functions:
-// const ROOT = `<?= ROOT ?>`;
-
-// ----------
-// 2. filterCards() - if the displayed cards need to be filtered use something like this:
-// const emailFilter = document.querySelector('#emailFilter');
-// const typeFilter = document.querySelector('#typeFilter');
-// const filters = {
-//     email: '',
-//     type: '',
-//     startDate: null,
-//     endDate: null
-// };
-// // Function to update filters and apply them
-// function updateFilters() {
-//     filters.email = emailFilter.value; // Update email filter
-//     filters.type = typeFilter.value; // Update type filter
-//     filters.startDate = startDateInput.value ? new Date(startDateInput.value) : null; // Update start date
-//     filters.endDate = endDateInput.value ? new Date(endDateInput.value) : null; // Update end date
-//     // Apply all filters
-//     filterCards(userData, filters, '.userCard-container');
-// }
-// // Add event listeners to inputs
-// emailFilter.addEventListener('input', updateFilters);
-// typeFilter.addEventListener('change', updateFilters);
-// startDateInput.addEventListener('change', updateFilters);
-// endDateInput.addEventListener('change', updateFilters);
-
 // ***************************************************************
 
 // for displaying a serviceProvider's avg rating
@@ -135,11 +94,11 @@ function createCard(template, data) {
                     displayStarRating(value, element);
                 }
             }
-            else if (isDateTimeeString(value)) {
-                const dateStr = new Date(value);
-                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
-                element.textContent =  dateStr.toLocaleTimeString('en-GB', options);
-            }
+            // else if (isDateTimeeString(value)) {
+            //     const dateStr = new Date(value);
+            //     const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+            //     element.textContent =  dateStr.toLocaleTimeString('en-GB', options);
+            // }
             else if (element.tagName == 'A') {
                 element.hasAttribute('href') && element.setAttribute('href', value);
             }
@@ -213,7 +172,7 @@ function fillDivData (data, divConatinerSelector) {
     const displayItem = document.querySelector(divConatinerSelector);
 
     if (!displayItem) {
-        console.error('Container not found!');
+        console.error('Container not found: ', divConatinerSelector);
         return;
     }
 
@@ -239,7 +198,7 @@ function fillDivData (data, divConatinerSelector) {
                         let imgSrc;
                         if (key == 'providerPic') {
                             if (data['type'] == 'vet') imgSrc = `${ROOT}/assets/images/vetDoctor/${value}`;
-                            else if (data['type'] == 'salon') imgSrc = `${ROOT}/assets/images/${value}`;
+                            else if (data['type'] == 'salon') imgSrc = `${ROOT}/${value}`;
                         } else if (key == 'petPic') {
                             imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
                         }

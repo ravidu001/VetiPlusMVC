@@ -92,14 +92,3 @@ body {
 .errorMsg {
     justify-content: center;
 }
-
-/* the search filters in appointment and other service pages: */
-.searchFilter-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 5px;
-}
-.searchFilter {
-    border: 1px solid var(--primary-color)
-}

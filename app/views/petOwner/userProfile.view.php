@@ -42,6 +42,7 @@
                             </button>
                             <input type="file" id="profilePicture" accept="image/*" name="profilePicture" hidden required>
     
+                            <div class="errorMsg"></div>
                             <div class="btnContainer">
                                 <button class="profileFormBtn" type="reset">Clear</button>
                                 <button class="profileFormBtn" type="submit">Save</button>
@@ -124,6 +125,7 @@
                 </div>
     
                 <button id="logoutButton" class="profileFormBtn loneBtn">Logout</button>
+                <button id="deleteButton" class="profileFormBtn loneBtn">Delete Account</button>
     
             </div>
     
@@ -177,15 +179,9 @@
                 document.getElementById('passwordChangeForm').classList.toggle('invisible')
             }
 
-            // const logoutPopObj = {
-            //     status: "success",
-            //     title: "Logout?",
-            //     message: "Are you sure you want to logout from your account?",
-            //     icon: `<?=ROOT?>/assets/images/petOwner/popUpIcons/confirm.png`,
-            //     askConfirm: true,
-            //     confirmPath: 'po_userProfile/logout'
-            // };
             document.getElementById('logoutButton').addEventListener('click', () => displayPopUp('popup_confirm', {action: 'PO_userProfile/logout'}) );
+            document.getElementById('deleteButton').addEventListener('click', () => displayPopUp('popup_confirm', {action: 'PO_userProfile/deleteAccount'}) );
+
 
         </script>
     </body>

@@ -11,7 +11,7 @@ class PO_PetAppts {
                     a.petOwnerID as petOwnerID,
                     CONCAT(s.selectedDate, ' ', a.visitTime) as apptDateTime,
                     'Vet Visit' as reason,
-                    v.fullName as providerName, 
+                    CONCAT('Dr. ', v.fullName )as providerName, 
                     v.profilePicture as providerPic,
                     p.profilePicture as petPic,
                     p.name as petName,
@@ -34,9 +34,6 @@ class PO_PetAppts {
         $query .= " WHERE a.petOwnerID = COALESCE(:petOwnerID, a.petOwnerID)
                     AND a.petID = COALESCE(:petID, a.petID)";
         
-        // 
-        //  AND (a.status = 'completed' OR a.status = 'cancelled')
-        //  AND a.status = 'available'
 
         if ($type === 'history') {
             $query .= " AND CONCAT(s.selectedDate, ' ', a.visitTime) < CURRENT_TIMESTAMP";
@@ -59,7 +56,9 @@ class PO_PetAppts {
                     s.name as providerName, 
                     s.profilePicture as providerPic,
                     p.profilePicture as petPic,
-                    p.name as petName";
+                    p.name as petName,
+                    ss.openday as day,
+                    ss.time_slot as timeSlot";
         
         if ($type === 'history') {
             $query .= ", sf.rating as rating";
@@ -78,14 +77,12 @@ class PO_PetAppts {
                     AND g.petID = COALESCE(:petID, g.petID)";
         
         if ($type === 'history') {
-            $query .= " AND g.status = '2'
-                        AND g.dateTime < CURRENT_TIMESTAMP";
+            $query .= " AND g.status = '2'";
         } else {
-            $query .= " AND g.status = '0'
-                        AND g.dateTime > CURRENT_TIMESTAMP";
+            $query .= " AND g.status = '0'";
         }
         
-        $query .= " ORDER BY apptDateTime " . ($type === 'history' ? 'DESC' : 'ASC');
+        $query .= " ORDER BY g.dateTime " . ($type === 'history' ? 'DESC' : 'ASC');
         
         return $this->query($query, $params);
     }
@@ -158,7 +155,7 @@ class PO_PetAppts {
 
     private function makeBooking_vet ($params) {
         $apptModel = new AppointmentModel;
-        $bookingSuccess = $apptModel->bookAppointment($params);
+        $bookingSuccess = $apptModel->bookAppointment_andReturnID($params);
 
         return $bookingSuccess;
     }
@@ -167,30 +164,91 @@ class PO_PetAppts {
         
         $this->beginTransaction();
         try {
-            $apptModel = new SalonBooked;
-            $insertSuccess = $apptModel->bookAppointment($params);
-
             $sessModel = new SalonSession;
             $updateSuccess = $sessModel->updateBookingsCount($params['salSessionID']);
+
+            $apptModel = new SalonBooked;
+            $insertSuccess = $apptModel->bookAppointment_andReturnID($params);
         
             if ($insertSuccess !== false && $updateSuccess !== false) {
                 $this->commit();
                 return true;
+                // return ['success' => true, 'appointmentID' => $this->getLastID()];
             }
             $this->rollBack();
             return false;
+            // return ['success' => false, 'appointmentID' => ''];
         } 
         catch (PDOException $e) {
             $this->rollBack();
+            // return ['success' => false, 'appointmentID' => ''];
             return false;
         }
     }
 
-    public function rescheduleAppt (string $type, $params) {
+    public function cancelAppt (string $type, $apptID) {
         if ($type === 'vet') {
-            return $this->makeBooking_vet($params);
-        } elseif ($type === 'salon') {
-            return $this->makeBooking_salon($params);
+            $apptModel = new AppointmentModel;
+            return $apptModel->cancelAppt($apptID);
+        } 
+        elseif ($type === 'salon') {
+            $apptModel = new SalonBooked;
+            return $apptModel->cancelAppt($apptID);
+        }
+    }
+
+    public function rescheduleAppt ($params) {
+        $po = new PetOwner;
+        $petOwnerID = $params['petOwnerID'];
+        $canReschedule = $po->canReschedule($petOwnerID);
+        $type = $params['type'];
+
+        if ($canReschedule) {
+            if ($type === 'vet') {
+                $this->beginTransaction();
+                try {
+                    $apptModel = new AppointmentModel;
+                    $cancelDone = $apptModel->cancelAppt($params['cancellingApptID']);
+
+                    $insertSuccess = $this->makeBooking_vet($params);
+                    $lessened = $po->lessenRescheduleCount($petOwnerID);
+                
+                    if ($insertSuccess !== false && $cancelDone !== false && $lessened !== false) {
+                        $this->commit();
+                        return ['status' => 'success', 'msg' => 'Reschedule successful.'];
+                    }
+                    $this->rollBack();
+                    return ['status' => 'failure', 'msg' => 'Unexpected error!'];
+                } 
+                catch (PDOException $e) {
+                    $this->rollBack();
+                    return ['status' => 'failure', 'msg' => 'Unexpected error!'];
+                }
+            } 
+            elseif ($type === 'salon') {
+                $this->beginTransaction();
+                try {
+                    $apptModel = new SalonBooked;
+                    $cancelDone = $apptModel->cancelAppt($params['cancellingApptID']);
+
+                    $insertSuccess = $this->makeBooking_salon($params);
+                    $lessened = $po->lessenRescheduleCount($petOwnerID);
+                
+                    if ($insertSuccess !== false && $cancelDone !== false && $lessened !== false) {
+                        $this->commit();
+                        return ['status' => 'success', 'msg' => 'Reschedule successful.'];
+                    }
+                    $this->rollBack();
+                    return ['status' => 'failure', 'msg' => 'Unexpected error!'];
+                } 
+                catch (PDOException $e) {
+                    $this->rollBack();
+                    return ['status' => 'failure', 'msg' => 'Unexpected error!'];
+                }
+            }
+        }
+        else {
+            return ['status' => 'failure', 'msg' => 'Rescheduling limit reached!'];
         }
     }
 }

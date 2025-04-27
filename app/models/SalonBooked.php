@@ -84,9 +84,20 @@ class SalonBooked
         return $this->query($query, ['salSessionID' => $salSessionID])[0]->total ?? 0;
     }
     
-    public function bookAppointment ($data) {
+    public function bookAppointment_andReturnID ($data) {
+
         $bookingSuccess = $this->insert($data);
         return empty($bookingSuccess) ? true : false;
+        // if (empty($bookingSuccess)) {
+        //     return ['success' => true, 'appointmentID' => $this->getLastID()];
+        // } else {
+        //     return ['success' => false, 'appointmentID' => ''];
+        // }
+    }
+
+    public function cancelAppt ($apptID) {
+        $cancelSuccess = $this->update($apptID, ['status' => 1], 'groomingID');
+        return empty($cancelSuccess) ? true : false;
     }
 
 }

@@ -31,7 +31,10 @@ class AppointmentPayModel {
         return  $result[0]->total;
     }
     
-    
+    public function saveAppointmentPayment ($data) {
+        $saveSuccess = $this->insert($data);
+        return empty($saveSuccess) ? true : false;
+    }
 
 
 }
