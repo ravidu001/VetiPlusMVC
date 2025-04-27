@@ -70,6 +70,58 @@ class SalonRegister extends Controller
         return $arr;
     }
 
+    //when salon rejected 
+    public function errorUpdate() 
+    {
+        if (isset($_GET['salonID'])) 
+        {
+            $salonID = $_GET['salonID'];
+            $salon = new Salons();
+            $salonDetails = $salon->FindUser($salonID);
+
+            // show($salonDetails);
+            if ($salonDetails->approvedStatus == 'rejected') 
+            {
+                $data = [];
+            //     $arr['salonID'] = $salonID;
+            //    $this->updateregisterdata($arr);
+
+                $data = [
+                    'SalonName' => $salonDetails->name,
+                    'location' => $salonDetails-> GMapLocation,
+                    'phoneNumber' => $salonDetails-> phoneNumber,
+                    'BRNumber' => $salonDetails->BRNumber,
+                    'imagepath' => $salonDetails->BRCertificate
+                ];
+                
+                // show($data);
+                $this->view('Salon/salonregister', $data);
+            } 
+            else 
+            {
+                // Redirect to the appropriate page based on the doctor's status
+                switch ($salonDetails->approvedStatus) {
+                    case 'pending':
+                        header('Location: ' . ROOT . '/Pending');
+                        break;
+                    case 'accepted':
+                        header('Location: ' . ROOT . '/Doctor');
+                        break;
+                    default:
+                        header('Location: ' . ROOT . '/login');
+                        exit();
+                }
+            }
+        }
+        else
+        {
+            $notification = new Notification();
+            $notification->show("Invalid request. Please try again.", 'error');
+            redirect('Rejected/index');
+        }
+    }
+
+
     //when reject again submit form update the data
     private function updateregisterdata($arr)
     {
@@ -84,8 +136,8 @@ class SalonRegister extends Controller
         $email = $arr['salonID'];
         // show($arr);
         //check if this is reject now should pass the status is pending
-        $arr['status'] = 'pending';
-        show($arr);
+        $arr['approvedStatus'] = 'pending';
+        // show($arr);
 
         // $table = new SalonRegisters;
         $salonTable = new Salons();
