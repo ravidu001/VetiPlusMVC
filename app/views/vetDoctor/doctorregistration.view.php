@@ -80,23 +80,23 @@ $notification = new Notification();
                 <h3>Personal Information</h3>
                 <div class="form-group">
                     <label for="name">Full Name <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="text" id="name" class="form-input" name="name" required placeholder="Enter your full name">
+                    <input type="text" id="name" class="form-input" name="name" placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label for="address">Permanent Address <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="text" id="address" class="form-input" name="address" required placeholder="Enter your permanent address">
+                    <input type="text" id="address" class="form-input" name="address" placeholder="Enter your permanent address">
                 </div>
                 <div class="form-group">
                     <label for="DOB">Date of Birth <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="date" id="DOB" class="form-input" name="DOB" required>
+                    <input type="date" id="DOB" class="form-input" name="DOB">
                 </div>
                 <div class="form-group">
                     <label for="mobile">Mobile Number <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="text" id="mobile" class="form-input" name="mobile" required placeholder="Enter your 10-digit mobile number">
+                    <input type="text" id="mobile" class="form-input" name="mobile" placeholder="Enter your 10-digit mobile number">
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender <div style="color:red; padding-left:5px;">*</div></label>
-                    <select id="gender" class="form-input" name="gender" required>
+                    <select id="gender" class="form-input" name="gender">
                         <option value="">Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -105,7 +105,7 @@ $notification = new Notification();
                 </div>
                 <div class="form-group">
                     <label for="bio">Bio <div style="color:red; padding-left:5px;">*</div></label>
-                    <textarea id="bio" class="form-input" name="bio" required placeholder="Enter a short biography"></textarea>
+                    <textarea id="bio" class="form-input" name="bio" placeholder="Enter a short biography"></textarea>
                 </div>
                 <div class="navigation-buttons">
                     <button type="button" class="btn btn-secondary" disabled>Previous</button>
@@ -118,11 +118,11 @@ $notification = new Notification();
                 <h3>Professional Details</h3>
                 <div class="form-group">
                     <label for="lnumber">License Number <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="text" id="lnumber" class="form-input" name="lnumber" required placeholder="Eg. VC/xxxx or TVC/xxxx">
+                    <input type="text" id="lnumber" class="form-input" name="lnumber" placeholder="Eg. VC/xxxx or TVC/xxxx">
                 </div>
                 <div class="form-group">
                     <label for="special">Specialization <div style="color:red; padding-left:5px;">*</div></label>
-                    <select id="special" class="form-input" name="special" required>
+                    <select id="special" class="form-input" name="special">
                         <option value="">Select Specialization</option>
                         <option value="Small Animal Care">Small Animal Care</option>
                         <option value="Large Animal Medicine">Large Animal Medicine</option>
@@ -147,11 +147,11 @@ $notification = new Notification();
                 </div>
                 <div class="form-group">
                     <label for="experience">Years of Experience <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="number" id="experience" class="form-input" name="experience" min="0" max="50" required placeholder="Enter your years of experience">
+                    <input type="number" id="experience" class="form-input" name="experience" min="0" max="50" placeholder="Enter your years of experience">
                 </div>
                 <div class="form-group">
                     <label for="timeSlot">Time Taken for a Treatment (minutes) <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="number" id="timeSlot" class="form-input" name="timeSlot" min="1" required placeholder="Enter time in minutes">
+                    <input type="number" id="timeSlot" class="form-input" name="timeSlot" min="1" placeholder="Enter time in minutes">
                 </div>
                 <div class="navigation-buttons">
                     <button type="button" class="btn btn-secondary previous-step">Previous</button>
@@ -163,8 +163,10 @@ $notification = new Notification();
             <div class="form-section" id="uploadInfo">
                 <h3>Upload Certification</h3>
                 <div class="form-group file-upload">
-                    <label for="doctorCertificate">Upload Professional Certificate <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="file" id="doctorCertificate" name="doctorCertificate" accept=".pdf,.jpg,.png" required>
+                    <label for="doctorCertificate">Upload Professional Certificate - Rename the file name as VC_1234 <span style="color:red; padding-left:5px;">*</span><br>
+                    
+                </label>
+                    <input type="file" id="doctorCertificate" name="doctorCertificate" accept=".pdf,.jpg,.png">
                 </div>
                 <div class="navigation-buttons">
                     <button type="button" class="btn btn-secondary previous-step">Previous</button>
