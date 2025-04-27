@@ -22,7 +22,7 @@
                     <i class='bx bx-trending-up icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Daily Income</h3>
-                        <p>Rs. <?= htmlspecialchars($todayRevenue) ?></p>
+                        <p>Rs. <?= htmlspecialchars($todayRevenue ?? '0') ?></p> 
                     </div>
                 </div>
                 <div class="dashboard-card">

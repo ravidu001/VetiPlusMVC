@@ -37,16 +37,19 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($admin as $data): ?>
-            <tr>
-              <td><?= $data->appointmentID ?? 'N/A' ?></td>
-              <td><?= htmlspecialchars($data->petID ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
-              <td><?= htmlspecialchars($data->status ?? 'N/A') ?></td>
-            </tr>
-          <?php endforeach; ?>
+          <?php 
+            if(is_array($admin)) :
+               foreach ($admin as $data): ?>
+                <tr>
+                  <td><?= $data->appointmentID ?? 'N/A' ?></td>
+                  <td><?= htmlspecialchars($data->petID ?? 'N/A') ?></td>
+                  <td><?= htmlspecialchars($data->bookedDateTime ?? 'N/A') ?></td>
+                  <td><?= htmlspecialchars($data->sessionID ?? 'N/A') ?></td>
+                  <td><?= htmlspecialchars($data->visitTime ?? 'N/A') ?></td>
+                  <td><?= htmlspecialchars($data->status ?? 'N/A') ?></td>
+                </tr>
+              <?php endforeach; ?>
+              <?php endif?>
         </tbody>
       </table>
 

@@ -58,7 +58,7 @@
                 <div class="stat-card">
                     <i class='bx bx-trending-up icon'></i>
                     <h3>Daily Revenue</h3>
-                    <p>Rs. <?= htmlspecialchars($todayRevenue) ?></p>
+                    <p>Rs. <?= htmlspecialchars($todayRevenue ?? '0') ?></p>
                 </div>
                 <div class="stat-card">
                     <i class='bx bx-calendar-x icon'></i>

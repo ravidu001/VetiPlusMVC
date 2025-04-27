@@ -18,6 +18,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <span class="profession">Pet Care</span>
             </div>
         </div>
+        <div class="text header-text">
+            <div class="type"> System Admin</div>
+        </div>
 
         <i class='bx bx-chevron-right toggle'></i>
     </header>
