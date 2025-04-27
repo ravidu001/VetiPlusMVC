@@ -67,7 +67,7 @@ class AssisAccepted extends Controller {
             $assistantID = $_GET['assistantID'];
             $selectedDate = $_GET['selectedDate'];
 
-            show($assistantID);
+            //show($assistantID);
     
             // Get the current date and subtract one day
             $currentDate = new DateTime();
