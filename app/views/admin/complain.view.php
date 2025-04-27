@@ -24,25 +24,28 @@
         </div>
 
         <div class="complaints-grid">
-          <?php foreach ($complain as $complaint): ?>
-            <div class="complaint-card">
-              <div class="complaint-info">
-                <div class="info-group">
-                  <h3>User Email</h3>
-                  <p><?= htmlspecialchars($complaint->email) ?></p>
+         <?php 
+          if(is_array($complain)):
+             foreach ($complain as $complaint): ?>
+              <div class="complaint-card">
+                <div class="complaint-info">
+                  <div class="info-group">
+                    <h3>User Email</h3>
+                    <p><?= htmlspecialchars($complaint->email) ?></p>
+                  </div>
+                  <div class="info-group">
+                    <h3>Complaint Description</h3>
+                    <p><?= htmlspecialchars($complaint->issue) ?></p>
+                  </div>
+                  <div class="info-group">
+                    <h3>Date</h3>
+                    <p><?= htmlspecialchars($complaint->dateTime) ?></p>
+                  </div>
+                  <a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>"  class="action-btn">View Details</a> 
                 </div>
-                <div class="info-group">
-                  <h3>Complaint Description</h3>
-                  <p><?= htmlspecialchars($complaint->issue) ?></p>
-                </div>
-                <div class="info-group">
-                  <h3>Date</h3>
-                  <p><?= htmlspecialchars($complaint->dateTime) ?></p>
-                </div>
-                <a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>"  class="action-btn">View Details</a> 
               </div>
-            </div>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
+           <?php endif?>
         </div>
       </div>
     </div>
