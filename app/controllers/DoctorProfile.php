@@ -241,6 +241,12 @@ class DoctorProfile extends Controller {
             'confirmPassword' => $_POST['confirmPassword'] ?? ''
         ];
 
+        // Check if new password is strong
+        if (!$this->isStrongPassword($data['newPassword'])) {
+            echo json_encode(['success' => false, 'message' => 'New password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.']);
+            return;
+        }
+
         if ($data['newPassword'] != $data['confirmPassword']) {
             echo json_encode(['success' => false, 'message' => 'Passwords do not match']);
             return;
@@ -299,6 +305,12 @@ class DoctorProfile extends Controller {
         header('Content-Type: application/json');
         echo json_encode($response);
         exit; // Ensure no further output is sent
+    }
+
+    // Function to check if the password is strong
+    private function isStrongPassword($password) {
+        // Regular expression to check for at least one uppercase letter, one lowercase letter, one number, one special character, and minimum length of 8
+        return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password);
     }
     
     // Example method to verify the password

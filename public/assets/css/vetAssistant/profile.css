@@ -124,7 +124,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     align-content: start;
-    min-height: 500px;
+    min-height: 330px;
     /* Minimum height to match other sections */
 }
 
@@ -274,7 +274,8 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: flex;
+    /* display: flex; */
+    margin-right: 20px;
     align-items: center;
     gap: 8px;
     transition: var(--transition);
@@ -628,4 +629,10 @@ hr {
 
 #confirmDeleteButton:hover, #cancelDeleteButton:hover {
     background-color: var(--secondary-color); /* Darker secondary color on hover */
+}
+
+.asterisk {
+    color: red;
+    font-size: 16px;
+    margin-left: 5px;
 }
