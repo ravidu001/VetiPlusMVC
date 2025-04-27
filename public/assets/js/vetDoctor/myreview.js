@@ -203,7 +203,8 @@ function sendReply() {
         replyTextarea.value = ''; // Clear the textarea
         document.getElementById('charCount').textContent = '0 / 500'; // Reset character count
     } else {
-        alert('Please write a reply before sending.');
+        showNotification('Please write a reply before sending.', 'error');
+        // alert('Please write a reply before sending.');
     }
 }
 
@@ -258,14 +259,16 @@ function sendReply() {
                 // Refresh the page
                 location.reload();
             } else {
-                alert('Failed to send reply: ' + data.message);
+                showNotification('Failed to send reply: ' + data.message, 'error');
+                // alert('Failed to send reply: ' + data.message);
             }
         })
         .catch(error => {
             console.log('Error sending reply: ' + error);
         });
     } else {
-        alert('Please write a reply before sending.');
+        showNotification('Please write a reply before sending.', 'error');
+        // alert('Please write a reply before sending.');
     }
 }
 

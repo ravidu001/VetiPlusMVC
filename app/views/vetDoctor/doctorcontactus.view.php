@@ -54,22 +54,22 @@
                 <form action="<?= ROOT ?>/doctorcontactus/insertData" method="post" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Name <span style="color:red;">*</span></label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email <span style="color:red;">*</span></label>
                             <input type="email" id="email" name="email" required>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="contact">Contact Number</label>
+                            <label for="contact">Contact Number <span style="color:red;">*</span></label>
                             <input type="tel" id="contact" name="contact" required>
                         </div>
                         <div class="form-group">
-                            <label for="messageType">Message Type</label>
+                            <label for="messageType">Message Type <span style="color:red;">*</span></label>
                             <select id="messageType" name="type" required>
                                 <option value="">Select Type</option>
                                 <option value="Feedback">Feedback</option>
@@ -79,12 +79,12 @@
                     </div>
 
                     <div id="messageContainer" class="form-group" style="display:none;">
-                        <label for="message">Message</label>
+                        <label for="message">Message <span style="color:red;">*</span></label>
                         <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
                     </div>
 
                     <div id="ratingContainer" class="form-group" style="display:none;">
-                        <label>Rating</label>
+                        <label>Rating <span style="color:red;">*</span></label>
                         <div class="rating">
                             <input type="radio" name="rate" id="rate-5" value="5">
                             <label for="rate-5" class="fas fa-star"></label>
@@ -100,7 +100,7 @@
                     </div>
 
                     <div id="uploadContainer" class="form-group" style="display:none;">
-                        <label for="imageUpload">Upload Image</label>
+                        <label for="imageUpload">Upload Image <span style="color:red;">*</span></label>
                         <div class="file-upload">
                             <input type="file" id="imageUpload" name="image" accept="image/*">
                             <span class="file-upload-text">Choose file</span>

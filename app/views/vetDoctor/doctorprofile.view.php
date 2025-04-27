@@ -67,27 +67,27 @@
                     <form class="form-grid" id="personalInfoForm">
 
                         <div class="form-group">
-                            <label>Full Name</label>
+                            <label>Full Name <span style="color:red;"> *</span></label>
                             <input type="text" class="form-input" name="fullName"
                                 value="<?= htmlspecialchars($doctor->fullName ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Address</label>
+                            <label>Address <span style="color:red;">*</span></label>
                             <input type="text" class="form-input" name="address"
                                 value="<?= htmlspecialchars($doctor->address ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Phone Number</label>
+                            <label>Phone Number <span style="color:red;">*</span></label>
                             <input type="tel" class="form-input" name="contactNumber"
                                 value="<?= htmlspecialchars($doctor->contactNumber ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Date of Birth</label>
+                            <label>Date of Birth <span style="color:red;">*</span></label>
                             <input type="date" class="form-input" name="DOB"
                                 value="<?= htmlspecialchars($doctor->DOB ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Gender</label>
+                            <label>Gender <span style="color:red;">*</span></label>
                             <select class="form-input" name="gender" disabled>
                                 <option value="Male" <?= ($doctor->gender ?? '') === 'Male' ? 'selected' : '' ?>>Male
                                 </option>
@@ -122,13 +122,13 @@
 
                     <form class="form-grid professional-details" id="professionalInfoForm">
                         <div class="form-group">
-                            <label>License Number</label>
+                            <label>License Number <span style="color:red;">(Read only)</span></label>
                             <input type="text" name="lnumber" class="form-input"
                                 value="<?= htmlspecialchars($doctor->lnumber ?? 'N/A') ?>" readonly>
                         </div>
 
                         <div class="form-group">
-                            <label for="specialization">Specialization</label>
+                            <label for="specialization">Specialization <span style="color:red;">*</span></label>
                             <select id="specialization" class="form-input" name="specialization" disabled>
                                 <option value="Small Animal Care"
                                     <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Small Animal Care' ? 'selected' : '' ?>>
@@ -142,20 +142,62 @@
                                 <option value="Wildlife Conservation"
                                     <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Wildlife Conservation' ? 'selected' : '' ?>>
                                     Wildlife Conservation</option>
+                                <option value="Veterinary Surgery"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Surgery' ? 'selected' : '' ?>>
+                                    Veterinary Surgery</option>
+                                <option value="Veterinary Dermatology"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Dermatology' ? 'selected' : '' ?>>
+                                    Veterinary Dermatology</option>
+                                <option value="Veterinary Dentistry"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Dentistry' ? 'selected' : '' ?>>
+                                    Veterinary Dentistry</option>
+                                <option value="Veterinary Oncology"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Oncology (Cancer Treatment)' ? 'selected' : '' ?>>
+                                    Veterinary Oncology (Cancer Treatment)</option>
+                                <option value="Animal Reproduction and Fertility"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Animal Reproduction and Fertility' ? 'selected' : '' ?>>
+                                    Animal Reproduction and Fertility</option>
+                                <option value="Veterinary Cardiology"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Cardiology (Heart Care)' ? 'selected' : '' ?>>
+                                    Veterinary Cardiology (Heart Care)</option>
+                                <option value="Veterinary Neurology"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Neurology (Brain & Nerve Care)' ? 'selected' : '' ?>>
+                                    Veterinary Neurology (Brain & Nerve Care)</option>
+                                <option value="Animal Behavior and Training"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Animal Behavior and Training' ? 'selected' : '' ?>>
+                                    Animal Behavior and Training</option>
+                                <option value="Veterinary Ophthalmology"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Ophthalmology (Eye Care)' ? 'selected' : '' ?>>
+                                    Veterinary Ophthalmology (Eye Care)</option>
+                                <option value="Equine Medicine"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Equine Medicine (Horse Care)' ? 'selected' : '' ?>>
+                                    Equine Medicine (Horse Care)</option>
+                                <option value="Poultry Medicine"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Poultry Medicine' ? 'selected' : '' ?>>
+                                    Poultry Medicine</option>
+                                <option value="Food Animal Medicine"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Food Animal Medicine (Cattle, Sheep, Goats)' ? 'selected' : '' ?>>
+                                    Food Animal Medicine (Cattle, Sheep, Goats)</option>
+                                <option value="Veterinary Public Health"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Veterinary Public Health (Zoonotic Disease Control)' ? 'selected' : '' ?>>
+                                    Veterinary Public Health (Zoonotic Disease Control)</option>
+                                <option value="Aquatic Animal Health"
+                                    <?= (htmlspecialchars($doctor->specialization) ?? '') === 'Aquatic Animal Health (Fish and Marine Animals)' ? 'selected' : '' ?>>
+                                    Aquatic Animal Health (Fish and Marine Animals)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Years of Experience</label>
+                            <label>Years of Experience <span style="color:red;">*</span></label>
                             <input type="number" name="experience" class="form-input"
                                 value="<?= htmlspecialchars($doctor->experience ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Time Taken for a Treatment (minutes)</label>
+                            <label>Time Taken for a Treatment (minutes) <span style="color:red;">*</span></label>
                             <input type="number" name="timeSlot" class="form-input"
                                 value="<?= htmlspecialchars($doctor->timeSlot ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Certifications</label>
+                            <label>Certifications <span style="color:red;">(Read only)</span></label>
                             <div class="certificate-container">
                                 <div class="certificate-wrapper">
                                     <img src="<?= ROOT ?>/assets/images/vetDoctor/<?= $doctor->doctorCertificate ?>"
@@ -199,15 +241,15 @@
 
                     <form class="form-grid" id="passwordChangeForm">
                         <div class="form-group">
-                            <label>Current Password</label>
+                            <label>Current Password <span style="color:red;">*</span></label>
                             <input type="password" name="password" class="form-input" disabled>
                         </div><br />
                         <div class="form-group">
-                            <label>New Password</label>
+                            <label>New Password <span style="color:red;">*</span></label>
                             <input type="password" name="newPassword" class="form-input" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Confirm New Password</label>
+                            <label>Confirm New Password <span style="color:red;">*</span></label>
                             <input type="password" name="confirmPassword" class="form-input" disabled>
                         </div>
                     </form>
@@ -234,12 +276,12 @@
 
                     <form class="form-grid" id="accountSettingsForm">
                         <div class="form-group">
-                            <label>User ID</label>
+                            <label>User ID <span style="color:red;">(Read only)</span></label>
                             <input type="text" class="form-input" value="<?= htmlspecialchars($doctor->ID ?? 'N/A') ?>"
                                 readonly>
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Email <span style="color:red;">(Read only)</span></label>
                             <input type="email" class="form-input"
                                 value="<?= htmlspecialchars($doctor->doctorID ?? 'N/A') ?>" readonly>
                         </div>

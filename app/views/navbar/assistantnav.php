@@ -14,7 +14,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <div class="text header-text">
                 <span class="name">VetiPlus</span>
                 <span class="profession">Pet Care</span>
-            </div>
+                
+            </div><br>
+        </div>
+        <div class="text header-text">
+            <div class="type"> Vet Assistant</div>
         </div>
 
         <i class='bx bx-chevron-right toggle'></i>
@@ -170,7 +174,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         </a>
                     </li>
                     <li class="nav-link <?= $current_page == 'toReview.php' ? 'active' : '' ?>">
-                        <a href="toReview.php">
+                        <a href="<?= ROOT ?>/logout/index">
                             <i class='bx bx-log-out icon'></i>
                             <span class="text nav-text" style="font-size:14px;">Sign out</span>
                         </a>
