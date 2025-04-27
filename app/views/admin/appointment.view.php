@@ -72,22 +72,25 @@ $notification = new Notification();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($data['appointmentdata'])) : ?>
-                            <?php foreach ($data['appointmentdata'] as $appointment) : ?>
+                        <?php
+                        if(is_array($data['appointmentdata'] )):
+                             if (isset($data['appointmentdata'])) : ?>
+                                <?php foreach ($data['appointmentdata'] as $appointment) : ?>
+                                    <tr>
+                                        <td><?= $appointment->appointmentID ?></td>
+                                        <td><?= $appointment->petID ?></td>
+                                        <td><?= $appointment->bookedDateTime ?></td>
+                                        <td><?= $appointment->sessionID ?></td>
+                                        <td><?= $appointment->visitTime ?></td>
+                                        <!-- <td><a class="view-btn">View</a></td> -->
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
                                 <tr>
-                                    <td><?= $appointment->appointmentID ?></td>
-                                    <td><?= $appointment->petID ?></td>
-                                    <td><?= $appointment->bookedDateTime ?></td>
-                                    <td><?= $appointment->sessionID ?></td>
-                                    <td><?= $appointment->visitTime ?></td>
-                                    <!-- <td><a class="view-btn">View</a></td> -->
+                                    <td colspan="6">No appointment data available.</td>
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="6">No appointment data available.</td>
-                            </tr>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                            <?php endif; ?>
                     </tbody>
                 </table>
             </div>
