@@ -71,6 +71,9 @@ $notification = new Notification();
                     <a href="#" class="btn btn-danger" onclick="openPasswordPopup()">
                         <i class='bx bx-lock'></i> Change Password
                     </a>
+                    <a href="<?= ROOT ?>/Logout" class="btn btn-danger">
+                        <i class='bx bx-lock'></i> Log Out 
+                    </a>
                 </div>
 
                 <!-- Popup Modal -->
