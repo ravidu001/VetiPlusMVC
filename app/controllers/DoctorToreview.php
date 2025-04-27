@@ -1,6 +1,27 @@
 <?php
 class DoctorToreview extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        if ($_SESSION['type'] != 'Vet Doctor') {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+        
         // Initialize data arrays for pending and completed reviews
         $data['pendingReviews'] = [];
         $data['completedReviews'] = [];

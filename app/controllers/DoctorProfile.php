@@ -2,6 +2,27 @@
 
 class DoctorProfile extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        if ($_SESSION['type'] != 'Vet Doctor') {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+        
         $doctorData = $this->showdata();
         // echo '<script>window.alert("'.$doctorData->timeSlot.'")</script>';
         // $this->view('vetDoctor/doctorprofile');
