@@ -32,6 +32,13 @@ class Salons
         return $this->insert($arr);
     }
 
+    ///check by br number
+    public function fetchByBrNumber($number) 
+    {
+        $this->order_column = "salonID";
+        return $this->where(['BRNumber' => $number]);
+    }
+
     public function salonCount(){
         $count = $this->getCount();
         return $count;
