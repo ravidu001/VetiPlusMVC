@@ -23,11 +23,15 @@ class DoctorContactus extends Controller {
                 ];
                 
                 if (!$feedback->create($data)) {
-                    echo "<script>alert('Feedback submitted successfully!');</script>";
-                    $this->view('vetDoctor/doctorcontactus');
+                    $notification = new Notification();
+                    $notification->show('Feedback submitted successfully!', 'success');
+                    // echo "<script>alert('Feedback submitted successfully!');</script>";
+                    //$this->view('vetDoctor/doctorcontactus');
                 } else {
-                    echo "<script>alert('Failed to submit feedback!');</script>";
-                    $this->view('vetDoctor/doctorcontactus');
+                    $notification = new Notification();
+                    $notification->show('Failed to submit feedback!', 'error');
+                    // echo "<script>alert('Failed to submit feedback!');</script>";
+                    //$this->view('vetDoctor/doctorcontactus');
                 }
             } else {
                 $complain = new systemcomplainModel();
@@ -71,18 +75,22 @@ class DoctorContactus extends Controller {
                                 'message' => 'Complain submitted successfully!',
                                 'filename' => $uniqueFileName
                             ]);
-                            echo "<script>alert('Complain submitted successfully!');</script>";
-                            $this->view('vetDoctor/doctorcontactus');
+                            $notification = new Notification();
+                            $notification->show('Complain submitted successfully!', 'success');
+                            // echo "<script>alert('Complain submitted successfully!');</script>";
+                            //$this->view('vetDoctor/doctorcontactus');
                         } else {
                             // Remove the uploaded file if database update fails
                             unlink($uploadPath);
                             echo json_encode(['success' => false, 'message' => 'Failed to update profile picture in the database']);
-                            echo "<script>alert('Failed to upload complain image to the database!');</script>";
+                            // echo "<script>alert('Failed to upload complain image to the database!');</script>";
                             $this->view('vetDoctor/doctorcontactus');
                         }
                     } else {
-                        echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file']);
-                        echo "<script>alert('Failed to move complain image to the database!');</script>";
+                        $notification = new Notification();
+                        $notification->show('Failed to move uploaded file!', 'error');
+                        //echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file']);
+                        // echo "<script>alert('Failed to move complain image to the database!');</script>";
                     }
                 } else {
                     $data = [
@@ -96,11 +104,15 @@ class DoctorContactus extends Controller {
                     ];
                    
                     if (!$complain->create($data)) {
-                        echo "<script>alert('Complain submitted successfully!');</script>";
-                        $this->view('vetDoctor/doctorcontactus');
+                        $notification = new notification();
+                        $notification->show('Complain submitted successfully!', 'success');
+                        //echo "<script>alert('Complain submitted successfully!');</script>";
+                        //$this->view('vetDoctor/doctorcontactus');
                     } else {
-                        echo "<script>alert('Failed to submit complain!');</script>";
-                        $this->view('vetDoctor/doctorcontactus');
+                        $notification = new notification();
+                        $notification->show('Failed to submit complain!', 'error');
+                        //echo "<script>alert('Failed to submit complain!');</script>";
+                        // $this->view('vetDoctor/doctorcontactus');
                     }
                 }
             }
