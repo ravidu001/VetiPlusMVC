@@ -3,16 +3,19 @@
 
 trait Database
 {
+    private $con = null;
     private function connect()
     {
-        $string = "mysql:host=" . DBHOST . ";dbname=" . DBNAME;
-        try {
-            $con = new PDO($string, DBUSER, DBPASS);
-            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $con;
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+        if ($this->con === null) {
+            $string = "mysql:host=" . DBHOST . ";dbname=" . DBNAME;
+            try {
+                $this->con = new PDO($string, DBUSER, DBPASS);
+                $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Connection failed: " . $e->getMessage());
+            }
         }
+        return $this->con;
     }
 
     public function query($query, $data = [])
@@ -47,17 +50,22 @@ trait Database
     }
 
     // function needed for Transactions dealing with multiple queries at the same time:
-    public function beginTransaction() {
+    public function beginTransaction () {
         $con = $this->connect();
         $con->beginTransaction();
     }
-    public function commit() {
+    public function commit () {
         $con = $this->connect();
         $con->commit();
     }
-    public function rollBack() {
+    public function rollBack () {
         $con = $this->connect();
         $con->rollBack();
+    }
+
+    public function getLastID() {
+        $con = $this->connect();
+        return $con->lastInsertId();
     }
 
 }
