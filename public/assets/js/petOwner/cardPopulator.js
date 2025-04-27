@@ -213,7 +213,7 @@ function fillDivData (data, divConatinerSelector) {
     const displayItem = document.querySelector(divConatinerSelector);
 
     if (!displayItem) {
-        console.error('Container not found!');
+        console.error('Container not found: ', divConatinerSelector);
         return;
     }
 
@@ -239,7 +239,7 @@ function fillDivData (data, divConatinerSelector) {
                         let imgSrc;
                         if (key == 'providerPic') {
                             if (data['type'] == 'vet') imgSrc = `${ROOT}/assets/images/vetDoctor/${value}`;
-                            else if (data['type'] == 'salon') imgSrc = `${ROOT}/assets/images/${value}`;
+                            else if (data['type'] == 'salon') imgSrc = `${ROOT}/${value}`;
                         } else if (key == 'petPic') {
                             imgSrc = `${ROOT}/assets/images/petOwner/profilePictures/pet/${value}`
                         }
