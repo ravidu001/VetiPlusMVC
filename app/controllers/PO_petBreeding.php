@@ -121,14 +121,14 @@ class PO_petBreeding extends Controller {
         
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
     }
     public function forBreeding_getMyList () {
         $result = $this->forBreedingObj->getList_byPetOwner($this->petOwnerID)  ?: ["fetchedCount" => 0];
         
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
     }
     public function getPetDetailsToFill () {
         $petID = $_GET['petID'];
@@ -136,6 +136,6 @@ class PO_petBreeding extends Controller {
         $result = $this->forBreedingObj->getPetDetails($petID)[0];
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
     }
 }

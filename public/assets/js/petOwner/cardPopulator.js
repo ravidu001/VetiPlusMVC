@@ -70,7 +70,6 @@ function createCard(template, data) {
                 }
             }
             else if(key == "type") {
-                console.log("hmm")
                 let title;
                 if(value == 'salon') title= 'salon'; else title = 'Dr.'
                 card.querySelector('providerTitle').textContent = title
@@ -150,6 +149,9 @@ async function fetchAndAppendCards (url, templateSelector, containerSelector) {
             card.classList.add('cardFloat');
 
             if (item.apptStatus == 'cancelled' || (item.apptStatus == 'available' && item.whenType == 'history')) {
+                card.classList.add('card-inactive');
+            }
+            if (item.apptStatus == '1') {
                 card.classList.add('card-inactive');
             }
 

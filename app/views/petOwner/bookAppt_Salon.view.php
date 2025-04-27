@@ -9,6 +9,7 @@
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/cardStyles.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
@@ -107,7 +108,6 @@
                         <div class="cardBtn-container">
                             <button class="cardBtn bookApptBtn"><i class="bx bxs-calendar-check bx-sm"></i> Book Appointment</button>
                         </div>
-
                     </div>
                 </template>
 
@@ -125,6 +125,31 @@
         <script defer>
             console.log(<?= json_encode($this->thisSalonDetails) ?>);
             fillDivData(<?= json_encode($this->thisSalonDetails) ?>, '.thisSalon');
+
+            const salonNameList = (<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName);
+            document.getElementById('salonSelect').innerHTML = salonNameList.map(x => `<option value="${x}">${x}</option>`).join('');
+            
+            document.querySelector('.searchFilter-container').addEventListener('change', () => {
+                const salonName = document.getElementById('salonSelect').value;
+                const dateSelected = document.getElementById('dateSearch').value;
+
+                const params = new URLSearchParams();
+                if (salonName) params.append('salonName', salonName);
+                if (dateSelected) params.append('dateSelected', dateSelected);
+
+                const url = `PO_apptDashboard_Salon/getAvailableSalons?${params.toString()}`;
+                fetchAndAppendCards(
+                    url,
+                    '.availSessCard-template',
+                    '.availSessCard-container'
+                )
+            });
+
+            fetchAndAppendCards(
+                'PO_apptDashboard_Salon/getAvailableSalons',
+                '.availSessCard-template',
+                '.availSessCard-container'
+            )
 
             const petSelect = document.getElementById('petSelect');
             const petList = (<?= json_encode($this->petList) ?>)
@@ -215,6 +240,7 @@
                     }
                 })
             })
+            
         </script>
     </body>
 </html>

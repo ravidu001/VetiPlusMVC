@@ -32,9 +32,9 @@
                     </span>
                 </div>
 
-                <div class="adSpace">
+                <!-- <div class="adSpace">
                     <h4 class="dashHeader">Ad Space</h4>
-                </div>
+                </div> -->
             </section>
 
             <section class="dashArea">

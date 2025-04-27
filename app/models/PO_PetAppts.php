@@ -77,9 +77,9 @@ class PO_PetAppts {
                     AND g.petID = COALESCE(:petID, g.petID)";
         
         if ($type === 'history') {
-            $query .= " AND g.status = '2'";
+            $query .= " AND g.status != '0' AND ss.openday <= CURRENT_TIMESTAMP";
         } else {
-            $query .= " AND g.status = '0'";
+            $query .= " AND g.status != '2'";
         }
         
         $query .= " ORDER BY g.dateTime " . ($type === 'history' ? 'DESC' : 'ASC');
