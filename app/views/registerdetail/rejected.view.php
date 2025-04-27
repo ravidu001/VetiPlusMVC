@@ -24,19 +24,26 @@
                 <li>Inconsistent or unclear information provided</li>
                 <li>Additional review needed</li> -->
                 <?php
-                if (isset($doctorDetails->rejectReason)) {
-                    $reasons = explode(',', $doctorDetails->rejectReason);
-                    foreach ($reasons as $reason) {
-                        echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
+                    if(isset($doctorDetails->rejectReason)) 
+                    {
+                        $reasons = explode(',', $doctorDetails->rejectReason);
+                        foreach ($reasons as $reason) 
+                        {
+                            echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
+                        }
+                    } 
+                    else if(isset($salonDetails->rejectReason))
+                    {
+                        $reasons = explode(',', $salonDetails->rejectReason);
+                        foreach ($reasons as $reason) 
+                        {
+                            echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
+                        }
+                    } 
+                    else 
+                    {
+                        echo "<li>No specific reason provided.</li>";
                     }
-                } elseif($salonDetails->rejectReason){
-                    $reasons = explode(',', $salonDetails->rejectReason);
-                    foreach ($reasons as $reason) {
-                        echo "<li>" . htmlspecialchars(trim($reason)) . "</li>";
-                    }
-                } else {
-                    echo "<li>No specific reason provided.</li>";
-                }
                 ?>
             </ul>
         </div>
@@ -46,7 +53,7 @@
             </button>
         <?php elseif (isset($salonDetails->approvedStatus) && $salonDetails->approvedStatus == 'rejected'): ?>
             <button class="action-btn" name="reapply" type="submit">
-                <a href="<?= ROOT ?>/salonregistration/errorUpdate?salonID=<?= urlencode($salonDetails->salonID) ?>" class="action-btn">Reapply</a>
+                <a href="<?=ROOT?>/SalonRegister" class="action-btn">Reapply</a>
             </button>
         <?php endif; ?>
 

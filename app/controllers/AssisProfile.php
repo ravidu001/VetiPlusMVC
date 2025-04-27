@@ -8,7 +8,7 @@ class AssisProfile extends Controller {
 
     public function showdata() {
         $assis = new AssisModel();
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
 
         $assisData = $assis->find($assistantID);
         if ($assisData) {
@@ -24,7 +24,7 @@ class AssisProfile extends Controller {
 
     public function updateProfile() {
         $assis = new AssisModel();
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
     
         // Check if the request is a POST request
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -106,7 +106,7 @@ class AssisProfile extends Controller {
 
     public function removeProfile(){
         $assis = new AssisModel();
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
 
         // Inside updateProfile method
         if (isset($_POST['removeProfilePicture']) && $_POST['removeProfilePicture'] === 'true') {
@@ -131,7 +131,7 @@ class AssisProfile extends Controller {
 
     public function updatePersonal() {
         $assis = new AssisModel();
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
         $data = [
             'fullName' => $_POST['fullName'] ?? '',
             'address' => $_POST['address'] ?? '',
@@ -154,7 +154,7 @@ class AssisProfile extends Controller {
 
     public function updateProfessional() {
         $assis = new AssisModel();
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
     
         // Retrieve languages from POST data
         $languages = $_POST['languageSpoken'] ?? [];
@@ -190,7 +190,7 @@ class AssisProfile extends Controller {
 
     public function updatePassword() {
         $assis = new User();
-        $assistantID = $_SESSION['user_id'];
+        $assistantID = $_SESSION['assis_id'];
         $assisDetails = $assis->checkLoginUser($assistantID);
     
         $currentPasswordHash = $assisDetails->password;
@@ -282,7 +282,7 @@ class AssisProfile extends Controller {
     
     // Example method to verify the password
     private function verifyPassword($password) {
-        $assisID = $_SESSION['user_id'];
+        $assisID = $_SESSION['assis_id'];
         $userModel = new User();
         $assisData = $userModel->checkUser($assisID);
 
@@ -297,7 +297,7 @@ class AssisProfile extends Controller {
     }
     
     private function deleteUserAccount() {
-        $assisID = $_SESSION['user_id'];
+        $assisID = $_SESSION['assis_id'];
         $sessionModel = new DoctorSessionModel();
         $assissessionData = $sessionModel->getsessionBySession($assisID);
     

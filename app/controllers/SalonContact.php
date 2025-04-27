@@ -8,7 +8,7 @@ class SalonContact extends Controller
 
         $systemfeedbackTable = new systemfeedbackModel();
         $systemComplainTable = new systemcomplainModel();
-        $adminTable = new AdminRegistrationModel();
+        $notifications = new Notification();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contactSubmit'])) {
             $name = htmlspecialchars($_POST['name']);
@@ -19,21 +19,7 @@ class SalonContact extends Controller
             $status = 'Pending';
             $dateTime = date('Y-m-d H:i:s');
             //how get the admin mail ??????????????????????
-            $adminDetails = $adminTable->GetAdminDetails();
-
-            show($adminDetails);
-
-            if($adminDetails)
-            {
-                $adminMail = $adminDetails[0]->email;
-            }
-
-            if (!$adminMail) 
-            {
-                $data['error'] = "Admin email not found. Cannot submit complaint.";
-                $this->view('Salon/saloncontact', $data);
-                return;
-            }
+            
       
             if ($type === 'Feedback') 
             {
@@ -42,12 +28,11 @@ class SalonContact extends Controller
                 $array = [
                     'name' => $name,
                     'email' => $email,
-                    'contact' => $contact,
+                    'contactNumber' => $contact,
                     'comment' => $message,
                     'feedbackDateTime' => $dateTime,
                     'status' => $status,
-                    'rating' => $rating,
-                    'adminEmail' => $adminMail
+                    'rating' => $rating
                 ];
 
                 $results = $this->SalonDataValidation($array);
@@ -65,12 +50,16 @@ class SalonContact extends Controller
                    
                     if (!$result) 
                     {
-                        redirect('SalonContact');
-                        $data['success'] = "Successfully inserted";
+                        // redirect('SalonContact');
+                        // $data['success'] = "Successfully inserted";
+                         $notifications->show("Successfully inserted!",'success');
+                         exit();
                     }
                     else 
                     {
-                        $data['error'] = "Data cannot be inserted successfully";
+                        // $data['error'] = "Data cannot be inserted successfully"
+                        $notifications->show("Data cannot be inserted successfully!",'error');
+                        exit();
                     }
                 }
             } 
@@ -107,7 +96,6 @@ class SalonContact extends Controller
                                 'issue' => $message,
                                 'dateTime' => $dateTime,
                                 'status' => $status,
-                                'adminEmail' => $adminMail,
                                 'image' => $destination
                             ];
 
@@ -115,36 +103,42 @@ class SalonContact extends Controller
 
                             if(!$result)
                             {
-                                $data['success'] = "Successfully inserted";
+                                // $data['success'] = "Successfully inserted"
+                                $notifications->show("Successfully inserted!",'success');
+                                exit();
                             }
                             else 
                             {
-                                $data['error'] = "Data cannot be inserted successfully";
+                                // $data['error'] = "Data cannot be inserted successfully";
+                                $notifications->show("Data cannot be inserted successfully!",'error');
+                                exit();
                             }
 
                         } 
                         else 
                         {
-                            $data['error'] = "Failed to upload the image.";
+                            // $data['error'] = "Failed to upload the image.";
+                            $notifications->show("Failed to upload the image.!",'error');
+                            exit();
                         }
                     } 
                     else 
                     {
-                        $data['error'] = $imageValidation['errors'];
+                        // $data['error'] = $imageValidation['errors'];
+                        $notifications->show("Uploaded image is too large!",'error');
+                        exit();
                     }
                 }
 
                 else
                 {
-                    show('hhhhhhhhhhhhhhhhhhhhhh');
                     $array = [
                         'name' => $name,
                         'email' => $email,
                         'contact' => $contact,
                         'issue' => $message,
                         'dateTime' => $dateTime,
-                        'status' => $status,
-                        'adminEmail' => $adminMail
+                        'status' => $status
                     ];
     
                     $results = $this->SalonDataValidation($array);
@@ -161,11 +155,15 @@ class SalonContact extends Controller
                         
                         if (!$result) 
                         {
-                            $data['success'] = "Successfully inserted";
+                            // $data['success'] = "Successfully inserted";
+                            $notifications->show("Successfully inserted!",'success');
+                            exit();
                         }
                         else 
                         {
-                            $data['error'] = "Data cannot be inserted successfully";
+                            // $data['error'] = "Data cannot be inserted successfully";
+                            $notifications->show("Data cannot be inserted successfully!",'error');
+                            exit();
                         }
                     }
                 }

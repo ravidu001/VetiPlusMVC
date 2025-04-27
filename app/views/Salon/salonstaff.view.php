@@ -1,3 +1,7 @@
+<?php
+    $notification = new Notification;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Details</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonstaff.css">
-    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/cssFiles/salon/ToolContentMainTopic.css"> -->
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/deletepopup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
 <body>
-
+<?= $notification->display(); ?>
     <div class="pagecontent">
             
         <div class="StaffandSidebar">
@@ -26,9 +30,6 @@
                     <button class="add" id="service-add">
                     <a href="<?=ROOT?>/SalonStaff/add">Add</a>
                     </button>
-                        <?php
-                            // require "../../components/common/serchbar.php";
-                        ?>
                 </div>
 
                 <table class="table">
@@ -50,7 +51,6 @@
                             {
                                 foreach ($data as $x)
                                 {
-                                    // show($data);
                                  ?>
                                     <tr>
                                     <td>
@@ -66,8 +66,8 @@
                                         <button class='edit'>
                                             <a href='<?= ROOT ?>/SalonStaff/edit/<?= htmlspecialchars($x->staffID) ?>'>Edit</a>
                                         </button>
-                                        <button class='delete'>
-                                            <a href='<?= ROOT ?>/SalonStaff/delete/<?= htmlspecialchars($x->staffID) ?>'>Delete</a>
+                                        <button class='delete' onclick="confirmDelete(<?= htmlspecialchars($x->staffID) ?>)">
+                                            Delete
                                         </button>
                                     </div>    
                                     </td>
@@ -85,20 +85,32 @@
                             <?php    
                             }
                         ?>
-
-                       
-                        
                     </tbody>
-
                 </table>
-
-
             </div>
         </div>
     </div>
     
+    
+    <!-- Modal for confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="closebtn" onclick="closeModal()">&times;</span><br>
+            <p class="ask">Are you sure you want to delete this Offer?</p>
+            <button id="confirmDeleteBtn">Confirm</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+         const BASE_URL = "<?=ROOT?>";
+    </script>
+
+</body>
+</html>
 
 </body>
 <script src="<?=ROOT?>/assets/js/nav/salonnav.js"></script>
+<script src="<?=ROOT?>/assets/js/nav/salonstaffdelete.js"></script>
 
 </html>

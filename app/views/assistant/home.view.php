@@ -131,57 +131,63 @@
             <div class="reviews-grid">
                 <!-- Previous review cards -->
                  <?php $count = 0; ?>
-                <?php foreach ($reviews as $review): ?>
-                    <?php if ($count >= 3) break; ?>
-                    <div class="review-card" style="margin-bottom: 15px;">
-                        <div class="review-details">
-                            <div class="review-header">
-                                <span class="review-author"><?= $review['doctor']->fullName ?></span>
-                                <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
-                                <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
-                                <span class="review-date"><?= $formattedDate ?></span>
-                            </div>
-                            <div class="review-rating">
-                                <?php 
-                                    $rating = $review['reviewData']->rating; // Assuming rating is out of 5
-                                    for ($i = 1; $i <= 5; $i++) {
-                                        if ($i <= $rating) {
-                                            echo '<span class="star filled">★</span>'; // Filled star
-                                        } else {
-                                            echo '<span class="star empty">☆</span>'; // Empty star
-                                        }
-                                    }
-                                ?>
-                                <span>(<?= $rating ?>/5)</span>
-                            </div>
-                            <p class="review-content"><?= $review['reviewData']->comment ?></p>
-                            <small>Session #<?= $review['reviewData']->sessionID ?></small>
-                        </div>
-                        <div class="review-actions">
-                            <?php if ($review['reviewData']->status): ?>
-                                <!-- <span class="review-responded">Replied</span> -->
-                                <button class="btn btn-details" 
-                                        onclick="openDetailsModal(
-                                        '<?= htmlspecialchars($review['doctor']->fullName) ?>', 
-                                        '<?= htmlspecialchars($formattedDate) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
-                                        '<?= htmlspecialchars($review['reviewData']->sessionID) ?>'
-                                    )">
-                                    View Details
-                                </button>
-                            <?php else: ?>
-                            <!-- <button class="btn btn-reply" onclick="">Reply</button> -->
-                            <!-- <button class="btn btn-details" 
-                                    onclick="">
-                                View Details
-                            </button> -->
-                            <?php endif; ?>
-                        </div>
+                 <?php if (empty($reviews)): ?>
+                    <div class="no-reviews">
+                        <p style="padding-left:10px;">No reviews available.</p>
                     </div>
-                    <?php $count++; ?>
-                    
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($reviews as $review): ?>
+                        <?php if ($count >= 3) break; ?>
+                        <div class="review-card" style="margin-bottom: 15px;">
+                            <div class="review-details">
+                                <div class="review-header">
+                                    <span class="review-author"><?= $review['doctor']->fullName ?></span>
+                                    <?php $date = new DateTime($review['reviewData']->feedbackDateTime); ?>
+                                    <?php $formattedDate = $date->format('d/m/Y H:i'); ?>
+                                    <span class="review-date"><?= $formattedDate ?></span>
+                                </div>
+                                <div class="review-rating">
+                                    <?php 
+                                        $rating = $review['reviewData']->rating; // Assuming rating is out of 5
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $rating) {
+                                                echo '<span class="star filled">★</span>'; // Filled star
+                                            } else {
+                                                echo '<span class="star empty">☆</span>'; // Empty star
+                                            }
+                                        }
+                                    ?>
+                                    <span>(<?= $rating ?>/5)</span>
+                                </div>
+                                <p class="review-content"><?= $review['reviewData']->comment ?></p>
+                                <small>Session #<?= $review['reviewData']->sessionID ?></small>
+                            </div>
+                            <div class="review-actions">
+                                <?php if ($review['reviewData']->status): ?>
+                                    <!-- <span class="review-responded">Replied</span> -->
+                                    <button class="btn btn-details" 
+                                            onclick="openDetailsModal(
+                                            '<?= htmlspecialchars($review['doctor']->fullName) ?>', 
+                                            '<?= htmlspecialchars($formattedDate) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->rating) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->comment) ?>', 
+                                            '<?= htmlspecialchars($review['reviewData']->sessionID) ?>'
+                                        )">
+                                        View Details
+                                    </button>
+                                <?php else: ?>
+                                <!-- <button class="btn btn-reply" onclick="">Reply</button> -->
+                                <!-- <button class="btn btn-details" 
+                                        onclick="">
+                                    View Details
+                                </button> -->
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php $count++; ?>
+                        
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
         </div>

@@ -32,6 +32,13 @@ class Salons
         return $this->insert($arr);
     }
 
+    ///check by br number
+    public function fetchByBrNumber($number) 
+    {
+        $this->order_column = "salonID";
+        return $this->where(['BRNumber' => $number]);
+    }
+
     public function salonCount(){
         $count = $this->getCount();
         return $count;
@@ -91,7 +98,7 @@ class Salons
         ];
         return $this->query($query, $params);
     }
-    
+  
     public function getServiceOfferAll ($salonID) {
         $query = "SELECT s.*, o.*
                     FROM salonservice s LEFT JOIN specialoffers o
@@ -99,6 +106,12 @@ class Salons
                     WHERE s.salonID = :salonID
                 ";
         return $this->query($query, ['salonID' => $salonID]);
+    }
+  
+    public function pendingsaloncount(){
+        $query = "SELECT COUNT(*) as total FROM $this->table WHERE approvedStatus = 'pending'";
+        $result = $this->query($query);
+        return $result[0]->total;
     }
 }
 

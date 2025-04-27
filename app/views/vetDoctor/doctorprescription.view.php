@@ -101,11 +101,11 @@ $notification = new Notification();
                     <th colspan="2">Patient Information</th>
                 </tr>
                 <tr>
-                    <td>Weight (kg)</td>
+                    <td>Weight (kg) <span style="color:red;">*</span></td>
                     <td><input type="number" name="weight" class="form-input" placeholder="Enter weight (kg)"></td>
                 </tr>
                 <tr>
-                    <td>Symptoms</td>
+                    <td>Symptoms <span style="color:red;">*</span></td>
                     <td><textarea class="form-input" name="symptoms" rows="4" placeholder="Describe patient's symptoms"></textarea></td>
                 </tr>
                 <tr>
@@ -160,7 +160,7 @@ $notification = new Notification();
                     </td>
                 </tr>
                 <tr>
-                    <td>Prescription</td>
+                    <td>Prescription <span style="color:red;">*</span></td>
                     <td><textarea class="form-input" name="prescription" rows="4" placeholder="Enter medical prescription using comma separation"></textarea></td>
                 </tr>
                 <tr>

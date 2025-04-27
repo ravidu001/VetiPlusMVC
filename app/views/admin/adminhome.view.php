@@ -21,7 +21,7 @@
                 <!-- User Header -->
                 <div class="user-header">
                     <div class="user-profile">
-                        <img src="https://via.placeholder.com/60" alt="Admin Profile">
+                        <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" alt="Admin Profile">
                         <div>
                             <small class="text-muted">System Administrator</small>
                         </div>
@@ -55,7 +55,7 @@
                         <i class='bx bxs-dollar-circle icon'></i>
                         <div class="content">
                             <h3>Total Transactions</h3>
-                            <h2>Rs.<?= htmlspecialchars($total) ?></h2>
+                            <h2>Rs.<?= htmlspecialchars($total ?? '0')  ?></h2>
                         </div>
                     </div>
                     <div class="stats-card">
@@ -102,13 +102,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($complain as $complaint): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($complaint->email) ?></td>
-                                    <td><?= htmlspecialchars($complaint->issue) ?></td>
-                                    <td><a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>" class="view-button">View Details</a></td>
-                                </tr>
-                                <?php endforeach; ?>
+                                <?php
+                                if(is_array($complain)): ?>
+
+                                    <?php foreach ($complain as $complaint): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($complaint->email) ?></td>
+                                            <td><?= htmlspecialchars($complaint->issue) ?></td>
+                                            <td><a href="<?= ROOT ?>/AdminComplain/complainlist?email=<?= ($complaint->email) ?>" class="view-button">View</a></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                     <?php endif?>
                             </tbody>
                         </table> 
                     </div>
@@ -125,27 +129,27 @@
                                         <div class="sub-card-column">
                                             <div class="sub-card">
                                                 <div class="sub-card-body">
-                                                    <h6 class="sub-card-title">Recent Registrations</h6>
-                                                    <p class="sub-card-text">120 New Users This Month</p>
+                                                    <h6 class="sub-card-title">Vet Doctor Pending Approvels</h6>
+                                                    <p class="sub-card-text"><?php echo htmlspecialchars($pendingvetdoctorcount, ENT_QUOTES, 'UTF-8'); ?> Vet Doctor Registrations Pending </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="sub-card-column">
                                             <div class="sub-card">
                                                 <div class="sub-card-body">
-                                                    <h6 class="sub-card-title">Pending Approvals</h6>
-                                                    <p class="sub-card-text">15 Salon Registrations Pending</p>
+                                                    <h6 class="sub-card-title"> Salon Pending Approvals</h6>
+                                                    <p class="sub-card-text"><?php echo htmlspecialchars($pendingsaloncount, ENT_QUOTES, 'UTF-8'); ?> Salon Registrations Pending</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="sub-card-column">
+                                        <!-- <div class="sub-card-column">
                                             <div class="sub-card">
                                                 <div class="sub-card-body">
                                                     <h6 class="sub-card-title">System Health</h6>
                                                     <p class="sub-card-text">All Systems Operational</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

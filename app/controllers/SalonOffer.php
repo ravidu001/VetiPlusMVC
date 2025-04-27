@@ -146,7 +146,7 @@ class SalonOffer extends Controller
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
         $offerID['offerID'] = $data;
-
+        
         $specialOfferID =  $offerID['offerID'] ?? null;
 
         if($specialOfferID === null)
@@ -243,7 +243,7 @@ class SalonOffer extends Controller
     {
         $arr['errors'] = []; 
 
-        // 1. Check if serviceID is selected
+        // Check if serviceID is selected
         if (empty($arr['serviceID'])) {
             $arr['errors'][] = 'Please select a service.';
         }
@@ -253,7 +253,7 @@ class SalonOffer extends Controller
             $arr['errors'][] = 'Please provide a valid discount (positive number).';
         }
 
-        // 2.1 Check if the new price is valid
+        // Check if the new price is valid
         if ($newServicePrice < 0) {
             $arr['errors'][] = 'Please enter a suitable discount.';
         }
@@ -262,6 +262,15 @@ class SalonOffer extends Controller
         $createDate = !empty($arr['createDate']) ? strtotime($arr['createDate']) : 0;
         $startDate = !empty($arr['startDate']) ? strtotime($arr['startDate']) : 0;
         $closeDate = !empty($arr['closeDate']) ? strtotime($arr['closeDate']) : 0;
+
+         //get 60 days later
+         $sixafterDate = date('Y-m-d',strtotime('+60 days'));
+
+         //check the start Date > 60 future
+        if($startDate > $sixafterDate)
+        {
+            $arr['errors'][] = 'Start Date cannot be next 2 months after.';
+        }
 
         // Check if startDate and closeDate are not null or empty
         if ($startDate && $startDate < $createDate) {
@@ -272,12 +281,12 @@ class SalonOffer extends Controller
             $arr['errors'][] = 'Close date cannot be before the create date.';
         }
 
-        // 4. Check if startDate is before closeDate
+        // Check if startDate is before closeDate
         if ($startDate && $closeDate && $startDate > $closeDate) {
             $arr['errors'][] = 'Start date cannot be after the close date.';
         }
 
-        // 5. Check if startDate and closeDate have valid formats
+        // Check if startDate and closeDate have valid formats
         if ($startDate && !strtotime($arr['startDate'])) {
             $arr['errors'][] = 'Start date is not in a valid format.';
         }

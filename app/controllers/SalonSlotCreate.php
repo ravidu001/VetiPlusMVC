@@ -5,6 +5,7 @@ class SalonSlotCreate extends Controller
     public function index()
     {        
         $timeslotconfig = new SalonTImeSLotConfig();
+        $notifications = new Notification();
 
         $data = [];
        
@@ -23,9 +24,25 @@ class SalonSlotCreate extends Controller
             $duration = $_POST['duration'];
             $noappointments = $_POST['appointments'];
             $slotfor = $_POST['period'];
+            $limitdate = date('Y-m-d',strtotime('+60 days'));
+            $currentDate = date('Y-m-d');
 
             if(isset( $_POST['startDate']))
             {
+                //check the slect date in the next 2 month after date
+                if($limitdate < $_POST['startDate'])
+                {
+                    $notifications->show('Cannot create slot for the date future the 2 month later','error');
+                    redirect('SalonSlot');
+                }
+
+                //check the select date after date
+                if($currentDate > $_POST['startDate'])
+                {
+                    $notifications->show('Cannot create slot for past dates.','error');
+                    redirect('SalonSlot');
+                }
+
                 $startDate = $_POST['startDate'];
             }
             else
@@ -35,8 +52,9 @@ class SalonSlotCreate extends Controller
 
             if (!$startDate && !$slotfor) 
             {
-                echo('select the time or date');
-                $data['error'] = "Start date and period must be selected.";
+                // echo('select the time or date');
+                // $data['error'] = "Start date and period must be selected.";
+                $notifications->show("Start date and period must be selected.",'error');
             }
 
             
@@ -66,7 +84,9 @@ class SalonSlotCreate extends Controller
                 }
                 else
                 {
-                    $data['error'] = "cannot catch the slotfor type";
+                    // $data['error'] = "cannot catch the slotfor type";
+                    $notifications->show("cannot catch the slotfor type.",'error');
+                
                 }
 
                 $validInput = false;
@@ -85,23 +105,42 @@ class SalonSlotCreate extends Controller
                     $startTime = $_POST['startTime'][$dayName] ?? null;
                     $closeTime = $_POST['closeTime'][$dayName] ?? null;
 
-                    if ($startTime && $closeTime) {
-                        $validInput = true; // At least one valid day configured
-                    }
-                    else 
-                    {
-                        $data['error'] = "Missing start/close time for $dayName";
-                    }
+                    show($dayName);
+                    show($startTime);
+                    show($closeTime);
+
+                    // if($startTime == $closeTime)
+                    // {
+                    //     $notifications->show("$startTime and $closeTime cannot be same.",'error');
+                    //     redirect('SalonSlot');
+                    // }
+
+                    // if ($startTime && $closeTime) 
+                    // {
+                    //     $validInput = true; // At least one valid day configured
+                    // }
+                    // else 
+                    // {
+                    //     $data['error'] = "Missing start/close time for $dayName";
+                    //     // $notifications->show("Missing start/close time for $dayName",'error');
+                    //     // redirect('SalonSlot');
+
+                    // }
                 }
 
-                if (!$validInput) 
-                {
-                    $data['error'] = "Please configure at least one day's time slot properly.";
-                }
+                // if (!$validInput) 
+                // {
+                //     $data['error'] = "Please configure at least one day's time slot properly.";
+                //     // $notifications->show("Please configure at least one day's time slot properly",'error');
+                //     // redirect('SalonSlot');
+
+                // }
 
             }
 
             $result = $this->validateTimeSlotConfigData($duration, $noappointments, $slotfor, $startDate);
+             
+            show($result);
 
             if(empty($result['errors']))
             {
@@ -139,6 +178,7 @@ class SalonSlotCreate extends Controller
                     else 
                     {
                         $data['error'] = "Error: No config ID found.";
+                        // $notifications->show("Please configure at least one day's time slot properly",'error');
                     }
                     
                     if($configID)
@@ -148,17 +188,20 @@ class SalonSlotCreate extends Controller
 
                         if (empty($results['error'])) {
                             //All good, redirect now
+                            $notifications->show("Successfully done",'success');
                             redirect('SalonSlot');
                             exit;
                         } 
                         else 
                         {
-                            $data['error'][] = $results;
+                            $data['error'] = $results;
+                            // $notifications->show("Oops!error occur.",'error');
                         }
                     }
                     else
                     {
                         $data['error'] = "Failed to get the configID" ;
+                        // $notifications->show("Failed to get the configID.",'error');
                     }
 
                     
@@ -166,14 +209,24 @@ class SalonSlotCreate extends Controller
                 else
                 {
                     $data['error'] = $isinsert['message'];
+                    // $notifications->show("Inserting Failed.",'error');
                 }
             }
             else
             {
-                $data['error'] = $result;
+                foreach($result['errors'] as $error)
+                {
+                    $notifications->show($error,'error');
+                }
             }   
            
+            // if(!empty($data['error']))
+            // {
+            //     $notifications->show($data['error'], 'error');
+            // }
         }
+
+
 
         $this->view('salon/salonslotcreate', $data);
     }
@@ -201,23 +254,23 @@ class SalonSlotCreate extends Controller
 
             if(in_array($startDate, $startDates))
             {
-                $arr['errors'] = "The date select before as the start date and created slots";
+                $arr['errors'][] = "The date select before as the start date and created slots";
             }
 
             if($startDate < $today)
             {
-                $arr['errors'] = "The select Date should not be a past Date.";
+                $arr['errors'][] = "The select Date should not be a past Date.";
             }
                             
             if (!is_numeric($duration) || $duration <= 0) 
             {
-                $arr['errors'] = "Duration must be a positive number.";
+                $arr['errors'][] = "Duration must be a positive number.";
             }
 
             
             if (!is_numeric($noappointments) || $noappointments <= 0) 
             {
-                $arr['errors'] = "Number of appointments must be a positive number.";
+                $arr['errors'][] = "Number of appointments must be a positive number.";
             }
 
             
@@ -225,7 +278,7 @@ class SalonSlotCreate extends Controller
 
             if (!in_array($slotfor, $validSlots)) 
             {
-                $arr['errors'] = "Invalid time period selected.";
+                $arr['errors'][] = "Invalid time period selected.";
             }
 
             if(empty($arr['errors']))
@@ -250,6 +303,8 @@ class SalonSlotCreate extends Controller
             $salonSessions = new SalonTimeSlots();
 
             $holidays = new SalonHoliday();
+
+            $notifications = new Notification();
 
             $salonweekdayschedules = new SalonWeekdaySchedules();
             $weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -335,6 +390,11 @@ class SalonSlotCreate extends Controller
                             $endTime = strtotime($insertedweekdays[0] -> end_time);
                             $slotDuration = $duration * 60;
 
+                            if($startTime == $endTime)
+                            {
+                                $notifications->show("Start Time and End Time cannot be same", 'error');
+                            }
+
                             //want to check the date in the holiday table
                             $checkholiday = $holidays->findHolidayByDate($openday);
 
@@ -367,7 +427,7 @@ class SalonSlotCreate extends Controller
 
                             if($insertweekdays == true)
                             {
-                                $array['error'] = "Data cannot be insert";
+                                $array['error'][] = "Data cannot be insert";
                             }
                         }
                 }

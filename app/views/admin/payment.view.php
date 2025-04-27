@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +12,7 @@
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <title>VetiPlus - Payments Dashboard</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/adminnav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/payment.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -15,19 +21,20 @@
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
+        <?php echo $notification->display(); ?>
         <div class="main-container">
             <div class="payment-stats">
                 <div class="stat-card">
                     <h3>Daily Transactions</h3>
-                    <div class="stat-number">Rs. <?= htmlspecialchars($todayRevenue) ?></div>
+                    <div class="stat-number">Rs. <?= htmlspecialchars($todayRevenue ?? '0') ?></div>
                 </div>
                 <div class="stat-card">
-                    <h3>Total Users</h3>
-                    <div class="stat-number">1,256</div>
+                    <h3>Total Pet Owner</h3>
+                    <div class="stat-number"><?= htmlspecialchars($petownercount) ?></div>
                 </div>
                 <div class="stat-card">
                     <h3>Total Revenue</h3>
-                    <div class="stat-number">Rs.  <?= htmlspecialchars($total) ?></div>
+                    <div class="stat-number">Rs. <?= htmlspecialchars($total  ?? '0') ?></div>
                 </div>
             </div>
 
@@ -55,22 +62,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($data['paymentdata'])) : ?>
-                            <?php foreach ($data['paymentdata'] as $payment) : ?>
+                      <?php
+                        if(is_array($data['paymentdata'])):
+                             if (isset($data['paymentdata'])) : ?>
+                                <?php foreach ($data['paymentdata'] as $payment) : ?>
+                                    <tr>
+                                        <td><?= $payment->paymentID ?></td>
+                                        <td><?= $payment->petownerID ?></td>
+                                        <td><?= $payment->appointmentID ?></td>
+                                        <td>Rs. <?= $payment->amount ?></td>
+                                        <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
+                                        <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
                                 <tr>
-                                    <td><?= $payment->paymentID ?></td>
-                                    <td><?= $payment->petownerID ?></td>
-                                    <td><?= $payment->appointmentID ?></td>
-                                    <td>Rs. <?= $payment->amount ?></td>
-                                    <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
-                                    <td><a href="<?= ROOT ?>/AdminPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                    <td colspan="6">No payment data available.</td>
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="6">No payment data available.</td>
-                            </tr>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                            <?php endif; ?>
                     </tbody>
                 </table>
             </div>

@@ -1,3 +1,7 @@
+<?php
+    $notification = new Notification;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +10,15 @@
     <title>View Service Details</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonservice.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/deletepopup.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonpopup.css">
     
 </head>
 
-
 <body>
+    <?= $notification->display(); ?>
+    <div id="notification" class="notification" style="display: none;"></div>
     <div class="pagecontent">
         <div class="sidebarandsevice">
             <div>
@@ -52,7 +59,7 @@
                                     </td>
                                     <td>
                                         <button class='edit'>
-                                            <a href='<?= ROOT ?>/SalonService/edit/<?= htmlspecialchars($x->serviceID) ?>'>Edit</a>
+                                            <a href='<?=ROOT?>/SalonService/edit/<?= htmlspecialchars($x->serviceID) ?>'>Edit</a>
                                         </button>
                                         <button class='delete' onclick="confirmDelete(<?= htmlspecialchars($x->serviceID) ?>)">
                                             Delete
@@ -74,6 +81,21 @@
             </div>
         </div>
     </div> 
+    
+    <!-- Modal for confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="closebtn" onclick="closeModal()">&times;</span><br>
+            <p class="ask">Are you sure you want to delete this Offer?</p>
+            <button id="confirmDeleteBtn">Confirm</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+         const BASE_URL = "<?=ROOT?>";
+    </script>
+    <script src="<?=ROOT?>/assets/js/salon/salonservicedelete.js"></script>
 </body>
- 
+
 </html>

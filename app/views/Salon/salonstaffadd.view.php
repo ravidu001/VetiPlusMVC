@@ -66,7 +66,7 @@
                 <!-- Work Status -->
                 <div class="form-group">
                     <label for="job">
-                        <i class="fa-solid fa-user-check"></i> Work Status
+                        <i class="fa-solid fa-user-check"></i> Work Status<span class="required">*</span>
                     </label>
                     <input type="text" 
                            id="job" 

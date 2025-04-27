@@ -59,7 +59,7 @@ class Login extends Controller
                                 redirect('SalonRegister');
                                 break;
                             case 'Vet Assistant':
-                                $_SESSION['user_id'] = $registered->email;
+                                $_SESSION['assis_id'] = $registered->email;
                                 header('Location: ../AssisRegistration');
                                 break;
                             case 'System Admin':
@@ -117,6 +117,11 @@ class Login extends Controller
                                     $salon = new Salons();
                                     $salonData = $salon->FindUser($registered->email);
 
+                                    if (empty($salonData)) {
+                                        header('Location: ../SalonRegister');
+                                        exit();
+                                    }
+
                                     switch ($salonData->approvedStatus){
                                         case 'pending':
                                             header('Location: ../Pending');
@@ -132,7 +137,7 @@ class Login extends Controller
                                     }
                                     break;
                                 case 'Vet Assistant':
-                                    $_SESSION['user_id'] = $registered->email;
+                                    $_SESSION['assis_id'] = $registered->email;
                                     header('Location: ../Assistant');
                                     break;
                                 case 'System Admin':

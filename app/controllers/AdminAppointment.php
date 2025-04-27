@@ -7,12 +7,14 @@ class AdminAppointment extends Controller
         $appointment = new AppointmentModel();
         $appointmentdata = $appointment->getalldata();
         $appointmentcount = $this->appointmentcount();
-        $dailyappointment = $this->dailyappointment();
+        $cancelappointment = $this->cancelappointmentcount();
+        $pendingappointment = $this->pendingappointmentcount();
 
         $this->view('admin/appointment', [
             'appointmentdata' => $appointmentdata,
             'appointmentcount' => $appointmentcount,
-            'dailyappointmentcount' => $dailyappointment,
+            'pendingappointment' => $pendingappointment,
+            'cancelappointment' => $cancelappointment,
 
         ]);
     }
@@ -22,6 +24,8 @@ class AdminAppointment extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
             // Retrieve the email from the GET request
             $petownerID = $_GET['petownerid'];
+
+            $notification = new Notification();
 
 
             // Validate the email
@@ -39,11 +43,11 @@ class AdminAppointment extends Controller
                     $this->view('admin/appointmentlist', ['admin' => $petownerresult]);
                 } else {
                     // If admin not found, redirect to a 'not found' page or display a message
-                    $this->view(['error' => 'No admin found with this email.']);
+                    $notification->show("No admin found with this email.", 'error');
                 }
             } else {
                 // Handle invalid email input
-                $this->view(['error' => 'Invalid email format. Please try again.']);
+                $notification->show("Invalid email format. Please try again.", 'error');
             }
         }
     }
@@ -55,10 +59,45 @@ class AdminAppointment extends Controller
         return $count;
     }
 
-    public function dailyappointment()
+    public function pendingappointmentcount()
     {
-        $dailyappointment = new AppointmentModel();
-        $count = $dailyappointment->dailyappointment();
+        $pendingappointment = new AppointmentModel();
+        $count = $pendingappointment->pendingappointmentcount();
         return $count;
+    }
+    public function cancelappointmentcount()
+    {
+        $cancelappointment = new AppointmentModel();
+        $count = $cancelappointment->cancelappointmentcount();
+        return $count;
+    }
+    public function downloadreport()
+    {
+        $appointment = new AppointmentModel();
+        $appointmentdata = $appointment->getalldata();
+
+        // Set headers to download file
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename=appointments_report.csv');
+
+        $output = fopen('php://output', 'w');
+
+        // Write the column headers
+        fputcsv($output, ['Appointment ID', 'Pet Name', 'Date and Time', 'Session ID', 'Visit Time', 'Status']);
+
+        // Write the rows
+        foreach ($appointmentdata as $data) {
+            fputcsv($output, [
+                $data->appointmentID ?? 'N/A',
+                $data->petID ?? 'N/A',
+                $data->bookedDateTime ?? 'N/A',
+                $data->sessionID ?? 'N/A',
+                $data->visitTime ?? 'N/A',
+                $data->status ?? 'N/A'
+            ]);
+        }
+
+        fclose($output);
+        exit;
     }
 }

@@ -22,7 +22,20 @@
                         <input type="text" name="name" placeholder="Enter Vaccine Name">
                         <input type="text" name="description" placeholder="Enter Vaccine Description">
                         <input type="text" name="brand" placeholder="Enter Vaccine Brand">
-                        <input type="text" name="type" placeholder="Enter Pet Type">
+                        <select name="type" id="pettype">
+                            <option value="">Select Option</option>
+                            <?php
+                            $uniquepettype = [];
+                            foreach ($pettype as $type):
+                                if (!in_array($type->species, $uniquepettype)):
+                                    $uniquepettype[] = $type->species;
+                            ?>
+                                    <option value="<?= $type->species ?>"><?= $type->species ?></option>
+                            <?php
+                                endif;
+                            endforeach;
+                            ?>
+                        </select>
                     </div>
                     <button type="submit" name="submit" class="search-btn">Add Vaccine Data</button>
                 </form>

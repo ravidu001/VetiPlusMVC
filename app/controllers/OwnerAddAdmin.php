@@ -20,12 +20,13 @@ class OwnerAddAdmin extends Controller
         $admincount = $this->totalcountUser();
         $deactiveusercount = $this->deactiveusercount();
 
-        $this->view('owner/addadmin', [...$data, 
-        'userCount' => $userCount,
-        'admincount' => $admincount,
-        'deactiveusercount' => $deactiveusercount,
+        $this->view('owner/addadmin', [
+            ...$data,
+            'userCount' => $userCount,
+            'admincount' => $admincount,
+            'deactiveusercount' => $deactiveusercount,
 
-    ]);
+        ]);
     }
 
     public function adminregistration()
@@ -61,8 +62,63 @@ class OwnerAddAdmin extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['submit'])) {
-                $data = [
+                $errors = [];
+                $notification = new Notification();
+                // Validate Name
+                if (empty(trim($_POST['name']))) {
+                    $errors[] = "Name is required.";
+                } elseif (!preg_match("/^[a-zA-Z\s]+$/", $_POST['name'])) {
+                    $errors[] = "Name can only contain letters and spaces.";
+                }
 
+                // Validate Email
+                if (empty(trim($_POST['email']))) {
+                    $errors[] = "Email is required.";
+                } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    $errors[] = "Invalid email format.";
+                }
+
+                // Validate Password
+                if (empty(trim($_POST['password']))) {
+                    $errors[] = "Password is required.";
+                } elseif (strlen($_POST['password']) < 8) {
+                    $errors[] = "Password must be at least 8 characters long.";
+                } elseif ($_POST['password'] !== $_POST['cpassword']) {
+                    $errors[] = "Passwords do not match.";
+                }
+
+                // Validate Address
+                if (empty(trim($_POST['address']))) {
+                    $errors[] = "Address is required.";
+                }
+
+                // Validate Phone Number
+                if (empty(trim($_POST['phone_number']))) {
+                    $errors[] = "Phone number is required.";
+                } elseif (!preg_match("/^[0-9]{10}$/", $_POST['phone_number'])) {
+                    $errors[] = "Invalid phone number format.";
+                }
+
+                // Validate NIC
+                if (empty(trim($_POST['nic']))) {
+                    $errors[] = "NIC number is required.";
+                }
+
+                // Validate Gender
+                if (empty($_POST['gender'])) {
+                    $errors[] = "Gender must be selected.";
+                }
+
+                // If there are errors, show them
+                if (!empty($errors)) {
+                    foreach ($errors as $error) {
+                        $notification->show($error, "error");
+                    }
+                    return; // Stop further processing
+                }
+
+                // Proceed with registration if no errors
+                $data = [
                     'name' => $_POST['name'],
                     'email' => $_POST['email'],
                     'password' => $_POST['password'],
@@ -70,15 +126,13 @@ class OwnerAddAdmin extends Controller
                     'contactNumber' => $_POST['phone_number'],
                     'gender' => $_POST['gender'],
                     'NIC' => $_POST['nic'],
-
                 ];
 
-                $admin = new  AdminRegistrationModel();
+                $admin = new AdminRegistrationModel();
                 $admin->create($data);
 
                 $user = new User();
-                $password = $_POST['password'];
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $userData = [
                     'email' => $_POST['email'],
                     'password' => $hashedPassword,
@@ -88,22 +142,21 @@ class OwnerAddAdmin extends Controller
                 ];
 
                 $result = $user->create($userData);
-
                 $notification = new Notification();
-                if(!$result) {
+                if (!$result) {
                     $notification->show("Admin registration successful.", "success");
                 } else {
                     $notification->show("Admin registration failed.", "error");
                 }
-                // $this->redirectToIndex();
             }
         }
     }
 
+
     public function select()
     {
         $notification = new Notification();
-        
+
         if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
             // Retrieve the email from the GET request
             $email = $_GET['email'];
@@ -122,11 +175,9 @@ class OwnerAddAdmin extends Controller
                     $this->view('owner/adminprofile', [
                         'admin' => $result[0],
                     ]);
-                  
                 } else {
                     // If admin not found, redirect to a 'not found' page or display a message .
                     $notification->show("No admin found with this email !", 'error');
-
                 }
             } else {
                 // Handle invalid email input
@@ -177,19 +228,20 @@ class OwnerAddAdmin extends Controller
         return $count;
     }
 
-    public function totalcountUser() {
+    public function totalcountUser()
+    {
         $user = new User();
         $count = $user->admincountUser();
         return $count;
     }
 
-    public function deactiveusercount(){
+    public function deactiveusercount()
+    {
         $user = new User();
         $count = $user->deactiveusercount();
         return $count;
-
     }
-    
+
 
 
     public function deleteprofile()

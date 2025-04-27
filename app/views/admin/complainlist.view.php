@@ -16,7 +16,7 @@
     <section class="home">
         <div class="complain-container">
             <div class="profile-header">
-                <img src="../../assets/images/user.png" alt="User Profile" class="profile-image">
+                <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" alt="User Profile" class="profile-image">
                 <div class="profile-details">
                     <div class="detail-item">
                         <label>Name</label>

@@ -20,6 +20,9 @@ class AdminAccountDashboard extends Controller
             $adminData = $admin->checkLoginUser($adminID);
             $admindatabasePassword = $adminData->password;
 
+            $notification = new Notification();
+
+
             // Verify the password
             if (password_verify($admin_password, $admindatabasePassword)) {
                 // echo "Password verified successfully!";
@@ -37,16 +40,16 @@ class AdminAccountDashboard extends Controller
                         $this->view('admin/petuseraccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
-                        $this->view(['error' => 'No admin found with this email.']);
+                        $notification->show("No Pet Owner found with this email.", 'error');
                     }
                 } else {
                     // Handle invalid email input
-                    $this->view(['error' => 'Invalid email format. Please try again.']);
+                    $notification->show("Invalid email format. Please try again.", 'error'); 
                 }
                 // Proceed with the rest of your logic
             } else {
                 // Password is incorrect
-                echo "Invalid password. Please try again.";
+                $notification->show("Invalid password. Please try again.", 'error'); 
                 // Handle the error (e.g., redirect or show an error message)
             }
         }
@@ -91,9 +94,11 @@ class AdminAccountDashboard extends Controller
 
                 $User->deactivateUser($petOwnerID, $activeStatus);
                 $notification->show("User deactivate successfully!", 'success');
+                redirect('AdminAccountDashboard');
             }
         } else {
             $notification->show("Invalid request.", 'error');
+            redirect('AdminAccountDashboard');
         }
     }
 
@@ -108,6 +113,8 @@ class AdminAccountDashboard extends Controller
             $admin = new User();
             $adminData = $admin->checkLoginUser($adminID);
             $admindatabasePassword = $adminData->password;
+
+            $notification = new Notification();
 
             if (password_verify($admin_password, $admindatabasePassword)) {
 
@@ -125,15 +132,15 @@ class AdminAccountDashboard extends Controller
                         $this->view('admin/doctoraccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
-                        $this->view(['error' => 'No admin found with this email.']);
+                        $notification->show("No Vet Doctor found with this email.", 'error');
                     }
                 } else {
                     // Handle invalid email input
-                    $this->view(['error' => 'Invalid email format. Please try again.']);
+                    $notification->show("Invalid email format. Please try again.", 'error');
                 }
             } else {
                 // Password is incorrect
-                echo "Invalid password. Please try again.";
+                $notification->show("Invalid password. Please try again.", 'error'); 
                 // Handle the error (e.g., redirect or show an error message)
             }
         }
@@ -156,9 +163,11 @@ class AdminAccountDashboard extends Controller
 
                 $User->updatePassword($doctorID, $hashedPassword);
                 $notification->show("Password reset successfully!", 'success');
+                redirect('AdminAccountDashboard');
             }
         } else {
             $notification->show("Invalid request.", 'error');
+            redirect('AdminAccountDashboard');
         }
     }
     public function doctordelete()
@@ -194,6 +203,8 @@ class AdminAccountDashboard extends Controller
             $adminData = $admin->checkLoginUser($adminID);
             $admindatabasePassword = $adminData->password;
 
+            $notification = new Notification();
+
             if (password_verify($admin_password, $admindatabasePassword)) {
                 // Validate the email
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -209,15 +220,15 @@ class AdminAccountDashboard extends Controller
                         $this->view('admin/petaccount', ['admin' => $result[0]]);
                     } else {
                         // If admin not found, redirect to a 'not found' page or display a message
-                        $this->view(['error' => 'No admin found with this email.']);
+                        $notification->show("No Pet found with this email.", 'error');
                     }
                 } else {
                     // Handle invalid email input
-                    $this->view(['error' => 'Invalid email format. Please try again.']);
+                    $notification->show("Invalid email format. Please try again.", 'error');
                 }
             } else {
                 // Password is incorrect
-                echo "Invalid password. Please try again.";
+                $notification->show("Invalid password. Please try again.", 'error');
                 // Handle the error (e.g., redirect or show an error message)
             }
         }

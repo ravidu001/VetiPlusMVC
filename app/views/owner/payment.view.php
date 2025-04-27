@@ -22,21 +22,21 @@
                     <i class='bx bx-trending-up icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Daily Income</h3>
-                        <p>Rs. <?= htmlspecialchars($todayRevenue) ?></p>
+                        <p>Rs. <?= htmlspecialchars($todayRevenue ?? '0') ?></p> 
                     </div>
                 </div>
                 <div class="dashboard-card">
                     <i class='bx bx-line-chart icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Total Income</h3>
-                        <p>Rs.  <?= htmlspecialchars($total) ?></p>
+                        <p>Rs.  <?= htmlspecialchars($total ?? '0') ?></p>
                     </div>
                 </div>
-                <div class="dashboard-card">
+                <!-- <div class="dashboard-card">
                     <i class='bx bx-trending-down icon'></i>
                     <div class="dashboard-card-content">
                         <h3>Monthly Expenses</h3>
-                        <p>Rs.  <?= htmlspecialchars($total) ?></p>
+                        <p>Rs.  890</p>
                     </div>
                 </div>
                 <div class="dashboard-card">
@@ -45,7 +45,7 @@
                         <h3>Total Expenses</h3>
                         <p>Rs. 100,000</p>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Search Section -->
@@ -75,22 +75,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($data['paymentdata'])) : ?>
-                            <?php foreach ($data['paymentdata'] as $payment) : ?>
+                       <?php 
+                        if(is_array($data['paymentdata'])):
+                            if (isset($data['paymentdata'])) : ?>
+                                <?php foreach ($data['paymentdata'] as $payment) : ?>
+                                    <tr>
+                                        <td><?= $payment->paymentID ?></td>
+                                        <td><?= $payment->petownerID ?></td>
+                                        <td><?= $payment->appointmentID ?></td>
+                                        <td>Rs. <?= $payment->amount ?></td>
+                                        <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
+                                        <td><a href="<?= ROOT ?>/OwnerPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
                                 <tr>
-                                    <td><?= $payment->paymentID ?></td>
-                                    <td><?= $payment->petownerID ?></td>
-                                    <td><?= $payment->appointmentID ?></td>
-                                    <td>Rs. <?= $payment->amount ?></td>
-                                    <td><?= date('Y-m-d', strtotime($payment->dateTime)) ?></td>
-                                    <td><a href="<?= ROOT ?>/OwnerPayment/paymentdetailpay/<?= $payment->petownerID ?>" class="btn-view btn">View</a></td>
+                                    <td colspan="6">No payment data available.</td>
                                 </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="6">No payment data available.</td>
-                            </tr>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                            <?php endif; ?>
                     </tbody>
                 </table>
             </div>

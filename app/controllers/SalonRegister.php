@@ -3,7 +3,7 @@
 class SalonRegister extends Controller
 {
     //get the form registration submit data
-    private function getRegistrationdata($registration_table)
+    private function getRegistrationdata()
     {
         //create the new array to pass the data from submit form
         $arr = [];
@@ -56,7 +56,7 @@ class SalonRegister extends Controller
                 );
 
                 //if it has the error then pass the error 
-                if ($error) {
+                if (!empty($error)) {
                     $arr['error'] = $error;
                 }
             }
@@ -79,20 +79,19 @@ class SalonRegister extends Controller
         if(empty($arr['salonID'])) 
         {
             $data['error'] = "Email is required.";
+            return $data;
         }
 
-        $email = $arr['salonID'];
-        // show($arr);
-        //check if this is reject now should pass the status is pending
-        $arr['status'] = 'pending';
-        show($arr);
-
+        
         // $table = new SalonRegisters;
         $salonTable = new Salons();
 
-        $result =  $salonTable->updateSalonTimeSlots($email,$arr);
+        //check if this is reject now should pass the status is pending
+        $arr['approvedStatus'] = 'pending';
+        
+        $result =  $salonTable->updateSalonTimeSlots($arr['salonID'],$arr);
 
-        if($result)
+        if(!$result)
         {
             $data['success'] = true;
         }
@@ -101,25 +100,14 @@ class SalonRegister extends Controller
             $data['error'] = "data insert unsuccessfully";
         }
 
-        // if($table->update($email, $arr, 'email'))
-        // {
-        //     // show($email);
-        //     show($arr);
-        //     $data['success'] = true;
-        // }
-        // else
-        // {
-        //     show($email);
-        //     show('ishan');
-        //     show($email);
-        //     $data['error'] = "data insert unsuccessfully";
-        // }
         return $data;
     }
 
     //if this is new email create the new 
     private function insertregisterdata($arr, $registration_table)
     {
+        // $notifications = new Notification();
+
         $data = ['success' => false, 'error' => null];
 
         //if cannot catch the email error or can redirect the login page
@@ -128,14 +116,30 @@ class SalonRegister extends Controller
             return;
         }
 
-        if($registration_table->insertData($arr))
-        {
-            $data['success'] = true;
-        }
-        else
-        {
-            $data['error'] = "data insert unsuccessfully";
-        }
+        show($arr);
+       //check the BR number has or not
+       $BRnumber = $registration_table->fetchByBrNumber($arr['BRNumber']);
+
+       if(!empty($BRnumber))
+       {
+            $data['error'] = "Your BR number is invalid!.";
+       }
+       else
+       {
+            $results = $registration_table->insertData($arr);
+
+            if(!$results)
+            {
+                $data['success'] = true;
+                // $notifications->show("data insert successfully!.",'success');
+            }
+            else
+            {
+                $data['error'] = "data insert unsuccessfully";
+                // $notifications->show("data insert unsuccessfully",'error');
+            }
+
+       }
 
         return $data;
     }
@@ -152,6 +156,7 @@ class SalonRegister extends Controller
 
         // Use the salon registration model 
         $registration_table = new Salons;
+        $notifications = new Notification();
 
         // Check if same login email exists
         $existingRecord = $registration_table->FindUser($_SESSION['SALON_USER']);
@@ -162,32 +167,44 @@ class SalonRegister extends Controller
         if($existingRecord) 
         {
             $data['oldemaildata'] = $existingRecord;
+           
             $status = $existingRecord->approvedStatus;
-
-            if($status === 'rejected' && isset($_POST['submit']))
+            
+            if($status === 'rejected')
             {
-                $data = $this->getRegistrationdata($registration_table);
-
-                if(empty($data['errors'])) 
+                if(isset($_POST['submit']))
                 {
-                    $result = $this->updateregisterdata($data);
-                
-                    if($result['success']) 
+                    $formdata = $this->getRegistrationdata();
+
+                    if(empty($formdata['error'])) 
                     {
-                        redirect('Pending');
+                        $result = $this->updateregisterdata($formdata);
+
+                        if($result) 
+                        {
+                            $notifications->show("Re-Application submitted successfully.", 'success');
+                            redirect('Pending');
+                            exit();
+                        }
+                        else
+                        {
+                            $data['error'] = $result['error'];
+                        }
                     }
                     else
                     {
-                        $data['errors'][] = $result['error'];
+                        $data['error'] = $formdata['error'];
                     }
                 }
-                $data['oldemaildata'] = $existingRecord;
+
+               $data['oldemaildata'] = $existingRecord;
+            //    show($data['oldemaildata']);
             }
-            elseif($status === 'pending')
+            else if($status === 'pending')
             {
                 redirect('Pending');
             }
-            elseif($status === 'approved')
+            else if($status === 'approved')
             {
                 redirect('Salon');
             }            
@@ -198,19 +215,30 @@ class SalonRegister extends Controller
             if(isset($_POST['submit']))
             {
                  // New registration
-                 $data = $this->getRegistrationdata($registration_table);
+                 $data = $this->getRegistrationdata();
 
-                 if (empty($data['errors'])) 
-                 {
+                //  show($data['error']);
+                if(empty($data['error'])) 
+                {
+                    // show('hi');
                     $result = $this->insertregisterdata($data, $registration_table);
-                
-                    if ($result['success']) {
+                    show($result);
+                    if ($result['success']) 
+                    {
+                        $notifications->show("Registration Successfully!.",'success');
                         redirect('Pending');
                     }
                     else 
                     {
-                        $data['errors'][] = $result['error'];
+                        $notifications->show("Registration Unsuccessfully!.",'error');
+                        exit();
+                        // $data['errors'][] = $result['error'];
                     }
+                }
+                else
+                {
+                    $notifications->show($data['error'],'error');
+                    exit();
                 }
             }
             else
@@ -245,12 +273,6 @@ class SalonRegister extends Controller
         if (empty(trim($businessregnumber))) {
             $errors['businessregnumber'] = "Invalid business registration number is empty.";
         }
-
-        // Validate image size (if provided)
-        // if (!is_null($image_size) && $image_size < 100000) 
-        // { // 1MB limit
-        //     $errors['image_size'] = "File size too large. Please upload an image less than 1MB.";
-        // }
 
         return $errors;
     }

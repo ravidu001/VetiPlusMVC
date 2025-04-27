@@ -1,8 +1,5 @@
-
 <?php
-
-// include __DIR__ . '/../../../server/controllers/salon/AddSalonService.php';
-
+    $notification = new Notification;
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <?= $notification->display(); ?>
     <div class="container">
         <div class="form-wrapper">
             <a href="<?=ROOT?>/SalonService"><i class="fa-solid fa-circle-xmark pageclose"></i></a>

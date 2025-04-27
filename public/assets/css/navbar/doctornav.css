@@ -172,9 +172,9 @@ body.dark .sidebar header .toggle {
    overflow-x: hidden;
 }
 
-.sidebar .menu{
-   margin-top: 35px;
-}
+/* .sidebar .menu{
+    margin-top: 35px;
+} */
 
 .sidebar .search-box {
    background-color: var(--primary-color-light);
@@ -217,7 +217,7 @@ body.dark .sidebar li a:hover .text {
 }
 
 .sidebar .menu-bar {
-   height: calc(100% - 50px); 
+   height: calc(100% - 100px); 
    display: flex;
    flex-direction: column;
    justify-content: space-between;
@@ -389,4 +389,14 @@ body.dark .switch::before {
    color: var(--text-white);
    transform: scale(1.1);
    box-shadow: var(--shadow-color) 0px 5px 15px;
+}
+
+.type {
+   font-weight: 800;
+   color: var(--primary-color);
+   padding: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 15px;
 }

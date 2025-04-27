@@ -23,11 +23,15 @@ class AssisContactus extends Controller {
                 ];
                 
                 if (!$feedback->create($data)) {
-                    echo "<script>alert('Feedback submitted successfully!');</script>";
-                    $this->view('assistant/assiscontactus');
+                    $notification = new Notification();
+                    $notification->show('Feedback submitted successfully!', 'success');
+                    //echo "<script>alert('Feedback submitted successfully!');</script>";
+                    //$this->view('assistant/assiscontactus');
                 } else {
-                    echo "<script>alert('Failed to submit feedback!');</script>";
-                    $this->view('assistant/assiscontactus');
+                    $notification = new Notification();
+                    $notification->show('Failed to submit feedback!', 'error');
+                    //echo "<script>alert('Failed to submit feedback!');</script>";
+                    //$this->view('assistant/assiscontactus');
                 }
             } else {
                 $complain = new systemcomplainModel();
@@ -66,23 +70,29 @@ class AssisContactus extends Controller {
                         $result = $complain->create($data);
         
                         if (!$result) {
-                            echo json_encode([
-                                'success' => true, 
-                                'message' => 'Complain submitted successfully!',
-                                'filename' => $uniqueFileName
-                            ]);
-                            echo "<script>alert('Complain submitted successfully!');</script>";
-                            $this->view('assistant/assiscontactus');
+                            // echo json_encode([
+                            //     'success' => true, 
+                            //     'message' => 'Complain submitted successfully!',
+                            //     'filename' => $uniqueFileName
+                            // ]);
+                            // echo "<script>alert('Complain submitted successfully!');</script>";
+                            $notification = new Notification();
+                            $notification->show('Complain submitted successfully!', 'success');
+                            // $this->view('assistant/assiscontactus');
                         } else {
                             // Remove the uploaded file if database update fails
                             unlink($uploadPath);
                             echo json_encode(['success' => false, 'message' => 'Failed to update profile picture in the database']);
-                            echo "<script>alert('Failed to upload complain image to the database!');</script>";
-                            $this->view('assistant/assiscontactus');
+                            // echo "<script>alert('Failed to upload complain image to the database!');</script>";
+                            $notification = new Notification();
+                            $notification->show('Failed to upload complain image to the database!', 'error');
+                            //$this->view('assistant/assiscontactus');
                         }
                     } else {
                         echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file']);
-                        echo "<script>alert('Failed to move complain image to the database!');</script>";
+                        // echo "<script>alert('Failed to move complain image to the database!');</script>";
+                        $notification = new Notification();
+                        $notification->show('Failed to move complain image to the database!', 'error');
                     }
                 } else {
                     $data = [
@@ -96,11 +106,15 @@ class AssisContactus extends Controller {
                     ];
                    
                     if (!$complain->create($data)) {
-                        echo "<script>alert('Complain submitted successfully!');</script>";
-                        $this->view('assistant/assiscontactus');
+                        $notification = new Notification();
+                        $notification->show('Complain submitted successfully!', 'success');
+                        // echo "<script>alert('Complain submitted successfully!');</script>";
+                        // $this->view('assistant/assiscontactus');
                     } else {
-                        echo "<script>alert('Failed to submit complain!');</script>";
-                        $this->view('assistant/assiscontactus');
+                        $notification = new Notification();
+                        $notification->show('Failed to submit complain!', 'error');
+                        //echo "<script>alert('Failed to submit complain!');</script>";
+                        //$this->view('assistant/assiscontactus');
                     }
                 }
             }

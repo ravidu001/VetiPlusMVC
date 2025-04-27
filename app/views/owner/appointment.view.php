@@ -76,7 +76,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($data['appointmentdata'])) : ?>
+                      <?php 
+                      if(is_array($data['appointmentdata'])):
+                         if (isset($data['appointmentdata'])) : ?>
                             <?php foreach ($data['appointmentdata'] as $appointment) : ?>
                                 <tr>
                                     <td><?= $appointment->appointmentID ?></td>
@@ -91,6 +93,7 @@
                             <tr>
                                 <td colspan="6">No appointment data available.</td>
                             </tr>
+                        <?php endif; ?>
                         <?php endif; ?>
                     </tbody>
                 </table>

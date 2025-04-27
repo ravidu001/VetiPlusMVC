@@ -19,24 +19,24 @@
         <div class="session-form-section"> <h2>Create Session</h2>
         <form id="session-form" method="post" action="<?= ROOT ?>/doctorNewSession/createSession" enctype="multipart/form-data">
             <div class="form-group">
-                <label>Selected Date</label>
+                <label>Selected Date <div style="color:red; padding-left:5px;">*</div></label>
                 <input type="text" id="selected-date" name="selectedDate" class="form-input" placeholder="select date from calendar" readonly>
             </div>
             
                 <div class="form-group">
-                    <label>Start Time</label>
+                    <label>Start Time<div style="color:red; padding-left:5px;">*</div></label>
                     <input type="time" name="startTime" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <label>End Time</label>
+                    <label>End Time<div style="color:red; padding-left:5px;">*</div></label>
                     <input type="time" name="endTime" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <label>Clinic Location</label>
+                    <label>Clinic Location<div style="color:red; padding-left:5px;">*</div></label>
                     <input type="text" name="clinicLocation" class="form-input" placeholder="Enter Google Map Location" required>
                 </div>
                 <div class="form-group">
-                    <label for="district">District</label>
+                    <label for="district">District<div style="color:red; padding-left:5px;">*</div></label>
                     <select id="district" name="district" class="form-input" required>
                         <option value="" disabled selected>Select a district</option>
                         <option value="Ampara">Ampara</option>

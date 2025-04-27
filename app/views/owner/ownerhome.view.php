@@ -18,7 +18,7 @@
         <div class="dashboard">
             <div class="dashboard-header">
                 <div class="user-profile">
-                    <img src="https://via.placeholder.com/80" alt="User Profile">
+                    <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" alt="User Profile">
                     <div class="user-profile-info">
                         <h3>Welcome Back</h3>
                         <p>Owner Dashboard</p>
@@ -53,12 +53,12 @@
                 <div class="stat-card">
                     <i class='bx bx-line-chart icon'></i>
                     <h3>Total Revenue</h3>
-                    <p>Rs. <?= htmlspecialchars($total) ?></p>
+                    <p>Rs. <?= htmlspecialchars($total ?? '0') ?></p>
                 </div>
                 <div class="stat-card">
                     <i class='bx bx-trending-up icon'></i>
                     <h3>Daily Revenue</h3>
-                    <p>Rs. <?= htmlspecialchars($todayRevenue) ?></p>
+                    <p>Rs. <?= htmlspecialchars($todayRevenue ?? '0') ?></p>
                 </div>
                 <div class="stat-card">
                     <i class='bx bx-calendar-x icon'></i>

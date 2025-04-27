@@ -20,12 +20,13 @@ class Logout extends Controller
                     unset($_SESSION['SALON_USER']);
                  
                 case 'Vet Assistant':
-                    unset($_SESSION['user_id']);
+                    unset($_SESSION['assis_id']);
                    
                 case 'System Admin':
                     unset($_SESSION['adminID']);
             }
             
+            unset($_SESSION['type']);
         }
         
         header("Location: " . ROOT . "/Login");

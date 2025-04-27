@@ -98,11 +98,14 @@ class SalonTimeSlots {
         
         $result = $this->query($query, $params);
     
+        show($result);
+
         if ($result && count($result) > 0) {
             $record = $result[0];
-            $id = $record->id;
+            $id = $record->salSessionID;
     
             // Now update the status to 'blocked' using the reusable update method
+            $this ->order_column = 'salSessionID';
             $this->update($id, ['status' => $status]);
         }
     }

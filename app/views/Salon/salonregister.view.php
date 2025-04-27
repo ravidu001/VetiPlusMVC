@@ -1,3 +1,7 @@
+<?php
+    $notification = new Notification;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,7 @@
     <title>First Time Render Page</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonregister.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/common/formdataerror.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -13,13 +18,16 @@
 
             if(!empty($data['errors']))
             {
-                    foreach($data['errors'] as $message){
-                        echo '<div class="message">'. $message . '</div>';
-                    }
+                foreach($data['errors'] as $message){
+                    echo '<div class="message">'. $message . '</div>';
+                }
+                // show('hiiiiiiiiiiiii');
             }
+            show($data);
         ?>
                      
 <div class="RendarContent">
+<?= $notification->display(); ?>
     
     <!-- I am not set the path yet because the login and sign up page is waiting -->
     <a href="<?=ROOT?>/Login"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
@@ -58,7 +66,7 @@
                            value="<?php 
                                     if (!empty($data['oldemaildata'])) 
                                     {
-                                      echo $data['oldemaildata'][0]->salonName;
+                                      echo $data['oldemaildata']->name;
                                     }
                             ?>"
                            required>
@@ -78,15 +86,15 @@
                     <label for="salonPhoneNumber">
                     <i class="fa-solid fa-phone"></i> Phone Number <span class="required">*</span>
                     </label>
-                    <input type="number" 
+                    <input type="text" 
                            id="salonPhoneNumber" 
                            name="salonPhoneNumber" 
                            placeholder="e.g., 077-6399941"
-                           pattern="0[0-9]{2}-[0-9]{7}"
+                           pattern="0[0-9]{9}"
                            value="<?php 
                                     if (!empty($data['oldemaildata'])) 
                                     {
-                                      echo $data['oldemaildata'][0]->salonPhoneNumber;
+                                      echo $data['oldemaildata']->phoneNumber;
                                     }
                             ?>"
                            required>
@@ -104,17 +112,17 @@
                  <!-- Address (URL) -->
                 <div class="form-group">
                     <label for="location">
-                        <i class="fa-solid fa-location-dot"></i> Location (URL) <span class="required">*</span>
+                        <i class="fa-solid fa-location-dot"></i> Location<span class="required">*</span>
                     </label>
-                    <input type="url" 
+                    <input type="text" 
                         id="location" 
                         name="location" 
-                        placeholder="e.g., https://www.example.com"
-                        pattern="https?://.+"
+                        placeholder="e.g., Rajaguruwatta,kolonna"
+                        
                         value="<?php 
                                     if (!empty($data['oldemaildata'])) 
                                     {
-                                      echo $data['oldemaildata'][0]->location;
+                                      echo $data['oldemaildata']->address;
                                     }
                             ?>" 
                         required>
@@ -144,7 +152,7 @@
                                 value="<?php 
                                             if (!empty($data['oldemaildata'])) 
                                             {
-                                            echo $data['oldemaildata'][0]->businessregnumber;
+                                            echo $data['oldemaildata']->BRNumber;
                                             }
                                     ?>"
                                 required>
@@ -159,7 +167,7 @@
                         
                                 <div class="image-upload-box">
                                     <div class="image-preview">
-                                        <img src="<?=ROOT?>/<?php echo $data['oldemaildata'][0]->brcertificate ?>" alt="">
+                                        <img src="/<?php echo $data['oldemaildata']->BRCertificate ?>" alt="">
                                     </div>
                                     <div class="upload-button">
                                         <i class="fas fa-upload"></i>
