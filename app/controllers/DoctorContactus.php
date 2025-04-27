@@ -11,6 +11,20 @@ class DoctorContactus extends Controller {
             if ($_POST['type'] == 'Feedback') {
                 $feedback = new systemfeedbackModel();
 
+                // check contact number is valid
+                if (!preg_match('/^\d{10}$/', $_POST['contact'])) {
+                    $notification = new Notification();
+                    $notification->show('Invalid contact number!', 'error');
+                    return;
+                }
+
+                // check rating is not empty
+                if (empty($_POST['rate'])) {
+                    $notification = new Notification();
+                    $notification->show('Please select a rating!', 'error');
+                    return;
+                }
+
                 $data = [
                     'name' => $_POST['name'],
                     'email' => $_POST['email'],

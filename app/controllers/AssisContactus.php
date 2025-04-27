@@ -21,6 +21,42 @@ class AssisContactus extends Controller {
                     'respond' => '',
                     'status' => 0
                 ];
+
+                // check if contact number is valid
+                if (!preg_match('/^\d{10}$/', $data['contactNumber'])) {
+                    $notification = new Notification();
+                    $notification->show('Invalid contact number format!', 'error');
+                    exit();
+                }
+
+                // check if comment is empty
+                if (empty($data['comment'])) {
+                    $notification = new Notification();
+                    $notification->show('Comment cannot be empty!', 'error');
+                    return;
+                }
+
+                // check if rating is valid
+                if (!in_array($data['rating'], [1, 2, 3, 4, 5])) {
+                    $notification = new Notification();
+                    $notification->show('Invalid rating value!', 'error');
+                    return;
+                }
+
+                // checkif name is empty
+                if (empty($data['name'])) {
+                    $notification = new Notification();
+                    $notification->show('Name cannot be empty!', 'error');
+                    return;
+                }
+
+                // check if email is empty
+                if (empty($data['email'])) {
+                    $notification = new Notification();
+                    $notification->show('Email cannot be empty!', 'error');
+                    return;
+                }
+
                 
                 if (!$feedback->create($data)) {
                     $notification = new Notification();
@@ -65,6 +101,13 @@ class AssisContactus extends Controller {
                             'status' => 0,
                             'image' => $uniqueFileName
                         ];
+
+                        // check if contact number is valid
+                        if (!preg_match('/^\d{10}$/', $data['contactNumber'])) {
+                            $notification = new Notification();
+                            $notification->show('Invalid contact number format!', 'error');
+                            exit();
+                        }
         
                         // insert data in to the database
                         $result = $complain->create($data);
@@ -104,6 +147,13 @@ class AssisContactus extends Controller {
                         'status' => 0,
                         'image' => ''
                     ];
+
+                    // check if contact number is valid
+                    if (!preg_match('/^\d{10}$/', $data['contactNumber'])) {
+                        $notification = new Notification();
+                        $notification->show('Invalid contact number format!', 'error');
+                        exit();
+                    }
                    
                     if (!$complain->create($data)) {
                         $notification = new Notification();
