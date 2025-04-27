@@ -4,16 +4,23 @@ class Assistant extends Controller {
     public function index() {
         // Check if the user is logged in
         if (!isset($_SESSION['assis_id'])) {
-            // Redirect to the login page if not logged in
-            header('Location: /login');
-            exit();
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
         }
 
-        // Check if the user is an assistant
-        if ($_SESSION['type'] !== 'Vet Assistant') {
-            // Redirect to the home page if not an assistant
-            header('Location: /login');
-            exit();
+        if ($_SESSION['type'] != 'Vet Assistant') {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
         }
 
         $assistantID = $_SESSION['assis_id'];
