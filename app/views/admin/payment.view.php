@@ -21,12 +21,12 @@ $notification = new Notification();
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
-    <?php echo $notification->display(); ?>
+        <?php echo $notification->display(); ?>
         <div class="main-container">
             <div class="payment-stats">
                 <div class="stat-card">
                     <h3>Daily Transactions</h3>
-                    <div class="stat-number">Rs. <?= htmlspecialchars($todayRevenue) ?></div>
+                    <div class="stat-number">Rs. <?= htmlspecialchars($todayRevenue ?? '0') ?></div>
                 </div>
                 <div class="stat-card">
                     <h3>Total Pet Owner</h3>
@@ -34,7 +34,7 @@ $notification = new Notification();
                 </div>
                 <div class="stat-card">
                     <h3>Total Revenue</h3>
-                    <div class="stat-number">Rs.  <?= htmlspecialchars($total) ?></div>
+                    <div class="stat-number">Rs. <?= htmlspecialchars($total) ?></div>
                 </div>
             </div>
 
