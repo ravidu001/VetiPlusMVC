@@ -164,13 +164,14 @@ class PO_PetAppts {
         
         // $this->beginTransaction();
         // try {
-            $sessModel = new SalonSession;
-            $updateSuccess = $sessModel->updateBookingsCount($params['salSessionID']);
-
+            // $sessModel = new SalonSession;
+            // $updateSuccess = $sessModel->updateBookingsCount($params['salSessionID']);
+            // && $updateSuccess !== false
+            
             $apptModel = new SalonBooked;
             $insertSuccess = $apptModel->bookAppointment_andReturnID($params);
         
-            if ($insertSuccess !== false && $updateSuccess !== false) {
+            if ($insertSuccess !== false) {
                 return true;
             }
             else return false;
