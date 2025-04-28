@@ -151,6 +151,8 @@ class DoctorViewSession extends Controller {
 
         // Check if assistant session data is found
         if ($assisSessionData) {
+            $n = 0;
+            $actionArray = [];
             foreach ($assisSessionData as $assisSessionItem) {
                 $assistant = new AssisModel;
                 $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
@@ -159,6 +161,10 @@ class DoctorViewSession extends Controller {
                     // print_r($assistantData->fullName);
                     $sessionAssistants[] = $assistantData;
                 }
+                if ($assisSessionItem->assistantID == $assistantIDsArray[$n]) {
+                    $actionArray[$n] = $assisSessionItem->action;
+                }
+                $n++;
             }
         }
 
@@ -194,7 +200,11 @@ class DoctorViewSession extends Controller {
             // show($sessionAppointments);
         }
 
-        $this->view('vetDoctor/doctorsessionview', ['sessionsDetails' => $consolidatedSessions, 'appointmentsDetails' => $sessionAppointments]);
+        $this->view('vetDoctor/doctorsessionview', 
+            ['sessionsDetails' => $consolidatedSessions, 
+            'appointmentsDetails' => $sessionAppointments,
+            'actionArray' => $actionArray,
+        ]);
     }
 
     public function updateAppointment() {

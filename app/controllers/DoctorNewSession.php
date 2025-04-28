@@ -54,8 +54,8 @@ class DoctorNewSession extends Controller {
         }
 
         // take the difference between start and end time in minutes
-        $interval = $startTime->diff($endTime);
-        $minutes = ($interval->h * 60) + $interval->i;
+        $interval = $startTime->diff($endTime); //Calculates the difference between the start time and the end time.
+        $minutes = ($interval->h * 60) + $interval->i; //$interval->i gives the number of minutes in the interval.
         $noOfAppointments = floor($minutes / $duration); // Calculate the number of appointments
         if ($noOfAppointments <= 0) {
             echo json_encode([
