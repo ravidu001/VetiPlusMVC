@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () =>
             const targetSection = document.getElementById(sectionId);
             targetSection.classList.add('active');
 
-            // Smooth scroll to section
+            // Smooth scroll to section /^(\d{9}[vVxX]|\d{12})$/
             targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
         });
     });
