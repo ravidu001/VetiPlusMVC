@@ -70,7 +70,7 @@
 
                     <form class="form-grid" id="personalInfoForm">
                         <div class="form-group">
-                            <label>Full Name</label>
+                            <label>Full Name <span class="asterisk">*</span></label>
                             <input type="text" class="form-input" name="fullName"
                                 value="<?= htmlspecialchars($assis->fullName ?? 'N/A') ?>" disabled>
                         </div>
@@ -83,17 +83,17 @@
                             <input type="text" class="form-input" value="199845123456" disabled>
                         </div> -->
                         <div class="form-group">
-                            <label>Phone Number</label>
+                            <label>Phone Number <span class="asterisk">*</span></label>
                             <input type="tel" class="form-input" name="contactNumber"
                                 value="<?= htmlspecialchars($assis->contactNumber ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Date of Birth</label>
+                            <label>Date of Birth <span class="asterisk">*</span></label>
                             <input type="date" class="form-input" name="DOB"
                                 value="<?= htmlspecialchars($assis->DOB ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Gender</label>
+                            <label>Gender <span class="asterisk">*</span></label>
                             <select class="form-input" name="gender" disabled>
                                 <option value="Male" <?= ($assis->gender ?? '') === 'Male' ? 'selected' : '' ?>>Male
                                 </option>
@@ -106,17 +106,17 @@
 
                         </div>
                         <div class="form-group full-width">
-                            <label>Address</label>
+                            <label>Address <span class="asterisk">*</span></label>
                             <input type="text" name="address" class="form-input"
                                 value="<?= htmlspecialchars($assis->address ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>District</label>
+                            <label>District <span class="asterisk">*</span></label>
                             <input type="text" class="form-input" name="district"
                                 value="<?= htmlspecialchars($assis->district ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group full-width">
-                            <label>Bio</label>
+                            <label>Bio <span class="asterisk">*</span></label>
                             <textarea class="form-input bio-input" name="bio" readonly>
                                 <?= htmlspecialchars($assis->bio, ENT_QUOTES, 'UTF-8') ?>
                             </textarea>
@@ -144,14 +144,14 @@
 
                     <form class="form-grid professional-details" id="professionalInfoForm">
                         <div class="form-group">
-                            <label>License Number</label>
+                            <label>License Number<span class="asterisk">(Read only)</span></label>
                             <input type="text" class="form-input" name="certificateNumber"
                                 value="<?= htmlspecialchars($assis->certificateNumber ?? 'N/A') ?>" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="expertise">Specialization</label>
+                            <label for="expertise">Specialization <span class="asterisk">*</span></label>
                             <select id="expertise" class="form-input" name="expertise" disabled>
-                                <option value="Small Animal Care"
+                            <option value="Small Animal Care"
                                     <?= (htmlspecialchars($assis->expertise) ?? '') === 'Small Animal Care' ? 'selected' : '' ?>>
                                     Small Animal Care</option>
                                 <option value="Large Animal Medicine"
@@ -163,20 +163,62 @@
                                 <option value="Wildlife Conservation"
                                     <?= (htmlspecialchars($assis->expertise) ?? '') === 'Wildlife Conservation' ? 'selected' : '' ?>>
                                     Wildlife Conservation</option>
+                                <option value="Veterinary Surgery"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Surgery' ? 'selected' : '' ?>>
+                                    Veterinary Surgery</option>
+                                <option value="Veterinary Dermatology"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Dermatology' ? 'selected' : '' ?>>
+                                    Veterinary Dermatology</option>
+                                <option value="Veterinary Dentistry"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Dentistry' ? 'selected' : '' ?>>
+                                    Veterinary Dentistry</option>
+                                <option value="Veterinary Oncology"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Oncology (Cancer Treatment)' ? 'selected' : '' ?>>
+                                    Veterinary Oncology (Cancer Treatment)</option>
+                                <option value="Animal Reproduction and Fertility"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Animal Reproduction and Fertility' ? 'selected' : '' ?>>
+                                    Animal Reproduction and Fertility</option>
+                                <option value="Veterinary Cardiology"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Cardiology (Heart Care)' ? 'selected' : '' ?>>
+                                    Veterinary Cardiology (Heart Care)</option>
+                                <option value="Veterinary Neurology"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Neurology (Brain & Nerve Care)' ? 'selected' : '' ?>>
+                                    Veterinary Neurology (Brain & Nerve Care)</option>
+                                <option value="Animal Behavior and Training"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Animal Behavior and Training' ? 'selected' : '' ?>>
+                                    Animal Behavior and Training</option>
+                                <option value="Veterinary Ophthalmology"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Ophthalmology (Eye Care)' ? 'selected' : '' ?>>
+                                    Veterinary Ophthalmology (Eye Care)</option>
+                                <option value="Equine Medicine"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Equine Medicine (Horse Care)' ? 'selected' : '' ?>>
+                                    Equine Medicine (Horse Care)</option>
+                                <option value="Poultry Medicine"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Poultry Medicine' ? 'selected' : '' ?>>
+                                    Poultry Medicine</option>
+                                <option value="Food Animal Medicine"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Food Animal Medicine (Cattle, Sheep, Goats)' ? 'selected' : '' ?>>
+                                    Food Animal Medicine (Cattle, Sheep, Goats)</option>
+                                <option value="Veterinary Public Health"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Veterinary Public Health (Zoonotic Disease Control)' ? 'selected' : '' ?>>
+                                    Veterinary Public Health (Zoonotic Disease Control)</option>
+                                <option value="Aquatic Animal Health"
+                                    <?= (htmlspecialchars($assis->expertise) ?? '') === 'Aquatic Animal Health (Fish and Marine Animals)' ? 'selected' : '' ?>>
+                                    Aquatic Animal Health (Fish and Marine Animals)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Years of Experience</label>
+                            <label>Years of Experience <span class="asterisk">*</span></label>
                             <input type="number" class="form-input" name="experience"
                                 value="<?= htmlspecialchars($assis->experience ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Charge per Hour</label>
+                            <label>Charge per Hour <span class="asterisk">*</span></label>
                             <input type="number" class="form-input" name="chargePerHour"
                                 value="<?= htmlspecialchars($assis->chargePerHour ?? 'N/A') ?>" disabled>
                         </div>
                         <div class="form-group full-width">
-                            <label>Languages Spoken</label>
+                            <label>Languages Spoken <span class="asterisk">*</span></label>
                             <div class="language-checkboxes">
                                 <label class="checkbox-container">
                                     <input type="checkbox" name="languageSpoken[]" value="English" disabled
@@ -196,7 +238,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Certifications</label>
+                            <label>Certifications <span class="asterisk">(Read only)</span></label>
                             <div class="certificate-container">
                                 <div class="certificate-wrapper">
                                     <img src="<?= ROOT ?>/assets/images/vetAssistant/<?= $assis->certificate ?>"
@@ -232,7 +274,7 @@
                 <!-- Password Change Section -->
                 <div id="password" class="section">
                     <h2 class="section-header">
-                        Change Password
+                        Change Password 
                         <button class="edit-btn" id="passwordEditBtn">
                             <i class="fas fa-edit"></i> Edit
                         </button>
@@ -240,16 +282,16 @@
 
                     <form class="form-grid" id="passwordChangeForm">
                         <div class="form-group">
-                            <label>Current Password</label>
+                            <label>Current Password <span class="asterisk">*</span></label>
                             <input type="password" class="form-input" name="password" disabled>
                         </div>
                         <br />
                         <div class="form-group">
-                            <label>New Password</label>
+                            <label>New Password <span class="asterisk">*</span></label>
                             <input type="password" class="form-input" name="newPassword" disabled>
                         </div>
                         <div class="form-group">
-                            <label>Confirm New Password</label>
+                            <label>Confirm New Password <span class="asterisk">*</span></label>
                             <input type="password" class="form-input" name="confirmPassword" disabled>
                         </div>
                     </form>

@@ -51,7 +51,7 @@ class PO_home extends Controller {
         $options = [
             'petID' => null,
             'petOwnerID' => $this->petOwnerID,
-            'type' => 'vet'
+            'type' => 'all'
         ];
         $result = $this->petAppts->getPetApptUpcoming($options) ?: ["fetchedCount" => 0];
         

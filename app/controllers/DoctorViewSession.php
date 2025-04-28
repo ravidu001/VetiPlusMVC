@@ -2,6 +2,27 @@
 
 class DoctorViewSession extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        if ($_SESSION['type'] != 'Vet Doctor') {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+        
         $doctorID = $_SESSION['user_id'];
         $session = new DoctorSessionModel;
 
@@ -130,6 +151,8 @@ class DoctorViewSession extends Controller {
 
         // Check if assistant session data is found
         if ($assisSessionData) {
+            $n = 0;
+            $actionArray = [];
             foreach ($assisSessionData as $assisSessionItem) {
                 $assistant = new AssisModel;
                 $assistantData = $assistant->getAssistant($assisSessionItem->assistantID);
@@ -138,6 +161,10 @@ class DoctorViewSession extends Controller {
                     // print_r($assistantData->fullName);
                     $sessionAssistants[] = $assistantData;
                 }
+                if ($assisSessionItem->assistantID == $assistantIDsArray[$n]) {
+                    $actionArray[$n] = $assisSessionItem->action;
+                }
+                $n++;
             }
         }
 
@@ -173,7 +200,11 @@ class DoctorViewSession extends Controller {
             // show($sessionAppointments);
         }
 
-        $this->view('vetDoctor/doctorsessionview', ['sessionsDetails' => $consolidatedSessions, 'appointmentsDetails' => $sessionAppointments]);
+        $this->view('vetDoctor/doctorsessionview', 
+            ['sessionsDetails' => $consolidatedSessions, 
+            'appointmentsDetails' => $sessionAppointments,
+            'actionArray' => $actionArray,
+        ]);
     }
 
     public function updateAppointment() {

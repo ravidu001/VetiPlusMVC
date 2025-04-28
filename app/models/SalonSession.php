@@ -30,11 +30,14 @@ class SalonSession {
     public function updateBookingsCount ($salSessionID) {
         $updateQuery = " UPDATE salonsession SET
                             noOfBookings = noOfBookings + 1,
-                            noOfAvailable = noOfAvailable - 1
+                            noOfAvailable = CASE 
+                                WHEN noOfAvailable > 0 THEN noOfAvailable - 1 
+                                ELSE 0 
+                                END
                             WHERE salSessionID = :salSessionID
                         ";
         $updateDone = $this->query($updateQuery, ['salSessionID' => $salSessionID]);
-        return empty($updateDone) ? true : false;
+        return ($updateDone) ? true : false;
     }
 
     

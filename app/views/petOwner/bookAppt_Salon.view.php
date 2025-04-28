@@ -9,6 +9,7 @@
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/cardStyles.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
@@ -31,6 +32,7 @@
                             <p class="details"></p>
                             <div class="avgRating loneBtn-container"></div>
                             <span class="sessNote"></span>
+                            <p>Phone number: <strong class="phoneNumber"></strong></p>
                             <p>Address: <b><span class="address"></span></b></p>
                             <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
 
@@ -107,7 +109,6 @@
                         <div class="cardBtn-container">
                             <button class="cardBtn bookApptBtn"><i class="bx bxs-calendar-check bx-sm"></i> Book Appointment</button>
                         </div>
-
                     </div>
                 </template>
 
@@ -125,6 +126,31 @@
         <script defer>
             console.log(<?= json_encode($this->thisSalonDetails) ?>);
             fillDivData(<?= json_encode($this->thisSalonDetails) ?>, '.thisSalon');
+
+            const salonNameList = (<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName);
+            document.getElementById('salonSelect').innerHTML = salonNameList.map(x => `<option value="${x}">${x}</option>`).join('');
+            
+            document.querySelector('.searchFilter-container').addEventListener('change', () => {
+                const salonName = document.getElementById('salonSelect').value;
+                const dateSelected = document.getElementById('dateSearch').value;
+
+                const params = new URLSearchParams();
+                if (salonName) params.append('salonName', salonName);
+                if (dateSelected) params.append('dateSelected', dateSelected);
+
+                const url = `PO_apptDashboard_Salon/getAvailableSalons?${params.toString()}`;
+                fetchAndAppendCards(
+                    url,
+                    '.availSessCard-template',
+                    '.availSessCard-container'
+                )
+            });
+
+            fetchAndAppendCards(
+                'PO_apptDashboard_Salon/getAvailableSalons',
+                '.availSessCard-template',
+                '.availSessCard-container'
+            )
 
             const petSelect = document.getElementById('petSelect');
             const petList = (<?= json_encode($this->petList) ?>)
@@ -164,7 +190,7 @@
                         optionHTML.value = `${x.salSessionID}`;
                         optionHTML.textContent = `${x.time_slot}`;
                         timeSlotSelect.appendChild(optionHTML);
-                        (x.status != 'available' || x.noOfAvailable == 0) && (optionHTML.disabled = true);
+                        (x.status == 'blocked' || x.noOfAvailable == 0) && (optionHTML.disabled = true);
                     });
                 })
             })
@@ -203,7 +229,8 @@
                     }
                     else {
                         let apptID = data1.appointmentID;
-                        let payObj = {action: 'PO_bookAppt_salon/acceptPayment', serviceType: 'salon', amount: '300', groomingID: apptID};
+                        let payObj = {action: 'PO_bookAppt_salon/acceptPayment', serviceType: 'salon', amount: '300'};
+                        // , groomingID: apptID
         
                         fetch('PO_bookAppt_Salon/getSavedCard')
                         .then(response => response.json())
@@ -215,6 +242,7 @@
                     }
                 })
             })
+            
         </script>
     </body>
 </html>

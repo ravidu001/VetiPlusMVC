@@ -18,8 +18,8 @@ class Salon extends Controller
         }
 
         //define today
-        $today = date('Y-m-d');
-        // $today = '2025-04-23';
+        // $today = date('Y-m-d');
+        $today = '2025-04-28';
 
         $data = [];
 

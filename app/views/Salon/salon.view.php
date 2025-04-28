@@ -77,12 +77,14 @@
                         <div class="stat-info">
                             <div class="stat-value">
                                 <?php
+                                    $completecount = 0;
+                                    
                                     if(!empty($data['completedCount']))
                                     {
-                                        $count = $data['completedCount'];
+                                        $completecount = $data['completedCount'];
                                     }
                                 ?>
-                                <?= $count ?>
+                                <?= $completecount ?>
                             </div>
                             <div class="stat-label">Total Complete Appointments</div>
                         </div>
@@ -247,7 +249,7 @@
                                                 <td><?= $detail['bookedDate'] ?></td>
                                                 <td><?= $detail['bookedTime'] ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="detailfor">
                                                 <td><?= $detail['petOwner'] ?></td>
                                                 <td><?= $detail['slotDate'] ?></td>
                                                 <td><?= $detail['timeSlot'] ?></td>

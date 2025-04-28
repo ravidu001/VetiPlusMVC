@@ -88,6 +88,7 @@ class SalonBooked
 
         $bookingSuccess = $this->insert($data);
         return empty($bookingSuccess) ? true : false;
+        
         // if (empty($bookingSuccess)) {
         //     return ['success' => true, 'appointmentID' => $this->getLastID()];
         // } else {

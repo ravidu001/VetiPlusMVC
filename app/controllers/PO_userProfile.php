@@ -187,18 +187,26 @@ class PO_userProfile extends Controller {
                 "popUpMsg" => "Password changed successfully!",
                 "nextPage" => "PO_userProfile"
             ]);
+            exit();
         } else {
             echo json_encode([
                 "status" => "failure",
                 "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png",
                 "popUpMsg" => "Failed to change password. Please try again later."
             ]);
+            exit();
         }
     }
 
     public function logout () {
         unset($_SESSION['petOwnerID']);
-        redirect('Landing');
+        echo json_encode([
+            "status" => "success",
+            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+            "popUpMsg" => "Bye for now!",
+            "nextPage" => "Landing"
+        ]);
+        exit();
     }
 
     public function deleteAccount () {
@@ -211,12 +219,14 @@ class PO_userProfile extends Controller {
                 "popUpMsg" => "We're sorry to see you go 😓!",
                 "nextPage" => "Landing"
             ]);
+            exit();
         } else {
             echo json_encode([
                 "status" => "failure",
                 "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png",
                 "popUpMsg" => "Something went wrong! PLease try again later."
             ]);
+            exit();
         }
     }
 }

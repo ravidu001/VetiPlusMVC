@@ -23,13 +23,13 @@
             const ROOT = `<?= ROOT ?>`;
             // get details from the closest card class into an object and return it:
             function getCardDetails_appt (btn) {
-                let formAction;
-                if (btn.classList.contains('rescheduleBtn'))
-                    formAction = 'PO_apptDashboard_Salon/bookAppt';
-                else if (btn.classList.contains('cancelBtn'))
-                    formAction = 'PO_apptDashboard_Salon/rateAppt';
-                else if (btn.classList.contains('ratingBtn'))
-                    formAction = 'PO_apptDashboard_Salon/rateAppt';
+                // let formAction;
+                // if (btn.classList.contains('rescheduleBtn'))
+                //     formAction = 'PO_apptDashboard_Salon/bookAppt';
+                // else if (btn.classList.contains('cancelBtn'))
+                //     formAction = 'PO_apptDashboard_Salon/cancelAppt';
+                // else if (btn.classList.contains('ratingBtn'))
+                //     formAction = 'PO_apptDashboard_Salon/rateAppt';
                 
                 const card = btn.closest('.card');
                 const cardDetails = {
@@ -41,8 +41,8 @@
                     providerName: card.querySelector('.providerName').textContent,
                     reason: card.querySelector('.reason').textContent,
                     petName: card.querySelector('.petName').textContent,
-                    apptDateTime: card.querySelector('.apptDateTime').textContent,
-                    action: formAction
+                    // apptDateTime: card.querySelector('.apptDateTime').textContent
+                    // action: formAction
                 };
 
                 return cardDetails;
@@ -71,9 +71,8 @@
                             </p>
                         </div>
                         <div class="cardBtn-container">
-                            <!-- <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button> -->
-                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
-                                <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
+                            <!-- <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
+                                <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button> -->
                             <button class="cardBtn cancelBtn" title="Cancel the appointment.">
                                 <i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
                         </div>
@@ -209,9 +208,11 @@
                 const button = e.target.closest('button');
                 if (button) {
                     const cardDetailsObj = getCardDetails_appt(button);
-                    (button.classList.contains('editBtn')) && displayPopUp('popup_editAppt', cardDetailsObj);
-                    (button.classList.contains('rescheduleBtn')) && displayPopUp('popup_rescheduleAppt', cardDetailsObj);
-                    (button.classList.contains('cancelBtn')) && displayPopUp('popup_cancelAppt', cardDetailsObj);
+                    // (button.classList.contains('rescheduleBtn')) && displayPopUp('popup_rescheduleAppt', cardDetailsObj);
+                    if (button.classList.contains('cancelBtn')) {
+                        const cancelObj = {action: 'PO_apptDashboard_Salon/cancelAppt', someID: cardDetailsObj.apptID}
+                        displayPopUp('popup_cancelAppt', cancelObj)
+                    };
                 }
             })
 

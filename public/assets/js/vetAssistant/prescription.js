@@ -159,7 +159,7 @@ document .getElementById('okButton').onclick = function() {
             console.error('Error:', error);
         });
     } else {
-        alert('Please select a Pet and Session before proceeding.');
+        showNotification('Please select a Pet and Session before proceeding.', 'error');
     }
 };
     

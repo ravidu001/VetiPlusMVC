@@ -85,7 +85,7 @@
                 </div>
                 <div>
                     <h2>Email</h2>
-                    <p>vetiplus737@gmail.com</p>
+                    <p>support@vetiplus.com</p>
                 </div>
                 <div>
                     <h2>Call us</h2>

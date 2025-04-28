@@ -169,13 +169,13 @@ class PO_petAdoption extends Controller {
         
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
     }
     public function forAdoption_getMyList () {
         $result = $this->forAdoptionObj->getList_byPetOwner($this->petOwnerID)  ?: ["fetchedCount" => 0];
         
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
     }
 }

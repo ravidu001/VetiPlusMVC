@@ -72,8 +72,8 @@
                         </div>
                         <div class="cardBtn-container">
                             <!-- <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button> -->
-                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
-                                <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
+                            <!-- <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
+                                <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button> -->
                             <button class="cardBtn cancelBtn" title="Cancel the appointment.">
                                 <i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
                         </div>
