@@ -32,6 +32,7 @@
                             <p class="details"></p>
                             <div class="avgRating loneBtn-container"></div>
                             <span class="sessNote"></span>
+                            <p>Phone number: <strong class="phoneNumber"></strong></p>
                             <p>Address: <b><span class="address"></span></b></p>
                             <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
 
@@ -189,7 +190,7 @@
                         optionHTML.value = `${x.salSessionID}`;
                         optionHTML.textContent = `${x.time_slot}`;
                         timeSlotSelect.appendChild(optionHTML);
-                        (x.status != 'available' || x.noOfAvailable == 0) && (optionHTML.disabled = true);
+                        (x.status == 'blocked' || x.noOfAvailable == 0) && (optionHTML.disabled = true);
                     });
                 })
             })
@@ -228,7 +229,8 @@
                     }
                     else {
                         let apptID = data1.appointmentID;
-                        let payObj = {action: 'PO_bookAppt_salon/acceptPayment', serviceType: 'salon', amount: '300', groomingID: apptID};
+                        let payObj = {action: 'PO_bookAppt_salon/acceptPayment', serviceType: 'salon', amount: '300'};
+                        // , groomingID: apptID
         
                         fetch('PO_bookAppt_Salon/getSavedCard')
                         .then(response => response.json())

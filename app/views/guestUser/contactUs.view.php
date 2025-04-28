@@ -71,11 +71,6 @@
                     No, the system is entirely web-based and can be accessed via a browser
                     on any device, including desktops, laptops, tablets, and smartphones.
                 </details>
-                <!-- <details name="faq">
-                    <summary>What should I do if I forget my password?</summary>
-                    Use the "Forgot Password" feature on the login page to reset your password.
-                    Instructions will be sent to your registered email address.
-                </details> -->
                 <details name="faq">
                     <summary>Is my personal data secure?</summary>
                     Yes, the system employs secure data storage and encryption methods to protect all user data.
@@ -97,7 +92,7 @@
                 </div>
                 <div>
                     <h2>Email</h2>
-                    <p>vetiplus737@gmail.com</p>
+                    <p>support@vetiplus.com</p>
                 </div>
                 <div>
                     <h2>Call us</h2>
