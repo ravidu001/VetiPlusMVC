@@ -17,13 +17,6 @@
     <div class="appointment-container">
       <div class="appointments-header">
         <h1>Appointment Management</h1>
-        <!-- <div class="search-filter">
-          <select>
-            <option>All Status</option>
-            <option>Accepted</option>
-            <option>Cancelled</option>
-          </select>
-        </div> -->
       </div>
       <table class="appointments-table">
         <thead>

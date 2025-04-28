@@ -52,17 +52,13 @@
                 <form class="search-form" action="<?= ROOT ?>/OwnerAppointment/appointmentlist" method="GET">
                     <div class="search-inputs">
                         <input type="text" name="petownerid" placeholder="Enter User ID">
-                        <!-- <input type="text" placeholder="Search by Pet ID"> -->
-                        <!-- <input type="date"> -->
+            
                     </div>
                     <button type="submit" name="submit" value="1" class="search-btn">Search Appointments</button>
                 </form>
             </div>
 
-            <!-- <div class="chart-section">
-                 <h2>Appointment Trends</h2>
-                <canvas id="appointmentChart"></canvas> 
-            </div> -->
+        
             <div class="appointments-list">
                 <table class="appointments-table">
                     <thead>

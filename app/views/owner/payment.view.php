@@ -32,20 +32,6 @@
                         <p>Rs.  <?= htmlspecialchars($total ?? '0') ?></p>
                     </div>
                 </div>
-                <!-- <div class="dashboard-card">
-                    <i class='bx bx-trending-down icon'></i>
-                    <div class="dashboard-card-content">
-                        <h3>Monthly Expenses</h3>
-                        <p>Rs.  890</p>
-                    </div>
-                </div>
-                <div class="dashboard-card">
-                    <i class='bx bx-chart icon'></i>
-                    <div class="dashboard-card-content">
-                        <h3>Total Expenses</h3>
-                        <p>Rs. 100,000</p>
-                    </div>
-                </div> -->
             </div>
 
             <!-- Search Section -->
@@ -53,8 +39,6 @@
                 <form class="search-form"  action="<?= ROOT ?>/OwnerPayment/paymentlist" method="post">
                 <div class="search-inputs">
                         <input type="text" name="petownerID" placeholder="Enter User ID">
-                        <!-- <input type="text" placeholder="Enter Pet ID">
-                        <input type="date"> -->
                     </div>
                     <div class="search-button-row">
                     <button type="submit" class="search-btn">Search Transactions</button>

@@ -18,9 +18,6 @@
       <div class="complain-container">
         <div class="complain-header">
           <h1>Complaint Management</h1>
-          <!-- <div class="search-filter">
-            <input type="text" id="searchInput" placeholder="Search complaints...">
-          </div> -->
         </div>
 
         <div class="complaints-grid">

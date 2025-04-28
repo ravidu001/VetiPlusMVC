@@ -38,23 +38,10 @@ $notification = new Notification();
                     <div class="stat-number"><?php echo htmlspecialchars($appointmentcount, ENT_QUOTES, 'UTF-8'); ?></div>
                 </div>
             </div>
-
-            <!-- <div class="appointment-search">
-                <form class="search-form" action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="GET">
-                    <div class="search-inputs">
-                        <input type="text" name="user_id" placeholder="Enter User ID">
-                        <input type="text" name="pet_id" placeholder="Enter Pet ID">
-                        <input type="date" name="appointment_date">
-                    </div>
-                    <button type="submit" class="search-btn">Search Appointments</button>
-                </form>
-
-            </div> -->
             <div class="appointment-search">
                 <form class="search-form" action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="GET">
                     <div class="search-inputs">
                         <input type="text" name="petownerid" placeholder="Enter User ID">
-                        <!-- <input type="text" name="petid" placeholder="Enter Pet ID">  -->
                         <button type="submit" name="submit" value="1" class="search-btn">Search Appointments</button>
                     </div>
                 </form>
@@ -82,7 +69,6 @@ $notification = new Notification();
                                         <td><?= $appointment->bookedDateTime ?></td>
                                         <td><?= $appointment->sessionID ?></td>
                                         <td><?= $appointment->visitTime ?></td>
-                                        <!-- <td><a class="view-btn">View</a></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>

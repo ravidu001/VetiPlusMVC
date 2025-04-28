@@ -54,7 +54,6 @@
                                         </td>
                                     </tr>
                                 <?php else: ?>
-                                    <!-- <p> No registration requests </p> -->
                                 <?php endif; ?>
     
                             <?php endforeach; ?>

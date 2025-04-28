@@ -44,54 +44,6 @@
                     <p class="account-card-count">20</p>
                 </div>
             </div>
-
-            <!-- <div class="search-section">
-                <div class="search-card">
-                    <i class="fas fa-users search-card-icon"></i>
-                    <form class="search-form" action ="<?= ROOT ?>/OwnerAccount/petuser" method="post">
-                        <h3>User Account Search</h3>
-                        <div class="input-wrapper">
-                            <i class="fas fa-search search-form-icon"></i>
-                            <input type="text" placeholder="Search User ID" name="user_id" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock search-form-icon"></i>
-                            <input type="password" placeholder="Owner Password" name="owner_password" required>
-                        </div>
-                        <button type="submit">Search Users</button>
-                    </form>
-                </div>
-                <div class="search-card">
-                    <i class="fas fa-user-md search-card-icon"></i>
-                    <form class="search-form" action="<?= ROOT ?>/OwnerAccount/doctor" method="post">
-                        <h3>Doctor Account Search</h3>
-                        <div class="input-wrapper">
-                            <i class="fas fa-search search-form-icon"></i>
-                            <input type="text" placeholder="Search Doctor ID" name="doctor_id" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock search-form-icon"></i>
-                            <input type="password" placeholder="Owner Password" name="owner_password" required>
-                        </div>
-                        <button type="submit">Search Doctors</button>
-                    </form>
-                </div>
-                <div class="search-card">
-                    <i class="fas fa-dog search-card-icon"></i>
-                    <form class="search-form" action="<?= ROOT ?>/OwnerAccount/pet" method="post">
-                        <h3>Pet Account Search</h3>
-                        <div class="input-wrapper">
-                            <i class="fas fa-search search-form-icon"></i>
-                            <input type="text" placeholder="Search Pet ID" name="pet_id" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock search-form-icon"></i>
-                            <input type="password" placeholder="Owner Password" name="owner_password" required>
-                        </div>
-                        <button type="submit">Search Pets</button>
-                    </form>
-                </div>
-            </div> -->
         </div>
     </section>
 </body>

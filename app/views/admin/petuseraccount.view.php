@@ -77,20 +77,6 @@ $notification = new Notification();
                         <i class='bx bx-trash'></i> Delete Account
                     </a>
                 </div>
-                <!-- <div class="stats-section">
-                    <div class="stat-card">
-                        <h3>40</h3>
-                        <p>Total Appointments</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>10</h3>
-                        <p>Cancelled Appointments</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>3</h3>
-                        <p>Number of Pets</p>
-                    </div>
-                </div> -->
             </div>
         </div>
         <!-- Delete Confirmation Modal -->

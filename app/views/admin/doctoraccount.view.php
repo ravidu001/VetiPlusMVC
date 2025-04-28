@@ -83,21 +83,6 @@ $notification = new Notification();
                             <i class='bx bx-trash'></i> Delete Account
                         </a>
                     </div>
-
-                    <!-- <div class="stats-section">
-                        <div class="stat-card">
-                            <h3>100</h3>
-                            <p>Total Appointments</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>5</h3>
-                            <p>Cancelled Appointments</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>20</h3>
-                            <p>Years of Experience</p>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
