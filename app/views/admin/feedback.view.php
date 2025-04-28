@@ -19,11 +19,6 @@
         <div class="main-container">
             <div class="header">
                 <h1>User Feedback</h1>
-                <!-- <div class="filter-options">
-                    <button class="filter-btn active">Latest</button>
-                    <button class="filter-btn">Highest Rated</button>
-                    <button class="filter-btn">Most Helpful</button>
-                </div> -->
             </div>
             <!-- Feedback Card 1 -->
     

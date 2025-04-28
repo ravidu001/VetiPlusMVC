@@ -60,21 +60,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="stats-section">
-                    <div class="stat-card">
-                        <h3>12</h3>
-                        <p>Veterinary Visits</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>5</h3>
-                        <p>Vaccinations</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>3</h3>
-                        <p>Treatments</p>
-                    </div>
-                </div> -->
             </div>
         </div>
     </section>

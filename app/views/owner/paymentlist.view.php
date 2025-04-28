@@ -32,7 +32,6 @@
                             <th>Payment ID</th>
                             <th>Appointment ID</th>
                             <th>Date</th>
-                            <!-- <th>Doctor Name</th> -->
                             <th>Amount</th>
                         </tr>
                     </thead>
@@ -43,7 +42,6 @@
                                     <td><?= htmlspecialchars($payment->paymentID) ?></td>
                                     <td><?= htmlspecialchars($payment->appointmentID) ?></td>
                                     <td><?= htmlspecialchars($payment->dateTime) ?></td>
-                                    <!-- <td></td> -->
                                     <td>Rs. <?= htmlspecialchars($payment->amount) ?></td>
                                 </tr>
                             <?php endforeach; ?>

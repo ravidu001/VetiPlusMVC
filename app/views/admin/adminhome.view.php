@@ -26,13 +26,6 @@
                             <small class="text-muted">System Administrator</small>
                         </div>
                     </div>
-                    <!-- <div class="search-container">
-                        <i class='bx bx-search'></i>
-                        <input type="text" placeholder="Search dashboard...">
-                        <div class="notifications-badge">
-                            <i class='bx bx-bell'></i>
-                        </div>
-                    </div> -->
                 </div>
 
                 <!-- Stats Grid -->
@@ -142,14 +135,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="sub-card-column">
-                                            <div class="sub-card">
-                                                <div class="sub-card-body">
-                                                    <h6 class="sub-card-title">System Health</h6>
-                                                    <p class="sub-card-text">All Systems Operational</p>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

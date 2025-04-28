@@ -42,8 +42,6 @@ $notification = new Notification();
                 <form class="search-form" action="<?= ROOT ?>/AdminPayment/paymentlist" method="post">
                     <div class="search-inputs">
                         <input type="text" name="petownerID" placeholder="Enter User ID">
-                        <!-- <input type="text" placeholder="Enter Pet ID">
-                        <input type="date"> -->
                         <button type="submit" class="search-btn">Search Transactions</button>
                     </div>
                 </form>
