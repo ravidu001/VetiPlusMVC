@@ -113,15 +113,17 @@ class PO_bookAppt_Salon extends Controller {
 
     public function bookAppt () {
         $data = $_POST;
-        $data['petOwnerID'] = $this->petOwnerID;
-        $data['dateTime'] = date('Y-m-d');
+        // $data['petOwnerID'] = $this->petOwnerID;
+        // $data['dateTime'] = date('Y-m-d');
 
-        // $submitting['petOwnerID'] = $this->petOwnerID;
-        // $submitting['salSessionID'] = $data['salSessionID'];
-        // $submitting['petID'] = $data['petID'];
-        // $submitting['service'] = $data['service'];
+        $submitting['petOwnerID'] = $this->petOwnerID;
+        $submitting['dateTime'] = date('Y-m-d H:i');
+        $submitting['petOwnerID'] = $this->petOwnerID;
+        $submitting['salSessionID'] = $data['salSessionID'];
+        $submitting['petID'] = $data['petID'];
+        $submitting['service'] = $data['service'];
 
-        $bookingDone = $this->petApptsObj->makeBooking('salon', $data);
+        $bookingDone = $this->petApptsObj->makeBooking('salon', $submitting);
 
         header('Content-Type: application/json');
         echo json_encode(['success' => $bookingDone]);

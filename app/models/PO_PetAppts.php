@@ -162,8 +162,8 @@ class PO_PetAppts {
 
     private function makeBooking_salon ($params) {
         
-        $this->beginTransaction();
-        try {
+        // $this->beginTransaction();
+        // try {
             $sessModel = new SalonSession;
             $updateSuccess = $sessModel->updateBookingsCount($params['salSessionID']);
 
@@ -171,19 +171,19 @@ class PO_PetAppts {
             $insertSuccess = $apptModel->bookAppointment_andReturnID($params);
         
             if ($insertSuccess !== false && $updateSuccess !== false) {
-                $this->commit();
                 return true;
-                // return ['success' => true, 'appointmentID' => $this->getLastID()];
             }
-            $this->rollBack();
-            return false;
+            else return false;
+                // $this->commit();
+                // return ['success' => true, 'appointmentID' => $this->getLastID()];
+            // $this->rollBack();
             // return ['success' => false, 'appointmentID' => ''];
-        } 
-        catch (PDOException $e) {
-            $this->rollBack();
-            // return ['success' => false, 'appointmentID' => ''];
-            return false;
-        }
+        // } 
+        // catch (PDOException $e) {
+        //     $this->rollBack();
+        //     // return ['success' => false, 'appointmentID' => ''];
+        //     return false;
+        // }
     }
 
     public function cancelAppt (string $type, $apptID) {
