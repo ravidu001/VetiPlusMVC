@@ -72,10 +72,8 @@
             const modal = document.getElementById('deleteModal');
             const deleteBtn = document.getElementById('confirmDeleteBtn');
 
-            // Dynamically set the href with correct ID
             deleteBtn.href = `<?= ROOT ?>/AdminAddData/deletedata?id=${id}`;
 
-            // Show modal
             modal.style.display = 'block';
         }
 

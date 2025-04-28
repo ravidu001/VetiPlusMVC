@@ -17,7 +17,7 @@ class AdminSalonSystem extends Controller
             'rejectReason' => 'Proved' 
         ];
         $salon->updateStatus($salonID, $data);
-        redirect('adminsalonsystem'); // redirect back to list
+        redirect('adminsalonsystem'); 
     }
 
     public function decline($salonID)

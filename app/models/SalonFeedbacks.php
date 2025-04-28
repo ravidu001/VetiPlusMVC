@@ -10,7 +10,6 @@ class SalonFeedbacks
 
     public function getReviewsBySalonID($salonID)
     {
-        // show($salonId);
         $this->limit = 100;
         $this->offset = 0;
         $this->order_type = "desc";
@@ -26,14 +25,12 @@ class SalonFeedbacks
 
     public function saveReply($feedbackID, $replyContent)
     {
-        // Prepare the data to be updated
         $data = [
             'response' => $replyContent,
-            'status' => 1, // Assuming 1 means replied
-            'responseDateTime' => date('Y-m-d H:i:s') // Current date and time
+            'status' => 1, 
+            'responseDateTime' => date('Y-m-d H:i:s') 
         ];
 
-        // Update the record in the database
         return $this->update($feedbackID, [
             'status' => $data['status'], 
             'response' => $data['response'], 

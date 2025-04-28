@@ -33,19 +33,17 @@ class DoctorModel {
     public function doctorcount()
     {
         $count = $this->getCount();
-        return $count;  // Return the count value
+        return $count;  
 
     }
 
     public function find($doctorID) {
-        // $this->order_column = 'doctorID';
         $result = $this->first(['doctorID' => $doctorID]);
     
-        // Return the first record if the result is not empty
         if (!empty($result)) {
-            return $result; // Get the first record
+            return $result; 
         } else {
-            return false; // No record found
+            return false; 
         }
     }
 
@@ -59,15 +57,9 @@ class DoctorModel {
 
     public function checkUser($email)
     {
-        // echo $email;
         $this->order_column = 'doctorID';
-        // $result = $this->where(['email' => $email]);
-        return $this->where(['doctorID' => $email]); // what this return is an array of user
-        // if($result) {
-        //     return true;
-        // } else {
-        //     return false;
-        // } 
+        return $this->where(['doctorID' => $email]); 
+        
     }
 
     public function updateStatus($doctorID, $data) {

@@ -2,7 +2,6 @@
 
 class AssisPrescription extends Controller {
     public function index() {
-        // Check if the user is logged in
         if (!isset($_SESSION['assis_id'])) {
             header('Location: ' . ROOT . '/login');
             exit();
@@ -21,17 +20,13 @@ class AssisPrescription extends Controller {
         $sessionModel = new DoctorSessionModel();
         $sessionData = [];
 
-        // show($assissessionData);
         if(is_array($assissessionData)) {
-            // Check if assistant accepted the session
             foreach ($assissessionData as $assissessionItem) {
                 $sessionModel = new DoctorSessionModel();
                 if ($assissessionItem->action == 'accept') { 
                     echo "<script>console.log('ID " . json_encode($assissessionItem->sessionID) . "');</script>";
                     $session = $sessionModel->getsessionBySession($assissessionItem->sessionID);
-                    // show($session);
-                    if ($session) { // Check if session data is not empty
-                        // Convert stdClass object to associative array
+                    if ($session) { 
                         foreach ($session as $s) {
                             $sessionData[] = [
                                 'sessionID' => $s->sessionID,
@@ -53,16 +48,13 @@ class AssisPrescription extends Controller {
             }
         }
     
-        // Initialize an array to hold appointment and pet data
         $appointmentsWithPets = [];
-        $petsBySession = []; // New array to hold pets by session
-        // show($sessionData);
+        $petsBySession = []; 
         foreach ($sessionData as $sessionItem) {
             if ($sessionItem['completeStatus'] == 0) {
                 $appointmentModel = new AppointmentModel();
                 echo "<script>console.log('IDAPP " . json_encode($sessionItem['sessionID']) . "');</script>";
                 $appointmentData = $appointmentModel->getAppointmentBySession($sessionItem['sessionID']);
-                // show($appointmentData);
                 if ($appointmentData && is_array($appointmentData)) {
                     foreach ($appointmentData as $appointmentItem) {
                         $petModel = new Pet();
@@ -82,59 +74,27 @@ class AssisPrescription extends Controller {
                 }
             }
         }
-        
-        // foreach ($sessionData as $sessionItem) {
-        //     if ($sessionItem->completeStatus == 0) {
-        //         $appointmentModel = new AppointmentModel();
-        //         $appointmentData = $appointmentModel->getAppointmentBySessionwithEmpty($sessionItem->sessionID);
-    
-        //         foreach ($appointmentData as $appointmentItem) {
-        //             $petModel = new Pet();
-        //             $petData = $petModel->findPetDetailsByID($appointmentItem->petID);
-    
-        //             // Store the appointment and pet data in the array
-        //             $appointmentsWithPets[] = [
-        //                 'session' => $sessionItem,
-        //                 'appointment' => $appointmentItem,
-        //                 'pet' => $petData
-        //             ];
-    
-        //             // Group pets by session
-        //             if (!isset($petsBySession[$sessionItem->sessionID])) {
-        //                 $petsBySession[$sessionItem->sessionID] = [];
-        //             }
-        //             $petsBySession[$sessionItem->sessionID][] = $petData;
-        //         }
-        //     }
-        // }
          
-
         $vaccine = new VaccineDataModel();
-        $vaccineData = $vaccine->getvaccine(); // all vaccine data
-    
-        // Pass the combined data to the view
+        $vaccineData = $vaccine->getvaccine(); 
         $this->view('assistant/assisprescription', [
             'appointmentsWithPets' => $appointmentsWithPets,
             'petsBySession' => $petsBySession,
             'vaccineData' => $vaccineData,
-            'selectedPetID' => $_GET['petID'] ?? null, // Pass the selected pet ID if available
-            'selectedSessionID' => $_GET['sessionID'] ?? null // Pass the selected session ID if available
+            'selectedPetID' => $_GET['petID'] ?? null, 
+            'selectedSessionID' => $_GET['sessionID'] ?? null 
         ]);
     }
 
     public function getpetdetails() {
-        // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
             header('Location: ' . ROOT . '/login');
             exit();
         }
     
-        // Get the raw POST data
         $data = json_decode(file_get_contents('php://input'), true);
     
-        // Check if data is received
         if ($data) {
-            // Extract the values
             $petID = $data['petID'] ?? null;
             $sessionID = $data['sessionID'] ?? null;
             $appointmentID = $data['appointmentID'] ?? null;
@@ -143,16 +103,13 @@ class AssisPrescription extends Controller {
             $petData = $petModel->findPetDetailsByID($petID);
    
             if ($petData) {
-                // Set a session variable to indicate that the popup should not be shown
                 $_SESSION['popupShown'] = false;
 
-                // Return the pet data along with a success message
                 echo json_encode(['status' => 'success', 'message' => 'Data received successfully', 'petData' => $petData]);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Pet not found']);
             }
         } else {
-            // Handle the case where no data is received
             echo json_encode(['status' => 'error', 'message' => 'No data received']);
         }
     }
@@ -175,14 +132,11 @@ class AssisPrescription extends Controller {
                 $appointmentID = $appointmentItem->appointmentID;
             }
         }
-        // echo "<script>console.log('hello ' + " . json_encode($appointmentID) . ");</script>";
-
-        // check POST request
+       
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
             exit;
         }
-        // Validate and sanitize input data// Fetch data from the POST request
         $data['weight'] = isset($_POST['weight']) ? trim($_POST['weight']) : null;
         $data['symptoms'] = isset($_POST['symptoms']) ? trim($_POST['symptoms']) : null;
         $data['vaccine'] = isset($_POST['vaccine']) ? trim($_POST['vaccine']) : null;
@@ -197,7 +151,6 @@ class AssisPrescription extends Controller {
         $data['nextvaccineDate'] = isset($_POST['nextvaccineDate']) ? trim($_POST['nextvaccineDate']) : null;
 
         $notification = new Notification();
-        // Validation
         if (empty($data['weight']) || !is_numeric($data['weight']) || $data['weight'] <= 0) {
             $notification->show('Weight is required and must be a positive number.', 'error');
             exit();
@@ -208,10 +161,7 @@ class AssisPrescription extends Controller {
             exit();
         }
 
-        // if (empty($data['vaccine'])) {
-        //     $notification->show('Vaccination selection is required.', 'error', 'false');
-        //     exit();
-        // }
+        
 
         if ($data['surgical'] === 'Yes') {
             if (empty($data['surgicalName'])) {
@@ -271,20 +221,16 @@ class AssisPrescription extends Controller {
         ];
 
         $recordData = $medicalData->getMedicalID($conditions);
-        // show($recordData);
-
-        // Process the result
+        
         if (($recordData)) {
             echo "<script>console.log('RecordID assigned successfully: " . json_encode($recordData[0]->recordID) . "');</script>"; 
-            //echo $recordData[0]->recordID;
             $recordID = $recordData[0]->recordID;
         } else {
             echo "<script>console.log('Error, Record ID not assign successfully');</script>";
-            // echo $recordData[0]->recordID;
             exit;
         }
 
-        $currentDateTime = date('Y-m-d H:i'); // Format: YYYY-MM-DD HH:MM
+        $currentDateTime = date('Y-m-d H:i'); 
         $currentDate = date('Y-m-d');
         if ($data['surgical'] === 'Yes') {
             $surgeryData = [
@@ -313,16 +259,16 @@ class AssisPrescription extends Controller {
             ];
             $vaccineData = $vaccinetable->getVaccineBypetID($vacdata['petID']);
             if (!empty($vaccineData)) {
-                $found = false;  // flag to track if update was done
+                $found = false;  
                 foreach ($vaccineData as $vaccineItem) {
                     if ($vaccineItem->vaccineID == $vacdata['vaccineID'] && $vaccineItem->status == 0) {
                         $vaccine = [
                             'status' => 1,
-                            // 'nextDate' => 
+                             
                             'vaccinatedDate' => $currentDate,
-                            // 'recordID' => null,
+                            
                             'newRecordID' => $recordID,
-                            // 'vaccineID' => trim($_POST['vaccine']) ?? null
+                            
                         ];
 
                         $vaccinationID = $vaccineItem->vaccinationID;
@@ -334,7 +280,7 @@ class AssisPrescription extends Controller {
                             echo "<script>console.log('Update Error');</script>";
                         }
                         $found = true;
-                        break;  // no need to loop further
+                        break;  
                     }  
                 }
                 if (!$found) {
@@ -372,7 +318,6 @@ class AssisPrescription extends Controller {
                     'vaccineID' => trim($_POST['vaccine']) ?? null,
                     'petID' => $vacdata['petID'],
                 ];
-                // show($vaccine);
 
                 $result = $vaccinetable->insertData($vaccine);
 
@@ -392,9 +337,7 @@ class AssisPrescription extends Controller {
                 $nextvaccination = [
                     'status' => 0,
                     'nextDate' => $data['nextvaccineDate'],
-                    // 'vaccinatedDate' => $currentDate,
                     'recordID' => $recordID,
-                    // 'newRecordID' => null,
                     'vaccineID' => trim($_POST['nextvaccine']) ?? null,
                     'petID' => $petID,
                 ];

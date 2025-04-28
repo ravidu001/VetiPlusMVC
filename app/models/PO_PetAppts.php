@@ -34,9 +34,7 @@ class PO_PetAppts {
         $query .= " WHERE a.petOwnerID = COALESCE(:petOwnerID, a.petOwnerID)
                     AND a.petID = COALESCE(:petID, a.petID)";
         
-        // 
-        //  AND (a.status = 'completed' OR a.status = 'cancelled')
-        //  AND a.status = 'available'
+        
 
         if ($type === 'history') {
             $query .= " AND CONCAT(s.selectedDate, ' ', a.visitTime) < CURRENT_TIMESTAMP";
@@ -97,7 +95,6 @@ class PO_PetAppts {
         $vetResults = $this->getPetAppts_vet($params, $type) ?: [];
         $salonResults = $this->getPetAppts_salon($params, $type) ?: [];
         
-        // Combine and sort results
         $combined = array_merge($vetResults, $salonResults);
         
         usort($combined, function($a, $b) use ($type) {
@@ -108,10 +105,7 @@ class PO_PetAppts {
         return $combined;
     }
 
-    // i'm seperating these because history and upcoming won't be needed together
-    /**
-     * jm - $options should contain petOwnerID, petID and a type whether all, vet or salon
-     */
+    
     public function getPetApptHistory (array $options) {
         $params = ['petOwnerID' => $options['petOwnerID'], 'petID' => $options['petID']];
 
@@ -128,9 +122,7 @@ class PO_PetAppts {
         return $result;
     }
 
-    /**
-     * jm - $options should contain petOwnerID, petID and a type whether all, vet or salon
-     */
+    
     public function getPetApptUpcoming (array $options) {
         $params = ['petOwnerID' => $options['petOwnerID'], 'petID' => $options['petID']];
 

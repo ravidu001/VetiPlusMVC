@@ -31,7 +31,7 @@ class AdminAddData extends Controller
             $id = $_GET['id'];
             $deletedata = new Species_Breeds();
             $deletedata->delete($id, 'id');
-            redirect('AdminAddData'); // refresh the view
+            redirect('AdminAddData');
         }
     }
     
