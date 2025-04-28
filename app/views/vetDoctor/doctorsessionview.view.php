@@ -48,6 +48,7 @@
             <div class="detail-label">Assistant Details</div>
         </div>
         <?php if (!empty($sessionsDetails[0]['assistants'])): ?>
+            <?php $n=0; ?>
             <?php foreach($sessionsDetails[0]['assistants'] as $assistant): ?>
                 <div class="assistant-profile">
                     <div class="assistant-avatar">
@@ -55,11 +56,14 @@
                     </div>
                     <div class="assistant-info">
                         <h3><?= htmlspecialchars($assistant->fullName) ?></h3>
+                        <p><?= htmlspecialchars($assistant->contactNumber) ?></p>
                         <p><?= htmlspecialchars($assistant->expertise) ?> | <?= htmlspecialchars($assistant->experience) ?> Years Experience</p>
                         <div id="assistant-rating"></div>
                         <div>Hourly Rate: $<?= htmlspecialchars($assistant->chargePerHour) ?>/hr</div>
+                        <div> Request Status: <?= ucfirst(htmlspecialchars($actionArray[$n])) ?></div>
                     </div>
                 </div>
+                <?php $n++; ?>
             <?php endforeach; ?>
         <?php else: ?>
             <div class="assistant-profile">

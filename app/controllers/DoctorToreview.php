@@ -1,6 +1,27 @@
 <?php
 class DoctorToreview extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        if ($_SESSION['type'] != 'Vet Doctor') {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+        
         // Initialize data arrays for pending and completed reviews
         $data['pendingReviews'] = [];
         $data['completedReviews'] = [];
@@ -69,6 +90,17 @@ class DoctorToreview extends Controller {
     public function submitReview() {
         // Process form submission for reviews
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $notification = new Notification();
+            if (!isset($_POST['rate']) || empty($_POST['rate'])) {
+                // Handle case where no rating is provided
+                $notification->show('Please rate the assistant.', 'error');
+                exit();
+            }
+            if (!isset($_POST['feedback']) || empty($_POST['feedback'])) {
+                // Handle case where no feedback is provided
+                $notification->show('Please provide feedback.', 'error');
+                exit();
+            }
             $sessionID = $_POST['sessionID'] ?? 0;
             $assistantID = $_POST['assistantID'] ?? 0;
             $rating = $_POST['rate'] ?? 0;

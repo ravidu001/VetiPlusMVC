@@ -152,7 +152,7 @@ $notification = new Notification();
                 <h3>Personal Information</h3>
                 <div class="form-group">
                     <label for="fullName">Full Name <div style="color:red; padding-left:5px;">*</div></label>
-                    <input type="text" id="fullName" class="form-input" name="fullName" required 
+                    <input type="text" id="fullName" class="form-input" name="fullName"  
                         placeholder="Enter Full Name">
                 </div>
                 <div class="form-group">
@@ -294,7 +294,7 @@ $notification = new Notification();
             <div class="form-section" id="uploadInfo">
                 <h3>Upload Certification</h3>
                 <div class="form-group file-upload">
-                    <label for="certificate">Upload Professional Certificate <div style="color:red; padding-left:5px;">*</div></label>
+                    <label for="certificate">Upload Professional Certificate - - Rename the file name as ASVC_1234 <div style="color:red; padding-left:5px;">*</div></label>
                     <input type="file" id="certificate" name="certificate" accept=".pdf,.jpg,.png" required>
                 </div>
 

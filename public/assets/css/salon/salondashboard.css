@@ -163,32 +163,14 @@ body:has(#sidebar.close) .homecontent
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Slot Status Colors */
-.timeSlotforTOday .booked-slot {
-    background-color: var(--primary-color);
-    color: var(--text-white);
-    border-left: 4px solid #4a0980;
-  }
-  
-  .timeSlotforTOday .blocked-slot {
-    background-color: var(--background-light);
-    color: var(--text-clr);
-    border-left: 4px solid #a07ba0;
-  }
-  
-  .timeSlotforTOday .available-slot {
-    background-color: var(--list-item);
-    color: var(--text-primary);
-    border-left: 4px solid #efbfef;
-  }
 
 /* Time Slots Table */
 .timeSlotforTOday .slotdetails {
-  width: 90%;
+  width: 100%;
   border-collapse: separate;
   border-spacing: 0 8px;
-  margin-top: 15px;
-  margin-left: 10px;
+  margin-top: 3px;
+  margin-left: 3px;
 }
 
 .timeSlotforTOday .slotdetails td {
@@ -275,7 +257,7 @@ body:has(#sidebar.close) .homecontent
   background-color: #fafbfc;
 }
 
-.part2 .table tbody tr:hover td {
+.part2 .table tr .detailfor {
   background-color: #f1f8fe;
 }
 
@@ -363,21 +345,23 @@ body:has(#sidebar.close) .homecontent
 
 /* Specific styling for timeSlotforTOday class */
 .timeSlotforTOday .booked-slot {
-  background-color: var(--primary-color);
-  color: var(--text-white);
-  border-left: 4px solid #4a0980;
+  background-color: #d9beef;
+  color: var(--primary-color);
+  font:bold;
+  font-size: 15px;
+  border-left: 6px solid #4a0980;
 }
  
 .timeSlotforTOday .blocked-slot {
-  background-color: var(--background-light);
+  background-color: rgb(161, 161, 161);
   color: var(--text-clr);
-  border-left: 4px solid #a07ba0;
+  border-left: 6px solid black;
 }
  
 .timeSlotforTOday .available-slot {
   background-color: var(--list-item);
   color: var(--text-primary);
-  border-left: 4px solid #efbfef;
+  border-left: 6px solid #efbfef;
 }
 
 /* No time slots message styling */
@@ -400,7 +384,7 @@ body:has(#sidebar.close) .homecontent
   .slotdetails tr {
     margin-bottom: 15px;
     display: block;
-    border-bottom: 2px solid #6A0DAD;
+    /* border-bottom: 2px solid #6A0DAD; */
   }
   
   .slotdetails td {
