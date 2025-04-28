@@ -1,58 +1,3 @@
-// document.addEventListener('DOMContentLoaded', () => {
-// const reviewNotification = document.getElementById('reviewNotification');
-// const loadingMessage = document.getElementById('loadingMessage');
-
-// Function to check and display review notifications
-//     function checkReviewNotifications() {
-//         // Simulate fetching review data (replace with actual backend call)
-//         fetch('')
-//             .then(response => response.json())
-//             .then(data => {
-//                 const newReviewCount = data.newReviewCount;
-//                 // set the new review count as 1
-//                 newReviewCount = 1;
-
-//                 if (newReviewCount > 0) {
-//                     // Exciting message for new reviews
-//                     // window.alert('You have new reviews waiting to be checked!');
-//                     reviewNotification.innerHTML = `
-//                         <div class="review-alert">
-//                             <span class="review-icon">🌟</span>
-//                             <p>Exciting News! You have ${newReviewCount} 
-//                                ${newReviewCount === 1 ? 'new review' : 'new reviews'} 
-//                                waiting to be checked!</p>
-//                         </div>
-//                     `;
-//                     loadingMessage.textContent = 'New Reviews Arrived!';
-//                 } else {
-//                     // Motivational message when no new reviews
-//                     reviewNotification.innerHTML = `
-//                         <div class="no-review-alert">
-//                             <span class="no-review-icon">📊</span>
-//                             <p>No new reviews at the moment. 
-//                                Keep providing exceptional care!</p>
-//                         </div>
-//                     `;
-//                     loadingMessage.textContent = 'Stay Motivated';
-//                 }
-//             })
-//             .catch(error => {
-//                 // Fallback in case of error
-//                 reviewNotification.innerHTML = `
-//                     <div class="error-alert">
-//                         <span class="error-icon">⚠️</span>
-//                         <p>Unable to fetch review updates. 
-//                            Please check your connection.</p>
-//                     </div>
-//                 `;
-//                 loadingMessage.textContent = 'Connection Issue';
-//             });
-//     }
-
-//     // Call the function to check reviews
-//     checkReviewNotifications();
-// });
-
 // sorting and filtering functions
 document.addEventListener('DOMContentLoaded', () => {
     const sortSelect = document.getElementById('sortSelect');
@@ -169,7 +114,7 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Optional: Add keyboard support
+// Add keyboard support
 document.addEventListener('keydown', (event) => {
     if (loadingOverlay.classList.contains('hidden')) return;
     
@@ -183,7 +128,7 @@ function updateCharCount(textarea) {
     const charCount = document.getElementById('charCount');
     charCount.textContent = `${textarea.value.length} / ${textarea.maxLength}`;
     
-    // Optional: Change color if approaching limit
+    // Change color if approaching limit
     if (textarea.value.length > 400) {
         charCount.style.color = 'red';
     } else {
