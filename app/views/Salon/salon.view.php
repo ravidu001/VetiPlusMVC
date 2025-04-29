@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/navbar/salonnav.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salondashboard.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonchart.css"> 
-    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/css/guest/myFooter.css"> -->
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonpopup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Document</title>
@@ -163,11 +162,9 @@
                                             {
                                                 $timeslots = $data['slotdetails'];
 
-                                                // show($timeslots);
-
                                                 foreach ($data['slotdetails'] as $timeslot) 
                                                 {
-                                                    // show($timeslot['status']);
+                                                   
                                                     $slotstatus = isset($timeslot['status']) ? $timeslot['status'] : 'unknown';
                                                     $timeSlot = isset($timeslot['time_slot']) ? $timeslot['time_slot'] : 'N/A';
                                                     $noOfBookings = isset($timeslot['noOfBookings']) ? $timeslot['noOfBookings'] : 0;
@@ -240,7 +237,7 @@
                                         <?php 
                                             if(!empty($data['upcoming']))
                                             {
-                                                // print_r($data);
+                                                
                                                 $details = $data['upcoming'];
                                                 foreach($details as $detail)
                                                 {     
@@ -286,7 +283,7 @@
 
         <div>
             <?php
-                // require "../../../app/views"; 
+                
             ?>
         </div> 
     </div> 

@@ -116,7 +116,7 @@ class SalonRegister extends Controller
             return;
         }
 
-        show($arr);
+        // show($arr);
        //check the BR number has or not
        $BRnumber = $registration_table->fetchByBrNumber($arr['BRNumber']);
 
@@ -222,7 +222,7 @@ class SalonRegister extends Controller
                 {
                     // show('hi');
                     $result = $this->insertregisterdata($data, $registration_table);
-                    show($result);
+                    // show($result);
                     if ($result['success']) 
                     {
                         $notifications->show("Registration Successfully!.",'success');

@@ -13,15 +13,15 @@ class AssisRequest extends Controller {
             exit;
         }
 
-        if ($_SESSION['type'] != 'Vet Assistant') {
-            header('Location: ' . ROOT . '/login');
-            $notification = new Notification();
-            $_SESSION['notification'] = [
-                'message' => 'You are not authorized to access this page.',
-                'type' => 'error',
-            ];
-            exit;
-        }
+        // if ($_SESSION['type'] != 'Vet Assistant') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
 
         // change the action into expired if assiant not select any option(accept or reject) before the session
         $this->autoExpiredRequest();

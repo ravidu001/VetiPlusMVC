@@ -6,7 +6,6 @@
     <title>New Appointments</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/saloncancelappointment.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/navbar/salonnav.css">
-    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/cssFiles/salon/Enterdatebox.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>

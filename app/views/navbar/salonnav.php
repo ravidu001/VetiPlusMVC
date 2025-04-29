@@ -10,12 +10,9 @@
     <script type="text/javascript" src="<?=ROOT?>/assets/js/navbar/salonnav.js" defer></script>
 
     <?php
-        // Get the current file name (without query parameters)
-        $current_page = basename($_SERVER['PHP_SELF']);
-        // Check if any of the appointment pages are active
-        // $appointment_active = in_array($current_page, ['Newappointment.php', 'Cancelappointment.php', 'Completeappointment.php']);
         
-        //get the salon ID from the salon table 
+        $current_page = basename($_SERVER['PHP_SELF']);
+        
         $salonID = $_SESSION['SALON_USER'];
 
         if(empty($salonID))
@@ -60,13 +57,6 @@
                         <span>Time Slot</span>
                     </a>
                 </li>
-
-                <!-- <li class="nav-link <?= $current_page == 'SalonSlot' ? 'active' : '' ?>"> 
-                    <a href="<?= ROOT?>/SalonSlot">
-                        <i class='bx bxs-pie-chart-alt icon'></i>
-                        <span>Time SlotCreate</span>
-                    </a>
-                </li> -->
 
                 <li class="nav-link <?= $current_page == 'SalonService' ? 'active' : '' ?>"> 
                     <a href="<?= ROOT?>/SalonService">
@@ -129,7 +119,7 @@
         </nav>
     </div>
 </body>
-    <!-- <script src="<?=ROOT?>/assets/js/salon/sidebar.js"></script> -->
+   
 </html>
 
 

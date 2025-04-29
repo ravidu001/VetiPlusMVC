@@ -13,15 +13,15 @@ class DoctorReview extends Controller {
             exit;
         }
 
-        if ($_SESSION['type'] != 'Vet Doctor') {
-            header('Location: ' . ROOT . '/login');
-            $notification = new Notification();
-            $_SESSION['notification'] = [
-                'message' => 'You are not authorized to access this page.',
-                'type' => 'error',
-            ];
-            exit;
-        }
+        // if ($_SESSION['type'] != 'Vet Doctor') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
 
         // create vetfeedback model
         $feedback = new VetFeedbackModel();

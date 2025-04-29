@@ -13,15 +13,15 @@ class AssisProfile extends Controller {
             exit;
         }
 
-        if ($_SESSION['type'] != 'Vet Assistant') {
-            header('Location: ' . ROOT . '/login');
-            $notification = new Notification();
-            $_SESSION['notification'] = [
-                'message' => 'You are not authorized to access this page.',
-                'type' => 'error',
-            ];
-            exit;
-        }
+        // if ($_SESSION['type'] != 'Vet Assistant') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
         
         list($assisData, $languageSpoken) = $this->showdata();
         $this->view('assistant/assisprofile', ['assis' => $assisData, 'languageSpoken' => $languageSpoken]);

@@ -60,7 +60,7 @@
                         <p><?= htmlspecialchars($assistant->expertise) ?> | <?= htmlspecialchars($assistant->experience) ?> Years Experience</p>
                         <div id="assistant-rating"></div>
                         <div>Hourly Rate: $<?= htmlspecialchars($assistant->chargePerHour) ?>/hr</div>
-                        <div> Request Status: <?= ucfirst(htmlspecialchars($actionArray[$n])) ?></div>
+                        <div> Request Status: <?= ucfirst(htmlspecialchars($actionArray[$n] ?? '')) ?></div>
                     </div>
                 </div>
                 <?php $n++; ?>

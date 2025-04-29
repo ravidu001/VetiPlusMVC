@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Salon Service Form</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonofferadd.css"> 
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonofferadd.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>

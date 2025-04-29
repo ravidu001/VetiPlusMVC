@@ -82,7 +82,7 @@ $notification = new Notification();
                     // Format the age as "Nyr Mmons"
                     $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
             ?>
-                    <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($item['pet']->profilePicture) ?>" alt="Patient Avatar" class="patient-avatar">
+                    <img src="<?= ROOT ?>/assets/images/petowner/profilePictures/pet/<?= htmlspecialchars($item['pet']->profilePicture) ?>" alt="Patient Avatar" class="patient-avatar">
                     <div class="patient-info">
                         <h1><?= htmlspecialchars($item['pet']->name) ?></h1>
                         <p>Patient ID: #<?= htmlspecialchars($item['pet']->petID) ?></p>

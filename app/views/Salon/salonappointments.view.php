@@ -43,7 +43,7 @@
 
     function filterAppointments(status, btn = null) 
     {
-      // Update active button style
+      
       const allBtns = document.querySelectorAll('.filter-btn');
       allBtns.forEach(b => b.classList.remove('active'));
       if (btn)
@@ -52,14 +52,12 @@
       }
       else
       {
-        // highlight default "Upcoming" button
-        //special use :nth-child(1) this use for get the child from count the parent if use 2 color the complete
+        
         document.querySelector(".filter-btn:nth-child(1)").classList.add("active");
       }
       
       const container = document.getElementById('appointment-list');
-      // container.innerHTML = '';
-
+      
       const appointments = appointmentData[status] || [];
 
       console.log(appointments);
@@ -131,18 +129,10 @@
       
   }
   
-    //________________________________________________________________________________________________
-    //updateStatus function 
-
-    //_____________________________________________________________
-    //if not select show today
     window.onload = () => 
     {
         const today = new Date();
-        // const formattedToday = today.toISOString().split('T')[0];
-        // currentSelectedDate = formattedToday;
-
-        // Highlight today's date in the calendar
+        
         highlightAndSelectDay(today.getDate());
         
         // Fetch slots from backend
@@ -163,25 +153,12 @@
         //create a date object for selected day
         const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
 
-        // console.log(selected);
-        // console.log(day);
-
-        // Format the date as YYYY-MM-DD
-        // currentSelectedDate = selected;
-
-        // Send to backend to fetch slot details
-        // currentSelectedDate = formatted;
-
         // Highlight selected day
         highlightAndSelectDay(selected.getDate());
 
         // Fetch slots from backend
         sendSelectedDateToBackend(selected);
 
-        // let currentFilter = 'upcoming'; // Default filter
-
-        // Refresh appointments
-        // filterAppointments(currentFilter);
     }
 
 
@@ -200,8 +177,7 @@
         if(data.success) {
           alert('Status updated successfully!');
           location.reload();
-          //again refresh the data 
-          // sendSelectedDateToBackend(currentSelectedDate);
+          
         }
         else
         {

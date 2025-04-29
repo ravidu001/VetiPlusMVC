@@ -1,3 +1,7 @@
+<?php
+    $notification = new Notification;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,7 @@
     <title>Edit Salon Member Details</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonserviceadd.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/imageupload.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -15,11 +20,11 @@
         {
             if(!empty($data['olddata']))
             {
-                // show($data);
                 foreach($data['olddata'] as $x)
                 {
                 ?>
                     <div class="container">
+                    <?= $notification->display(); ?>
                         <div class="form-wrapper">
                         <a href="<?=ROOT?>/SalonStaff"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
                                 <h1 class="form-title">Update Member Details</h1>
@@ -50,6 +55,19 @@
                                             placeholder="0778566395"
                                             required>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="PhoneNumber">
+                                        Age <span class="required">*</span>
+                                    </label>
+                                        <input type="number" 
+                                            id="PhoneNumber" 
+                                            name="age" 
+                                            value = "<?= $x->age ?>"
+                                            placeholder="10"
+                                            required>
+                                </div>
+
 
                                 <!-- Address -->
                                 <div class="form-group">

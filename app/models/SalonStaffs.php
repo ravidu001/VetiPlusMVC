@@ -19,8 +19,8 @@ class SalonStaffs
 
     public function deletestaff($staffID)
     {
-         $this->delete($staffID, 'staffID');
-         return true;
+        return  $this->delete($staffID, 'staffID');
+        //  return true;
     }
 
     public function updatestaff($staffID, $data)
