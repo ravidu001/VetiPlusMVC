@@ -78,7 +78,7 @@
                     // Format the age as "Nyr Mmons"
                     $ageFormatted = "{$years}yr " . ($months > 0 ? "{$months}mons" : "");
             ?>
-                <img src="<?= ROOT ?>/assets/images/common/<?= htmlspecialchars($item['pet']->profilePicture) ?>"
+                <img src="<?= ROOT ?>/assets/images/petowner/profilePictures/pet/<?= htmlspecialchars($item['pet']->profilePicture) ?>"
                     alt="Patient Avatar" class="pet-avatar">
                 <div class="profile-details">
                     <h1><?= htmlspecialchars($item['pet']->name) ?></h1>

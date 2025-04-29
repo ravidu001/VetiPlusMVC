@@ -10,18 +10,14 @@ class SalonCompleteAppointment extends Controller{
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') 
         {
-            // Check if 'selectedDate' is received from the frontend
             if (isset($_POST['selectedDate'])) 
             {
                 $grooming_table = new SalonBooked();
                 $session_table = new SalonTimeSlots();
                 $pet_table = new Pet();
                 $petowner_table = new PetOwners();
-                // $data = [];
                 $upcomingappointments = [];
 
-        
-                // Sanitize input to prevent security issues
                 $selectedDate = htmlspecialchars(trim($_POST['selectedDate']));
 
 
@@ -31,19 +27,14 @@ class SalonCompleteAppointment extends Controller{
                 {
                     foreach($selectedSessions as $selectedSession)
                     {
-                        // show($selectedSession);
-
                         $salID = $selectedSession->salSessionID;
 
                         $bookeddatas = $grooming_table->getCompleteDetailsByID($salID);
-                        // show($bookeddatas);
-                        
+                       
                         if(isset($bookeddatas) && $bookeddatas != NULL)
                         {
                             foreach($bookeddatas as $bookeddata)
                             {
-                                // show($bookeddata);
-
                                 $petownerID = $bookeddata -> petOwnerID;
                                 // $petID = $bookeddata -> petOwnerID;
                                 $sessionID = $bookeddata -> salSessionID;

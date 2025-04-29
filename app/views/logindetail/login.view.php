@@ -58,7 +58,7 @@ $notification = new Notification();
                             <input type="password" id="password" name="password" placeholder="Password" required>
                             <span class="toggle-password" onclick="togglePassword()">👁️</span>
                         </div>
-                        <a href="#" class="forgot-password">Forgot Password?</a>
+                        <!-- <a href="#" class="forgot-password">Forgot Password?</a> -->
                         <button type="submit" class="login-button" name="login">Login</button>
                     </form>
                     <p class="register-prompt">

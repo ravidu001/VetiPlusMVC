@@ -81,8 +81,7 @@
             </div>
         </div>
     </div> 
-    
-    <!-- Modal for confirmation -->
+  
     <div id="deleteModal" class="modal">
         <div class="modal-content">
             <span class="closebtn" onclick="closeModal()">&times;</span><br>

@@ -6,10 +6,9 @@ class Salon extends Controller
     {
         $salonsessions = new SalonTimeSlots();
         $groomingSessions = new SalonBooked();
-        $petowner = new PetOwners();//get the pet owners details
+        $petowner = new PetOwners();
         $notifications = new Notification();
 
-        //get the salon ID from the salon table 
         $salonID = $_SESSION['SALON_USER'];
 
         if(empty($salonID))
@@ -17,37 +16,28 @@ class Salon extends Controller
             redirect('Login/login');
         }
 
-        //define today
-        // $today = date('Y-m-d');
-        $today = '2025-04-28';
-
+        $today = date('Y-m-d');
+       
         $data = [];
 
         $status = 'booked';
         
-        //get the salon time slot data for today
         $data['slotdetails'] = $this->fetchTimeSlotData($salonID, $today);
 
-        //get the total reviews from the salon
         $data['reviews'] = $this->fetchTotalReviews($salonID);
 
-        //get the appointments count
         $data['count'] = $this->fetchAppointmentsCount($salonID);
 
-        //get the total customers 
         $data['customers'] = $this->fetchCustomerCount($salonID);
 
-        //get the total complete bookings
         $data['completedCount'] = $groomingSessions->getCompletedAppointmentsCount($salonID);
 
-        //get salon details
         $data['salonDetails'] = $this->fetchSalonDetails($salonID);
 
         $results = $salonsessions->fetchUpcomingAppointments($salonID, $today, $status);
 
         if($results)
         {
-            // show($results);
             foreach($results as $result)
             {
                 $salsessionID = $result->salSessionID;
@@ -81,12 +71,10 @@ class Salon extends Controller
             }
         }
 
-        //check salon click the complete button
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['markComplete'])) 
         {
             $bookingID = $_POST['bookingID'];
 
-            // Update the booking status to 'complete'
             $result = $groomingSessions->updateStatus($bookingID, ['status' => 2]);
 
             if($result == true)

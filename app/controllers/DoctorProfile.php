@@ -13,15 +13,15 @@ class DoctorProfile extends Controller {
             exit;
         }
 
-        if ($_SESSION['type'] != 'Vet Doctor') {
-            header('Location: ' . ROOT . '/login');
-            $notification = new Notification();
-            $_SESSION['notification'] = [
-                'message' => 'You are not authorized to access this page.',
-                'type' => 'error',
-            ];
-            exit;
-        }
+        // if ($_SESSION['type'] != 'Vet Doctor') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
         
         $doctorData = $this->showdata();
         // echo '<script>window.alert("'.$doctorData->timeSlot.'")</script>';

@@ -12,14 +12,14 @@ class SalonStaff extends Controller
         $this->view('Salon/salonstaff',$data);
     }
 
-    //_____________________________________________________________________________________________________________________________
-    //delete staff member 
     public function deleteStaff()
     {
         $staffID = [];
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
         $staffID['staffID'] = $data;
+
+        $notifications = new Notification();
         
         $salonstaffID =  $staffID['staffID'] ?? null;
 
@@ -33,32 +33,32 @@ class SalonStaff extends Controller
 
         $stafftable = new SalonStaffs;
         
-        $data = $stafftable->deletestaff($salonstaffID);
+        $result = $stafftable->deletestaff($salonstaffID);
         
-        if ($data) 
+        if (!$result) 
         {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Offer deleted successfully.'
-            ]);
+            // echo json_encode([
+            //     'success' => true,
+            //     'message' => 'Offer deleted successfully.'
+            // ]);
+            $notifications->show("Successfully delete staff member",'success');
         } 
         else 
         {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to delete the offer.'
-            ]);
+            // echo json_encode([
+            //     'success' => false,
+            //     'message' => 'Failed to delete the staff member.'
+            // ]);
+            $notifications->show("Cannot delete",'error');
         }
 
         exit;
     }
 
-    //________________________________________________________________________________________________________________________________
-    //update staff member 
     public function edit($staffID)
     {
-        $staffID = (int)$staffID; // Convert to integer
-        // Create the array to pass the form data
+        $staffID = (int)$staffID; 
+        
         $data = [];
 
         $staffModel = new SalonStaffs;
@@ -67,25 +67,18 @@ class SalonStaff extends Controller
         $serviceData = $staffModel->wherestaff($staffID);
         $data['olddata'] = $serviceData;
 
-        // show($data['olddata']);
-
-        // Check if the submit button is clicked
         if (isset($_POST['update'])) 
         {
-            show('hi');
-            // Get the form data as the data array index
             $data = [
                 'fullName' => htmlspecialchars(trim($_POST['MemberName'] ?? '')),
                 'mobileNumber' => htmlspecialchars(trim($_POST['PhoneNumber'] ?? '')),
                 'address' => htmlspecialchars(trim($_POST['memberAddress'] ?? '')),
+                'age' => htmlspecialchars(trim($_POST['age'] ?? '')),
                 'NIC' => htmlspecialchars(trim($_POST['memberId'] ?? '')),
                 'workingType' => htmlspecialchars(trim($_POST['job'] ?? '')),
                 'salonID' => $_SESSION['SALON_USER'] ?? ''
             ];
 
-            show($data);
-
-            // Check if photo1 is uploaded
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) 
             {
                 $data = array_merge($data, [
@@ -96,7 +89,6 @@ class SalonStaff extends Controller
             }
             else 
             {
-                // Assign null values if photo1 is not uploaded
                 $data = array_merge($data, [
                     'photoname' =>  "",
                     'tempphoto' =>  "",
@@ -104,16 +96,12 @@ class SalonStaff extends Controller
                 ]);
             }
 
-
-           
-            // Validate the data
             $validateresult = $this->SalonDataValidation($data);
 
             show($validateresult);
 
             if (empty($validateresult['errors'])) 
             {
-                // Prepare file upload logic
                 $validateresult['profilePicture']= "";
             
                 if ($validateresult['photoname']) 
@@ -127,7 +115,6 @@ class SalonStaff extends Controller
                     }
                 }
 
-                // Save service data if no errors
                 if (empty($validateresult['errors'])) 
                 {
 
@@ -151,48 +138,46 @@ class SalonStaff extends Controller
                         else
                         {
                             $notifications->show("update Staff details unsuccessfully.!",'error');
+                            redirect('SalonStaff');
+                           
                         }
                 } 
                 else 
                 {
-                    // $data['errors'] = $validateresult['errors'];
                     $notifications->show("update Staff Profile picture cannot upload.!",'error');
+                    redirect('SalonStaff');
+                    
                 }
             }
             else 
             {
-                // $data['errors'] = $validateresult['errors'];
                 $notifications->show("updated some details incorrect update unsuccessfully.!",'error');
+                redirect('SalonStaff');
+                
             }
         }
 
         $this->view('Salon/salonstaffedit', $data);
     }
 
-
-    // Add salon service form data
-    //______________________________________________________________________________________________________________________________________________
     public function add() 
     {
-        // Create the array to pass the form data
         $data = [];
 
         $notifications = new Notification;
 
-        // Check if the submit button is clicked
         if (isset($_POST['submit'])) 
         {
-            // Get the form data as the data array index
             $data = [
                 'fullName' => htmlspecialchars(trim($_POST['MemberName'] ?? '')),
                 'mobileNumber' => htmlspecialchars(trim($_POST['PhoneNumber'] ?? '')),
                 'address' => htmlspecialchars(trim($_POST['memberAddress'] ?? '')),
+                'age' => htmlspecialchars(trim($_POST['age'] ?? '')),
                 'NIC' => htmlspecialchars(trim($_POST['memberId'] ?? '')),
                 'workingType' => htmlspecialchars(trim($_POST['job'] ?? '')),
                 'salonID' => $_SESSION['SALON_USER'] ?? ''
             ];
 
-            // Check if photo1 is uploaded
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) 
             {
                 $data = array_merge($data, [
@@ -203,7 +188,6 @@ class SalonStaff extends Controller
             }
             else 
             {
-                // Assign null values if photo1 is not uploaded
                 $data = array_merge($data, [
                     'photoname' =>  "",
                     'tempphoto' =>  "",
@@ -211,15 +195,10 @@ class SalonStaff extends Controller
                 ]);
             }
 
-            // show($data);
-            // Validate the data
             $validateresult = $this->SalonDataValidation($data);
-
-            // show($validateresult);
 
             if (empty($validateresult['errors'])) 
             {
-                // Prepare file upload logic
                 $validateresult['profilePicture']= "";
             
                 if ($validateresult['photoname']) 
@@ -233,7 +212,6 @@ class SalonStaff extends Controller
                     }
                 }
 
-                // Save service data if no errors
                 if (empty($validateresult['errors'])) 
                 {
 
@@ -246,35 +224,30 @@ class SalonStaff extends Controller
 
                     $stafftable = new SalonStaffs;
 
-                    // show($stafftable);
-                    try {
-                        // Call the insert method
-                        $stafftable->staffadd($validateresult);
-                        $notifications->show("Insert Staff details successfully.!",'success');
-                        // show($result);
-                        // show('hi');
-                
-                        // If no exceptions occur, assume success
-                        redirect('SalonStaff');
-                    } catch (Exception $e) {
-                        // show('ddf');
-                        // Handle the exception if something goes wrong
-                        // $data['errors'] = 'Data insert unsuccessful: ' . $e->getMessage();
-                        // show( $data['errors']);
-                        $notifications->show("update Staff details unsuccessfully.!",'error');
-                    }
+                       $result =  $stafftable->staffadd($validateresult);
+
+                       if(!$result)
+                       {
+                            $notifications->show("Insert Staff details successfully.!",'success');
+                            redirect('SalonStaff');
+                       }
+                       else
+                       {
+                            $notifications->show("update Staff details unsuccessfully.!",'error');
+                            redirect('SalonStaff');
+                       }
                 } 
                 else 
                 {
-                    // $data['errors'] = $validateresult['errors';
                     $notifications->show("Insert profile image unsuccessfully.!",'error');
-
+                    redirect('SalonStaff');
                 }
             }
             else 
             {
-                // $data['errors'] = $validateresult['errors'];
                 $notifications->show("Insert Staff details unsuccessfully.!",'error');
+                redirect('SalonStaff');
+
             }
         }
 
@@ -283,9 +256,8 @@ class SalonStaff extends Controller
 
     private function SalonDataValidation($arr) 
     {
-        $arr['errors'] = []; // Initialize errors as an array
+        $arr['errors'] = []; 
 
-        // Validate PhoneNumber
         if (empty($arr['mobileNumber'])) 
         {
             $arr['errors'][] = 'Phone Number is required.';
@@ -295,26 +267,31 @@ class SalonStaff extends Controller
             $arr['errors'][] = 'Phone Number must be a valid 10-digit number.';
         }
 
-        // Validate MemberName
+        if(!empty($arr['age']))
+        {
+            $age = $arr['age'];
+
+            if( $age <= 18 || $age >= 50)
+            {
+                 $arr['errors'][] = 'Age cannot be a less than 18 or greater than 50.';
+            }
+        }
+
         if (empty($arr['fullName'])) 
         {
             $arr['errors'][] = 'Member Name is required.';
         }
 
-
-        // Validate memberAddress
         if (empty($arr['address'])) 
         {
             $arr['errors'][] = 'Member Address is required.';
         }
 
-        // Validate job
         if (empty($arr['workingType'])) 
         {
             $arr['errors'][] = 'Job is required.';
         }
 
-        // Validate NIC
         if (empty($arr['NIC'])) 
         {
             $arr['errors'][] = 'National Identity Card (NIC) is required.';
@@ -331,7 +308,7 @@ class SalonStaff extends Controller
 
         if (empty($arr['errors'])) 
         {
-            unset($arr['errors']); // Remove errors key if no errors exist
+            unset($arr['errors']); 
         }
 
         return $arr;

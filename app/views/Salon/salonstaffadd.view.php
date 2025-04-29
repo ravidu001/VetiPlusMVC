@@ -1,3 +1,7 @@
+<?php
+    $notification = new Notification;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +10,19 @@
     <title>Add Salon Member</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonserviceadd.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/imageupload.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
+
+    <?= $notification->display(); ?>
         <div class="form-wrapper">
         <a href="<?=ROOT?>/SalonStaff"><i class="fa-solid fa-circle-xmark pageclose"></i></a>
                 <h1 class="form-title">Add New Member</h1>
             
             <form id="serviceForum" class="service-form" action= "" method="POST" enctype="multipart/form-data">
-                <!-- Salon Member Name -->
+               
                 <div class="form-group">
                     <label for="MemberName">
                         <i class="fa-solid fa-user"></i> Salon Member Name <span class="required">*</span>
@@ -27,7 +34,6 @@
                            required>
                 </div>
 
-                <!-- Telephone Number -->
                 <div class="form-group">
                     <label for="PhoneNumber">
                         <i class="fa-solid fa-phone"></i> Phone Number <span class="required">*</span>
@@ -39,7 +45,17 @@
                                required>
                 </div>
 
-                <!-- Address -->
+                <div class="form-group">
+                    <label for="PhoneNumber">
+                         Age <span class="required">*</span>
+                    </label>
+                        <input type="number" 
+                               id="PhoneNumber" 
+                               name="age" 
+                               placeholder="10"
+                               required>
+                </div>
+
                 <div class="form-group">
                     <label for="memberAddress">
                         <i class="fa-solid fa-location-dot"></i> Address <span class="required">*</span>
@@ -51,7 +67,6 @@
                            required>
                 </div>
 
-                <!-- Address -->
                 <div class="form-group">
                     <label for="memberId">
                         <i class="fa-solid fa-id-card-clip"></i> National Identity Number<span class="required">*</span>
@@ -63,7 +78,6 @@
                            required>
                 </div>
 
-                <!-- Work Status -->
                 <div class="form-group">
                     <label for="job">
                         <i class="fa-solid fa-user-check"></i> Work Status<span class="required">*</span>
@@ -75,7 +89,6 @@
                            required>
                 </div>
 
-                <!-- Image Upload Section -->
                 <div class="form-group">
                     <label>
                         <i class="fas fa-images"></i> Profile Image
@@ -97,7 +110,6 @@
 
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="submit-button" name="submit">
                     <i class="fas fa-plus-circle"></i> Save
                 </button>
