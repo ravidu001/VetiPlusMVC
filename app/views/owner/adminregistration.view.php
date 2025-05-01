@@ -1,5 +1,4 @@
 <?php
-// Create an instance of the Notification controller
 $notification = new Notification();
 ?>
 
@@ -54,6 +53,10 @@ $notification = new Notification();
                     <div class="form-group">
                         <i class='bx bxs-id-card'></i>
                         <input type="text" id="nic" name="nic" placeholder="NIC Number" required>
+                    </div>
+                    <div class="form-group">
+                        <i class='bx bxs-id-card'></i>
+                        <input type="text" id="dob" name="dob" placeholder="Enter DOB" required>
                     </div>
                     <div class="form-group">
                         <i class='bx bxs-user-detail'></i>

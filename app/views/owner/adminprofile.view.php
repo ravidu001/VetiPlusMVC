@@ -1,5 +1,4 @@
 <?php
-// Create an instance of the Notification controller
 $notification = new Notification();
 ?>
 
@@ -63,6 +62,13 @@ $notification = new Notification();
                         <div class="info">
                             <h4>Gender</h4>
                             <p><?= htmlspecialchars($admin->gender ?? 'N/A') ?></p>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class='bx bx-male-female'></i>
+                        <div class="info">
+                            <h4>Date of Birth</h4>
+                            <p><?= htmlspecialchars($admin->DOB ?? 'N/A') ?></p>
                         </div>
                     </div>
                 </div>

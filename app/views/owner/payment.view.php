@@ -16,7 +16,6 @@
     <?php require_once '../app/views/navbar/ownernav.php'; ?>
     <section class="home">
         <div class="container">
-            <!-- Payment Dashboard Cards -->
             <div class="payment-dashboard">
                 <div class="dashboard-card">
                     <i class='bx bx-trending-up icon'></i>
@@ -34,7 +33,6 @@
                 </div>
             </div>
 
-            <!-- Search Section -->
             <div class="payment-search">
                 <form class="search-form"  action="<?= ROOT ?>/OwnerPayment/paymentlist" method="post">
                 <div class="search-inputs">
