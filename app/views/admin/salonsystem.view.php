@@ -67,7 +67,6 @@
                     <h2 id="modalTitle">Confirm Action</h2>
                     <p id="modalDescription">Are you sure you want to proceed?</p>
 
-                    <!-- Reason Input (initially hidden) -->
                     <div id="rejectReasonWrapper" style="display: none; margin-top: 10px;">
                         <label for="rejectReason">Reason for rejection:</label>
                         <input type="text" id="rejectReason" placeholder="Enter reason..." class="reject-input">
@@ -90,7 +89,6 @@
                         alert("Please provide a reason for rejection.");
                         return;
                     }
-                    // Pass reason via query string (or POST if needed)
                     window.location.href = `<?= ROOT ?>/AdminSalonSystem/decline/${selectedSalonID}?reason=${encodeURIComponent(reason)}`;
                 } else {
                     window.location.href = `<?= ROOT ?>/AdminSalonSystem/accept/${selectedSalonID}`;
