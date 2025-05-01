@@ -1,5 +1,4 @@
 <?php
-// Create an instance of the Notification controller
 $notification = new Notification();
 ?>
 
@@ -41,7 +40,7 @@ $notification = new Notification();
             <div class="appointment-search">
                 <form class="search-form" action="<?= ROOT ?>/AdminAppointment/appointmentlist" method="GET">
                     <div class="search-inputs">
-                        <input type="text" name="petownerid" placeholder="Enter User ID">
+                        <input type="text" name="appointmentID" placeholder="Enter Appointment ID">
                         <button type="submit" name="submit" value="1" class="search-btn">Search Appointments</button>
                     </div>
                 </form>
