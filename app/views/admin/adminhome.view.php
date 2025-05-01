@@ -18,7 +18,6 @@
     <div class="home">
         <div class="container-fluid">
             <div class="dashboard-wrapper">
-                <!-- User Header -->
                 <div class="user-header">
                     <div class="user-profile">
                         <img src="<?= ROOT ?>/assets/images/systemAdmin/user.png" alt="Admin Profile">
@@ -28,7 +27,6 @@
                     </div>
                 </div>
 
-                <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stats-card">
                         <i class='bx bxs-user-account icon'></i>
@@ -60,10 +58,8 @@
                     </div>
                 </div>
 
-                <!-- Dashboard Main Content -->
                 <div class="dashboard-main">
                     <div class="chart-container">
-                        <!-- <canvas id="appointmentChart"></canvas> -->
                          <h2>Account Type</h2>
                           <div>
                             <div class="stats-cards card">
