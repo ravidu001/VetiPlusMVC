@@ -20,7 +20,6 @@
             <div class="header">
                 <h1>User Feedback</h1>
             </div>
-            <!-- Feedback Card 1 -->
     
 
 
