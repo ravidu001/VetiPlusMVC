@@ -23,15 +23,13 @@
             const ROOT = `<?= ROOT ?>`;
             // get details from the closest card class into an object and return it:
             function getCardDetails_appt (btn) {
-                let formAction;
-                if (btn.classList.contains('editBtn'))
-                    formAction = 'PO_apptDashboard_Vet/editAppt';
-                else if (btn.classList.contains('rescheduleBtn'))
-                    formAction = 'PO_apptDashboard_Vet/bookAppt';
-                else if (btn.classList.contains('cancelBtn'))
-                    formAction = 'PO_apptDashboard_Vet/rateAppt';
-                else if (btn.classList.contains('ratingBtn'))
-                    formAction = 'PO_apptDashboard_Vet/rateAppt';
+                // let formAction;
+                // if (btn.classList.contains('rescheduleBtn'))
+                //     formAction = 'PO_apptDashboard_Salon/bookAppt';
+                // else if (btn.classList.contains('cancelBtn'))
+                //     formAction = 'PO_apptDashboard_Salon/cancelAppt';
+                // else if (btn.classList.contains('ratingBtn'))
+                //     formAction = 'PO_apptDashboard_Salon/rateAppt';
                 
                 const card = btn.closest('.card');
                 const cardDetails = {
@@ -43,8 +41,8 @@
                     providerName: card.querySelector('.providerName').textContent,
                     reason: card.querySelector('.reason').textContent,
                     petName: card.querySelector('.petName').textContent,
-                    apptDateTime: card.querySelector('.apptDateTime').textContent,
-                    action: formAction
+                    // apptDateTime: card.querySelector('.apptDateTime').textContent
+                    // action: formAction
                 };
 
                 return cardDetails;
@@ -68,12 +66,13 @@
                             <span class="providerName"></span>
                             <span class="reason"></span>
                             <span class="petName"></span>
-                            <h4 class="apptDateTime"></h4>
+                            <p> <strong class="day"></strong> | 
+                                <strong class="timeSlot"></strong>
+                            </p>
                         </div>
                         <div class="cardBtn-container">
-                            <!-- <button class="cardBtn editBtn"><i class="bx bxs-edit bx-sm"></i> Edit</button> -->
-                            <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
-                                <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button>
+                            <!-- <button class="cardBtn rescheduleBtn" title="Reschedule appointment to another time.">
+                                <i class="bx bxs-calendar-edit bx-sm"></i> Reschedule</button> -->
                             <button class="cardBtn cancelBtn" title="Cancel the appointment.">
                                 <i class="bx bxs-trash bx-sm"></i> Cancel Appointment</button>
                         </div>
@@ -97,7 +96,9 @@
                             <span class="providerName"></span>
                             <span class="reason"></span>
                             <span class="petName"></span>
-                            <h4 class="apptDateTime"></h4>
+                            <p> <strong class="day"></strong>
+                                <strong class="timeSlot"></strong>
+                            </p>
                         </div>
                         <div class="cardBtn-container">
                             <div class="rating loneBtn-container"></div>
@@ -109,12 +110,17 @@
             </section>
 
             <section class="dashArea">
-                <h2>Search Available Vet Sessions</h2>
+                <h2>Search Available Salon Sessions</h2>
 
                 <div class="searchFilter-container">
-                    <div class="filter-group">
-                        Search by salon's name:
+
+                    <div class="searchFilter">
+                        <label for="salonSelect">Search by salon's name:</label>
                         <select name="salonName" id="salonSelect" class="searchBar" placeholder="Search by a salon's Name."></select>
+                    </div>
+                    <div class="searchFilter">
+                        <label for="date">Search by open day:</label>
+                        <input type="date" value="<?=date('Y-m-d')?>" min="<?=date('Y-m-d')?>" id="dateSearch" class="searchBar">
                     </div>
                 </div>
 
@@ -125,21 +131,12 @@
                             <img src="" alt="providerPic" class="cardPic providerPic">
                         </div>
                         <div class="cardDetails">
-                            <p>
-                                <span class="name" style="font-weight: 800; font-size: 1.3em;"></span>
-                                Specializing in <span class="salonType"></span>
-                            </p>
-                            <p class="details"></p>
+                            <span class="name" style="font-weight: 800; font-size: 1.3em;"></span>
                             <div class="avgRating loneBtn-container"></div>
                         </div>
                         <div class="cardDetails">
-                            <span style="text-align: left;">Open</span>
-                            <ul>
-                                <li>From: <b><span class="open_time"></span></b></li>
-                                <li>To: <b><span class="close_time"></span></b></li>
-                            </ul>
                             <p>
-                                Contact: 0<span class="phoneNumber"></span>
+                                Contact: <span class="phoneNumber"></span>
                             </p>
                             <p>Address: <b><span class="address"></span></b></p>
                             <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
@@ -151,27 +148,17 @@
                     </div>
                 </template>
             </section>
-            
-            <!-- footer at page's bottom: -->
+
             <?php include_once '../app/views/navbar/po_Footer.php'; ?>
             
         </div>
 
+    
+
         <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
-
-        <!-- <script src="<?=ROOT?>/assets/js/petOwner/searchableDropdown.js"></script> -->
         <script defer>
-            console.log((<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName));
-
-            const salonNameList = (<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName);
-            document.getElementById('salonSelect').innerHTML = salonNameList.map(x => `<option value="${x}">${x}</option>`).join('');
-
-            fetch('PO_apptDashboard_Salon/getSalons')
-            .then(response => response.json())
-            .then(data => console.log(data));
-
             fetchAndAppendCards(
                 'PO_apptDashboard_Salon/getAppts_upcoming',
                 '.apptUpcomingCard-template',
@@ -184,6 +171,25 @@
                 '.apptHistoryCard-container'
             )
             
+            const salonNameList = (<?= json_encode($this->activeSalonList) ?>).map(x => x.salonName);
+            document.getElementById('salonSelect').innerHTML = salonNameList.map(x => `<option value="${x}">${x}</option>`).join('');
+            
+            document.querySelector('.searchFilter-container').addEventListener('change', () => {
+                const salonName = document.getElementById('salonSelect').value;
+                const dateSelected = document.getElementById('dateSearch').value;
+
+                const params = new URLSearchParams();
+                if (salonName) params.append('salonName', salonName);
+                if (dateSelected) params.append('dateSelected', dateSelected);
+
+                const url = `PO_apptDashboard_Salon/getAvailableSalons?${params.toString()}`;
+                fetchAndAppendCards(
+                    url,
+                    '.availSessCard-template',
+                    '.availSessCard-container'
+                )
+            });
+
             fetchAndAppendCards(
                 'PO_apptDashboard_Salon/getAvailableSalons',
                 '.availSessCard-template',
@@ -202,9 +208,11 @@
                 const button = e.target.closest('button');
                 if (button) {
                     const cardDetailsObj = getCardDetails_appt(button);
-                    (button.classList.contains('editBtn')) && displayPopUp('popup_editAppt', cardDetailsObj);
-                    (button.classList.contains('rescheduleBtn')) && displayPopUp('popup_rescheduleAppt', cardDetailsObj);
-                    (button.classList.contains('cancelBtn')) && displayPopUp('popup_cancelAppt', cardDetailsObj);
+                    // (button.classList.contains('rescheduleBtn')) && displayPopUp('popup_rescheduleAppt', cardDetailsObj);
+                    if (button.classList.contains('cancelBtn')) {
+                        const cancelObj = {action: 'PO_apptDashboard_Salon/cancelAppt', someID: cardDetailsObj.apptID}
+                        displayPopUp('popup_cancelAppt', cancelObj)
+                    };
                 }
             })
 

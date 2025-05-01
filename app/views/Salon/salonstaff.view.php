@@ -39,6 +39,7 @@
                         <th>Picture</th>
                         <th>Phone Number</th>
                         <th>NIC Number</th>
+                        <th>Age</th>
                         <th>Address</th>
                         <th>Position</th>
                         <th>Action</th>
@@ -58,6 +59,7 @@
                                     </td>
                                     <td><p><?= htmlspecialchars($x->fullName) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->mobileNumber) ?></p></td>
+                                    <td><p><?= htmlspecialchars($x->age) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->NIC) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->address) ?></p></td>
                                     <td><p><?= htmlspecialchars($x->workingType) ?></p></td>
@@ -91,8 +93,6 @@
         </div>
     </div>
     
-    
-    <!-- Modal for confirmation -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
             <span class="closebtn" onclick="closeModal()">&times;</span><br>
@@ -111,6 +111,6 @@
 
 </body>
 <script src="<?=ROOT?>/assets/js/nav/salonnav.js"></script>
-<script src="<?=ROOT?>/assets/js/nav/salonstaffdelete.js"></script>
+<script src="<?=ROOT?>/assets/js/salon/salonstaffdelete.js"></script>
 
 </html>

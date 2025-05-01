@@ -41,6 +41,8 @@
                             </button>
                             <input type="file" id="profilePicture" accept="image/*" name="profilePicture" hidden required>
     
+                            <div class="errorMsg"></div>
+                            
                             <div class="btnContainer">
                                 <button class="profileFormBtn" type="reset">Clear</button>
                                 <button class="profileFormBtn" type="submit">Save</button>
@@ -146,6 +148,7 @@
 
         </div>
 
+        <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
 
@@ -188,9 +191,7 @@
             }
         </script>
 
-        <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
-        <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
-        <script>
+        <script defer>
             document.querySelectorAll('form').forEach(form => {
                 form.addEventListener('submit', submitForm);
             })

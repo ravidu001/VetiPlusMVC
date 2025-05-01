@@ -2,6 +2,27 @@
 
 class DoctorContactus extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        // if ($_SESSION['type'] != 'Vet Doctor') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
+        
         $this->view('vetDoctor/doctorcontactus');
     }
 
@@ -10,6 +31,20 @@ class DoctorContactus extends Controller {
 
             if ($_POST['type'] == 'Feedback') {
                 $feedback = new systemfeedbackModel();
+
+                // check contact number is valid
+                if (!preg_match('/^\d{10}$/', $_POST['contact'])) {
+                    $notification = new Notification();
+                    $notification->show('Invalid contact number!', 'error');
+                    return;
+                }
+
+                // check rating is not empty
+                if (empty($_POST['rate'])) {
+                    $notification = new Notification();
+                    $notification->show('Please select a rating!', 'error');
+                    return;
+                }
 
                 $data = [
                     'name' => $_POST['name'],

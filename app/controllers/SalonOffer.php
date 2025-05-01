@@ -15,7 +15,6 @@ class SalonOffer extends Controller
             redirect('Login');
         }
 
-        //first get this salon service ID 
         $serviceDetails = $servicedata->findAllServiceId($salonID);
 
         $offers = [];
@@ -41,10 +40,7 @@ class SalonOffer extends Controller
             $data['service'] = "service Not added yet";
         }
 
-        // Fetch all offers from salonspecialoffer table
-        // $offers = $offerdata->findAllOfferId();
-
-        $data = []; // Initialize $data array
+        $data = [];
 
         if (!empty($offers)) 
         {
@@ -66,7 +62,7 @@ class SalonOffer extends Controller
                 } 
                 else 
                 {
-                    // If service is not found, set placeholders
+                    
                     $data[$key] = [
                         'serviceName' => 'Unknown',
                         'discount' => $offer->discount ?? 0,
@@ -88,6 +84,7 @@ class SalonOffer extends Controller
         $data = [];
         $salonID = $_SESSION['SALON_USER'];
         $servicedata = new SalonServices;
+        $notifications = new Notification();
         $services = $servicedata->findAllServiceId($salonID);
         $data['services'] = $services;
 
@@ -133,7 +130,9 @@ class SalonOffer extends Controller
                     $data['errors'] = 'Data insert unsuccessful: ' . $e->getMessage();
                 }
             } else {
-                $data['errors'] = $validateresult['errors'];
+                
+                $notifications->show("Cannot insert this beacuse this not valid data",'error');
+                exit();
             }
         }
 
@@ -183,6 +182,7 @@ class SalonOffer extends Controller
         $salonID = $_SESSION['SALON_USER'];
 
         $servicedata = new SalonServices;
+        $notifications = new Notification();
         $services = $servicedata->findAllServiceId($salonID);
         $data['services'] = $services;
 
@@ -221,17 +221,22 @@ class SalonOffer extends Controller
 
             if (empty($validateresult['errors'])) {
                 $offertable = new SalonOffers;
-                try {
-                    // Call the update method
+                
                     $result = $offertable->offerupdate($specialOfferID, $validateresult);
-                    // If no exception occurs, assume success
-                    redirect('SalonOffer');
-                } catch (Exception $e) {
-                    // Handle the exception if something goes wrong
-                    $data['errors'] = 'Data update unsuccessful: ' . $e->getMessage();
-                }
+
+                    if(!$result)
+                    {
+                        redirect('SalonOffer');
+                    }
+                    else
+                    {
+                        $notifications->show("Your data is invalid",'error');
+                        redirect('SalonOffer');
+                    }
             } else {
-                $data['errors'] = $validateresult['errors'];
+                // $data['errors'] = $validateresult['errors'];
+                $notifications->show("Your data is invalid",'error');
+                redirect('SalonOffer');
             }
 
         }
@@ -251,6 +256,16 @@ class SalonOffer extends Controller
         // 2. Check if discount is a valid number (positive value)
         if (empty($arr['discount'])) {
             $arr['errors'][] = 'Please provide a valid discount (positive number).';
+        }
+
+        if( !empty($arr['discount']))
+        {
+            $discount = $arr['discount'];
+
+            if( (5 > $discount ) || (20 < $discount))
+            {
+                $arr['errors'][] = 'Please provide a valid discount (positive number).';
+            }
         }
 
         // Check if the new price is valid

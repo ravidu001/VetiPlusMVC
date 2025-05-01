@@ -5,29 +5,17 @@ class SalonSession {
 
     protected $table = 'salonsession';
 
-    public function getSalons ($options) {
-        $query = "SELECT 'salon' as type,
-                    s.*,
-                    s.profilePicture as providerPic,
-                    AVG(sf.rating) as avgRating
+    public function __construct() {
+        $this->order_column = 'salSessionID';
+        $this->limit = 30;
+    }
 
-                    FROM salon s
-                    LEFT JOIN salonsession ss ON ss.salonID = s.salonID
-                    LEFT JOIN salonfeedback sf ON ss.salonID = sf.salonID
-                    INNER JOIN user u ON u.email = s.salonID
-
-                    WHERE ss.noOfAvailable > 0
-                    AND u.activeStatus = 'active'
-                    GROUP BY s.salonID
-                    ORDER BY (s.name LIKE :salonName) DESC,
-                            (s.open_time <= :openHour AND s.close_time >= :openHour) DESC
+    public function getOpenDays ($salonID) {
+        $query = "SELECT DISTINCT openday from salonsession
+                    WHERE salonID = :salonID
                 ";
-        
-        $params = [
-            'salonName' => isset($options['salonName']) ? '%'.$options['salonName'].'%' : '%'
-            // 'openHour' => isset($options['openHour']) ? $options['openHour'] : date('H:i')          
-        ];
-        return $this->query($query, $params);
+                
+        return $this->query($query, ['salonID' => $salonID]);
     }
 
     public function getSlots_byDate ($salonID, $date) {
@@ -35,7 +23,6 @@ class SalonSession {
             'salonID' => $salonID,
             'openday' => $date
         ];
-        $notParams = ['status' => 'blocked'];
         $result = $this->where($params);
         return $result;
     }
@@ -43,11 +30,14 @@ class SalonSession {
     public function updateBookingsCount ($salSessionID) {
         $updateQuery = " UPDATE salonsession SET
                             noOfBookings = noOfBookings + 1,
-                            noOfAvailable = noOfAvailable - 1
+                            noOfAvailable = CASE 
+                                WHEN noOfAvailable > 0 THEN noOfAvailable - 1 
+                                ELSE 0 
+                                END
                             WHERE salSessionID = :salSessionID
                         ";
         $updateDone = $this->query($updateQuery, ['salSessionID' => $salSessionID]);
-        return empty($updateDone) ? true : false;
+        return ($updateDone) ? true : false;
     }
 
     

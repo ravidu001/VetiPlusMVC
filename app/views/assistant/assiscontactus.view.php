@@ -1,3 +1,8 @@
+<?php
+// Create an instance of the Notification controller
+$notification = new Notification();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +13,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/contactus.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
 </head>
 <body>
+<?php echo $notification->display(); ?>
     <?php require_once '../app/views/navbar/assistantnav.php'; ?>
     <div class="home">
     <div class="contact-container">

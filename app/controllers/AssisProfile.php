@@ -2,6 +2,27 @@
 
 class AssisProfile extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['assis_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        // if ($_SESSION['type'] != 'Vet Assistant') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
+        
         list($assisData, $languageSpoken) = $this->showdata();
         $this->view('assistant/assisprofile', ['assis' => $assisData, 'languageSpoken' => $languageSpoken]);
     }
@@ -185,6 +206,12 @@ class AssisProfile extends Controller {
             'newPassword' => $_POST['newPassword'] ?? '',
             'confirmPassword' => $_POST['confirmPassword'] ?? ''
         ];
+
+        // Check if new password is strong
+        if (!$this->isStrongPassword($data['newPassword'])) {
+            echo json_encode(['success' => false, 'message' => 'New password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.']);
+            return;
+        }
     
         if (empty($data['password']) || empty($data['newPassword']) || empty($data['confirmPassword'])) {
             echo json_encode(['success' => false, 'message' => 'All password fields are required']);
@@ -216,7 +243,7 @@ class AssisProfile extends Controller {
         try {
             $result = $assis->updatePassword($assistantID, $newPasswordHash);
             
-            if ($result) {
+            if (!$result) {
                 echo json_encode(['success' => true, 'message' => 'Password updated successfully']);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to update password']);
@@ -224,6 +251,12 @@ class AssisProfile extends Controller {
         } catch (Exception $e) {
             echo json_encode(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
         }
+    }
+
+    // Function to check if the password is strong
+    private function isStrongPassword($password) {
+        // Regular expression to check for at least one uppercase letter, one lowercase letter, one number, one special character, and minimum length of 8
+        return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password);
     }
 
     public function deleteAccount() {

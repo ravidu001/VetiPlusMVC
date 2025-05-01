@@ -95,14 +95,14 @@ class PO_VetSession {
                     ORDER BY (v.fullName LIKE :docName) DESC,
                             (s.selectedDate = :selectedDate) DESC,
                             (s.district LIKE :district) DESC,
-                            (s.startTime >= :startTime) DESC
+                            (s.startTime <= :startTime AND :startTime <= s.endTime) DESC
                 ";
         
         $params = [
-            'docName' => isset($options['']) ? '%'.$options['docName'].'%' : '%',
-            'selectedDate' => isset($options['']) ? $options['selectedDate'] : '%',
-            'district' => isset($options['']) ? '%'.$options['district'].'%' : '%',
-            'startTime' => isset($options['']) ? $options['startTime'] : '%',
+            'docName' => isset($options['docName']) ? '%'.$options['docName'].'%' : '%',
+            'selectedDate' => isset($options['selectedDate']) ? $options['selectedDate'] : '%',
+            'district' => isset($options['district']) ? '%'.$options['district'].'%' : '%',
+            'startTime' => isset($options['startTime']) ? $options['startTime'] : '%',
             'doctorID' => isset($options['doctorID']) ? $options['doctorID'] : null
         ];
         return $this->query($query, $params);
@@ -118,8 +118,17 @@ class PO_VetSession {
         $query = "SELECT a.visitTime
                     FROM appointment a
                     WHERE a.sessionID = :sessionID
+                    AND a.status != 'completed' OR a.status != 'cancelled'
             ";
         return $this->query($query, ['sessionID' => $sessionID]);
+    }
+
+    public function getSessionDatesByDoctor ($doctorID) {
+        $query = "SELECT sessionID, selectedDate, startTime, endTime FROM session 
+                WHERE doctorID = :docID AND completeStatus = 0";
+
+        $result = $this->query($query, ['docID' => $doctorID]);
+        return $result;
     }
 
 }

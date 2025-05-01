@@ -9,10 +9,11 @@
 
         <link href="<?= ROOT ?>/assets/css/petOwner/colourPalette.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/cardStyles.css" rel="stylesheet">
+        <link href="<?= ROOT ?>/assets/css/petOwner/contactUs.css" rel="stylesheet">
 
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
 
-        <link href="<?= ROOT ?>/assets/css/petOwner/contactUs.css" rel="stylesheet">
         
     </head>
     <body>
@@ -63,11 +64,6 @@
                     No, the system is entirely web-based and can be accessed via a browser
                     on any device, including desktops, laptops, tablets, and smartphones.
                 </details>
-                <!-- <details name="faq">
-                    <summary>What should I do if I forget my password?</summary>
-                    Use the "Forgot Password" feature on the login page to reset your password.
-                    Instructions will be sent to your registered email address.
-                </details> -->
                 <details name="faq">
                     <summary>Is my personal data secure?</summary>
                     Yes, the system employs secure data storage and encryption methods to protect all user data.
@@ -89,21 +85,164 @@
                 </div>
                 <div>
                     <h2>Email</h2>
-                    <p>vetiplus737@gmail.com</p>
+                    <p>support@vetiplus.com</p>
                 </div>
                 <div>
                     <h2>Call us</h2>
                     <p>+94 12 345 6789<br/>+94 12 345 6789</p>
                 </div>
             </section>
+
+            <!-- <section class="dashArea">
+                <h3 class="dashHeader">Send us a Message</h3>
+
+                <form action="" method="post" enctype="multipart/form-data" id="contactUsForm">
+                    <div class="formGroup">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" min="5" placeholder="Enter your name" required>
+                    </div>
+                    <div class="formGroup">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="formGroup">
+                        <label for="contactNumber">Contact number</label>
+                        <input type="text" id="contactNumber" name="contactNumber" min="10"
+                            placeholder="Enter your contact number" required>
+                    </div>
+                    <div class="formGroup">
+                        <label for="type">Select a Message type</label>
+                        <select name="type" id="type">
+                            <option value="feedback" selected>Feedback</option>
+                            <option value="complaint">Complaint</option>
+                        </select>
+                    </div>
+
+                    <div class="for-Complaint formGroup">
+                        <div class="formGroup">
+                            <button class="cardBtn" type="button">
+                                <label for="profilePicture">Upload an image:</label>
+                            </button>
+                            <input type="file" id="profilePicture" class="complaintInput" accept="image/*" name="profilePicture" hidden disabled>
+                        </div>
+                        <div class="formGroup">
+                            <label for="issue">Issue:</label>
+                            <textarea id="issue" name="issue" class="complaintInput" disabled></textarea>
+                        </div>
+                    </div>
+
+                    <div class="for-Feedback formGroup">
+                        <div class="formGroup">
+                            <label for="rating">Rating:</label>
+                            <input type="number" id="rating" name="rating" min="1" max="5" class="feedbackInput" hidden>
+                            <div id="starContainer"></div>
+                        </div>
+                        <div class="formGroup">
+                            <label for="comment">Comment:</label>
+                            <textarea id="comment" name="comment" class="feedbackInput"></textarea>
+                        </div>
+                    </div>
+
+                    <button class="cardBtn" type="submit">Submit</button>
+                    <button class="cardBtn" type="reset">Reset</button>
+                </form>
+            </section> -->
+
+
+            <!-- <div class="contact-form">
+                <h2>Send us a Message</h2>
+                <form action="<?=ROOT?>/SalonContact" method="post" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="email">Email</label> -->
+                            <!-- <input type="hidden" id="email" name="email" value = "<?= $email ?>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact">Contact Number</label>
+                            <input type="text" id="contact" name="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="messageType">Message Type</label>
+                            <select id="messageType" name="type" required>
+                                <option value="">Select Type</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Inquiry">Inquiry</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="messageContainer" class="form-group" style="display:none;">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+                    </div>
+
+                    <div id="ratingContainer" class="form-group" style="display:none;">
+                        <label>Rating</label>
+                        <div class="rating">
+                            <input type="radio" name="rate" id="rate-5" value="5">
+                            <label for="rate-5" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-4" value="4">
+                            <label for="rate-4" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-3" value="3">
+                            <label for="rate-3" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-2" value="2">
+                            <label for="rate-2" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-1" value="1">
+                            <label for="rate-1" class="fas fa-star"></label>
+                        </div>
+                    </div>
+
+                    <div id="uploadContainer" class="form-group" style="display:none;">
+                        <label for="imageUpload">Upload Image</label>
+                        <div class="file-upload">
+                            <input type="file" id="imageUpload" name="image" accept="image/*">
+                            <span class="file-upload-text">Choose file</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" name="contactSubmit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form> -->
+            <!-- </div> --> -->
     
             <!-- footer at page's bottom: -->
             <?php include_once '../app/views/navbar/po_Footer.php'; ?>
 
         </div>
 
-        <!-- system feedback form -->
-        <!-- <?php include ROOT.'/components/common/systemFeedbackForm.php'; ?> -->
+        <script src="<?=ROOT?>/assets/js/petOwner/popUp.js"></script>
+        <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
+        <!-- <script>
+            interactiveStarRating('starContainer')
+
+            const contactUsForm = document.getElementById('contactUsForm');
+            const typeSelect = document.getElementById('type');
+
+            const complaintInputs = contactUsForm.querySelectorAll('.complaintInput');
+            const feedbackInput = contactUsForm.querySelectorAll('.feedbackInput');
+
+            const complaintsDiv = contactUsForm.querySelector('for-Complaint');
+            const feedbacksDiv = contactUsForm.querySelector('for-Feedback');
+
+            typeSelect.addEventListener('change', () => {
+                const typeState = (typeSelect.value == "feedback");
+
+                complaintInputs.forEach(x => {x.disabled = typeState; x.required = !typeState});
+                feedbackInput.forEach(x => {x.disabled = !typeState; x.required = typeState});
+
+                complaintsDiv.style.display = (typeState ? 'none' : 'flex');
+                feedbacksDiv.style.display = (typeState ? 'flex' : 'none');
+            })
+        </script> -->
 
 
     </body>

@@ -11,6 +11,8 @@ class PO_petBreeding extends Controller {
     public $petOwnerDetails;
     public $forBreedingObj;
 
+    public $petList;
+
     public function __construct() {
         !isset($_SESSION['petOwnerID']) && redirect('Login');
         $this->petOwnerID = $_SESSION['petOwnerID'];
@@ -18,7 +20,11 @@ class PO_petBreeding extends Controller {
         $this->forBreedingObj = new ForBreeding;
 
         $petOwner = new PetOwner;
-        $this->petOwnerDetails = $petOwner->getDetails_forOtherListings($this->petOwnerID);
+        $this->petOwnerDetails = $petOwner->getDetails_forOtherListings($this->petOwnerID)[0];
+
+        $petObj = new Pet;
+        $petObj->setPetOwnerID();
+        $this->petList = $petObj->getAllPetsUnderUser();
     }
 
     public function index() {
@@ -27,15 +33,16 @@ class PO_petBreeding extends Controller {
 
     public function forBreeding_addNew () {
         $sanitized = array_map('sanitizeInput', $_POST);
-        if (in_array('', $sanitized, true)) {
-            echo json_encode([
-                "status" => "inputFail",
-                "message" => "Please fill all the required fields!"
-            ]);
-            exit();
-        }
+        // if (in_array('', $sanitized, true)) {
+        //     echo json_encode([
+        //         "status" => "inputFail",
+        //         "message" => "Please fill all the required fields!"
+        //     ]);
+        //     exit();
+        // }
 
-        $fullInsertData = array_merge($sanitized, $this->petOwnerDetails);
+        $fullInsertData = array_merge($sanitized, (array) $this->petOwnerDetails);
+        $fullInsertData['petOwnerID'] = $this->petOwnerID;
 
         $insertSuccess = $this->forBreedingObj->addNew($fullInsertData);
         if ($insertSuccess) {
@@ -88,7 +95,7 @@ class PO_petBreeding extends Controller {
     }
     public function forBreeding_delist () {
         $sanitized = array_map('sanitizeInput', $_POST);
-        $itemID = $sanitized['breedingListID'];
+        $itemID = $sanitized['someID'];
 
         $delistSuccess = $this->forBreedingObj->delist($itemID);
         if ($delistSuccess) {
@@ -114,13 +121,21 @@ class PO_petBreeding extends Controller {
         
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
     }
     public function forBreeding_getMyList () {
         $result = $this->forBreedingObj->getList_byPetOwner($this->petOwnerID)  ?: ["fetchedCount" => 0];
         
         header('Content-Type: application/json');
         echo json_encode($result);
-        exit;
+        exit();
+    }
+    public function getPetDetailsToFill () {
+        $petID = $_GET['petID'];
+
+        $result = $this->forBreedingObj->getPetDetails($petID)[0];
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit();
     }
 }

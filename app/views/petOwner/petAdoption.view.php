@@ -11,21 +11,159 @@
         <link href="<?= ROOT ?>/assets/css/petOwner/PO_commonStyles.css" rel="stylesheet">
         <link href="<?= ROOT ?>/assets/css/petOwner/cardStyles.css" rel="stylesheet">
         
-        <!-- <link href="<?= ROOT ?>/assets/css/petOwner/otherServicePages.css" rel="stylesheet"> -->
-        
         <link href="<?= ROOT ?>/assets/css/boxicons/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
 
-        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
         <script> const ROOT = `<?= ROOT ?>`; </script>
+        <?php include_once '../app/views/navbar/po_Sidebar.php'; ?>
 
+        <div class="popup popup_newAdoptionListing">
+            <h2 class="popUpTitle"> Create new Adoption Listing </h2>
+
+            <form action="PO_petAdoption/forAdoption_addNew" method="post" class="popupForm">
+                <div class="formGroup">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" class="formTextInput" name="title" required>
+                </div>
+                <div class="formGroup">
+                    <label for="species">Species:</label>
+                    <input type="text" id="species" class="formTextInput" name="species" required>
+                </div>
+
+                <div class="formGroup">
+                    <label for="freeOrSellRadios">Free:</label>
+                    <div id="freeOrSellRadios">
+                        <input type="radio" id="freeYes" name="freeOrSell" value="free" checked required>
+                            <label for="freeYes">Yes</label>
+                        <input type="radio" id="freeNo" name="freeOrSell" value="sell" required>
+                            <label for="freeNo">No</label>
+                    </div>
+                </div>
+                <div class="formGroup priceGrp" style="opacity: 0;">
+                    <label for="price">Price (in LKR):</label>
+                    <input type="text" id="price" class="formTextInput" name="price" value="0" required>
+                </div>
+
+                <div>
+                    <label for="toggleEdit">Use my default details:  </label>
+                    <input type="checkbox" id="toggleEdit" ttargets="#district,#contactNumber" tmode="readonly" checked>
+                </div>
+                <div class="formGroup">
+                    <label for="district">District:</label>
+                    <input type="text" id="district" class="district formTextInput" name="district" value="" readonly required>
+                </div>
+                <div class="formGroup">
+                    <label for="contactNumber">Contact Number:</label>
+                    <input type="text" id="contactNumber" class="contactNumber formTextInput" name="contactNumber" value="" readonly min="10" max="10" required>
+                </div>
+
+                <div class="formGroup"></div>
+
+                <div>
+                    <label for="checkupDone">Animal had a recent checkup:  </label>
+                    <input type="checkbox" id="checkupDone" ttargets="#lastCheckUpDate,#lastCheckUpTime" tmode="disable">
+                </div>
+                <div class="formGroup">
+                    <label for="lastCheckUpDate">Last check-up date:</label>
+                    <input type="date" id="lastCheckUpDate" class="formTextInput" name="lastCheckUpDate" disabled>
+                </div>
+                <div class="formGroup">
+                    <label for="lastCheckUpTime">Last check-up time:</label>
+                    <input type="time" id="lastCheckUpTime" class="formTextInput" name="lastCheckUpTime" disabled>
+                </div>
+                
+                <div class="errorMsg" style="justify-content:center;"></div>
+
+                <div>
+                    <button class="submitBtn popupBtn" type="submit">Submit</button>
+                    <button class="clearBtn popupBtn" type="reset">Clear</button>
+
+                    <button class="closeBtn popupBtn" type="button">Close</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="popup popup_editAdoptionListing">
+            <h2 class="popUpTitle"> Edit Adoption Listing </h2>
+
+            <form action="PO_petAdoption/forAdoption_edit" method="post" enctype="multipart/form-data" class="popupForm">
+                <div class="formGroup">
+                    <label for="adoptionImage">Image:</label>
+                    <input type="file" id="adoptionImage" name="adoptionImage" accept="image/*">
+                </div>
+
+                <div class="formGroup">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" class="title formTextInput" name="title" required>
+                </div>
+                <div class="formGroup">
+                    <label for="species">Species:</label>
+                    <input type="text" id="species" class="species formTextInput" name="species" required>
+                </div>
+
+                <div class="formGroup">
+                    <label for="freeOrSellRadios">Free:</label>
+                    <div id="freeOrSellRadios">
+                        <input type="radio" id="freeYes" name="freeOrSell" value="free" checked required>
+                            <label for="freeYes">Yes</label>
+                        <input type="radio" id="freeNo" name="freeOrSell" value="sell" required>
+                            <label for="freeNo">No</label>
+                    </div>
+                </div>
+                <div class="formGroup priceGrp" style="opacity: 0;">
+                    <label for="price">Price (in LKR):</label>
+                    <input type="text" id="price" class="price formTextInput" name="price" required>
+                </div>
+
+                <div>
+                    <label for="toggleEdit">Use my default details:  </label>
+                    <input type="checkbox" id="toggleEdit" ttargets="#district,#contactNumber" tmode="readonly" checked>
+                </div>
+                <div class="formGroup">
+                    <label for="district">District:</label>
+                    <input type="text" id="district" class="district formTextInput" name="district" value="" readonly required>
+                </div>
+                <div class="formGroup">
+                    <label for="contactNumber">Contact Number:</label>
+                    <input type="text" id="contactNumber" class="contactNumber formTextInput" name="contactNumber" value="" readonly min="10" max="10" required>
+                </div>
+
+                <div class="formGroup"></div>
+
+                <div>
+                    <label for="checkupDone">Animal had a recent checkup:  </label>
+                    <input type="checkbox" id="checkupDone" ttargets="#lastCheckUpDate,#lastCheckUpTime" tmode="disable">
+                </div>
+                <div class="formGroup">
+                    <label for="lastCheckUpDate">Last check-up date:</label>
+                    <input type="date" id="lastCheckUpDate" class="lastCheckUpDate formTextInput" name="lastCheckUpDate" value="" disabled>
+                </div>
+                <div class="formGroup">
+                    <label for="lastCheckUpTime">Last check-up time:</label>
+                    <input type="time" id="lastCheckUpTime" class="lastCheckUpTime formTextInput" name="lastCheckUpTime" value="" disabled>
+                </div>
+                
+                <input type="text" class="adoptionListID formTextInput" name="adoptionListID" hidden>
+
+                <div class="errorMsg" style="justify-content:center;"></div>
+
+                <div>
+                    <button class="submitBtn popupBtn" type="submit">Submit</button>
+                    <button class="clearBtn popupBtn" type="reset">Clear</button>
+                    <button class="closeBtn popupBtn" type="button">Close</button>
+                </div>
+
+            </form>
+        </div>
+        
         <div class="bodyArea">
 
             <section class="dashArea">
+
                 <div class="header-btn">
                     <h3 class="dashHeader">My Listings</h3>
-                    
                     <button class="addNewListing"><i class='bx bx-plus-circle bx-md'></i>
                         Create new listing</button>
                 </div>

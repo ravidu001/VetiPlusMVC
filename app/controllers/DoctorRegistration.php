@@ -2,6 +2,27 @@
 
 class DoctorRegistration extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        // if ($_SESSION['type'] != 'Vet Doctor') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
+        
         $this->view('vetDoctor/doctorregistration');
     }
     public function register() {
@@ -27,8 +48,8 @@ class DoctorRegistration extends Controller {
     
             // Validate contact number
             $contactNumber = $_POST['mobile'];
-            if (!preg_match('/^\d{10,15}$/', $contactNumber)) {
-                $errors[] = "Invalid contact number. It should be 10 to 15 digits.";
+            if (!preg_match('/^\d{10}$/', $contactNumber)) {
+                $errors[] = "Invalid contact number. It should be 10 digits.";
             }
     
             // Validate DoctorID (should be email format)
@@ -39,7 +60,7 @@ class DoctorRegistration extends Controller {
     
             // Validate veterinary license number format (VC/xxxx or TVC/xxxx)
             $lnumber = $_POST['lnumber'];
-            if (!preg_match('/^(VC|TVC)\/\d{4,}$/', $lnumber)) {
+            if (!preg_match('/^(VC|TVC)\/\d{4}$/', $lnumber)) {
                 $errors[] = "Invalid license number format. It should be VC/xxxx or TVC/xxxx where xxxx are digits.";
             }
     

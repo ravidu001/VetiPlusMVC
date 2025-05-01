@@ -44,6 +44,15 @@ class PO_userProfile extends Controller {
 
         // Get file extension and generate new file name
         $fileExt = pathinfo($originalName, PATHINFO_EXTENSION);
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array(strtolower($fileExt), $allowedExtensions)) {
+            
+            echo json_encode([
+                "status" => "inputFail",
+                "message" => "Invalid profile picture type!"
+            ]);
+            exit();
+        }
         $newFileName = "petOwner_" . $this->petOwnerID . "." . $fileExt;
 
         // Move uploaded file to the target directory
@@ -55,24 +64,25 @@ class PO_userProfile extends Controller {
             $updateDone = $this->petOwner->uploadProfilePicture(['profilePicture' => $newFileName]);
             if ($updateDone) {
                 echo json_encode(["status" => "success",
-                                "title" => "Success! 😺",
-                                "message" => "Uploaded profile picture successfully!",
-                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/success.png"
+                                "popUpTitle" => "Success! 😺",
+                                "popUpMsg" => "Uploaded profile picture successfully!",
+                                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+                                "nextPage" => 'PO_userProfile'
                             ]);
                 exit();
             } else {
                 echo json_encode(["status" => "failure",
-                                "title" => "Failure! 🙀",
-                                "message" => "Couldn't update profile picture. 🙀\nPlease try again later.",
-                                "icon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
+                                "popUpTitle" => "Failure! 🙀",
+                                "popUpMsg" => "Couldn't update profile picture. 🙀\nPlease try again later.",
+                                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
                             ]);
                 exit();
             }
         } else {
             echo json_encode(["status" => "failure",
-                            "title" => "Failure! 🙀",
-                            "message" => "Couldn't upload profile picture. 🙀\nPlease try again later.",
-                            "icon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
+                            "popUpTitle" => "Failure! 🙀",
+                            "popUpMsg" => "Couldn't upload profile picture. 🙀\nPlease try again later.",
+                            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png"
                         ]);
             exit();
         }
@@ -95,9 +105,10 @@ class PO_userProfile extends Controller {
         if ($dobDate && $dobDate > new DateTime($tenYearsAgo))
             $this->addError("Invalid date of birth: you should be 10 years at least.");
     
-        $contactRegex = '/07\\d\\d\\d\\d\\d\\d\\d\\d/i';
+        $contactRegex = '/^07\\d{8}$/';
         if(empty($contactNumber)) $this->addError("No contact number provided!");
-        elseif (!preg_match($contactRegex, $contactNumber)) $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
+        elseif (!preg_match($contactRegex, $contactNumber))
+            $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
     
         if(empty($sanitized['houseNo'])) $this->addError("No house number or apartment number provided for Address!");
         if(empty($sanitized['streetName'])) $this->addError("No street name provided for Address!");
@@ -176,17 +187,46 @@ class PO_userProfile extends Controller {
                 "popUpMsg" => "Password changed successfully!",
                 "nextPage" => "PO_userProfile"
             ]);
+            exit();
         } else {
             echo json_encode([
                 "status" => "failure",
                 "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png",
                 "popUpMsg" => "Failed to change password. Please try again later."
             ]);
+            exit();
         }
     }
 
     public function logout () {
         unset($_SESSION['petOwnerID']);
-        redirect('Landing');
+        echo json_encode([
+            "status" => "success",
+            "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+            "popUpMsg" => "Bye for now!",
+            "nextPage" => "Landing"
+        ]);
+        exit();
+    }
+
+    public function deleteAccount () {
+        $user = new User;
+        $deleteDone = empty($user->deactivateUser($this->petOwnerID, 'deactive')) ? true : false;
+        if ($deleteDone) {
+            echo json_encode([
+                "status" => "success",
+                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/success.png",
+                "popUpMsg" => "We're sorry to see you go 😓!",
+                "nextPage" => "Landing"
+            ]);
+            exit();
+        } else {
+            echo json_encode([
+                "status" => "failure",
+                "popUpIcon" => ROOT."/assets/images/petOwner/popUpIcons/fail.png",
+                "popUpMsg" => "Something went wrong! PLease try again later."
+            ]);
+            exit();
+        }
     }
 }

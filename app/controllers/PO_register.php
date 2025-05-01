@@ -32,10 +32,6 @@ class PO_register extends Controller {
         $contactNumber = $sanitized['contactNumber'];
         $DOB = $sanitized['DOB'];
         $gender = $sanitized['gender'];
-    
-        $houseNo = $sanitized['houseNo'];
-        $streetName = $sanitized['streetName'];
-        $city = $sanitized['city'];
 
         if(empty($fullName)) $this->addError("Empty name value provided!");
         elseif (strlen($fullName) < 5) $this->addError("Name should be at least 5 characters.");
@@ -46,15 +42,17 @@ class PO_register extends Controller {
     
         if ($dobDate && $dobDate > new DateTime($tenYearsAgo)) $this->addError("Invalid date of birth: you should be 10 years at least.");
     
-        $contactRegex = '/07\\d\\d\\d\\d\\d\\d\\d\\d/i';
+        $contactRegex = '/^07\\d{8}$/';
         if(empty($contactNumber)) $this->addError("No contact number provided!");
-        elseif (!preg_match($contactRegex, $contactNumber)) $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
+        elseif (!preg_match($contactRegex, $contactNumber))
+            $this->addError("Contact number does not follow Sri Lankan phone pattern!\n10 numbers starting with 07.");
     
         if($gender != 'male' && $gender != 'female') $this->addError("Gender is not selected!");
     
-        if(empty($houseNo)) $this->addError("No house number or apartment number provided for Address!");
-        if(empty($streetName)) $this->addError("No street name provided for Address!");
-        if(empty($city)) $this->addError("No city provided for Address!");
+        if(empty($sanitized['houseNo'])) $this->addError("No house number or apartment number provided for Address!");
+        if(empty($sanitized['streetName'])) $this->addError("No street name provided for Address!");
+        if(empty($sanitized['city'])) $this->addError("No city provided for Address!");
+        if(empty($sanitized['district'])) $this->addError("No district provided for Address!");
     
         $lastLogin = $today->format('Y-m-d H:i');
         $sanitized['lastLogin'] = $lastLogin;

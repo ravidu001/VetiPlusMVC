@@ -5,7 +5,8 @@ class ForBreeding{
 
     protected $table = 'forbreeding';
     protected $allowedColumns = [
-        'breedingListID', 'status', 'petID', 'petOwnerID', 'listedDate', 'title', 'freeOrSell', 'price', 'district', 'contactNumber', 'lastCheckUpDate'
+        'breedingListID', 'status', 'petID', 'petOwnerID', 'listedDate', 'title',
+        'freeOrSell', 'price', 'district', 'contactNumber', 'lastCheckUpDate'
     ];
 
     private $petObj;
@@ -35,9 +36,16 @@ class ForBreeding{
     }
     
     public function getList_byOthers ($petOwnerID) {
-        $query = "SELECT p.name AS petName, p.DOB AS DOB, p.gender AS gender, p.species AS species, p.breed AS breed, b.*
+        $query = "SELECT 'breedingPet' as type,
+                    p.name AS petName,
+                    p.DOB AS DOB,
+                    p.gender AS gender,
+                    p.species AS species,
+                    p.breed AS breed,
+                    p.profilePicture as petPic,
+                    b.*
                     FROM forbreeding b INNER JOIN pet p ON b.petID = p.petID
-                    WHERE p.petOwnerID != :poID,
+                    WHERE p.petOwnerID != :poID
                     AND b.status = 'available'
                 ";
 
@@ -45,13 +53,37 @@ class ForBreeding{
         return $result;
     }
     public function getList_byPetOwner ($petOwnerID) {
-        $query = "SELECT p.name AS petName, p.DOB AS DOB, p.gender AS gender, p.species AS species, p.breed AS breed, b.*
+        $query = "SELECT 'breedingPet' as type,
+                    p.name AS petName,
+                    p.DOB AS DOB,
+                    p.gender AS gender,
+                    p.species AS species,
+                    p.breed AS breed,
+                    p.profilePicture as petPic,
+                    p.petOwnerID,
+                    b.*
                     FROM forbreeding b INNER JOIN pet p ON b.petID = p.petID
-                    WHERE p.petOwnerID = :poID,
+                    WHERE p.petOwnerID = :poID
                     AND b.status = 'available'
                 ";
 
         $result = $this->query($query, ['poID' => $petOwnerID]);
+        return $result;
+    }
+    public function getPetDetails ($petID) {
+        $query = "SELECT 'breedingPet' as type,
+                    p.name AS petName,
+                    p.DOB AS DOB,
+                    p.gender AS gender,
+                    p.species AS species,
+                    p.breed AS breed,
+                    p.profilePicture as petPic,
+                    b.*
+                    FROM forbreeding b RIGHT JOIN pet p ON b.petID = p.petID
+                    WHERE p.petID = :petID
+                ";
+
+        $result = $this->query($query, ['petID' => $petID]);
         return $result;
     }
 

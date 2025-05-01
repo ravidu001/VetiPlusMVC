@@ -27,7 +27,9 @@ class systemfeedbackModel {
     }
 
     public function create($data) {
-        $this->insert($data);
+       
+       return  $this->insert($data);
+    
     }
 
     

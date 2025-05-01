@@ -93,5 +93,20 @@ class AppointmentModel
         return $result[0]->total;
     }
 
-    
+    public function bookAppointment_andReturnID ($data) {
+
+        $bookingSuccess = $this->insert($data);
+        return empty($bookingSuccess) ? true : false;
+        
+        // if (empty($bookingSuccess)) {
+        //     return ['success' => true, 'appointmentID' => $this->getLastID()];
+        // } else {
+        //     return ['success' => false, 'appointmentID' => ''];
+        // }
+    }
+
+    public function cancelAppt ($apptID) {
+        $cancelSuccess = $this->update($apptID, ['status' => 'cancelled'], 'appointmentID');
+        return empty($cancelSuccess) ? true : false;
+    }
 }

@@ -61,7 +61,7 @@ class Notification {
                 // Automatically close the notification after 10 seconds
                 setTimeout(() => {
                     closeNotification();
-                }, 10000); // 10000 milliseconds = 10 seconds
+                }, 600000); // 10000 milliseconds = 10 seconds
             </script>
         ";
     }

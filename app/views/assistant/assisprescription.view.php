@@ -12,6 +12,7 @@ $notification = new Notification();
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar/doctornav.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/vetDoctor/prescription.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/notification.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common/jsnotification.css">
     <link rel="icon" href="<?= ROOT ?>/assets/images/common/logo.png" type="image/png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -103,12 +104,12 @@ $notification = new Notification();
                     <th colspan="2">Patient Information</th>
                 </tr>
                 <tr>
-                    <td>Weight (kg)</td>
-                    <td><input type="number" name="weight" class="form-input" placeholder="Enter weight (kg)"></td>
+                    <td>Weight (kg) <span style="color:red; font-size:16px;">*</span></td>
+                    <td><input type="number" name="weight" class="form-input" placeholder="Enter weight (kg)" required></td>
                 </tr>
                 <tr>
-                    <td>Symptoms</td>
-                    <td><textarea class="form-input" name="symptoms" rows="4" placeholder="Describe patient's symptoms"></textarea></td>
+                    <td>Symptoms <span style="color:red; font-size:16px;">*</span></td>
+                    <td><textarea class="form-input" name="symptoms" rows="4" placeholder="Describe patient's symptoms" required></textarea></td>
                 </tr>
                 <tr>
                     <th colspan="2">Medical Treatements</th>
@@ -162,8 +163,8 @@ $notification = new Notification();
                     </td>
                 </tr>
                 <tr>
-                    <td>Prescription</td>
-                    <td><textarea class="form-input" name="prescription" rows="4" placeholder="Enter medical prescription using comma separation"></textarea></td>
+                    <td>Prescription <span style="color:red; font-size:16px;">*</span></td>
+                    <td><textarea class="form-input" name="prescription" rows="4" placeholder="Enter medical prescription using comma separation" required></textarea></td>
                 </tr>
                 <tr>
                     <th colspan="2">Next Vaccination Details</th>
@@ -212,6 +213,7 @@ $notification = new Notification();
             }
         });
     </script>
+    <script src="<?= ROOT ?>/assets/js/vetAssistant/jsnotification.js"></script>
     <script src="<?= ROOT ?>/assets/js/vetAssistant/prescription.js"></script>
 
 </body>

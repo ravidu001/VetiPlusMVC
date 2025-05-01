@@ -1,20 +1,17 @@
 
     let deleteServiceId = null;
 
-    // Show the modal and set the ID to delete
     function confirmDelete(serviceId) {
         deleteServiceId = serviceId;
 
         document.getElementById('deleteModal').style.display = 'block';
     }
 
-    // Close the modal
     function closeModal() {
         document.getElementById('deleteModal').style.display = 'none';
         deleteServiceId = null;
     }
 
-    // Handle confirmation
     document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
         if (deleteServiceId !== null) {
             const formData = deleteServiceId;
@@ -40,7 +37,6 @@
         }
     });
 
-    // Close modal when clicking outside
     window.onclick = function(event) {
         const modal = document.getElementById('deleteModal');
         if (event.target === modal) {
@@ -55,12 +51,10 @@
         notification.className = `notification ${type}`;
         notification.style.display = 'block';
     
-        // Trigger fade-in
         setTimeout(() => {
             notification.style.opacity = 1;
         }, 10);
     
-        // Auto hide after 3 seconds
         setTimeout(() => {
             notification.style.opacity = 0;
             setTimeout(() => {

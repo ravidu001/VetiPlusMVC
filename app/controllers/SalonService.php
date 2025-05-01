@@ -8,7 +8,6 @@ class SalonService extends Controller
         $servicedata = new SalonServices;
         $salonID = $_SESSION['SALON_USER'];
 
-        //check the user login
         if(!$salonID)
         {
             redirect('Login');
@@ -19,8 +18,6 @@ class SalonService extends Controller
         $this->view('Salon/salonservice', $data);
     }
 
-    //__________________________________________________________________________________________________________________________
-    //delete service function
     public function deleteService()
     {
         $serviceID = [];
@@ -39,12 +36,10 @@ class SalonService extends Controller
         }
         
         $servicetable = new SalonServices;
-        // $notifications = new Notification();
-
+      
         $result = $servicetable->servicedelete($service);
         if($result)
         {
-            // $notifications->show("Service delete successfully.",'success');
             echo json_encode([
                 'success' => true,
                 'message' => 'Offer deleted successfully.'
@@ -52,7 +47,6 @@ class SalonService extends Controller
         }
         else
         {
-            // $notifications->show("Service delete unsuccessfully.",'error');
             echo json_encode([
                 'success' => false,
                 'message' => 'Failed to delete the offer.'
@@ -61,13 +55,12 @@ class SalonService extends Controller
 
         exit;
     }
-    //________________________________________________________________________________________________________________________________
-    //update service details function
+   
 
     public function edit($serviceID)
     {
-        $serviceID = (int)$serviceID; // Convert to integer
-        //fetch the all data in the database and push it in to the edit form for values
+        $serviceID = (int)$serviceID;
+        
         $data = [];
 
         $serviceModel = new SalonServices;
@@ -76,7 +69,7 @@ class SalonService extends Controller
         $serviceData = $serviceModel->whereservice($serviceID);
         $data['olddata'] = $serviceData;
 
-        show($data['olddata']);
+        // show($data['olddata']);
 
         if(isset($_POST['update']))
         {

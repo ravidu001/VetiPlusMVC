@@ -7,23 +7,16 @@ class SalonCalendar extends Controller {
 
         $salsession = new SalonTimeSlots();
 
-        // Get date from request (if sent via POST)
-        // $date = $_POST['date'] ?? date('Y-m-d'); // Default to today if not provided
-
         $date = '2025-02-28';
 
         $result = $salsession->findSlotsbyDate($date);
 
-        // Log result for debugging (optional)
         show($result);
 
-        // Pass data to view
         $data['slots'] = $result;
         $this->view('Salon/test', $data);
     }
 
-    // API endpoint to handle AJAX requests- get the appointments details
-    //______________________________________________________________________________________________________________________________
     public function getSlots() 
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST') 
@@ -36,11 +29,11 @@ class SalonCalendar extends Controller {
 
             if ($date && $salonID) 
             {
-                $salsession = new SalonTimeSlots();//get the salon sessions
-                $groomingsession = new SalonBooked();//get the appoinments booking details
-                $petowner = new PetOwners();//get the pet owners details
-                $SalonWeekDaysSchedule = new SalonWeekdaySchedules();//get the week days
-                $TimeSlotConfig = new SalonTImeSLotConfig();//get the salonID,month or week, slot time duration
+                $salsession = new SalonTimeSlots();
+                $groomingsession = new SalonBooked();
+                $petowner = new PetOwners();
+                $SalonWeekDaysSchedule = new SalonWeekdaySchedules();
+                $TimeSlotConfig = new SalonTImeSLotConfig();
 
                 $status = 'booked';
                 $results = $salsession->findSlotsbyDateAndStatus($date, $status);
@@ -50,24 +43,19 @@ class SalonCalendar extends Controller {
                 $complete = [];
 
                 if(!empty($results))
-                {
-                    
+                {   
                     foreach($results as $booking)
                     {
                         $salsessionID = $booking->salSessionID;
 
                         $sheduleID = $booking->schedule_id;
 
-                        //pass the above shceduleID and get the configID 
                         $salonWeekDaysDetails = $SalonWeekDaysSchedule->FindSlotByScheduleID($sheduleID);
 
-                        //get the config ID 
                         $configID = $salonWeekDaysDetails->config_id;
 
-                        //GET THE CONFIG DETAILS for get salon ID
                         $configDetails = $TimeSlotConfig->FindByConfigID($configID);
 
-                        //get the salon ID for appoinments searching
                         $salon = $configDetails->salonID;
 
 
@@ -86,7 +74,6 @@ class SalonCalendar extends Controller {
                                 $slotDate = $booking->openday;
                                 $slotTime = $booking->time_slot;
 
-                                //Extract the start time (before dash)
                                 list($startTime, $endTime) = explode('-', $slotTime);
                                 $slotDateTimeStr = $slotDate. ' ' . trim($endTime);// "2025-04-07 10:00"
 
@@ -98,23 +85,7 @@ class SalonCalendar extends Controller {
                                 
                                 $sendDate = date('Y-m-d', strtotime($dateAndTime)); 
                                 $sendTime = date('H:i', strtotime($dateAndTime));    
-                                
-                                //check the upcoming appointmetns and update 
-                                // if($statusVal == 0 && $slotDateTime < $today)
-                                // {
-                                //     $result = $groomingsession->updateStatus($bookingdetails->groomingID, 1);
-                                //     $statusVal = 1;
-
-                                //     if($result)
-                                //     {
-                                //         echo json_encode(['success' => true]);
-                                //     }
-                                //     else
-                                //     {
-                                //         echo json_encode(['success' =>false, 'message' => 'Update failed']);
-                                //     }
-                                // }
-
+                               
                                 $appointment = [
                                     'petOwner' => $owner->fullName ?? 'Unknown',
                                     'contactNumber' => $owner->contactNumber ?? 'N/A',
@@ -149,7 +120,6 @@ class SalonCalendar extends Controller {
                     }
                 }
 
-                // Send actual final response
                 header('Content-Type: application/json');
                 echo json_encode([
                     'success' => true, 

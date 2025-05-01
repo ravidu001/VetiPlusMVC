@@ -2,6 +2,27 @@
 
 class AssisRegistration extends Controller {
     public function index() {
+        // Check if the user is logged in
+        if (!isset($_SESSION['assis_id'])) {
+            header('Location: ' . ROOT . '/login');
+            $notification = new Notification();
+            $_SESSION['notification'] = [
+                'message' => 'You are not authorized to access this page.',
+                'type' => 'error',
+            ];
+            exit;
+        }
+
+        // if ($_SESSION['type'] != 'Vet Assistant') {
+        //     header('Location: ' . ROOT . '/login');
+        //     $notification = new Notification();
+        //     $_SESSION['notification'] = [
+        //         'message' => 'You are not authorized to access this page.',
+        //         'type' => 'error',
+        //     ];
+        //     exit;
+        // }
+        
         $this->view('assistant/assisregistration');
     }
 
@@ -48,6 +69,13 @@ class AssisRegistration extends Controller {
             // Validate and process the uploaded file
             if (isset($_FILES['certificate']) && $_FILES['certificate']['error'] === UPLOAD_ERR_OK) {
                 $assistantCertificate = $_FILES['certificate']['name'];
+
+                // Validate the filename format
+                if (preg_match('/^ASVC_\d+$/', pathinfo($assistantCertificate, PATHINFO_FILENAME))) {
+                    $_SESSION['errors'][] = "Invalid certificate filename. The filename must be in the format 'ASVC_1234'.";
+                }
+
+
                 $assistantCertificate_tmp_name = $_FILES['certificate']['tmp_name'];
                 $upload_dir = 'assets/images/vetAssistant/';
                 if (!is_dir($upload_dir)) {
@@ -62,15 +90,16 @@ class AssisRegistration extends Controller {
             }
     
             $contactNumber = $_POST['mobile'];
-            if (!preg_match('/^\d{10,15}$/', $contactNumber)) {
+            if (!preg_match('/^\d{10}$/', $contactNumber)) {
                 $_SESSION['errors'][] = "Invalid contact number. Please provide a valid phone number.";
             }
     
-            // If there are any errors, redirect back to the form
+            // If there are any errors, render the view with errors
             if (!empty($_SESSION['errors'])) {
-                redirect('AssisRegistration/index'); // Redirect to the registration form
+                $this->view('assistant/assisregistration'); // Render the view directly
                 return; // Exit the method
             }
+
     
             // Serialize the languageSpoken array
             $languageSpoken = isset($_POST['languageSpoken']) ? serialize($_POST['languageSpoken']) : '';

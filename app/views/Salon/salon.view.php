@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/navbar/salonnav.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salondashboard.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonchart.css"> 
-    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/css/guest/myFooter.css"> -->
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/salon/salonpopup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Document</title>
@@ -77,12 +76,14 @@
                         <div class="stat-info">
                             <div class="stat-value">
                                 <?php
+                                    $completecount = 0;
+                                    
                                     if(!empty($data['completedCount']))
                                     {
-                                        $count = $data['completedCount'];
+                                        $completecount = $data['completedCount'];
                                     }
                                 ?>
-                                <?= $count ?>
+                                <?= $completecount ?>
                             </div>
                             <div class="stat-label">Total Complete Appointments</div>
                         </div>
@@ -161,11 +162,9 @@
                                             {
                                                 $timeslots = $data['slotdetails'];
 
-                                                // show($timeslots);
-
                                                 foreach ($data['slotdetails'] as $timeslot) 
                                                 {
-                                                    // show($timeslot['status']);
+                                                   
                                                     $slotstatus = isset($timeslot['status']) ? $timeslot['status'] : 'unknown';
                                                     $timeSlot = isset($timeslot['time_slot']) ? $timeslot['time_slot'] : 'N/A';
                                                     $noOfBookings = isset($timeslot['noOfBookings']) ? $timeslot['noOfBookings'] : 0;
@@ -238,7 +237,7 @@
                                         <?php 
                                             if(!empty($data['upcoming']))
                                             {
-                                                // print_r($data);
+                                                
                                                 $details = $data['upcoming'];
                                                 foreach($details as $detail)
                                                 {     
@@ -247,7 +246,7 @@
                                                 <td><?= $detail['bookedDate'] ?></td>
                                                 <td><?= $detail['bookedTime'] ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="detailfor">
                                                 <td><?= $detail['petOwner'] ?></td>
                                                 <td><?= $detail['slotDate'] ?></td>
                                                 <td><?= $detail['timeSlot'] ?></td>
@@ -284,7 +283,7 @@
 
         <div>
             <?php
-                // require "../../../app/views"; 
+                
             ?>
         </div> 
     </div> 

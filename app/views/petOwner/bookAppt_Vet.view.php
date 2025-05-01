@@ -28,8 +28,7 @@
                         <div class="apptDetails">
                             <img src="" alt="providerPic" class="cardPic providerPic" style="height: clamp(5em, 6vw, 6em);">
                             <span class="providerName" style="font-weight: 800;"></span>
-                            <p>
-                                Specializing in <span class="doctorSpecialization"></span>
+                            <p> Specializing in <span class="doctorSpecialization"></span>
                             </p>
                             <p class="details"></p>
                             <div class="avgRating loneBtn-container"></div>
@@ -38,6 +37,7 @@
                                 <li>From: <b><span class="sessStartDateTime"></span></b></li>
                                 <li>To: <b><span class="sessEndDateTime"></span></b></li>
                             </ul>
+                            <p><strong class="availApptCount"></strong> appointments available.</p>
                             <p>District: <b><span class="district"></span></b></p>
                             <a href="" class="mapLocation" target="_blank">View Location in GMaps</a>
                         </div>
@@ -64,12 +64,8 @@
         
                         </form>
                     </div>
-
-                
-
             </section>
 
-            
             <section class="dashArea">
                 <h3 class="dashHeader">More sessions by this Doctor</h3>
                 <div class="longCard-container availSessByThisCard-container"></div>
@@ -79,30 +75,26 @@
                 <h2 class="dashHeader">Search for others</h2>
 
                 <div class="searchFilter-container">
-
-                    <div class="filter-group" id="docNameFilter">
-                        Search by a doctor's name:
-                        <input type="text" name="docName" class="searchBar" placeholder="Search by a doctor's Name.">
-                        <ul class="dropdownList"></ul>
+                    <div class="searchFilter">
+                        <label for="doctorSelect">Search by doctor's name:</label>
+                        <select id="doctorSelect" class="searchBar">
+                            <option value="" disabled selected>Search by doctor's name.</option>
+                        </select>
                     </div>
-                    
-                    <div class="filter-group" id="districtFilter">
-                        Search by district:
-                        <input type="text" name="district" class="searchBar" placeholder="Search by district.">
-                        <ul class="dropdownList"></ul>
+                    <div class="searchFilter">
+                        <label for="districtSelect">Search by district:</label>
+                        <select id="districtSelect" class="searchBar">
+                            <option value="" disabled selected>Search by district.</option>
+                        </select>
                     </div>
-
-                    <div class="filter-group" id="dateFilter">
-                        Search available sessions by date:
-                        <input type="date" name="date" class="searchBar" min="<?= (new DateTime("now"))->format('Y-m-d') ?>">
+                    <div class="searchFilter">
+                        <label for="dateFilter">Search by date:</label>
+                        <input type="date" id="dateFilter" class="searchBar" min="<?= (new DateTime("now"))->format('Y-m-d') ?>">
                     </div>
-
-                    <div class="filter-group" id="timeFilter">
-                        Search available sessions by starting time:
-                        <input type="time" name="time" class="searchBar" >
+                    <div class="searchFilter">
+                        <label for="timeFilter">Search by starting time:</label>
+                        <input type="time" id="timeFilter" class="searchBar">
                     </div>
-
-                    <button class="cardBtn clearBtn"><i class="bx bxs-clear bx-sm"></i>Clear</button>
                 </div>
 
                 <div class="longCard-container availSessCard-container"></div>
@@ -146,14 +138,90 @@
         <script src="<?=ROOT?>/assets/js/petOwner/slotsDivider.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/cardPopulator.js"></script>
         <script src="<?=ROOT?>/assets/js/petOwner/submitForm.js"></script>
-        <script>
-            document.getElementById('apptBookingForm_vet').addEventListener('submit', submitForm)
-        </script>
         <script src="<?=ROOT?>/assets/js/petOwner/popup.js"></script>
+        <script defer>
+            document.getElementById('apptBookingForm_vet').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const form = event.target;
+                const formMethod = form.getAttribute('method');
+                const formData = new FormData(form);
 
-        <script src="<?=ROOT?>/assets/js/petOwner/searchableDropdown.js"></script>
+                fetch('PO_bookAppt_Vet/bookAppt', {
+                    method: formMethod || 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data1 => {
+                    console.log(data1)
+                    if (!data1.success) {
+                        const errorObj = {
+                            popUpTitle: "Error", 
+                            popUpMsg: "Something went wrong! Please try again later.",
+                            popUpIcon: `${ROOT}/assets/images/petOwner/popUpIcons/fail.png`,
+                            nextPage: 'PO_home'
+                        }
+                        displayPopUp('popup_formResult', errorObj)
+                    }
+                    else {
+                        let apptID = data1.appointmentID;
+                        let payObj = {action: 'PO_bookAppt_Vet/acceptPayment', serviceType: 'vet', amount: '300', appointmentID: apptID};
+        
+                        fetch('PO_bookAppt_Vet/getSavedCard')
+                        .then(response => response.json())
+                        .then(data2 => {
+                            (data2.fetchedCount != 0) && (payObj = {...payObj, ...data2[0]});
+                            console.log(payObj);
+                            displayPopUp('popup_payment', payObj);
+                        })
+                    }
+                })
+            })
+            
+            const districtList = [
+                "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", 
+                "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara", 
+                "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", 
+                "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya", 
+                "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"
+            ];
+            const districtSelect = document.getElementById('districtSelect');
+            districtList.map(x => {
+                let optionHTML = document.createElement('option');
+                optionHTML.value = x;
+                optionHTML.textContent = x;
+                districtSelect.appendChild(optionHTML);
+            })
 
-        <script>
+            const docNameList = (<?= json_encode($this->activeDocList) ?>).map(x => x.docName);
+            const doctorSelect = document.getElementById('doctorSelect');
+            docNameList.map(x => {
+                let optionHTML = document.createElement('option');
+                optionHTML.value = x;
+                optionHTML.textContent = `Dr. ${x}`;
+                doctorSelect.appendChild(optionHTML);
+
+            });
+            
+            document.querySelector('.searchFilter-container').addEventListener('change', () => {
+                const docName = document.getElementById('doctorSelect').value;
+                const district = document.getElementById('districtSelect').value;
+                const selectedDate = document.getElementById('dateFilter').value;
+                const startTime = document.getElementById('timeFilter').value;
+
+                const params = new URLSearchParams();
+                if (docName) params.append('docName', docName);
+                if (district) params.append('district', district);
+                if (selectedDate) params.append('selectedDate', selectedDate);
+                if (startTime) params.append('startTime', startTime);
+
+                const url = `PO_apptDashboard_Vet/getAvailableSessions?${params.toString()}`;
+                fetchAndAppendCards(
+                    url,
+                    '.availSessCard-template',
+                    '.availSessCard-container'
+                )
+            });
+
             fetchAndAppendCards(
                 'PO_bookAppt_Vet/getAvailableSessions_specific',
                 '.availSessCard-template',
@@ -231,9 +299,6 @@
                 }
             })
 
-            const docNameList = (<?= json_encode($this->activeDocList) ?>).map(x => { return x.docName });
         </script>
-        <script src="<?=ROOT?>/assets/js/petOwner/searchFilters_vet.js"></script>
-
     </body>
 </html>

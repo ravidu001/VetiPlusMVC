@@ -21,7 +21,11 @@ async function submitForm (event) {
     const formMethod = form.getAttribute('method');
     const formData = new FormData(form); // Collect form data
 
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    }
 
+    
     try {
         const response = await fetch(formAction, {
             method: formMethod || 'POST',
@@ -50,5 +54,12 @@ async function submitForm (event) {
     } catch (error) {
         console.error('An error occurred\n' + error);
         alert('An error occurred.\nPlease try again later.\n' + error);
+        // const errorObj = {
+        //     popUpTitle: "Error", 
+        //     popUpMsg: "An unexpected error occured! Please try again later.",
+        //     popUpIcon: `${ROOT}/assets/images/petOwner/popUpIcons/fail.png`,
+        //     nextPage: 'PO_home'
+        // }
+        // displayPopUp('popup_formResult', errorObj)
     }
 }
