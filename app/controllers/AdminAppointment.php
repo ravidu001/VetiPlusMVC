@@ -22,32 +22,24 @@ class AdminAppointment extends Controller
     {
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['submit'])) {
-            // Retrieve the email from the GET request
-            $petownerID = $_GET['petownerid'];
+            $appointmentID = $_GET['appointmentID'];
 
             $notification = new Notification();
 
 
-            // Validate the email
-            if (filter_var($petownerID, FILTER_VALIDATE_EMAIL)) {
-                // Instantiate the model
-                $appointmentpetownerid = new AppointmentModel();
+            if (!empty($appointmentID)) {
+                $appointmentappointmentID = new AppointmentModel();
 
-                // Fetch admin details using the email
-                $petownerresult = $appointmentpetownerid->getAppointmentBypetownerID($petownerID);
+                $petownerresult = $appointmentappointmentID->getAppointmentByappointmentID($appointmentID);
 
 
-                // Check if an admin exists with the provided email
                 if (!empty($petownerresult)) {
-                    // Pass the admin details to the admin profile view
                     $this->view('admin/appointmentlist', ['admin' => $petownerresult]);
                 } else {
-                    // If admin not found, redirect to a 'not found' page or display a message
-                    $notification->show("No admin found with this email.", 'error');
+                    $notification->show("No Appointment found with this Appointment ID.", 'error');
                 }
             } else {
-                // Handle invalid email input
-                $notification->show("Invalid email format. Please try again.", 'error');
+                $notification->show(" Please Enter Appointment ID. ", 'error');
             }
         }
     }
@@ -76,16 +68,13 @@ class AdminAppointment extends Controller
         $appointment = new AppointmentModel();
         $appointmentdata = $appointment->getalldata();
 
-        // Set headers to download file
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment;filename=appointments_report.csv');
 
         $output = fopen('php://output', 'w');
 
-        // Write the column headers
         fputcsv($output, ['Appointment ID', 'Pet Name', 'Date and Time', 'Session ID', 'Visit Time', 'Status']);
 
-        // Write the rows
         foreach ($appointmentdata as $data) {
             fputcsv($output, [
                 $data->appointmentID ?? 'N/A',
