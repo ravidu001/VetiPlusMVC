@@ -12,7 +12,6 @@ class DoctorSessionModel {
     }
 
     public function lastID() {
-        // need a query to get the last inserted ID
         $this->order_column = 'sessionID';
         $this->limit = 1;
         $result = $this->findAll();
@@ -29,7 +28,6 @@ class DoctorSessionModel {
         return $result;
     }
 
-    // this function is used to get the session details by sessionID
     public function getsessionBySession($sessionID) {
         $this->order_column = 'selectedDate';
         $this->order_type = 'asc';
@@ -44,7 +42,6 @@ class DoctorSessionModel {
             throw new InvalidArgumentException('Session ID must be numeric');
         }
     
-        // Call the delete method
         return $this->delete($sessionID, 'sessionID');
     }
 

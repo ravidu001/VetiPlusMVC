@@ -6,7 +6,6 @@ class AdminDoctorSystem extends Controller
     {
         $doctor = new doctorModel();
         $doctorData = $doctor->getalldata();
-        // show($doctorData);
        
         $this->view('admin/doctorsystem', ['doctorItem' =>$doctorData]);
 
@@ -20,7 +19,7 @@ class AdminDoctorSystem extends Controller
             'rejectReason' => 'Proved' 
         ];
         $doctor->updateStatus($doctorID, $data);
-        redirect('admindoctorsystem'); // redirect back to list
+        redirect('admindoctorsystem'); 
     }
 
     public function decline($doctorID)

@@ -1,5 +1,4 @@
 <?php
-// Create an instance of the Notification controller
 $notification = new Notification();
 ?>
 
@@ -76,12 +75,10 @@ $notification = new Notification();
                     </a>
                 </div>
 
-                <!-- Popup Modal -->
                 <div id="passwordPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
                     <div style="background:white; width:400px; margin:100px auto; padding:20px; border-radius:10px; position:relative;">
                         <h3>Change Password</h3>
 
-                        <!-- Notice the action attribute points to your controller function -->
                         <form action="<?= ROOT ?>/AdminProfile/changePassword?email=<?= ($admin[0]->email) ?>" method="POST">
                             <div>
                                 <label>Current Password</label><br>

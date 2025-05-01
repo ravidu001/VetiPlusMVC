@@ -26,14 +26,12 @@ class AssisModel {
     ];
 
     public function find($assistantID) {
-        // $this->order_column = 'assistantID';
         $result = $this->first(['assistantID' => $assistantID]);
     
-        // Return the first record if the result is not empty
         if (!empty($result)) {
-            return $result; // Get the first record
+            return $result; 
         } else {
-            return false; // No record found
+            return false; 
         }
     }
 
@@ -45,7 +43,6 @@ class AssisModel {
         $this->update($assisID, $data, 'assistantID');
     }
 
-    // Get all assistants by district
     public function getAssistantsByDistrict($district) {
         $result = $this->where(['district' => $district]);
         return $result;
@@ -54,7 +51,6 @@ class AssisModel {
     public function getAssistant($assistantID) {
         $result = $this->where(['assistantID' => $assistantID]);
         
-        // Return the first result if it exists, otherwise return null
         return !empty($result) ? $result[0] : null;
     }
 

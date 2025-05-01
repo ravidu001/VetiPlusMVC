@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <!-- Include navbar -->
     <?php require_once '../app/views/navbar/ownernav.php'; ?>
 
     <section class="home">

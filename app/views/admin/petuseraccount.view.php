@@ -1,5 +1,4 @@
 <?php
-// Create an instance of the Notification controller
 $notification = new Notification();
 ?>
 
@@ -79,7 +78,6 @@ $notification = new Notification();
                 </div>
             </div>
         </div>
-        <!-- Delete Confirmation Modal -->
         <div id="deleteModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>

@@ -30,7 +30,7 @@ class AdminProfile extends Controller
                 exit();
             }
     
-            $email = $_GET['email']; // from URL
+            $email = $_GET['email']; 
     
             $userModel = new User();
             $user = $userModel->getUserByEmail($email);
@@ -41,14 +41,12 @@ class AdminProfile extends Controller
                 exit();
             }
     
-            //  $user[0]->password is the hashed password in DB
             if (!password_verify($currentPassword, $user[0]->password)) {
                 $notification->show('Current password is incorrect.','error');  
                 redirect('AdminProfile');
                 exit();
             }
     
-            // If all checks pass -> Update password
             $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     
             $data = [

@@ -16,6 +16,6 @@ class PetWeightModel
         $this->limit = 1000;
         $this->order_column = 'measuredDate';
         $this->order_type = 'DESC';
-        return $this->where(['petID' => $petID]); // what this return is an array of pet
+        return $this->where(['petID' => $petID]); 
     }
 }

@@ -23,7 +23,6 @@
         </div>
         <form class="edit-form" action="<?= ROOT ?>/OwnerAddAdmin/adminupdate" method="post">
             <h1>Edit Profile</h1>
-            <!-- Hidden input field to pass the email -->
             <input type="hidden" name="email" value="<?= htmlspecialchars($admin->email ?? '') ?>">
 
             <div class="form-group">

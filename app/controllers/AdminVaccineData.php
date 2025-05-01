@@ -8,7 +8,6 @@ class AdminVaccineData extends Controller
         $adminavaccinedata = $vaccinedata->getalldata();
         $adminpettype = new Species_Breeds();
         $pettype =  $adminpettype->getalldata();
-        // show($pettype);
         $this->view('admin/adminvaccinedata',[
             'adminavaccinedata' => $adminavaccinedata,
             'pettype' => $pettype,
@@ -24,7 +23,6 @@ class AdminVaccineData extends Controller
                     'brand' => $_POST['brand'],
                     'petType' => $_POST['type']
                 ];
-                // show($data);
                 $petdata = new VaccineDataModel();
                 $petdata->addNew($data);
                 redirect('AdminVaccineData');
@@ -37,7 +35,7 @@ class AdminVaccineData extends Controller
             $vaccineID = $_GET['vaccineID'];
             $deletedata = new VaccineDataModel();
             $deletedata->delete($vaccineID, 'vaccineID');
-            redirect('AdminVaccineData'); // refresh the view
+            redirect('AdminVaccineData'); 
         }
     }
     

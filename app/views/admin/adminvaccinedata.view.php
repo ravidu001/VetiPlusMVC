@@ -90,10 +90,8 @@
             const modal = document.getElementById('deleteModal');
             const deleteBtn = document.getElementById('confirmDeleteBtn');
 
-            // Dynamically set the href with correct ID
             deleteBtn.href = `<?= ROOT ?>/AdminVaccineData/deletevaccinedata?vaccineID=${vaccineID}`;
 
-            // Show modal
             modal.style.display = 'block';
         }
 

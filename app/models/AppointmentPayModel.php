@@ -22,7 +22,7 @@ class AppointmentPayModel {
     public function CalRevenue() {
         $query = "SELECT SUM(amount) as total FROM $this->table";
         $result = $this->query($query);
-        return $result[0]->total;  //  the result is an array of objects and 'total' is a field
+        return $result[0]->total;  
     }
 
     public function CalTodayRevenue() {

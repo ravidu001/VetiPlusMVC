@@ -6,7 +6,6 @@ class SalonHoliday
 
     protected $table = 'holiday';
 
-    //insert the data
     public function insertData($array)
     {
         return $this->insert($array);  

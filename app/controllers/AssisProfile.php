@@ -47,34 +47,25 @@ class AssisProfile extends Controller {
         $assis = new AssisModel();
         $assistantID = $_SESSION['assis_id'];
     
-        // Check if the request is a POST request
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Check if a file was uploaded
             if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {
-                // Generate a unique filename
                 $originalFileName = $_FILES['profilePicture']['name'];
                 $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
                 $uniqueFileName = uniqid('profile_') . '.' . $fileExtension;
     
-                // Define the upload directory
                 $uploadDirectory = __DIR__ . '/../../public/assets/images/vetAssistant/';
     
-                // Ensure the directory exists
                 if (!is_dir($uploadDirectory)) {
                     mkdir($uploadDirectory, 0755, true);
                 }
     
-                // Full path for the file
                 $uploadPath = $uploadDirectory . $uniqueFileName;
     
-                // Move the uploaded file
                 if (move_uploaded_file($_FILES['profilePicture']['tmp_name'], $uploadPath)) {
-                    // Prepare data for database update
                     $data = [
                         'profilePicture' => $uniqueFileName
                     ];
     
-                    // Update the profile picture in the database
                     $result = $assis->updateProfile($assistantID, $data);
     
                     if (empty($result)) {
@@ -84,7 +75,6 @@ class AssisProfile extends Controller {
                             'filename' => $uniqueFileName
                         ]);
                     } else {
-                        // Remove the uploaded file if database update fails
                         unlink($uploadPath);
                         echo json_encode(['success' => false, 'message' => 'Failed to update profile picture in the database']);
                     }
@@ -92,7 +82,6 @@ class AssisProfile extends Controller {
                     echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file']);
                 }
             } else {
-                // Handle file upload errors
                 $errorMessage = 'No file uploaded';
                 switch ($_FILES['profilePicture']['error']) {
                     case UPLOAD_ERR_INI_SIZE:
@@ -129,7 +118,6 @@ class AssisProfile extends Controller {
         $assis = new AssisModel();
         $assistantID = $_SESSION['assis_id'];
 
-        // Inside updateProfile method
         if (isset($_POST['removeProfilePicture']) && $_POST['removeProfilePicture'] === 'true') {
             $data = [
                 'profilePicture' => 'defaultProfile.png'
@@ -177,10 +165,8 @@ class AssisProfile extends Controller {
         $assis = new AssisModel();
         $assistantID = $_SESSION['assis_id'];
     
-        // Retrieve languages from POST data
         $languages = $_POST['languageSpoken'] ?? [];
     
-        // Ensure languages is an array and filter out any empty values
         $languages = is_array($languages) ? array_filter($languages) : [];
 
     
@@ -193,13 +179,12 @@ class AssisProfile extends Controller {
         ];
     
         try {
-            // Perform the update
             $assis->updateProfile($assistantID, $data);
     
             echo json_encode([
                 'success' => true, 
                 'message' => 'Professional details updated successfully',
-                'languages' => $languages // Optional: send back the languages for verification
+                'languages' => $languages 
             ]);
         } catch (Exception $e) {
             echo json_encode([
@@ -216,7 +201,6 @@ class AssisProfile extends Controller {
     
         $currentPasswordHash = $assisDetails->password;
     
-        // Get the form data from the POST request
         $data = [
             'password' => $_POST['password'] ?? '',
             'newPassword' => $_POST['newPassword'] ?? '',
@@ -229,7 +213,6 @@ class AssisProfile extends Controller {
             return;
         }
     
-        // Validation
         if (empty($data['password']) || empty($data['newPassword']) || empty($data['confirmPassword'])) {
             echo json_encode(['success' => false, 'message' => 'All password fields are required']);
             return;
@@ -255,10 +238,8 @@ class AssisProfile extends Controller {
             return;
         }
     
-        // Hash the new password
         $newPasswordHash = password_hash($data['newPassword'], PASSWORD_DEFAULT);
     
-        // Update password
         try {
             $result = $assis->updatePassword($assistantID, $newPasswordHash);
             
@@ -279,17 +260,14 @@ class AssisProfile extends Controller {
     }
 
     public function deleteAccount() {
-        // Initialize the response array
         $response = [];
         
-        // Check if the user is authenticated and has provided the correct password
         if (isset($_POST['password'])) {
             $password = $_POST['password'];
             
-            // method to verify the password
             if ($this->verifyPassword($password)) {
                 
-                $deletionSuccessful = $this->deleteUserAccount(); // This should return true or false
+                $deletionSuccessful = $this->deleteUserAccount(); 
                 
                 if ($deletionSuccessful) {
                     $response['success'] = true;
@@ -307,13 +285,11 @@ class AssisProfile extends Controller {
             $response['message'] = 'Password is required.';
         }
     
-        // Set the content type to application/json
         header('Content-Type: application/json');
         echo json_encode($response);
-        exit; // Ensure no further output is sent
+        exit; 
     }
     
-    // Example method to verify the password
     private function verifyPassword($password) {
         $assisID = $_SESSION['assis_id'];
         $userModel = new User();
@@ -337,12 +313,10 @@ class AssisProfile extends Controller {
         if (is_array($assissessionData)) {
             foreach ($assissessionData as $assissessionItem) {
                 if ($assissessionItem->action == 'pending' || $assissessionItem->action == 'accept') {
-                    // Check if session is incomplete
                     $sessionData = $sessionModel->getsessionBySession($assissessionItem->sessionID);
                     if (is_array($sessionData)) {
                         foreach ($sessionData as $sessionItem) {
                             if ($sessionItem->completeStatus == 0) {
-                                // Cannot delete if there's an incomplete session
                                 return false;
                             }
                         }
@@ -351,7 +325,6 @@ class AssisProfile extends Controller {
             }
         }
     
-        // If no blocking sessions found, deactivate user
         $userModel = new User();
         $assisData = $userModel->checkUser($assisID);
     

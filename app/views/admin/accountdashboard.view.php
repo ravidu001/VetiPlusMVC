@@ -1,5 +1,4 @@
 <?php
-// Create an instance of the Notification controller
 $notification = new Notification();
 ?>
 
@@ -19,7 +18,6 @@ $notification = new Notification();
 </head>
 
 <body>
-    <!-- Include navbar -->
     <?php require_once '../app/views/navbar/adminnav.php'; ?>
 
     <section class="home">
